@@ -1,0 +1,11 @@
+name: say hello
+author: SnowCait
+description: Sample action.
+inputs:
+  name:
+    description: input name
+    required: false
+    default: world
+runs:
+  using: node12
+  main: main.js

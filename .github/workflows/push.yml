@@ -1,0 +1,10 @@
+name: sample
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: HELLO
+        run: echo 'hello, action'
+      - name: test
+        uses: ./
