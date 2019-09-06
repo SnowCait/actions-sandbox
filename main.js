@@ -1,1 +1,1 @@
-console.log('hello, ' + ProcessingInstruction.env.INPUT_NAME);
+console.log('hello, ' + process.env.INPUT_NAME);
