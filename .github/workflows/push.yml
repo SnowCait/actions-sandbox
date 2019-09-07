@@ -13,9 +13,19 @@ jobs:
       #   uses: ./docker-action/
       # - name: packer
       #   uses: ./packer-action/
-      - uses: docker://hashicorp/packer
+      - name: packer validate packer.json
+        uses: docker://hashicorp/packer
         with:
           args: validate packer.json
-      - uses: docker://hashicorp/packer
+      - name: packer build packer.json
+        uses: docker://hashicorp/packer
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-northeast-1
+        with:
+          args: build packer.json
+      - name: packer validate invalid.json
+        uses: docker://hashicorp/packer
         with:
           args: validate invalid.json
