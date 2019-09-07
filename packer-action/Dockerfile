@@ -1,2 +1,2 @@
 FROM hashicorp/packer
-CMD [ "packer", "version"]
+CMD [ "packer", "--version"]
