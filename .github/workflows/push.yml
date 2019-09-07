@@ -16,4 +16,4 @@ jobs:
       - name: hashicorp/packer
         uses: docker://hashicorp/packer
         with:
-          args: version
+          args: validate packer.json
