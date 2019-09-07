@@ -15,4 +15,5 @@ jobs:
       #   uses: ./packer-action/
       - name: hashicorp/packer
         uses: docker://hashicorp/packer
-        run: version
+        with:
+          args: version
