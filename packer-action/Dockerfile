@@ -1,2 +1,2 @@
 FROM hashicorp/packer
-CMD [ "version"]
+CMD [ "validate", "packer.json"]
