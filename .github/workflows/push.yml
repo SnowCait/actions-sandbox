@@ -8,4 +8,4 @@ jobs:
       - name: HELLO
         run: echo 'hello, action'
       - name: test
-        uses: ./
+        uses: ./nodejs-action/
