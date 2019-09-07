@@ -2,9 +2,9 @@
     "variables": {},
     "builders": [{
         "type": "amazon-ebs",
-        "source_ami": "ami-af22d9b9",
+        "source_ami": "ami-0427cc7b",
         "instance_type": "t2.micro",
-        "ssh_username": "ubuntu",
+        "ssh_username": "ec2-user",
         "ami_name": "packer-example {{timestamp}}"
     }]
 }
