@@ -13,11 +13,9 @@ jobs:
       #   uses: ./docker-action/
       # - name: packer
       #   uses: ./packer-action/
-      - name: hashicorp/packer
-        uses: docker://hashicorp/packer
+      - uses: docker://hashicorp/packer
         with:
           args: validate packer.json
-      - name: hashicorp/packer
-        uses: docker://hashicorp/packer
+      - uses: docker://hashicorp/packer
         with:
           args: validate invalid.json
