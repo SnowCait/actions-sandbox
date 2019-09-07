@@ -7,5 +7,7 @@ jobs:
       - uses: actions/checkout@v1
       - name: HELLO
         run: echo 'hello, action'
-      - name: test
+      - name: nodejs
         uses: ./nodejs-action/
+      - name: php
+        uses: ./docker-action/

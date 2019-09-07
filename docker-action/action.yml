@@ -1,0 +1,6 @@
+name: exec php
+author: SnowCait
+description: Sample action.
+runs:
+  using: docker
+  image: Dockerfile
