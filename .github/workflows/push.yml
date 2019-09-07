@@ -11,5 +11,8 @@ jobs:
       #   uses: ./nodejs-action/
       # - name: php
       #   uses: ./docker-action/
-      - name: packer
-        uses: ./packer-action/
+      # - name: packer
+      #   uses: ./packer-action/
+      - name: hashicorp/packer
+        uses: docker://hashicorp/packer
+        run: version
