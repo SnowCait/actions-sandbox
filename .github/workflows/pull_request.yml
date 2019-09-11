@@ -1,0 +1,7 @@
+name: Pull Request Trigger Sandbox
+on: pull_request
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'pull_request triggered.'
