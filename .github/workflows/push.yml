@@ -1,5 +1,8 @@
 name: sample
-on: push
+on:
+  push:
+    paths:
+      - .github/workflows/push.yml
 jobs:
   build:
     runs-on: ubuntu-latest
