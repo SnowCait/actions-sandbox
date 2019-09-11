@@ -9,6 +9,7 @@ jobs:
       - run: echo $GITHUB_EVENT_NAME
       - run: echo $GITHUB_EVENT_PATH
       - run: cat $GITHUB_EVENT_PATH
-      - uses: docker://hashicorp/packer:1.4.3
+      - run: cd ./packer
+        uses: docker://hashicorp/packer:1.4.3
         with:
           args: validate packer/packer.json
