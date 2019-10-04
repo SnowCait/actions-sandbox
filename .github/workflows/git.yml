@@ -20,6 +20,7 @@ jobs:
         git checkout -b feature/git-commands
         git add -A
         git commit -m 'try commit'
-        git remote -v
-        git status
-#        git push origin feature/git-commands
+    - uses: actions/checkout@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: feature/git-commands
