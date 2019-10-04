@@ -1,0 +1,11 @@
+name: Issue
+
+on: [issues, issue_comment]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - run: cat $GITHUB_EVENT_PATH
