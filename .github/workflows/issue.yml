@@ -1,6 +1,6 @@
 name: Issue
 
-on: [issues, issue_comment]
+on: [issue_comment]
 
 jobs:
   build:
@@ -9,3 +9,4 @@ jobs:
     
     steps:
     - run: cat $GITHUB_EVENT_PATH
+    - run: echo ${{ github.event.comment.body }}
