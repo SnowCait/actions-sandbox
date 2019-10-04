@@ -13,4 +13,4 @@ jobs:
     - run: echo LGTM is contained
       if: contains(github.event.comment.body, 'LGTM')
     - run: echo this is pull request
-      if: github.event.comment.pull_request
+      if: github.event.issue.pull_request
