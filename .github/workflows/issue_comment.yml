@@ -13,5 +13,5 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          github.pulls.createReviewRequest({...context.issue, event: 'APPROVE'})
+          github.pulls.createReviewRequest({owner: 'SnowCait', repo: 'action-sandbox', pull_number: ${{ github.event.issue.number }}, event: 'APPROVE'})
       if: contains(github.event.comment.body, 'LGTM') && github.event.issue.pull_request
