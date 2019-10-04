@@ -1,0 +1,12 @@
+name: Pull Request Review
+
+on: [pull_request_review]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - run: cat $GITHUB_EVENT_PATH
+    - run: echo ${{ github.event.action }}
