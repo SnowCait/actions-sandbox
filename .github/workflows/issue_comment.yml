@@ -9,8 +9,9 @@ jobs:
 
     steps:
     - run: cat $GITHUB_EVENT_PATH
-    - run: echo ${{ github.event.comment.body }}
-    - run: echo LGTM is contained
-      if: contains(github.event.comment.body, 'LGTM')
-    - run: echo this is pull request
-      if: github.event.issue.pull_request
+    - uses: actions/github-script@0.2.0
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          github.issues.createComment({...context.issue, body: 'Nice!'})
+      if: contains(github.event.comment.body, 'LGTM') && github.event.issue.pull_request
