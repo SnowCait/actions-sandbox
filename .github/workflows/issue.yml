@@ -9,4 +9,4 @@ jobs:
     
     steps:
     - run: cat $GITHUB_EVENT_PATH
-    - run: echo ${{ github.event.comment.body }}
+    - run: echo ${{ github.event.action }}
