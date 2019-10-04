@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - uses: actions/checkout@master
     - run: cat $GITHUB_EVENT_PATH
 #    - run: echo ${{ github.event.comment.body }}
 #    - run: echo LGTM is contained
