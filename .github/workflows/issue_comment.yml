@@ -13,5 +13,5 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          github.pulls.createReviewRequest({...context.pulls, event: 'APPROVE'})
+          github.pulls.createReviewRequest({...context.issue, pull_number: context.issue.number, event: 'APPROVE'})
       if: contains(github.event.comment.body, 'LGTM') && github.event.issue.pull_request
