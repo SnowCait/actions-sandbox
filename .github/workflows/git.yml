@@ -20,7 +20,7 @@ jobs:
         git checkout -b feature/git-commands
         git add -A
         git commit -m 'try commit'
-    - uses: actions/checkout@master
+    - uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: feature/git-commands
