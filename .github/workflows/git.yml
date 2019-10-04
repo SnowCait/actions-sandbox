@@ -20,4 +20,6 @@ jobs:
         git checkout -b feature/git-commands
         git add -A
         git commit -m 'try commit'
-        git push origin feature/git-commands
+        git remote -v
+        git status
+#        git push origin feature/git-commands
