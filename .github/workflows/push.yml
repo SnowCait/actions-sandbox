@@ -1,4 +1,4 @@
-name: sample
+name: Push sandbox
 on:
   push:
     paths:
