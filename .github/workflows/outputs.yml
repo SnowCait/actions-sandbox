@@ -13,6 +13,6 @@ jobs:
     - uses: actions/checkout@v1
     - name: Read a file
       id: readfile
-      run: echo '::set-output name=text::'; cat ./github/workflows/outputs.yml
+      run: echo '::set-output name=text::'; cat .github/workflows/outputs.yml
     - name: Output
       run: echo ${{ steps.readfile.outputs.text }}
