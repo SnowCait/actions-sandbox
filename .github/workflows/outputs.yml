@@ -16,3 +16,6 @@ jobs:
       run: echo "::set-output name=text::$(<.github/workflows/outputs.yml)";
     - name: Output
       run: echo "${{ steps.readfile.outputs.text }}"
+    - name: Set env
+      run: export TEXT=test
+    - run: echo ${TEXT}
