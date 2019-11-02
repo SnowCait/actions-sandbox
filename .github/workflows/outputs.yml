@@ -2,7 +2,7 @@ name: Outputs
 
 on:
   push:
-    paths: ./github/workflows/outputs.yml
+    paths: .github/workflows/outputs.yml
 
 jobs:
   build:
