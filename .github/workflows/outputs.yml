@@ -11,8 +11,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Read a file
-      id: readfile
-      run: echo "::set-output name=text::$(<.github/workflows/outputs.yml)";
+#     - name: Read a file
+#       id: readfile
+#       run: TEXT=$(<.github/workflows/outputs.yml)";
     - name: Output
-      run: echo ${{ steps.readfile.outputs.text }}
+      run: echo ${TEXT}
+      env:
+        TEXT: test
