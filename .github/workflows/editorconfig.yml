@@ -10,4 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: zbeekman/EditorConfig-Action@v1.1.1
+      env:
+        ALWAYS_LINT_ALL_FILES: true
 
