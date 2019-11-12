@@ -12,4 +12,7 @@ jobs:
     - uses: zbeekman/EditorConfig-Action@v1.1.1
       env:
         ALWAYS_LINT_ALL_FILES: true
+    - uses: snow-actions/eclint@v1.0.0
+      with:
+        args: '--version'
 
