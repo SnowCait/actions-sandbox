@@ -1,0 +1,13 @@
+name: Zip
+
+on:
+  push:
+    paths: .github/workflows/zip.yml
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - run: zip --version
