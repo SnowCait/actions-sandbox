@@ -11,5 +11,5 @@ jobs:
     container: docker://hashicorp/packer:1.4.3
 
     steps:
-      - run: apt-get install zip
+      - run: apt-get install -y zip
       - run: zip --version
