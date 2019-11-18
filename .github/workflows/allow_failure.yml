@@ -1,0 +1,17 @@
+name: Allow failure
+
+on:
+  push:
+    paths: .github/workflows/allow_failure.yml
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - run: phpunit
+    - run: echo failure
+      if: failure()
+    - run: echo last step
