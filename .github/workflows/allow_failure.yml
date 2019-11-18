@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
     - run: phpunit
     - run: echo failure step
       if: failure()
@@ -24,4 +23,4 @@ jobs:
     
     steps:
       - run: echo failure job
-      - run: failure job last step
+      - run: echo failure job last step
