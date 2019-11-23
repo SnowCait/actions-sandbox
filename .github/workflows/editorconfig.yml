@@ -19,6 +19,8 @@ jobs:
     - run: ls -la
     - run: pwd
     - run: ls -la ../
+    - run: ls -la ../../
+    - run: ls -la ../../../
     - run: ls -la /
     - uses: snow-actions/eclint@v1.0.0
       with:
