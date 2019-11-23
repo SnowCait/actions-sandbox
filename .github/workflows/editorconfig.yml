@@ -24,9 +24,11 @@ jobs:
     - run: ls -la ../../_actions/snow-actions/
     - run: ls -la ../../_actions/snow-actions/eclint/
     - run: ls -la /
-    - uses: snow-actions/eclint@v1.0.0
-      with:
-        args: '--version'
+    - run: echo $HOME
+    - run: echo $GITHUB_WORKSPACE
+#     - uses: snow-actions/eclint@v1.0.0
+#       with:
+#         args: '--version'
 #     - uses: snow-actions/eclint@v1.0.0
 #       with:
 #         args: 'check'
