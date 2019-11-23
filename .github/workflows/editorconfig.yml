@@ -34,4 +34,5 @@ jobs:
     - uses: snow-actions/eclint@feature/add-matrix-test
       with:
         args: 'fix'
+    - run: git status
 
