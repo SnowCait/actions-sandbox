@@ -26,9 +26,9 @@ jobs:
     - run: ls -la /
     - run: echo $HOME
     - run: echo $GITHUB_WORKSPACE
-#     - uses: snow-actions/eclint@v1.0.0
-#       with:
-#         args: '--version'
+    - uses: snow-actions/eclint@v1.0.0
+      with:
+        args: '--version'
 #     - uses: snow-actions/eclint@v1.0.0
 #       with:
 #         args: 'check'
