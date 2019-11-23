@@ -20,7 +20,9 @@ jobs:
     - run: pwd
     - run: ls -la ../
     - run: ls -la ../../
-    - run: ls -la ../../*
+    - run: ls -la ../../_PipelineMapping/SnowCait/
+    - run: ls -la ../../_actions/snow-actions/
+    - run: ls -la ../../_actions/snow-actions/eclint/
     - run: ls -la /
     - uses: snow-actions/eclint@v1.0.0
       with:
