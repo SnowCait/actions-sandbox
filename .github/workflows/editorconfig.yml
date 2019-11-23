@@ -26,4 +26,7 @@ jobs:
       with:
         args: 'fix'
     - run: git status
+    - uses: peter-evans/create-pull-request@v1.7.4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
 
