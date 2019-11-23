@@ -12,9 +12,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: greut/eclint-action@v0.0.5
-      with:
-        args: fix
+#     - uses: greut/eclint-action@v0.0.5
+#       with:
+#         args: fix
 #     - uses: docker://greut/eclint
 #     - uses: zbeekman/EditorConfig-Action@v1.1.1
 #       env:
@@ -31,10 +31,10 @@ jobs:
     - run: ls -la /
     - run: echo $HOME
     - run: echo $GITHUB_WORKSPACE
-    - uses: snow-actions/eclint@master
+    - uses: snow-actions/eclint@v1.0.1
       with:
         args: '--version'
-    - uses: snow-actions/eclint@master
+    - uses: snow-actions/eclint@v1.0.1
       with:
         args: 'fix'
     - run: git status
