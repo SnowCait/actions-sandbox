@@ -12,9 +12,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - uses: zbeekman/EditorConfig-Action@v1.1.1
-      env:
-        ALWAYS_LINT_ALL_FILES: true
+#     - uses: zbeekman/EditorConfig-Action@v1.1.1
+#       env:
+#         ALWAYS_LINT_ALL_FILES: true
     - uses: snow-actions/eclint@feature/add-matrix-test
       with:
         args: '--version'
