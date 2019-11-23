@@ -27,7 +27,7 @@ jobs:
     - run: ls -la /
     - run: echo $HOME
     - run: echo $GITHUB_WORKSPACE
-    - uses: snow-actions/eclint@v1.0.0
+    - uses: snow-actions/eclint@feature/add-matrix-test
       with:
         args: '--version'
 #     - uses: snow-actions/eclint@v1.0.0
