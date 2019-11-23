@@ -19,18 +19,6 @@ jobs:
 #     - uses: zbeekman/EditorConfig-Action@v1.1.1
 #       env:
 #         ALWAYS_LINT_ALL_FILES: true
-    - run: ls -la
-    - run: pwd
-    - run: ls -la ../
-    - run: ls -la ../../
-    - run: ls -la ../../_PipelineMapping/SnowCait/
-    - run: ls -la ../../_actions/snow-actions/
-    - run: ls -la ../../_actions/snow-actions/eclint/
-    - run: ls -la ../../_actions/snow-actions/eclint/feature/
-    - run: ls -la ../../_actions/snow-actions/eclint/feature/add-matrix-test/
-    - run: ls -la /
-    - run: echo $HOME
-    - run: echo $GITHUB_WORKSPACE
     - uses: snow-actions/eclint@v1.0.1
       with:
         args: '--version'
