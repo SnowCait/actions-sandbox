@@ -8,17 +8,18 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v1
-    - uses: docker://greut/eclint
+#     - uses: docker://greut/eclint
 #     - uses: zbeekman/EditorConfig-Action@v1.1.1
 #       env:
 #         ALWAYS_LINT_ALL_FILES: true
-#     - uses: snow-actions/eclint@v1.0.0
-#       with:
-#         args: '--version'
+    - run: ls -la
+    - uses: snow-actions/eclint@v1.0.0
+      with:
+        args: '--version'
 #     - uses: snow-actions/eclint@v1.0.0
 #       with:
 #         args: 'check'
