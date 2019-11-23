@@ -23,6 +23,7 @@ jobs:
     - run: ls -la ../../_PipelineMapping/SnowCait/
     - run: ls -la ../../_actions/snow-actions/
     - run: ls -la ../../_actions/snow-actions/eclint/
+    - run: ls -la ../../_actions/snow-actions/eclint/v1.0.0/
     - run: ls -la /
     - run: echo $HOME
     - run: echo $GITHUB_WORKSPACE
