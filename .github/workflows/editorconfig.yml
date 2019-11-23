@@ -31,7 +31,7 @@ jobs:
     - uses: snow-actions/eclint@feature/add-matrix-test
       with:
         args: '--version'
-#     - uses: snow-actions/eclint@v1.0.0
-#       with:
-#         args: 'check'
+    - uses: snow-actions/eclint@v1.0.0
+      with:
+        args: 'check'
 
