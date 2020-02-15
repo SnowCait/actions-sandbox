@@ -11,6 +11,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - run: git fetch --no-tags --prune --depth=1 origin +refs/heads/default:refs/remotes/origin/default
     - run: git checkout -B default origin/default
     - run: git merge --ff-only origin/master
     - run: git push origin default
