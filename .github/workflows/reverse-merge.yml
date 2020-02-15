@@ -1,0 +1,22 @@
+name: Reverse merge
+
+on:
+  push:
+    branches: master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo ${{ github.repository }}
+      - uses: octokit/request-action@v2.0.0
+        with:
+          route: POST /repos/:repository/pulls
+          repository: ${{ github.repository }}
+          title: Merge master into v1
+          head: master
+          base: v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
