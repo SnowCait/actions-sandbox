@@ -12,11 +12,21 @@ jobs:
     steps:
       - run: echo ${{ github.repository }}
       - uses: octokit/request-action@v2.0.0
+        id: list_pull_requests
         with:
-          route: POST /repos/:repository/pulls
+          route: GET /repos/:repository/pulls
           repository: ${{ github.repository }}
-          title: Merge master into v1
           head: master
           base: v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: 'echo ${{ steps.list_pull_requests.outputs.data }}'
+#       - uses: octokit/request-action@v2.0.0
+#         with:
+#           route: POST /repos/:repository/pulls
+#           repository: ${{ github.repository }}
+#           title: Merge master into v1
+#           head: master
+#           base: v1
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
