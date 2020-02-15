@@ -20,7 +20,7 @@ jobs:
           base: v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: 'echo ${{ steps.list_pull_requests.outputs.data }}'
+      - run: "echo ${{ steps.list_pull_requests.outputs.data }} | jq '. | length'"
 #       - uses: octokit/request-action@v2.0.0
 #         with:
 #           route: POST /repos/:repository/pulls
