@@ -26,9 +26,9 @@ jobs:
       with:
         args: 'fix *.json'
     - run: git status
-    - uses: peter-evans/create-pull-request@v1.2.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PULL_REQUEST_BRANCH: 'feature/fix-file-format'
-        COMMIT_MESSAGE: 'Fix file format'
+#     - uses: peter-evans/create-pull-request@v1.2.0
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         PULL_REQUEST_BRANCH: 'feature/fix-file-format'
+#         COMMIT_MESSAGE: 'Fix file format'
 
