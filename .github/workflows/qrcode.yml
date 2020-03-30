@@ -10,7 +10,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - run: git checkout -b qrcode
+      with:
+        ref: qrcode
     - uses: SnowCait/qrcode@master
       with:
         text: ${{ github.run_id }}
