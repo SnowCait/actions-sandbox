@@ -15,12 +15,12 @@ jobs:
     - uses: SnowCait/qrcode@master
       with:
         text: ${{ github.run_id }}
-        path: 'sample.png'
+        path: qrcode.png
     - run: |
         git config --global user.email "you@example.com"
         git config --global user.name "Your Name"
-        git add sample.png
-        git commit -m "sample.png"
+        git add qrcode.png
+        git commit -m "QR Code"
         git push origin qrcode
     - name: You can upload the QR Code file to artifact.
       uses: actions/upload-artifact@v1
