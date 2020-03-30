@@ -1,0 +1,17 @@
+# https://qiita.com/mizchi/items/7b55f8a6782a4ab00989
+name: Gen
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Gen dump
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo 1 > .dump
+      - run: git add .dump
+      - run: git commit -m "Gen .dump"
+      - run: git push origin master
