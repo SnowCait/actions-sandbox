@@ -10,7 +10,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - run: git checkout -b qrcode
     - uses: SnowCait/qrcode@master
       with:
-        text: 'sample'
+        text: ${{ github.run_id }}
         path: 'sample.png'
+    - run: |
+        git add sample.png
+        git commit -m "sample.png"
+        git push origin qrcode
