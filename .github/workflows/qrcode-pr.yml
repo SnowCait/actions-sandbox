@@ -1,0 +1,18 @@
+name: QRCode PR
+on:
+  pull_request:
+    types: [ opened ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - run: echo ${{ toJson(github) }}
+#     - uses: actions/checkout@v2
+#       with:
+#         ref: qrcode
+#     - uses: SnowCait/qrcode@v1.0.0
+#       with:
+#         text: ${{ github. }}
+#         path: qrcode.png
