@@ -1,14 +1,12 @@
 name: QRCode PR
-on:
-  pull_request:
-    types: [ opened ]
+on: [ pull_request ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - run: echo ${{ toJson(github) }}
+    - run: echo ${{ toJson(github.event.pull_request) }}
 #     - uses: actions/checkout@v2
 #       with:
 #         ref: qrcode
