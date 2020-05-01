@@ -10,5 +10,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: echo "${{ github.ref }},${{ github.event.pusher.name }}" >> pusher.csv
       - run: git add pusher.csv
+      - run: git config --global user.email "you@example.com"
+      - run: git config --global user.name "Your Name"
       - run: git commit -m "pusher.csv"
       - run: git push    
