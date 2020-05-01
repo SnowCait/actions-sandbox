@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - run: echo ${{ toJSON(github.event) }}
+    - run: echo ${{ github.event.pusher.name }}
     - run: echo ${{ github.event_path }}
     - run: echo ${{ github.actor }}
     - run: echo ${{ github.event_name }}
