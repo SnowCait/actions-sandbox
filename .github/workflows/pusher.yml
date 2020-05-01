@@ -7,10 +7,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - run: echo ${{ github.event.pusher.name }}
-    - run: echo ${{ github.event_path }}
-    - run: echo ${{ github.actor }}
-    - run: echo ${{ github.event_name }}
-    - run: echo ${{ github.ref }}
-    - run: echo ${{ github.head_ref }}
-    - run: echo ${{ github.base_ref }}
+      - uses: actions/checkout@v2
+      - run: echo "${{ github.ref }},${{ github.event.pusher.name }}" >> pusher.csv
+      - run: git add pusher.csv
+      - run: git commit -m "pusher.csv"
+      - run: git push    
