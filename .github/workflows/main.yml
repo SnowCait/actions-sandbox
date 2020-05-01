@@ -1,0 +1,16 @@
+name: Pusher
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - run: echo ${{ github.event }}
+    - run: echo ${{ github.event_path }}
+    - run: echo ${{ github.actor }}
+    - run: echo ${{ github.event_name }}
+    - run: echo ${{ github.ref }}
+    - run: echo ${{ github.head_ref }}
+    - run: echo ${{ github.base_ref }}
