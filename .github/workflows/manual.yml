@@ -8,7 +8,6 @@ on:
         description: ログレベル
         default: warning
       tags:
-        description: タグ
 
 jobs:
   printInputs:
