@@ -1,28 +1,20 @@
 name: Manual Trigger
 
-on: [ workflow_dispatch ]
-#   workflow_dispatch:
-#     inputs:
-#       environment:
-#         required: true
-#         description: deploy to
-#         default: dev
-#       branch:
-#         required: true
-#         description: branch name
-#         default: master
+on:
+  workflow_dispatch:
+    inputs:
+      ログレベル:
+        required: true
+        description: ログレベル
+        default: warning
+      タグ:
+        description: タグ
 
 jobs:
-  build:
+  printInputs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Run a one-line script
-      run: echo Hello, world!
-
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+    - run: |
+        echo "Log level: ${{ github.event.inputs.logLevel }}"
+        echo "Tags: ${{ github.event.inputs.tags }}" 
