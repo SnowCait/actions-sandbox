@@ -3,11 +3,11 @@ name: Manual Trigger
 on:
   workflow_dispatch:
     inputs:
-      logLevel:
+      ログレベル:
         required: true
         description: ログレベル
         default: warning
-      tags:
+      タグ:
 
 jobs:
   printInputs:
@@ -15,5 +15,5 @@ jobs:
 
     steps:
     - run: |
-        echo "Log level: ${{ github.event.inputs.logLevel }}"
-        echo "Tags: ${{ github.event.inputs.tags }}" 
+        echo "Log level: ${{ github.event.inputs.ログレベル }}"
+        echo "Tags: ${{ github.event.inputs.タグ }}" 
