@@ -2,7 +2,7 @@ name: Node.js
 
 on:
   push:
-    paths: .github/workflow/nodejs.yml
+    paths: .github/workflows/nodejs.yml
 
 jobs:
   build:
