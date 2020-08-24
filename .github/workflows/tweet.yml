@@ -19,3 +19,5 @@ jobs:
         with:
           status: ${{ github.run_id }}-${{ github.run_number }} ${{ github.sha }}
       - run: echo ${{ steps.tweet.outputs.response }}
+      - run: echo ${{ fromJson(steps.tweet.outputs.response).id_str }}
+      - run: echo ${{ fromJson(steps.tweet.outputs.response).text }}
