@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Tweet
         id: tweet
-        uses: snow-actions/tweet@main
+        uses: snow-actions/tweet@feature/tweet
         env:
           CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
           CONSUMER_API_SECRET_KEY: ${{ secrets.TWITTER_CONSUMER_API_SECRET_KEY }}
