@@ -9,6 +9,7 @@ jobs:
   tweet:
     runs-on: ubuntu-latest
     steps:
+      - run: pwd
       - name: Tweet
         id: tweet
         uses: snow-actions/tweet@feature/upload-media
