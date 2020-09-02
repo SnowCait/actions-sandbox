@@ -2,8 +2,8 @@ name: Check
 
 on:
   push:
-#     branches:
-#       - master
+    branches:
+      - master
 
 jobs:
   check:
