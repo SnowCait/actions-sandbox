@@ -13,4 +13,4 @@ jobs:
       - run: git config --global user.email "you@example.com"
       - run: git config --global user.name "Your Name"
       - run: git commit -m "pusher.csv"
-      - run: git push    
+#       - run: git push    
