@@ -29,7 +29,7 @@ jobs:
         to: json
     - run: echo ${{ fromJson(steps.csproj.outputs.data).Project._.PropertyGroup.Version }}
 
-    - run: 'git reset --hard HEAD^'
+    - run: git reset --hard HEAD^
 
     - name: XML to JSON
       id: prev-csproj
@@ -39,6 +39,8 @@ jobs:
         from: xml
         to: json
     - run: echo ${{ fromJson(steps.prev-csproj.outputs.data).Project._.PropertyGroup.Version }}
+
+    - run: git pull
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
