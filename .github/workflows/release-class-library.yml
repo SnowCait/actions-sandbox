@@ -52,6 +52,7 @@ jobs:
 
     - name: Create a Release
       uses: actions/create-release@v1
+      if: fromJson(steps.csproj.outputs.data).Project._.PropertyGroup.Version != fromJson(steps.releases.outputs.result).data[0].tag_name
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
