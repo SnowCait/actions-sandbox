@@ -17,6 +17,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: XML to JSON
+      id: csproj
+      uses: fabasoad/yaml-json-xml-converter-action@v1.0.1
+      with:
+        path: ClassLibrary1/ClassLibrary1.csproj
+        from: xml
+        to: json
+    - run: echo ${{ steps.csproj.outputs.data }}
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
