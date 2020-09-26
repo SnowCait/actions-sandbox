@@ -17,6 +17,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+      with:
+        ref: HEAD^
+    - run: git log -1
 
     - name: XML to JSON
       id: csproj
