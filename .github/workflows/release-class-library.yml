@@ -19,9 +19,6 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 2
-    - run: git log -1
-    - run: 'git reset --hard HEAD^'
-    - run: git log -1
 
     - name: XML to JSON
       id: csproj
@@ -31,6 +28,17 @@ jobs:
         from: xml
         to: json
     - run: echo ${{ fromJson(steps.csproj.outputs.data).Project._.PropertyGroup.Version }}
+
+    - run: 'git reset --hard HEAD^'
+
+    - name: XML to JSON
+      id: prev-csproj
+      uses: fabasoad/yaml-json-xml-converter-action@v1.0.1
+      with:
+        path: class-library/ClassLibrary1/ClassLibrary1/ClassLibrary1.csproj
+        from: xml
+        to: json
+    - run: echo ${{ fromJson(steps.prev-csproj.outputs.data).Project._.PropertyGroup.Version }}
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
