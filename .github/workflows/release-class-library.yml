@@ -5,6 +5,7 @@ on:
     branches: [ master ]
     paths: 
       - class-library/ClassLibrary1/ClassLibrary1/ClassLibrary1.csproj
+      - .github/workflows/release-class-library.yml
 
 jobs:
   release:
