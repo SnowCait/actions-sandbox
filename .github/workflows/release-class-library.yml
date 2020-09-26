@@ -49,3 +49,13 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+
+    - name: Create a Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ fromJson(steps.csproj.outputs.data).Project._.PropertyGroup.Version }}
+        release_name: ${{ fromJson(steps.csproj.outputs.data).Project._.PropertyGroup.Version }}
+        draft: true
+        prerelease: true
