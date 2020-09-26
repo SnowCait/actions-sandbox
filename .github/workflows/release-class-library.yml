@@ -25,7 +25,7 @@ jobs:
         path: class-library/ClassLibrary1/ClassLibrary1/ClassLibrary1.csproj
         from: xml
         to: json
-    - run: echo ${{ steps.csproj.outputs.data }}
+    - run: echo ${{ fromJson(steps.csproj.outputs.data) }}
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
