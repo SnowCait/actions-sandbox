@@ -18,7 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: git log -1
-    - run: git reset --hard HEAD^
+    - run: 'git reset --hard HEAD^'
     - run: git log -1
 
     - name: XML to JSON
