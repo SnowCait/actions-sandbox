@@ -20,4 +20,4 @@ jobs:
         git checkout -b feature/git-commands
         git add -A
         git commit -m 'try commit'
-        git push
+    - run: git push
