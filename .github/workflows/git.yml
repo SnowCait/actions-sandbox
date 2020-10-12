@@ -1,6 +1,8 @@
 name: Git Commands
 
 on:
+  schedule:
+    - cron: '* * * * *'
   push:
     paths: .github/workflows/git.yml
 
