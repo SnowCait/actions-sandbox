@@ -1,6 +1,7 @@
 name: Git Commands
 
 on:
+  workflow_dispatch:
   schedule:
     - cron: '* * * * *'
   push:
