@@ -11,13 +11,14 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
+      with:
+        ref: feature/git-commands
     - run: mkdir -p files
     - run: echo 'content' >> files/file.txt
     - name: git
       run: |
         git config user.email email@example.com
         git config user.name example
-        git checkout -b feature/git-commands
         git add -A
         git commit -m 'try commit'
     - run: git push
