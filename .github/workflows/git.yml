@@ -13,12 +13,13 @@ jobs:
     - uses: actions/checkout@v2
       with:
         ref: feature/git-commands
+    - uses: dawidd6/action-git-user-config@v1.0.0
     - run: mkdir -p files
     - run: echo 'content' >> files/file.txt
-    - name: git
-      run: |
-        git config user.email email@example.com
-        git config user.name example
-        git add -A
+#     - name: git config
+#       run: |
+#         git config user.email email@example.com
+#         git config user.name example
+    - run: git add -A
     - run: git commit -m 'try commit'
     - run: git push
