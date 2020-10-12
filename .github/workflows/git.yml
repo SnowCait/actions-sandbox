@@ -17,6 +17,8 @@ jobs:
     - run: echo 'content' >> files/file.txt
     - name: git
       run: |
+        git config user.email email@example.com
+        git config user.name example
         git add -A
-        git commit -m 'try commit'
+    - run: git commit -m 'try commit'
     - run: git push
