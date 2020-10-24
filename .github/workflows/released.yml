@@ -22,4 +22,4 @@ jobs:
           status: |
             Released ${{ github.event.release.name }}
             ${{ github.event.release.html_url }}
-      - run: echo ${{ fromJson(steps.tweet.outputs.response).id }}
+      - run: echo ${{ fromJSON(steps.tweet.outputs.response).id }}
