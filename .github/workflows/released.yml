@@ -12,6 +12,7 @@ jobs:
     steps:
       - run: cat ${{ github.event_path }}
       - uses: snow-actions/tweet@v1.0.0
+        id: tweet
         env:
           CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
           CONSUMER_API_SECRET_KEY: ${{ secrets.TWITTER_CONSUMER_API_SECRET_KEY }}
@@ -21,3 +22,4 @@ jobs:
           status: |
             Released ${{ github.event.release.name }}
             ${{ github.event.release.html_url }}
+      - run: echo ${{ steps.tweet.outputs.response.id }}
