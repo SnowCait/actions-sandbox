@@ -21,3 +21,4 @@ jobs:
           status: |
             Released ${{ github.event.release.name }}
             ${{ github.event.release.html_url }}
+        if: github.event.action == 'released'
