@@ -21,4 +21,4 @@ jobs:
           status: |
             Released ${{ github.event.release.name }}
             ${{ github.event.release.html_url }}
-        if: github.event.action == 'released'
+        if: github.event.action == 'released' # GitHub Actions のバグで created, published, released の3つが同時に実行されてしまうので絞る
