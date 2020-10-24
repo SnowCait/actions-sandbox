@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo ${{ toJson(github.event) }}
+      - run: cat ${{ github.event_path }}
       - uses: snow-actions/tweet@v1.0.0
         env:
           CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
