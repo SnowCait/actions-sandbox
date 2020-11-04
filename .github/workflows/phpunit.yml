@@ -17,4 +17,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: composer install
-    - run: ./vendor/bin/phpunit --version
+    - run: ./vendor/bin/phpunit
