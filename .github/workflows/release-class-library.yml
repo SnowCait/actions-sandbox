@@ -20,7 +20,7 @@ jobs:
 
     - name: XML to JSON
       id: csproj
-      uses: fabasoad/yaml-json-xml-converter-action@v1.0.1
+      uses: fabasoad/yaml-json-xml-converter-action@v1.0.2
       with:
         path: class-library/ClassLibrary1/ClassLibrary1/ClassLibrary1.csproj
         from: xml
