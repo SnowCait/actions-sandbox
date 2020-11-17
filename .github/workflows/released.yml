@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - run: cat ${{ github.event_path }}
-      - uses: snow-actions/tweet@v1.0.0
+      - uses: snow-actions/tweet@v1.1.0
         id: tweet
         env:
           CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
