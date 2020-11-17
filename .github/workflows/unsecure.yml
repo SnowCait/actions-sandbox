@@ -1,0 +1,13 @@
+name: CI
+
+on:
+  push:
+    paths: .github/workflows/unsecure.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "::set-env name=ENV_1::$HOME/bin"
+      - run: echo "::add-path::$ENV_1"
