@@ -23,7 +23,7 @@ jobs:
         git commit -m "QR Code"
         git push origin qrcode
     - name: You can upload the QR Code file to artifact.
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2.2.1
       with:
         name: qrcode
         path: qrcode.png

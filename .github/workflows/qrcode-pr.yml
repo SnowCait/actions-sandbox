@@ -16,7 +16,7 @@ jobs:
         text: ${{ github.event.pull_request.html_url }}
         path: qrcode.png
     - name: You can upload it to artifact.
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v2.2.1
       with:
         name: qrcode
         path: qrcode.png
