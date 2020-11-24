@@ -1,7 +1,7 @@
 name: Pull Request Trigger Sandbox
 on:
   pull_request:
-#     paths: .github/workflows/pull_request.yml
+    paths: .github/workflows/pull_request.yml
 jobs:
   unit-test:
     runs-on: ubuntu-latest
