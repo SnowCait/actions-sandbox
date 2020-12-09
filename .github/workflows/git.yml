@@ -2,8 +2,8 @@ name: Git Commands
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '* * * * *'
+#   schedule:
+#     - cron: '* * * * *'
   push:
     paths: .github/workflows/git.yml
 
