@@ -2,7 +2,6 @@ name: Status Trigger
 
 on:
   status:
-  workflow_dispatch:
 
 jobs:
   build:
