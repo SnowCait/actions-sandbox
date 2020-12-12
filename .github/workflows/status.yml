@@ -2,6 +2,8 @@ name: Status Trigger
 
 on:
   status:
+  check_run:
+  check_suite:
 
 jobs:
   build:
@@ -10,5 +12,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Run a one-line script
-        run: cat $GITHUB_EVENT_PATH
+      - run: echo $GITHUB_EVENT_NAME
+      - run: cat $GITHUB_EVENT_PATH
