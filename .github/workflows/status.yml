@@ -30,4 +30,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: github.event.state == 'success'
-      - run: echo '${{ steps.get_latest_release.outputs.data }}'
+      - run: echo '${{ steps.commit_state.outputs.data }}'
