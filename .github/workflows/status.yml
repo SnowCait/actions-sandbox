@@ -15,6 +15,19 @@ jobs:
       - run: echo '${{ toJson(github.event.branches) }}'
       - run: |
           echo ${{ join(github.event.branches.*.name, ', ') }}
-          echo '::set-output name=names::${{ github.event.branches.*.name }}'
+          echo '::set-output name=names::${{ join(github.event.branches.*.name) }}'
         id: branches
       - run: echo ${{ steps.branches.outputs.names }}
+      
+      # state が success なら commit 全体の state を見に行く
+      - uses: octokit/request-action@v2.x
+        id: commit_state
+        with:
+          route: GET /repos/{owner}/{repo}/commits/{sha}/statuses
+          owner: SnowCait
+          repo: action-sandbox
+          sha: ${{ github.event.sha }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: github.event.state == 'success'
+      - run: echo '${{ steps.get_latest_release.outputs.data }}'
