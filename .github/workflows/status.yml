@@ -52,8 +52,9 @@ jobs:
       - run: echo '${{ steps.pulls.outputs.data }}'
         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
       - run: |
-          echo 'state: ${{ steps.pulls.outputs.data.state }}'
-          echo 'draft: ${{ steps.pulls.outputs.data.draft }}'
-          echo 'head.sha: ${{ steps.pulls.outputs.data.head.sha }}'
+          echo 'state: ${{ steps.pulls.outputs.data.*.state }}'
+          echo 'draft: ${{ steps.pulls.outputs.data.*.draft }}'
+          echo 'head.sha: ${{ steps.pulls.outputs.data.*.head.sha }}'
+          echo 'reviewers: ${{ toJson(steps.pulls.outputs.data.*.requested_reviewers) }}'
         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
       # reviewres が全員 Approve していたらコメントで通知する
