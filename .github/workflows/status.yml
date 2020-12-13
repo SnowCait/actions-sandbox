@@ -31,3 +31,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: github.event.state == 'success'
       - run: echo '${{ steps.commit_state.outputs.data }}'
+        if: github.event.state == 'success'
