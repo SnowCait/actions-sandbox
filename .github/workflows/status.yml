@@ -23,15 +23,15 @@ jobs:
       - uses: octokit/request-action@v2.0.2
         id: commit_state
         with:
-          route: GET /repos/{owner}/{repo}/commits/{sha}/statuses
+          route: GET /repos/{owner}/{repo}/commits/{sha}/status
           owner: SnowCait
           repo: action-sandbox
           sha: ${{ github.event.sha }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: github.event.state == 'success'
-      - run: echo '${{ steps.list_pull_requests.outputs.data }}'
-        if: github.event.state == 'success' && steps.commit_state.status = 200
+      - run: echo '${{ steps.commit_state.outputs.data }}'
+        if: github.event.state == 'success' && steps.commit_state.outputs.status = 200
       
       # commit 全体の state が success なら reviewers を見に行く
       # reviewres が全員 Approve していたらコメントで通知する
