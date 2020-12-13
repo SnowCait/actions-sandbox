@@ -53,18 +53,20 @@ jobs:
       - run: echo '${{ steps.pulls.outputs.data }}'
         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
       - run: |
-          echo 'state: ${{ fromJson(steps.pulls.outputs.data).*.state }}'
-          echo 'draft: ${{ fromJson(steps.pulls.outputs.data).*.draft }}'
-          echo 'head.sha: ${{ fromJson(steps.pulls.outputs.data).*.head.sha }}'
+          echo 'state: ${{ toJson(fromJson(steps.pulls.outputs.data).*.state) }}'
+          echo 'draft: ${{ toJson(fromJson(steps.pulls.outputs.data).*.draft) }}'
+          echo 'head.sha: ${{ toJson(fromJson(steps.pulls.outputs.data).*.head.sha) }}'
           echo 'reviewers: ${{ toJson(fromJson(steps.pulls.outputs.data).*.requested_reviewers) }}'
         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
       # reviewres が全員 Approve していたらコメントで通知する
       - uses: octokit/request-action@v2.0.2
         with:
-          route: POST /repos/{owner}/{repo}/commits/{sha}/status
+          route: POST /repos/{owner}/{repo}/commits/{sha}/comments
           owner: SnowCait
           repo: action-sandbox
           sha: ${{ github.event.sha }}
+          output: |
+            body: test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: github.event.state == 'success'
