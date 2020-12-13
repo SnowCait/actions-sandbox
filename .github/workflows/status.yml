@@ -14,7 +14,7 @@ jobs:
 
       - run: echo $GITHUB_EVENT_NAME
       - run: cat $GITHUB_EVENT_PATH
-      - run: echo ${{ toJson(github.event.branches) }}
+      - run: echo '${{ toJson(github.event.branches) }}'
       - run: |
           echo ${{ join(github.event.branches.*.name, ', ') }}
           echo '::set-output name=names::${{ join(github.event.branches.*.name, ', ') }}'
