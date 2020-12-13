@@ -65,8 +65,8 @@ jobs:
           owner: SnowCait
           repo: action-sandbox
           sha: ${{ github.event.sha }}
-          output: |
-            body: test
+          body: |
+            test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: github.event.state == 'success'
