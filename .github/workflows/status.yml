@@ -32,7 +32,8 @@ jobs:
         if: github.event.state == 'success'
       - run: echo '${{ steps.commit_state.outputs.data }}'
         if: github.event.state == 'success' && steps.commit_state.outputs.status == 200
-      - run: echo '${{ steps.commit_state.outputs.data.state }}'
+      - run: |
+          echo 'state: ${{ fromJson(steps.commit_state.outputs.data).state }}'
         if: github.event.state == 'success' && steps.commit_state.outputs.status == 200
       
       # コミットが含まれる PR を見に行く
@@ -52,10 +53,10 @@ jobs:
       - run: echo '${{ steps.pulls.outputs.data }}'
         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
       - run: |
-          echo '${{ steps.pulls.outputs.data.*.state }}'
-          echo '${{ steps.pulls.outputs.data.*.draft }}'
-          echo '${{ steps.pulls.outputs.data.*.head.sha }}'
-          echo '${{ toJson(steps.pulls.outputs.data.*.requested_reviewers) }}'
+          echo 'state: ${{ fromJson(steps.pulls.outputs.data).*.state }}'
+          echo 'draft: ${{ fromJson(steps.pulls.outputs.data).*.draft }}'
+          echo 'head.sha: ${{ fromJson(steps.pulls.outputs.data).*.head.sha }}'
+          echo 'reviewers: ${{ toJson(fromJson(steps.pulls.outputs.data).*.requested_reviewers) }}'
         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
       # reviewres が全員 Approve していたらコメントで通知する
       - uses: octokit/request-action@v2.0.2
