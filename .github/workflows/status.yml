@@ -2,8 +2,6 @@ name: Status Trigger
 
 on:
   status:
-  check_run:
-  check_suite:
 
 jobs:
   build:
@@ -17,6 +15,6 @@ jobs:
       - run: echo '${{ toJson(github.event.branches) }}'
       - run: |
           echo ${{ join(github.event.branches.*.name, ', ') }}
-          echo '::set-output name=names::${{ join(github.event.branches.*.name, ', ') }}'
+          echo '::set-output name=names::${{ github.event.branches.*.name }}'
         id: branches
       - run: echo ${{ steps.branches.outputs.names }}
