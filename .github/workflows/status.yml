@@ -4,11 +4,12 @@ on:
   status:
 
 jobs:
-  build:
+  status:
     runs-on: ubuntu-latest
+    if: github.event_name == 'status'
 
     steps:
-      - uses: actions/checkout@v2
+#       - uses: actions/checkout@v2
 
       - run: echo $GITHUB_EVENT_NAME
       - run: cat $GITHUB_EVENT_PATH
@@ -113,3 +114,10 @@ jobs:
           fromJson(steps.commit_state.outputs.data).sha == fromJson(steps.pulls.outputs.data)[0].head.sha &&
           fromJson(steps.pulls.outputs.data)[0].state == 'open'
           
+  review:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request_review'
+
+    steps:
+      - run: echo $GITHUB_EVENT_NAME
+      - run: cat $GITHUB_EVENT_PATH
