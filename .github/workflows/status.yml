@@ -104,7 +104,7 @@ jobs:
           issue_number: ${{ fromJson(steps.pulls.outputs.data)[0].number }}
           body: |
             ${{ fromJson(steps.pulls.outputs.data)[0].user.login }}
-            ${{ join(fromJson(steps.pulls.outputs.data).*.assignees, ' ') }}
+            ${{ join(fromJson(steps.pulls.outputs.data)[0].assignees.*.login, ' ') }}
             draft ${{ fromJson(steps.pulls.outputs.data)[0].draft }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
