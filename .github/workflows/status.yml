@@ -111,5 +111,5 @@ jobs:
           github.event.state == 'success' &&
           fromJson(steps.commit_state.outputs.data).state == 'success' &&
           fromJson(steps.commit_state.outputs.data).sha == fromJson(steps.pulls.outputs.data)[0].head.sha &&
-          fromJson(steps.pulls.outputs.data)[0].state == 'open' &&
+          fromJson(steps.pulls.outputs.data)[0].state == 'open'
           
