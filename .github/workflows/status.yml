@@ -35,6 +35,7 @@ jobs:
         if: github.event.state == 'success' && steps.commit_state.outputs.status == 200
       - run: |
           echo 'state: ${{ fromJson(steps.commit_state.outputs.data).state }}'
+          echo 'state: ${{ fromJson(steps.commit_state.outputs.data).sha }}'
         if: github.event.state == 'success' && steps.commit_state.outputs.status == 200
       
       # コミットが含まれる PR を見に行く
@@ -55,10 +56,10 @@ jobs:
       - run: echo '${{ steps.pulls.outputs.data }}'
         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
       - run: |
-          echo 'state: ${{ toJson(fromJson(steps.pulls.outputs.data).*.state) }}'
-          echo 'draft: ${{ toJson(fromJson(steps.pulls.outputs.data).*.draft) }}'
-          echo 'head.sha: ${{ toJson(fromJson(steps.pulls.outputs.data).*.head.sha) }}'
-          echo 'reviewers: ${{ toJson(fromJson(steps.pulls.outputs.data).*.requested_reviewers) }}'
+          echo 'state: ${{ toJson(fromJson(steps.pulls.outputs.data)[0].state) }}'
+          echo 'draft: ${{ toJson(fromJson(steps.pulls.outputs.data)[0].draft) }}'
+          echo 'head.sha: ${{ toJson(fromJson(steps.pulls.outputs.data)[0].head.sha) }}'
+          echo 'reviewers: ${{ toJson(fromJson(steps.pulls.outputs.data)[0].requested_reviewers) }}'
         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
       
       # ブランチ保護
