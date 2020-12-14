@@ -69,6 +69,9 @@ jobs:
       - run: |
           echo 'reviewers: ${{ toJson(fromJson(steps.pulls.outputs.data)[0].requested_reviewers) }}'
         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
+      - run: |
+          echo 'number: ${{ toJson(fromJson(steps.pulls.outputs.data)[0].number) }}'
+        if: github.event.state == 'success' && steps.pulls.outputs.status == 200
       
       # ブランチ保護
 # Error: Resource not accessible by integration
@@ -94,10 +97,10 @@ jobs:
       - name: POST /repos/{owner}/{repo}/commits/{sha}/comments
         uses: octokit/request-action@v2.0.2
         with:
-          route: POST /repos/{owner}/{repo}/commits/{sha}/comments
+          route: POST /repos/{owner}/{repo}/issues/{issue_number}/comments
           owner: SnowCait
           repo: action-sandbox
-          sha: ${{ github.event.sha }}
+          issue_number: ${{ toJson(fromJson(steps.pulls.outputs.data)[0].number }}
           body: |
             test
         env:
