@@ -58,7 +58,8 @@ jobs:
           echo 'head.sha: ${{ toJson(fromJson(steps.pulls.outputs.data).*.head.sha) }}'
           echo 'reviewers: ${{ toJson(fromJson(steps.pulls.outputs.data).*.requested_reviewers) }}'
         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
-      # reviewres が全員 Approve していたらコメントで通知する
+
+      # PR の最新コミットかつ reviewres が全員 Approve していたらコメントで通知する
       - uses: octokit/request-action@v2.0.2
         with:
           route: POST /repos/{owner}/{repo}/commits/{sha}/comments
