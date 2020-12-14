@@ -105,4 +105,6 @@ jobs:
             test
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: github.event.state == 'success'
+        if: |
+          github.event.state == 'success' &&
+          fromJson(steps.commit_state.outputs.data).state == 'success'
