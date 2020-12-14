@@ -58,19 +58,19 @@ jobs:
       - run: echo '${{ steps.pulls.outputs.data }}'
         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
       - run: |
-          echo 'state: ${{ toJson(fromJson(steps.pulls.outputs.data)[0].state) }}'
+          echo 'number: ${{ fromJson(steps.pulls.outputs.data)[0].number }}'
         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
       - run: |
-          echo 'draft: ${{ toJson(fromJson(steps.pulls.outputs.data)[0].draft) }}'
+          echo 'state: ${{ fromJson(steps.pulls.outputs.data)[0].state }}'
         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
       - run: |
-          echo 'head.sha: ${{ toJson(fromJson(steps.pulls.outputs.data)[0].head.sha) }}'
+          echo 'draft: ${{ fromJson(steps.pulls.outputs.data)[0].draft }}'
+        if: github.event.state == 'success' && steps.pulls.outputs.status == 200
+      - run: |
+          echo 'head.sha: ${{ fromJson(steps.pulls.outputs.data)[0].head.sha }}'
         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
       - run: |
           echo 'reviewers: ${{ toJson(fromJson(steps.pulls.outputs.data)[0].requested_reviewers) }}'
-        if: github.event.state == 'success' && steps.pulls.outputs.status == 200
-      - run: |
-          echo 'number: ${{ toJson(fromJson(steps.pulls.outputs.data)[0].number) }}'
         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
       
       # ブランチ保護
@@ -100,7 +100,7 @@ jobs:
           route: POST /repos/{owner}/{repo}/issues/{issue_number}/comments
           owner: SnowCait
           repo: action-sandbox
-          issue_number: ${{ toJson(fromJson(steps.pulls.outputs.data)[0].number }}
+          issue_number: ${{ fromJson(steps.pulls.outputs.data)[0].number }}
           body: |
             test
         env:
