@@ -62,23 +62,24 @@ jobs:
         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
       
       # ブランチ保護
-      - name: GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
-        uses: octokit/request-action@v2.0.2
-        id: protection
-        with:
-          route: GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
-          owner: SnowCait
-          repo: action-sandbox
-          branch: ${{ toJson(fromJson(steps.pulls.outputs.data)[0].base.ref) }}
-          mediaType: |
-            previews:
-              - groot
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: github.event.state == 'success'
-      - run: |
-          echo 'contexts: ${{ toJson(fromJson(steps.pulls.outputs.data)) }}'
-        if: github.event.state == 'success' && steps.pulls.outputs.status == 200
+# Error: Resource not accessible by integration
+#       - name: GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
+#         uses: octokit/request-action@v2.0.2
+#         id: protection
+#         with:
+#           route: GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
+#           owner: SnowCait
+#           repo: action-sandbox
+#           branch: ${{ toJson(fromJson(steps.pulls.outputs.data)[0].base.ref) }}
+#           mediaType: |
+#             previews:
+#               - groot
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         if: github.event.state == 'success'
+#       - run: |
+#           echo 'contexts: ${{ toJson(fromJson(steps.pulls.outputs.data)) }}'
+#         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
 
       # PR の最新コミットかつ reviewres が全員 Approve していたらコメントで通知する
       - name: POST /repos/{owner}/{repo}/commits/{sha}/comments
