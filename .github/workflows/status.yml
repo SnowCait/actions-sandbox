@@ -102,8 +102,8 @@ jobs:
           repo: action-sandbox
           issue_number: ${{ fromJson(steps.pulls.outputs.data)[0].number }}
           body: |
-            @${{ fromJson(steps.pulls.outputs.data)[0].user.login }}
-            @${{ fromJson(steps.pulls.outputs.data)[0].assignee }}
+            ${{ fromJson(steps.pulls.outputs.data)[0].user.login }}
+            ${{ fromJson(steps.pulls.outputs.data)[0].assignee }}
             draft: ${{ fromJson(steps.pulls.outputs.data)[0].draft }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
