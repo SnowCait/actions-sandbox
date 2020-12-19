@@ -46,7 +46,7 @@ jobs:
     needs: [first]
     
     steps:
-      - run: echo "second job"
+      - run: echo ${{ needs.first.outputs.changed }}
       - run: echo "true"
         if: needs.first.outputs.changed
     
