@@ -27,7 +27,7 @@ jobs:
         echo 'content' >> files/file.txt
         echo 'content2' >> files/file2.txt
         git diff --name-only
-    - run: echo "::set-output name=diff::$(git diff --name-only | wc -l)"
+    - run: echo "::set-output name=diff::$(git diff --name-only)"
       id: diff
     - run: echo ${{ steps.diff.outputs.diff }}
     - run: git add -A
