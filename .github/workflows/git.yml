@@ -24,12 +24,12 @@ jobs:
 #         git config user.name example
     - run: mkdir -p files
     - run: |
-        #echo 'content' >> files/file.txt
-        #echo 'content2' >> files/file2.txt
+        echo 'content' >> files/file.txt
+        echo 'content2' >> files/file2.txt
         git diff --name-only
     - run: echo "::set-output name=count::$(git diff --name-only | wc -l)"
       id: changes
-    - run: echo ${{ steps.changes.outputs.count }}
+    - run: echo ${{ steps.changes.outputs.count > 0 }}
     - run: git diff --name-only
       if: steps.changes.outputs.count > 0
     - run: git add -A
