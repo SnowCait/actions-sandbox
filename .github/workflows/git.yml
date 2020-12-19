@@ -24,6 +24,9 @@ jobs:
 #         git config user.name example
     - run: mkdir -p files
     - run: echo 'content' >> files/file.txt
+    - run: echo "::set-output name=diff::$(git diff --name-only | wc -l)"
+      id: diff
+    - run: echo ${{ steps.diff.outputs.diff }}
     - run: git add -A
     - run: git commit -m 'try commit'
     - run: git push
