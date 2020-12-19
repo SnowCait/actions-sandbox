@@ -23,8 +23,10 @@ jobs:
 #         git config user.email email@example.com
 #         git config user.name example
     - run: mkdir -p files
-    - run: echo 'content' >> files/file.txt
-    - run: echo 'content2' >> files/file2.txt
+    - run: |
+        echo 'content' >> files/file.txt
+        echo 'content2' >> files/file2.txt
+        git diff --name-only
     - run: echo "::set-output name=diff::$(git diff --name-only | wc -l)"
       id: diff
     - run: echo ${{ steps.diff.outputs.diff }}
