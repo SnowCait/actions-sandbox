@@ -34,9 +34,11 @@ jobs:
     - run: echo ${{ steps.changes.outputs.count > 0 }}
     - run: git diff --name-only
       if: steps.changes.outputs.count > 0
-    - run: git add -A
-    - run: git commit -m 'try commit'
-    - run: git push
+    - run: |
+        git add -A
+        git commit -m 'try commit'
+        git push
+      if: steps.changes.outputs.count > 0
 
   second:
 
