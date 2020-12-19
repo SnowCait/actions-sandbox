@@ -27,9 +27,11 @@ jobs:
         echo 'content' >> files/file.txt
         echo 'content2' >> files/file2.txt
         git diff --name-only
-    - run: echo "::set-output name=diff::$(git diff --name-only)"
-      id: diff
-    - run: echo ${{ steps.diff.outputs.diff }}
+    - run: echo "::set-output name=count::$(git diff --name-only | wc -l)"
+      id: changes
+    - run: echo ${{ steps.changes.outputs.count }}
+    - run: git diff --name-only
+      if: steps.changes.outputs.count > 0
     - run: git add -A
     - run: git commit -m 'try commit'
     - run: git push
