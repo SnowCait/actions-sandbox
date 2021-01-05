@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: curl https://api.twitter.com/labs/1/openapi.json -o docs/labs/openapi.json
+      - run: curl https://api.twitter.com/labs/1/openapi.json -o openapi.json
