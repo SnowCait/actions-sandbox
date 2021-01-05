@@ -1,0 +1,13 @@
+name: cURL
+
+on:
+  push:
+    paths: .github/workflows/curl.yml
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: curl https://api.twitter.com/labs/1/openapi.json -o docs/labs/openapi.json
