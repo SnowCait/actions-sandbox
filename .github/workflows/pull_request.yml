@@ -1,7 +1,7 @@
 name: Pull Request Trigger Sandbox
 on:
   pull_request:
-#     paths: .github/workflows/pull_request.yml
+    paths: .github/workflows/pull_request.yml
 jobs:
   unit-test:
     runs-on: ubuntu-latest
@@ -14,3 +14,5 @@ jobs:
           echo $GITHUB_WORKSPACE
       - run: cat $GITHUB_EVENT_PATH
       - run: git version
+      - uses: actions/checkout@v2
+      - run: git status
