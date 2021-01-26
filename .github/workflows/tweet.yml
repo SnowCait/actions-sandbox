@@ -23,8 +23,8 @@ jobs:
           status: |
             ${{ github.run_id }}-${{ github.run_number }}
             ${{ github.sha }}
-          media_paths: |
-            pusher.csv
+#           media_paths: |
+#             pusher.csv
       - run: echo ${{ steps.tweet.outputs.response }}
       - run: echo ${{ fromJSON(steps.tweet.outputs.response).id_str }}
       - run: echo ${{ fromJSON(steps.tweet.outputs.response).text }}
