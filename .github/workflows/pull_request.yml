@@ -16,3 +16,7 @@ jobs:
       - run: git version
       - uses: actions/checkout@v2
       - run: git status
+      - uses: actions/checkout@v2
+        with:
+          ref: $GITHUB_SHA
+      - run: git status
