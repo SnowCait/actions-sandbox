@@ -15,7 +15,6 @@ jobs:
       - run: mkdir -p path/to/artifact
 
       - run: echo hello > path/to/artifact/world.txt
-      - run: echo $GITHUB_SHA > path/to/artifact/sha.txt
 
       - uses: actions/upload-artifact@v2
         with:
@@ -27,7 +26,11 @@ jobs:
           name: my-artifact-2
           path: path/to/artifact/
 
+      - run: echo $GITHUB_SHA > path/to/artifact/sha.txt
+        
       - uses: actions/upload-artifact@v2
+        with:
+          path: path/to/artifact/
 
   download:
     runs-on: ubuntu-latest
