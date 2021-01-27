@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - run: echo ${{ github.repository }}
-      - uses: octokit/request-action@v2.0.0
+      - uses: octokit/request-action@v2.0.26
         id: list_pull_requests
         with:
           route: GET /repos/:repository/pulls
@@ -21,7 +21,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: "echo ${{ steps.list_pull_requests.outputs.data }} | jq '. | length'"
-#       - uses: octokit/request-action@v2.0.0
+#       - uses: octokit/request-action@v2.0.26
 #         with:
 #           route: POST /repos/:repository/pulls
 #           repository: ${{ github.repository }}

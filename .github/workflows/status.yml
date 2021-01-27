@@ -22,7 +22,7 @@ jobs:
       
       # state が success なら commit 全体の state を見に行く
       - name: GET /repos/{owner}/{repo}/commits/{sha}/status
-        uses: octokit/request-action@v2.0.2
+        uses: octokit/request-action@v2.0.26
         id: commit_state
         with:
           route: GET /repos/{owner}/{repo}/commits/{sha}/status
@@ -43,7 +43,7 @@ jobs:
       
       # コミットが含まれる PR を見に行く
       - name: GET /repos/{owner}/{repo}/commits/{sha}/pulls
-        uses: octokit/request-action@v2.0.2
+        uses: octokit/request-action@v2.0.26
         id: pulls
         with:
           route: GET /repos/{owner}/{repo}/commits/{sha}/pulls
@@ -77,7 +77,7 @@ jobs:
       # ブランチ保護
 # Error: Resource not accessible by integration
 #       - name: GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
-#         uses: octokit/request-action@v2.0.2
+#         uses: octokit/request-action@v2.0.26
 #         id: protection
 #         with:
 #           route: GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
@@ -96,7 +96,7 @@ jobs:
 
       # PR の最新コミットかつ reviewres が全員 Approve していたらコメントで通知する
       - name: POST /repos/{owner}/{repo}/commits/{sha}/comments
-        uses: octokit/request-action@v2.0.2
+        uses: octokit/request-action@v2.0.26
         with:
           route: POST /repos/{owner}/{repo}/issues/{issue_number}/comments
           owner: SnowCait
