@@ -48,10 +48,14 @@ jobs:
       - run: ls -R
         working-directory: docs
       
-      - name: git commit
+      - name: Deploy to GitHub Pages
         run: |
           git config user.email github-actions@github.com
           git config user.name github-actions
           git add -A
           git commit -m "$GITHUB_SHA"
           git push
+        
+      - run: |
+          echo https://snowcait.github.io/action-sandbox/artifact/sha.txt
+          echo https://snowcait.github.io/action-sandbox/artifact/world.txt
