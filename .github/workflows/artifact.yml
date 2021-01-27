@@ -47,3 +47,11 @@ jobs:
 
       - run: ls -R
         working-directory: docs
+      
+      - name: git commit
+        run: |
+          git config user.email github-actions@github.com
+          git config user.name github-actions
+          git add -A
+          git commit -m "$GITHUB_SHA"
+          git push
