@@ -18,5 +18,20 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: my-artifact
+          name: my-artifact-1
           path: path/to/artifact/world.txt
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact-2
+          path: path/to/artifact/
+
+  download:
+    runs-on: ubuntu-latest
+    needs: [upload]
+
+    steps:
+      - uses: actions/download-artifact@v2
+
+      - name: Display structure of downloaded files
+        run: ls -R
