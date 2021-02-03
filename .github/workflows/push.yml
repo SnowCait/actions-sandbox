@@ -1,4 +1,4 @@
-name: Push sandbox
+name: Push
 on:
   push:
     paths:
@@ -7,6 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - run: cat $GITHUB_EVENT_PATH
       - uses: actions/checkout@v1
       - run: printenv
       - name: HELLO
@@ -15,20 +16,20 @@ jobs:
         uses: ./nodejs-action/
       - name: php
         uses: ./docker-action/
-      - name: packer
-        uses: ./packer-action/
-      - name: packer validate packer.json
-        uses: docker://hashicorp/packer
-        with:
-          args: validate packer.json
-      - name: packer build packer.json
-        uses: docker://hashicorp/packer
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ap-northeast-1
-        with:
-          args: build packer.json
+#       - name: packer
+#         uses: ./packer-action/
+#       - name: packer validate packer.json
+#         uses: docker://hashicorp/packer
+#         with:
+#           args: validate packer.json
+#       - name: packer build packer.json
+#         uses: docker://hashicorp/packer
+#         env:
+#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           AWS_DEFAULT_REGION: ap-northeast-1
+#         with:
+#           args: build packer.json
       # - name: packer validate invalid.json
       #   uses: docker://hashicorp/packer
       #   with:
