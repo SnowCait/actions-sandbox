@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: !contains(github.event.commits.*.message, '[skip ci]')
+    if: ${{ !contains(github.event.commits.*.message, '[skip ci]') }}
 
     steps:
       - run: 'echo hello'
