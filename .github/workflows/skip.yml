@@ -14,3 +14,4 @@ jobs:
 
     steps:
       - run: 'echo hello'
+      - run: 'echo world'
