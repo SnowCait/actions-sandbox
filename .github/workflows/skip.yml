@@ -16,3 +16,4 @@ jobs:
       - run: 'echo hello'
       - run: 'echo world'
       - run: 'echo skip'
+      - run: 'echo no-skip'
