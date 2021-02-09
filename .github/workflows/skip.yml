@@ -15,4 +15,3 @@ jobs:
     steps:
       - run: 'echo hello'
       - run: 'echo world'
-      - run: 'echo skip'
