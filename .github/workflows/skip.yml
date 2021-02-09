@@ -5,6 +5,8 @@ on:
     paths:
       - .github/workflows/skip.yml
   pull_request:
+    types:
+      - synchronize
     paths:
       - .github/workflows/skip.yml
 
