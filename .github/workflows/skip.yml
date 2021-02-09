@@ -2,10 +2,10 @@ name: Skip CI
 
 on:
   push:
-    paths: 
+    paths:
       - .github/workflows/skip.yml
   pull_request:
-    paths: 
+    paths:
       - .github/workflows/skip.yml
 
 jobs:
@@ -15,3 +15,4 @@ jobs:
     steps:
       - run: 'echo hello'
       - run: 'echo world'
+      - run: 'echo skip'
