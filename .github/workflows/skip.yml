@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.title, '[skip ci]') == false
+    if: ${{ !contains(github.event.pull_request.body, '[skip ci]') }}
 
     steps:
       - run: 'echo hello'
