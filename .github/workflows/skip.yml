@@ -1,0 +1,21 @@
+name: Skip CI
+
+on:
+  push:
+    paths:
+      - .github/workflows/skip.yml
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    paths:
+      - .github/workflows/skip.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: ${{ !github.event.pull_request.draft }}
+
+    steps:
+      - run: 'echo hello'
+      - run: 'echo world'
