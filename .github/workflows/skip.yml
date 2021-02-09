@@ -1,0 +1,16 @@
+name: Skip CI
+
+on:
+  push:
+    paths: 
+      - .github/workflows/skip.yml
+  pull_request:
+    paths: 
+      - .github/workflows/skip.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: 'echo hello'
