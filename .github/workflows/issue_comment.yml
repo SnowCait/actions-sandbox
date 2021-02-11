@@ -9,13 +9,13 @@ jobs:
 
     steps:
     - run: cat $GITHUB_EVENT_PATH
-    - uses: actions/github-script@0.2.0
+    - uses: actions/github-script@v3.1
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           github.issues.createComment({...context.issue, body: 'Nice!'})
       if: contains(github.event.comment.body, 'LGTM') && github.event.issue.pull_request
-    - uses: actions/github-script@0.2.0
+    - uses: actions/github-script@v3.1
       with:
         github-token: ${{ github.token }}
         script: |
