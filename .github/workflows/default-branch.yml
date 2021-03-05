@@ -3,7 +3,7 @@ name: Default branch
 on:
   push:
     paths:
-      - .github/workflows/
+      - .github/workflows/default-branch.yml
 
 jobs:
   build:
