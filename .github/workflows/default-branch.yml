@@ -10,4 +10,4 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo ${{ github.repository.default_branch }}
+      - run: echo ${{ github.event.repository.default_branch }}
