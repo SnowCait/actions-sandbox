@@ -11,7 +11,20 @@ jobs:
 
     steps:
       - run: echo ${{ github.event.repository.default_branch }}
+      
+      # API
+      - uses: octokit/request-action@v2.x
+        id: repo
+        with:
+          route: GET /repos/{owner}/{repo}
+          owner: SnowCait
+          repo: rest-api-description
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # or ${{ github.token }}
+      - run: echo ${{ fromJson(steps.repo.outputs.data).default_branch }}
+
+      # Checkout
       - uses: actions/checkout@v2
         with:
           repository: SnowCait/rest-api-description
-      - run: git branch
+      - run: echo $(git rev-parse --abbrev-ref HEAD)
