@@ -27,4 +27,4 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: SnowCait/rest-api-description
-      - run: echo $(git rev-parse --abbrev-ref HEAD)
+      - run: git rev-parse --abbrev-ref HEAD
