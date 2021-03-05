@@ -1,0 +1,13 @@
+name: Default branch
+
+on:
+  push:
+    paths:
+      - .github/workflows/
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo ${{ github.repository.default_branch }}
