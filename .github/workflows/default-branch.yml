@@ -16,9 +16,7 @@ jobs:
       - uses: octokit/request-action@v2.x
         id: repo
         with:
-          route: GET /repos/{owner}/{repo}
-          owner: SnowCait
-          repo: rest-api-description
+          route: GET /repos/${{ github.repository }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # or ${{ github.token }}
       - run: echo ${{ fromJson(steps.repo.outputs.data).default_branch }}
