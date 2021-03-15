@@ -21,3 +21,5 @@ jobs:
           Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}
           ${{ github.event.pages[0].html_url }}
           EOS
+      - run: |
+          curl -X POST --data-urlencode "payload={\"channel\": \"#sandbox\", \"username\": \"webhookbot\", \"text\": \"Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}\", \"icon_emoji\": \":ghost:\"}" ${{ secrets.SLACK_WEBHOOK_2 }}
