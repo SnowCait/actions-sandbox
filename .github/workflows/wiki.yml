@@ -11,7 +11,7 @@ jobs:
       - run: cat $GITHUB_EVENT_PATH
       - name: Slack 新形式
         run: |
-          json={"text":"Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}"}
+          json='{"text": "Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}"}'
           curl -X POST -H 'Content-type: application/json' --data $json ${{ secrets.SLACK_WEBHOOK_3 }}
       - uses: actions/checkout@v2
         with:
