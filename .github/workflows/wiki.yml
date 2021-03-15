@@ -17,9 +17,11 @@ jobs:
       - run: git log -n 2
       - run: git diff HEAD^
       - id: head
-        run: echo '::set-output name=sha::$(git rev-parse HEAD)'
+        run: echo "::set-output name=sha::$(git rev-parse HEAD)"
       - id: prev
-        run: echo '::set-output name=sha::$(git rev-parse HEAD^)'
+        run: |
+          sha=$(git rev-parse HEAD^)
+          echo "::set-output name=sha::$sha"
       - run: |
           cat << EOS
           Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}
@@ -27,12 +29,7 @@ jobs:
           EOS
       - id: request
         run: |
-          echo 'set-output name=json::{
-            'channel': '#sandbox',
-            'username': 'bot',
-            'text': '',
-            ''
-          }'
+          echo "set-output name=json::{'channel': '#sandbox', 'username': 'bot', 'text': '', 'icon_emoji': 'ghost'}"
       - run: |
           echo ${{ steps.head.outputs.sha }}
           echo ${{ steps.prev.outputs.sha }}
