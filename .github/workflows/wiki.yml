@@ -29,7 +29,7 @@ jobs:
           EOS
       - id: request
         run: |
-          echo "set-output name=json::{'channel': '#sandbox', 'username': 'bot', 'text': '', 'icon_emoji': 'ghost'}"
+          echo "set-output name=json::{'channel': '#sandbox', 'username': 'bot', 'text': '', 'icon_emoji': ':ghost:'}"
       - run: |
           echo ${{ steps.head.outputs.sha }}
           echo ${{ steps.prev.outputs.sha }}
