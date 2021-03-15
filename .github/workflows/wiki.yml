@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - name: Slack 新形式
+      - name: Slack 新形式 secure
         run: |
           curl -X POST -H 'Content-type: application/json' \
             --data "{\"text\": \"Wiki ${ACTION}: ${TITLE}\n${URL}\"}" \
