@@ -19,20 +19,29 @@ jobs:
       - id: head
         run: echo "::set-output name=sha::$(git rev-parse HEAD)"
       - id: prev
+        run: echo "::set-output name=sha::$(git rev-parse HEAD^)"
+      - id: text
         run: |
-          sha=$(git rev-parse HEAD^)
-          echo "::set-output name=sha::$sha"
-      - run: |
-          cat << EOS
+          echo "::set-output name=text::$(cat << EOS
           Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}
           ${{ github.event.pages[0].html_url }}
-          EOS
+          EOS)"
       - id: request
         run: |
-          echo "set-output name=json::{'channel': '#sandbox', 'username': 'bot', 'text': '', 'icon_emoji': ':ghost:'}"
-      - run: |
+          echo "::set-output name=json::{'channel': '#sandbox', 'username': 'bot', 'text': '', 'icon_emoji': ':ghost:'}"
+      - id: request2
+        run: |
+          echo "::set-output name=json::${{ toJson({
+            'channel': '#sandbox',
+            'username': 'bot',
+            'text': 'Wiki ' + github.event.pages[0].action,
+            'icon_emoji': ':ghost:'
+          }) }}"
+      - name: echo
+        run: |
           echo ${{ steps.head.outputs.sha }}
           echo ${{ steps.prev.outputs.sha }}
           echo ${{ steps.request.outputs.json }}
+          echo ${{ steps.request2.outputs.json }}
       - run: |
-          curl -X POST --data-urlencode "payload={\"channel\": \"#sandbox\", \"username\": \"webhookbot\", \"text\": \"Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}/_compare/...\", \"icon_emoji\": \":ghost:\"}" ${{ secrets.SLACK_WEBHOOK_2 }}
+          curl -X POST --data-urlencode "payload=${{ github.event.pages[0].action }}" ${{ secrets.SLACK_WEBHOOK_2 }}
