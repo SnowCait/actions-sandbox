@@ -29,20 +29,11 @@ jobs:
       - id: request
         run: |
           echo "::set-output name=json::{'channel': '#sandbox', 'username': 'bot', 'text': '', 'icon_emoji': ':ghost:'}"
-      - id: request2
-        run: |
-          echo "::set-output name=json::${{ toJson({
-            'channel': '#sandbox',
-            'username': 'bot',
-            'text': 'Wiki ' + github.event.pages[0].action,
-            'icon_emoji': ':ghost:'
-          }) }}"
       - name: echo
         run: |
           echo ${{ steps.head.outputs.sha }}
           echo ${{ steps.prev.outputs.sha }}
           echo ${{ steps.text.outputs.text }}
           echo ${{ steps.request.outputs.json }}
-          echo ${{ steps.request2.outputs.json }}
       - run: |
           curl -X POST --data-urlencode "payload=${{ steps.request.outputs.json }}" ${{ secrets.SLACK_WEBHOOK_2 }}
