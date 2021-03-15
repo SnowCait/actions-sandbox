@@ -12,8 +12,13 @@ jobs:
       - name: Slack 新形式
         run: |
           curl -X POST -H 'Content-type: application/json' \
-            --data '{"text": "Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}"}' \
+            --data '{"text": "Wiki $action: $title\n$url"}' \
             ${{ secrets.SLACK_WEBHOOK_3 }}
+        env:
+          action: ${{ github.event.pages[0].action }}
+          title: ${{ github.event.pages[0].title }}
+          url: ${{ github.event.pages[0].html_url }}
+          
       - name: Slack 旧型式
         run: |
           json="{
