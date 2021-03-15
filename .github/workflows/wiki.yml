@@ -9,3 +9,5 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
+      - uses: actions/checkout@v2
+      - run: git status
