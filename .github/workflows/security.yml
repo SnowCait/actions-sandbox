@@ -1,0 +1,16 @@
+name: Security
+
+on:
+  workflow_dispatch:
+    inputs:
+      text:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo ${{ github.event.inputs.text }}
+      - run: echo $TEXT
+        env:
+          TEXT: ${{ github.event.inputs.text }}
