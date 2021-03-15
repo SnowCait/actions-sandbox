@@ -10,4 +10,6 @@ jobs:
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - uses: actions/checkout@v2
-      - run: git status
+        with:
+          repository: SnowCait/action-sandbox.wiki
+      - run: git log -n 2
