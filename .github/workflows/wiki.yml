@@ -31,7 +31,7 @@ jobs:
       - name: Slack 新形式
         run: |
           curl -X POST -H 'Content-type: application/json' \
-            --data '{"text": "[New] Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}/_compare/$(git rev-parse HEAD^)...$(git rev-parse HEAD)"}' \
+            --data "{\"text\": \"[New] Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}/_compare/$(git rev-parse HEAD^)...$(git rev-parse HEAD)\"}" \
             ${{ secrets.SLACK_WEBHOOK_3 }}
       - name: Slack 旧型式
         run: |
