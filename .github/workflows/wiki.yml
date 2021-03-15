@@ -14,6 +14,15 @@ jobs:
           curl -X POST -H 'Content-type: application/json' \
             --data '{"text": "Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}"}' \
             ${{ secrets.SLACK_WEBHOOK_3 }}
+      - name: Slack 旧型式
+        run: |
+          json="{
+            'channel': '#sandbox',
+            'username': 'bot',
+            'text': 'Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}',
+            'icon_emoji': ':ghost:'
+          }"
+          curl -X POST --data-urlencode "payload=$json" ${{ secrets.SLACK_WEBHOOK_2 }}
       - uses: actions/checkout@v2
         with:
           repository: SnowCait/action-sandbox.wiki
