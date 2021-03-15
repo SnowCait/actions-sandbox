@@ -16,3 +16,8 @@ jobs:
           fetch-depth: 2
       - run: git log -n 2
       - run: git diff HEAD^
+      - run: |
+          cat << EOS
+          Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}
+          ${{ github.event.pages[0].html_url }}
+          EOS
