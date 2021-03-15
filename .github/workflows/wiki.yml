@@ -15,3 +15,4 @@ jobs:
           ref: ${{ github.event.pages[0].sha }}
           fetch-depth: 2
       - run: git log -n 2
+      - run: git diff HEAD^
