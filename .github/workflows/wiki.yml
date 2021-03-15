@@ -25,7 +25,7 @@ jobs:
           curl -X POST --data-urlencode "payload=$json" ${{ secrets.SLACK_WEBHOOK_2 }}
       - uses: actions/checkout@v2
         with:
-          repository: SnowCait/action-sandbox.wiki
+          repository: ${{ github.event.repository.full_name }}.wiki
           ref: ${{ github.event.pages[0].sha }}
           fetch-depth: 2
       - name: Slack 新形式
