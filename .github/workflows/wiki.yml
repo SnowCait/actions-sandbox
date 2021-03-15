@@ -19,7 +19,7 @@ jobs:
           json="{
             'channel': '#sandbox',
             'username': 'bot',
-            'text': 'Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}',
+            'text': 'Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages.*.html_url }}',
             'icon_emoji': ':ghost:'
           }"
           curl -X POST --data-urlencode "payload=$json" ${{ secrets.SLACK_WEBHOOK_2 }}
