@@ -9,7 +9,6 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - 
       - uses: actions/checkout@v2
         with:
           repository: SnowCait/action-sandbox.wiki
