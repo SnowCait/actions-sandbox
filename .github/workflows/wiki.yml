@@ -44,4 +44,4 @@ jobs:
           echo ${{ steps.request.outputs.json }}
           echo ${{ steps.request2.outputs.json }}
       - run: |
-          curl -X POST --data-urlencode "payload=${{ github.event.pages[0].action }}" ${{ secrets.SLACK_WEBHOOK_2 }}
+          curl -X POST --data-urlencode "payload=${{ steps.request.outputs.json }}" ${{ secrets.SLACK_WEBHOOK_2 }}
