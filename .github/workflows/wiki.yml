@@ -1,0 +1,11 @@
+name: Wiki
+
+on:
+  gollum
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
