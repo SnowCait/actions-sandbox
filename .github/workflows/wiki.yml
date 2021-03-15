@@ -11,7 +11,9 @@ jobs:
       - run: cat $GITHUB_EVENT_PATH
       - name: Slack 新形式
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text": "Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}"}' ${{ secrets.SLACK_WEBHOOK_3 }}
+          curl -X POST -H 'Content-type: application/json' \
+            --data '{"text": "Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}"}' \
+            ${{ secrets.SLACK_WEBHOOK_3 }}
       - uses: actions/checkout@v2
         with:
           repository: SnowCait/action-sandbox.wiki
