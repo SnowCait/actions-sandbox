@@ -20,20 +20,8 @@ jobs:
         run: echo "::set-output name=sha::$(git rev-parse HEAD)"
       - id: prev
         run: echo "::set-output name=sha::$(git rev-parse HEAD^)"
-      - id: text
-        run: |
-          echo "::set-output name=text::$(cat << EOS
-          Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}
-          ${{ github.event.pages[0].html_url }}
-          EOS)"
       - id: request
         run: |
-          echo "::set-output name=json::{'channel': '#sandbox', 'username': 'bot', 'text': '${{ steps.text.outputs.text }}', 'icon_emoji': ':ghost:'}"
-      - name: echo
-        run: |
-          echo ${{ steps.head.outputs.sha }}
-          echo ${{ steps.prev.outputs.sha }}
-          echo ${{ steps.text.outputs.text }}
-          echo ${{ steps.request.outputs.json }}
+          echo "::set-output name=json::{'channel': '#sandbox', 'username': 'bot', 'text': 'Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}/_compare/$(git rev-parse HEAD^)...$(git rev-parse HEAD)', 'icon_emoji': ':ghost:'}"
       - run: |
           curl -X POST --data-urlencode "payload=${{ steps.request.outputs.json }}" ${{ secrets.SLACK_WEBHOOK_2 }}
