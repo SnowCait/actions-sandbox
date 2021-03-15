@@ -14,8 +14,6 @@ jobs:
           repository: SnowCait/action-sandbox.wiki
           ref: ${{ github.event.pages[0].sha }}
           fetch-depth: 2
-      - run: git log -n 2
-      - run: git diff HEAD^
       - id: head
         run: echo "::set-output name=sha::$(git rev-parse HEAD)"
       - id: prev
@@ -23,5 +21,13 @@ jobs:
       - id: request
         run: |
           echo "::set-output name=json::{'channel': '#sandbox', 'username': 'bot', 'text': 'Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}/_compare/$(git rev-parse HEAD^)...$(git rev-parse HEAD)', 'icon_emoji': ':ghost:'}"
-      - run: |
+      - name: Slack
+        run: |
+          json="{
+            'channel': '#sandbox',
+            'username': 'bot',
+            'text': 'Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}/_compare/$(git rev-parse HEAD^)...$(git rev-parse HEAD)',
+            'icon_emoji': ':ghost:'
+          }"
           curl -X POST --data-urlencode "payload=${{ steps.request.outputs.json }}" ${{ secrets.SLACK_WEBHOOK_2 }}
+          curl -X POST --data-urlencode "payload=$json" ${{ secrets.SLACK_WEBHOOK_2 }}
