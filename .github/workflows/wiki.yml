@@ -28,16 +28,17 @@ jobs:
           repository: SnowCait/action-sandbox.wiki
           ref: ${{ github.event.pages[0].sha }}
           fetch-depth: 2
-      - id: request
+      - name: Slack 新形式
         run: |
-          echo "::set-output name=json::{'channel': '#sandbox', 'username': 'bot', 'text': 'Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}/_compare/$(git rev-parse HEAD^)...$(git rev-parse HEAD)', 'icon_emoji': ':ghost:'}"
+          curl -X POST -H 'Content-type: application/json' \
+            --data '{"text": "[New] Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}/_compare/$(git rev-parse HEAD^)...$(git rev-parse HEAD)"}' \
+            ${{ secrets.SLACK_WEBHOOK_3 }}
       - name: Slack 旧型式
         run: |
           json="{
             'channel': '#sandbox',
             'username': 'bot',
-            'text': 'Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}/_compare/$(git rev-parse HEAD^)...$(git rev-parse HEAD)',
+            'text': '[Old] Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}/_compare/$(git rev-parse HEAD^)...$(git rev-parse HEAD)',
             'icon_emoji': ':ghost:'
           }"
-          curl -X POST --data-urlencode "payload=${{ steps.request.outputs.json }}" ${{ secrets.SLACK_WEBHOOK_2 }}
           curl -X POST --data-urlencode "payload=$json" ${{ secrets.SLACK_WEBHOOK_2 }}
