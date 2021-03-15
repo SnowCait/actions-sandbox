@@ -41,6 +41,7 @@ jobs:
         run: |
           echo ${{ steps.head.outputs.sha }}
           echo ${{ steps.prev.outputs.sha }}
+          echo ${{ steps.text.outputs.text }}
           echo ${{ steps.request.outputs.json }}
           echo ${{ steps.request2.outputs.json }}
       - run: |
