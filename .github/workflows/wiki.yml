@@ -4,7 +4,7 @@ on:
   gollum
 
 jobs:
-  build:
+  notify:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,10 +16,26 @@ jobs:
           fetch-depth: 2
       - run: git log -n 2
       - run: git diff HEAD^
+      - id: head
+        run: echo '::set-output name=sha::$(git rev-parse HEAD)'
+      - id: prev
+        run: echo '::set-output name=sha::$(git rev-parse HEAD^)'
       - run: |
           cat << EOS
           Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}
           ${{ github.event.pages[0].html_url }}
           EOS
+      - id: request
+        run: |
+          echo 'set-output name=json::${{ toJson([
+            'channel': '#sandbox',
+            'username': 'bot',
+            'text': '',
+            ''
+          ]) }}'
       - run: |
-          curl -X POST --data-urlencode "payload={\"channel\": \"#sandbox\", \"username\": \"webhookbot\", \"text\": \"Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}\", \"icon_emoji\": \":ghost:\"}" ${{ secrets.SLACK_WEBHOOK_2 }}
+          echo ${{ steps.head.outputs.sha }}
+          echo ${{ steps.prev.outputs.sha }}
+          echo ${{ steps.request.outputs.json }}
+      - run: |
+          curl -X POST --data-urlencode "payload={\"channel\": \"#sandbox\", \"username\": \"webhookbot\", \"text\": \"Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}/_compare/...\", \"icon_emoji\": \":ghost:\"}" ${{ secrets.SLACK_WEBHOOK_2 }}
