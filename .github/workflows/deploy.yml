@@ -1,0 +1,13 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: sandbox
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo Hello, world!
