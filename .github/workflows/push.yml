@@ -7,6 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - run: echo $GITHUB_EVENT_NAME
       - run: cat $GITHUB_EVENT_PATH
       - uses: actions/checkout@v1
       - run: printenv
