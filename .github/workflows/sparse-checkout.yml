@@ -16,7 +16,8 @@ jobs:
       - uses: ./.github/sparse-checkout/
         with:
           patterns: 'docs packer'
-      - run: ls -l
+          path: sparse
+      - run: ls -l sparse/
 
   gogaille:
     runs-on: ubuntu-latest
