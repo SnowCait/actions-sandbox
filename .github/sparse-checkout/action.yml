@@ -1,0 +1,44 @@
+name: "Sparse Checkout"
+description: "Sparse checkout a git repository, especially to speedup mono-repositories clone time"
+
+inputs:
+  patterns:
+    description: >
+      Git sparse checkout patterns.
+      [Learn more by reading git documentation](https://git-scm.com/docs/git-sparse-checkout#Documentation/git-sparse-checkout.txt-emsetem)
+    default: "*"
+    required: true
+  token:
+    description: >
+      Personal access token (PAT) used to fetch the repository. The PAT is configured
+      with the local git config, which enables your scripts to run authenticated git
+      commands. The post-job step removes the PAT.
+      We recommend using a service account with the least permissions necessary.
+      Also when generating a new PAT, select the least scopes necessary.
+      [Learn more about creating and using encrypted secrets](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets)
+    default: ${{ github.token }}
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: "⚙ configure git"
+      shell: bash
+      run: |
+        git version
+        git config --global gc.auto 0
+    - name: "⚡ git sparse checkout latest branch commit"
+      shell: bash
+      run: |
+        REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${GITHUB_REPOSITORY}.git"
+        BRANCH="${GITHUB_REF/#refs\/heads\//}"
+        git clone --filter=blob:none --no-checkout --depth 1 --sparse $REPO .
+        git sparse-checkout init --cone
+        git sparse-checkout set ${{ inputs.patterns }}
+        git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
+        git checkout --progress --force -B $BRANCH refs/remotes/origin/$BRANCH
+    - name: "👨‍💻 show what has been checked out"
+      shell: bash
+      run: |
+        git log
+        ls -lha
