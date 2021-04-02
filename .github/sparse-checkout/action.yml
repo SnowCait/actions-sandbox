@@ -47,7 +47,7 @@ runs:
         REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git"
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
         git clone --filter=${{ inputs.filter }} --no-checkout $REPO ${{ inputs.path }}
-        
+        cd ${{ inputs.path }}
         git sparse-checkout init --cone
         git sparse-checkout set ${{ inputs.patterns }}
         git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
