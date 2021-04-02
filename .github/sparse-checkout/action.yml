@@ -11,6 +11,11 @@ inputs:
   repository:
     description: 'Repository name with owner. For example, actions/checkout'
     default: ${{ github.repository }}
+  ref:
+    description: >
+      The branch, tag or SHA to checkout. When checking out the repository that
+      triggered a workflow, this defaults to the reference or SHA for that
+      event.  Otherwise, uses the default branch.
   token:
     description: >
       Personal access token (PAT) used to fetch the repository. The PAT is configured
@@ -24,6 +29,9 @@ inputs:
   path:
     description: path
     default: .
+  filter:
+    description: filter
+    default: tree:0
 
 runs:
   using: "composite"
@@ -38,13 +46,9 @@ runs:
       run: |
         REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git"
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
-        git clone --filter=blob:none --no-checkout --depth 1 --sparse $REPO ${{ inputs.path }}
+        git clone --filter=${{ inputs.filter }} --no-checkout $REPO ${{ inputs.path }}
+        
         git sparse-checkout init --cone
         git sparse-checkout set ${{ inputs.patterns }}
         git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
         git checkout --progress --force -B $BRANCH refs/remotes/origin/$BRANCH
-    - name: "👨‍💻 show what has been checked out"
-      shell: bash
-      run: |
-        git log
-        ls -lha
