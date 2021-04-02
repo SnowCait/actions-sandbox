@@ -4,10 +4,20 @@ on:
   push:
     paths:
       - .github/workflows/sparse-checkout.yml
+      - .github/sparse-checkout/
   workflow_dispatch:
 
 jobs:
-  checkout:
+  local:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: ./.github/sparse-checkout/
+        with:
+          patterns: 'docs packer'
+      - run: ls -l
+
+  gogaille:
     runs-on: ubuntu-latest
 
     steps:
