@@ -9,7 +9,8 @@ inputs:
     default: "*"
     required: true
   repository:
-    description: repository
+    description: 'Repository name with owner. For example, actions/checkout'
+    default: ${{ github.repository }}
   token:
     description: >
       Personal access token (PAT) used to fetch the repository. The PAT is configured
@@ -35,9 +36,9 @@ runs:
     - name: "⚡ git sparse checkout latest branch commit"
       shell: bash
       run: |
-        REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${GITHUB_REPOSITORY}.git"
+        REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git"
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
-        git clone --filter=blob:none --no-checkout --depth 1 --sparse $REPO ${{ inputs.paths }}
+        git clone --filter=blob:none --no-checkout --depth 1 --sparse $REPO ${{ inputs.path }}
         git sparse-checkout init --cone
         git sparse-checkout set ${{ inputs.patterns }}
         git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
