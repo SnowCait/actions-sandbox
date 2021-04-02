@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - .github/workflows/sparse-checkout.yml
-      - .github/sparse-checkout/
+      - .github/sparse-checkout/action.yml
   workflow_dispatch:
 
 jobs:
