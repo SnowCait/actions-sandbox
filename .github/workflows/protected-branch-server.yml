@@ -3,7 +3,8 @@ name: Protected branch (server)
 on:
   push:
     paths:
-      - server/
+      - server/**
+      - .github/workflows/protected-branch-server.yml
 
 jobs:
   test:
