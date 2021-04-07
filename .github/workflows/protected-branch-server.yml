@@ -1,0 +1,14 @@
+name: Protected branch (server)
+
+on:
+  push:
+    paths:
+      - server/
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./server/test.sh
