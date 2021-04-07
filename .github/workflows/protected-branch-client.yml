@@ -3,7 +3,8 @@ name: Protected branch (client)
 on:
   push:
     paths:
-      - client/
+      - client/**
+      - .github/workflows/protected-branch-client.yml
 
 jobs:
   test:
