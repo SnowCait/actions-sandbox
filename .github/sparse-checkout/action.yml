@@ -94,7 +94,7 @@ runs:
       run: |
         set -x
         echo $REF
-        if [ -z "$REF" ]; then
+        if [ -n "$REF" ]; then
           BRANCH=$REF
         else
           BRANCH="${GITHUB_REF/#refs\/heads\//}"
@@ -144,13 +144,21 @@ runs:
 #         /usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
 #       working-directory: ${{ inputs.path }}
 #       shell: bash
-#     - name: Checking out the ref
-#       run: |
-#         set -x
-#         BRANCH="${GITHUB_REF/#refs\/heads\//}"
-#         /usr/bin/git checkout --progress --force -B $BRANCH refs/remotes/origin/$BRANCH
-#       working-directory: ${{ inputs.path }}
-#       shell: bash
+    - name: Checking out the ref
+      run: |
+        set -x
+        echo $REF
+        if [ -n "$REF" ]; then
+          BRANCH=$REF
+        else
+          BRANCH="${GITHUB_REF/#refs\/heads\//}"
+        fi
+        echo $BRANCH
+        /usr/bin/git checkout --progress --force -B $BRANCH refs/remotes/origin/$BRANCH
+      env:
+        REF: ${{ inputs.ref }}
+      working-directory: ${{ inputs.path }}
+      shell: bash
     - run: |
         set -x
         /usr/bin/git log -1 --format='%H'
