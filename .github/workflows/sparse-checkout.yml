@@ -13,6 +13,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      
+      # 1st
+      - uses: ./.github/sparse-checkout/
+        with:
+          patterns: 'docs packer'
+          path: sparse
+      - run: ls -l sparse/
+      
+      # 2nd
       - uses: ./.github/sparse-checkout/
         with:
           patterns: 'docs packer'
@@ -23,7 +32,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1st
       - uses: gogaille/sparse-checkout@v0
         with:
           patterns: 'docs packer'
       - run: ls -l
+      
+      # 2nd
+      - uses: gogaille/sparse-checkout@v0
+        with:
+          patterns: 'docs packer'
+      - run: ls -l
+
+  checkout:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1st
+      - name: 1st checkout
+        uses: actions/checkout@v2
+      - run: ls -l
+      
+      # 2nd
+      - uses: actions/checkout@v2
+      - run: ls -l
+
+
