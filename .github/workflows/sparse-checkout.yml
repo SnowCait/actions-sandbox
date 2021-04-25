@@ -17,16 +17,17 @@ jobs:
       # 1st
       - uses: ./.github/sparse-checkout/
         with:
-          patterns: 'docs packer'
+          repository: snow-actions/tweet
+          patterns: 'src'
           path: sparse
       - run: ls -l sparse/
       
-      # 2nd
-      - uses: ./.github/sparse-checkout/
-        with:
-          patterns: 'docs packer'
-          path: sparse
-      - run: ls -l sparse/
+#       # 2nd
+#       - uses: ./.github/sparse-checkout/
+#         with:
+#           patterns: 'docs packer'
+#           path: sparse
+#       - run: ls -l sparse/
 
   gogaille:
     runs-on: ubuntu-latest
