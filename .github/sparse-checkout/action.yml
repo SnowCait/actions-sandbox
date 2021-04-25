@@ -1,7 +1,7 @@
 name: 'Sparse Checkout'
 description: 'Sparse checkout a git repository'
 inputs:
-  # clone options
+  # same as actions/checkout
   repository:
     description: 'Repository name with owner. For example, actions/checkout'
     default: ${{ github.repository }}
@@ -23,19 +23,65 @@ inputs:
 
       [Learn more about creating and using encrypted secrets](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets)
     default: ${{ github.token }}
+# TODO: implement
+#   ssh-key:
+#     description: >
+#       SSH key used to fetch the repository. The SSH key is configured with the local
+#       git config, which enables your scripts to run authenticated git commands.
+#       The post-job step removes the SSH key.
+
+
+#       We recommend using a service account with the least permissions necessary.
+
+
+#       [Learn more about creating and using
+#       encrypted secrets](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/creating-and-using-encrypted-secrets)
+#   ssh-known-hosts:
+#     description: >
+#       Known hosts in addition to the user and global host key database. The public
+#       SSH keys for a host may be obtained using the utility `ssh-keyscan`. For example,
+#       `ssh-keyscan github.com`. The public key for github.com is always implicitly added.
+#   ssh-strict:
+#     description: >
+#       Whether to perform strict host key checking. When true, adds the options `StrictHostKeyChecking=yes`
+#       and `CheckHostIP=no` to the SSH command line. Use the input `ssh-known-hosts` to
+#       configure additional hosts.
+#     default: true
+#   persist-credentials:
+#     description: 'Whether to configure the token or SSH key with the local git config'
+#     default: true
   path:
-    description: path
+    description: 'Relative path under $GITHUB_WORKSPACE to place the repository'
     default: .
+# TODO: implement
+#   clean:
+#     description: 'Whether to execute `git clean -ffdx && git reset --hard HEAD` before fetching'
+#     default: true
+#   fetch-depth:
+#     description: 'Number of commits to fetch. 0 indicates all history for all branches and tags.'
+#     default: 1
+#   lfs:
+#     description: 'Whether to download Git-LFS files'
+#     default: false
+#   submodules:
+#     description: >
+#       Whether to checkout submodules: `true` to checkout submodules or `recursive` to
+#       recursively checkout submodules.
+
+
+#       When the `ssh-key` input is not provided, SSH URLs beginning with `git@github.com:` are
+#       converted to HTTPS.
+#     default: false
+
+  # sparse checkout
   filter:
     description: filter
     default: tree:0
-
-  # sparse checkout options
   patterns:
     description: >
       Git sparse checkout patterns.
       [Learn more by reading git documentation](https://git-scm.com/docs/git-sparse-checkout#Documentation/git-sparse-checkout.txt-emsetem)
-    default: "*"
+    default: *
     required: true
 
 runs:
