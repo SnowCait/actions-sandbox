@@ -90,6 +90,10 @@ runs:
       shell: bash
     - run: printenv
       shell: bash
+    - run: whereis mkdir
+      shell: bash
+    - run: for x in ${PATH//:/ }; do ls -1 $x; done | sort | uniq
+      shell: bash
     - name: Make directory
       run: mkdir -p $PATH
       env:
