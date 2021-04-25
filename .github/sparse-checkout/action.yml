@@ -87,7 +87,7 @@ runs:
   steps:
     - run: git version
       shell: bash
-      - name: Sparse checkout
+    - name: Sparse checkout
       run: |
         REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git"
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
