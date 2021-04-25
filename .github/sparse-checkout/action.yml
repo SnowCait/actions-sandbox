@@ -74,9 +74,6 @@ inputs:
 #     default: false
 
   # sparse checkout
-  filter:
-    description: filter
-    default: tree:0
   patterns:
     description: >
       Git sparse checkout patterns.
@@ -97,7 +94,7 @@ runs:
       run: |
         REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git"
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
-        git clone --filter=${{ inputs.filter }} --no-checkout $REPO ${{ inputs.path }}
+        git clone --no-checkout --filter=tree:0 --depth 1 $REPO ${{ inputs.path }}
         cd ${{ inputs.path }}
         git sparse-checkout init --cone
         git sparse-checkout set ${{ inputs.patterns }}
