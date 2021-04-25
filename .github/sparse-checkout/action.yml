@@ -83,15 +83,11 @@ inputs:
     required: true
 
 runs:
-  using: "composite"
+  using: composite
   steps:
-    - name: "⚙ configure git"
+    - run: git version
       shell: bash
-      run: |
-        git version
-        git config --global gc.auto 0
-    - name: "⚡ git sparse checkout latest branch commit"
-      shell: bash
+      - name: Sparse checkout
       run: |
         REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git"
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
@@ -101,3 +97,4 @@ runs:
         git sparse-checkout set ${{ inputs.patterns }}
         git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
         git checkout --progress --force -B $BRANCH refs/remotes/origin/$BRANCH
+      shell: bash
