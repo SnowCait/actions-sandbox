@@ -104,7 +104,7 @@ runs:
         echo 'gc.auto'
         /usr/bin/git config --local gc.auto 0
         echo 'extraheader'
-        /usr/bin/git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic $TOKEN"
+        /usr/bin/git config --local http.https://github.com/.extraheader "AUTHORIZATION: token $TOKEN"
         echo 'sparse checkout'
         /usr/bin/git sparse-checkout init --cone
         /usr/bin/git sparse-checkout set $PATTERNS
