@@ -94,19 +94,32 @@ runs:
       run: |
         # REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git"
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
-        # git clone --no-checkout --filter=tree:0 --depth 1 $REPO ${{ inputs.path }}
-        cd ${{ inputs.path }}
+        # git clone --no-checkout --filter=tree:0 --depth 1 $REPO $PATH
+        mkdir -p $PATH
+        cd $PATH
         git init
         git remote add origin $REPOSITORY
         git config --local gc.auto 0
         git config --local http.https://github.com/.extraheader AUTHORIZATION: basic $TOKEN
         git sparse-checkout init --cone
-        git sparse-checkout set ${{ inputs.patterns }}
-        git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
-        git checkout --progress --force -B $BRANCH refs/remotes/origin/$BRANCH
+        git sparse-checkout set $PATTERNS
       env:
+        PATH: ${{ inputs.path }}
         REPOSITORY: https://github.com/${{ inputs.repository }}.git
         TOKEN: ${{ inputs.token }}
+        PATTERNS: ${{ inputs.patterns }}
+      shell: bash
+    - name: Fetching the repository
+      run: |
+        BRANCH="${GITHUB_REF/#refs\/heads\//}"
+        git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
+      working-directory: ${{ inputs.path }}
+      shell: bash
+    - name: Checking out the ref
+      run: |
+        BRANCH="${GITHUB_REF/#refs\/heads\//}"
+        git checkout --progress --force -B $BRANCH refs/remotes/origin/$BRANCH
+      working-directory: ${{ inputs.path }}
       shell: bash
     - run: git log -1 --format='%H'
       shell: bash
