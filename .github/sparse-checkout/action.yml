@@ -94,7 +94,6 @@ runs:
       run: mkdir -p $PATH
       env:
         PATH: ${{ inputs.path }}
-      if: inputs.path != '.'
       shell: bash
     - name: Sparse checkout
       run: |
