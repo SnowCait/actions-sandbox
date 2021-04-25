@@ -89,6 +89,7 @@ runs:
       run: git version
       shell: bash
     - run: printenv
+      shell: bash
     - name: Sparse checkout
       run: |
         # REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git"
@@ -103,9 +104,9 @@ runs:
         git sparse-checkout set ${{ inputs.patterns }}
         git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
         git checkout --progress --force -B $BRANCH refs/remotes/origin/$BRANCH
-      shell: bash
       env:
         REPOSITORY: https://github.com/${{ inputs.repository }}.git
         TOKEN: ${{ inputs.token }}
+      shell: bash
     - run: git log -1 --format='%H'
       shell: bash
