@@ -86,10 +86,10 @@ runs:
   using: composite
   steps:
     - name: Getting Git version info
-      run: git version
+      run: /usr/bin/git version
       shell: bash
     - name: Make directory
-      run: mkdir -p $PATH
+      run: /usr/bin/mkdir -p $PATH
       env:
         PATH: ${{ inputs.path }}
       shell: bash
@@ -97,13 +97,13 @@ runs:
       run: |
         # REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git"
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
-        # git clone --no-checkout --filter=tree:0 --depth 1 $REPO $PATH
-        git init
-        git remote add origin $REPOSITORY
-        git config --local gc.auto 0
-        git config --local http.https://github.com/.extraheader AUTHORIZATION: basic $TOKEN
-        git sparse-checkout init --cone
-        git sparse-checkout set $PATTERNS
+        # /usr/bin/git clone --no-checkout --filter=tree:0 --depth 1 $REPO $PATH
+        /usr/bin/git init
+        /usr/bin/git remote add origin $REPOSITORY
+        /usr/bin/git config --local gc.auto 0
+        /usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic $TOKEN
+        /usr/bin/git sparse-checkout init --cone
+        /usr/bin/git sparse-checkout set $PATTERNS
       env:
         PATH: ${{ inputs.path }}
         REPOSITORY: https://github.com/${{ inputs.repository }}.git
@@ -114,14 +114,14 @@ runs:
     - name: Fetching the repository
       run: |
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
-        git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
+        /usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
       working-directory: ${{ inputs.path }}
       shell: bash
     - name: Checking out the ref
       run: |
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
-        git checkout --progress --force -B $BRANCH refs/remotes/origin/$BRANCH
+        /usr/bin/git checkout --progress --force -B $BRANCH refs/remotes/origin/$BRANCH
       working-directory: ${{ inputs.path }}
       shell: bash
-    - run: git log -1 --format='%H'
+    - run: /usr/bin/git log -1 --format='%H'
       shell: bash
