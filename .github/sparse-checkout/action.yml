@@ -78,7 +78,7 @@ inputs:
     description: >
       Git sparse checkout patterns.
       [Learn more by reading git documentation](https://git-scm.com/docs/git-sparse-checkout#Documentation/git-sparse-checkout.txt-emsetem)
-    default: *
+    default: '*'
     required: true
 
 runs:
