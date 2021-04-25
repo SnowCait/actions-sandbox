@@ -95,16 +95,16 @@ runs:
       shell: bash
     - name: Sparse checkout
       run: |
-        # REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git"
+        REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git"
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
         # /usr/bin/git clone --no-checkout --filter=tree:0 --depth 1 $REPO $PATH
         /usr/bin/git init
         echo 'remote add'
-        /usr/bin/git remote add origin $REPOSITORY
+        /usr/bin/git remote add origin $REPO
         echo 'gc.auto'
         /usr/bin/git config --local gc.auto 0
-        echo 'extraheader'
-        /usr/bin/git config --local http.https://github.com/.extraheader "AUTHORIZATION: token $TOKEN"
+        #echo 'extraheader'
+        #/usr/bin/git config --local http.https://github.com/.extraheader "AUTHORIZATION: token $TOKEN"
         echo 'sparse checkout'
         /usr/bin/git sparse-checkout init --cone
         /usr/bin/git sparse-checkout set $PATTERNS
