@@ -85,16 +85,27 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: git version
+    - name: Getting Git version info
+      run: git version
       shell: bash
+    - run: printenv
     - name: Sparse checkout
       run: |
-        REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git"
+        # REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git"
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
-        git clone --no-checkout --filter=tree:0 --depth 1 $REPO ${{ inputs.path }}
+        # git clone --no-checkout --filter=tree:0 --depth 1 $REPO ${{ inputs.path }}
         cd ${{ inputs.path }}
+        git init
+        git remote add origin $REPOSITORY
+        git config --local gc.auto 0
+        git config --local http.https://github.com/.extraheader AUTHORIZATION: basic $TOKEN
         git sparse-checkout init --cone
         git sparse-checkout set ${{ inputs.patterns }}
         git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
         git checkout --progress --force -B $BRANCH refs/remotes/origin/$BRANCH
+      shell: bash
+      env:
+        REPOSITORY: https://github.com/${{ inputs.repository }}.git
+        TOKEN: ${{ inputs.token }}
+    - run: git log -1 --format='%H'
       shell: bash
