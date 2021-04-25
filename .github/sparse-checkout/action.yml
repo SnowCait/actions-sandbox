@@ -1,6 +1,5 @@
-name: "Sparse Checkout"
-description: "Sparse checkout a git repository, especially to speedup mono-repositories clone time"
-
+name: 'Sparse Checkout'
+description: 'Sparse checkout a git repository'
 inputs:
   patterns:
     description: >
