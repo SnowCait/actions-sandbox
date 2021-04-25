@@ -88,10 +88,8 @@ runs:
     - name: Getting Git version info
       run: git version
       shell: bash
-    - run: printenv
-      shell: bash
     - name: Make directory
-      run: /usr/bin/mkdir -p $PATH
+      run: mkdir -p $PATH
       env:
         PATH: ${{ inputs.path }}
       shell: bash
