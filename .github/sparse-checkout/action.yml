@@ -1,4 +1,4 @@
-name: 'Sparse Checkout'
+name: 'Sparse checkout'
 description: 'Sparse checkout a git repository'
 inputs:
   # same as actions/checkout
