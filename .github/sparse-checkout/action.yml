@@ -90,13 +90,17 @@ runs:
       shell: bash
     - run: printenv
       shell: bash
+    - name: Make directory
+      run: mkdir -p $PATH
+      env:
+        PATH: ${{ inputs.path }}
+      if: inputs.path != '.'
+      shell: bash
     - name: Sparse checkout
       run: |
         # REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git"
         BRANCH="${GITHUB_REF/#refs\/heads\//}"
         # git clone --no-checkout --filter=tree:0 --depth 1 $REPO $PATH
-        mkdir -p $PATH
-        cd $PATH
         git init
         git remote add origin $REPOSITORY
         git config --local gc.auto 0
@@ -108,6 +112,7 @@ runs:
         REPOSITORY: https://github.com/${{ inputs.repository }}.git
         TOKEN: ${{ inputs.token }}
         PATTERNS: ${{ inputs.patterns }}
+      working-directory: ${{ inputs.path }}
       shell: bash
     - name: Fetching the repository
       run: |
