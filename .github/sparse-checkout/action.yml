@@ -1,12 +1,7 @@
 name: 'Sparse Checkout'
 description: 'Sparse checkout a git repository'
 inputs:
-  patterns:
-    description: >
-      Git sparse checkout patterns.
-      [Learn more by reading git documentation](https://git-scm.com/docs/git-sparse-checkout#Documentation/git-sparse-checkout.txt-emsetem)
-    default: "*"
-    required: true
+  # clone options
   repository:
     description: 'Repository name with owner. For example, actions/checkout'
     default: ${{ github.repository }}
@@ -31,6 +26,14 @@ inputs:
   filter:
     description: filter
     default: tree:0
+
+  # sparse checkout options
+  patterns:
+    description: >
+      Git sparse checkout patterns.
+      [Learn more by reading git documentation](https://git-scm.com/docs/git-sparse-checkout#Documentation/git-sparse-checkout.txt-emsetem)
+    default: "*"
+    required: true
 
 runs:
   using: "composite"
