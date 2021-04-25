@@ -76,8 +76,9 @@ inputs:
   # sparse checkout
   patterns:
     description: >
-      Git sparse checkout patterns.
-      [Learn more by reading git documentation](https://git-scm.com/docs/git-sparse-checkout#Documentation/git-sparse-checkout.txt-emsetem)
+      Write a set of patterns to the sparse-checkout file.
+      
+      [Learn more about set](https://git-scm.com/docs/git-sparse-checkout#Documentation/git-sparse-checkout.txt-emsetem)
     default: '*'
     required: true
 
