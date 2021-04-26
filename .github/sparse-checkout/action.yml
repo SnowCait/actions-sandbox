@@ -93,18 +93,10 @@ runs:
     - name: Cloning the repository
       run: |
         set -x
-        echo $REF
-        if [ -n "$REF" ]; then
-          BRANCH=$REF
-        else
-          BRANCH="${GITHUB_REF/#refs\/heads\//}"
-        fi
-        echo $BRANCH
-        /usr/bin/git clone --no-checkout --filter=tree:0 --depth 1 --branch $BRANCH $REPOSITORY $PATH
+        /usr/bin/git clone --no-checkout --filter=tree:0 --depth 1 $REPOSITORY $PATH
       env:
         PATH: ${{ inputs.path }}
         REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git
-        REF: ${{ inputs.ref }}
       shell: bash
 #     - name: Make directory
 #       run: |
