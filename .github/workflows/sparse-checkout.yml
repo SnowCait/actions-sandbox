@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-  
+
       # 1st
       - uses: ./.github/sparse-checkout/
         with:
@@ -54,7 +54,7 @@ jobs:
         with:
           patterns: 'docs packer'
       - run: ls -l
-      
+
 #       # 2nd
 #       - uses: gogaille/sparse-checkout@v0
 #         with:
@@ -68,13 +68,15 @@ jobs:
 #       # 1st
 #       - uses: actions/checkout@v2
 #       - run: ls -l
-      
+
 #       # 2nd
 #       - uses: actions/checkout@v2
 #       - run: ls -l
-      
+
       # another
       - uses: actions/checkout@v2
         with:
           repository: snow-actions/tweet
       - run: ls -l
+      - run: git config http.https://github.com/.extraheader
+      - run: cat .git/config
