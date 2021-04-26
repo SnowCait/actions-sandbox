@@ -116,6 +116,7 @@ runs:
         REPOSITORY: https://github.com/${{ inputs.repository }}.git
         TOKEN: ${{ inputs.token }}
         ACTOR: ${{ inputs.actor }}
+      working-directory: ${{ inputs.path }}
       shell: bash
     - name: Disabling automatic garbage collection
       run: |
