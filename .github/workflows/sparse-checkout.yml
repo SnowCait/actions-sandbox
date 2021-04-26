@@ -19,6 +19,7 @@ jobs:
         with:
           patterns: 'docs packer'
           path: sparse
+          token: ${{ secrets.PAT }}
       - run: ls -l sparse/
 
 #       # 2nd
