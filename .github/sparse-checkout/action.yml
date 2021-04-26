@@ -90,31 +90,33 @@ runs:
         set -x
         /usr/bin/git version
       shell: bash
-    - name: Cloning the repository
-      run: |
-        set -x
-        /usr/bin/git clone --no-checkout --filter=tree:0 --depth 1 $REPOSITORY $PATH
-      env:
-        PATH: ${{ inputs.path }}
-        REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git
-      shell: bash
-#     - name: Make directory
+#     - name: Cloning the repository
 #       run: |
 #         set -x
-#         /usr/bin/mkdir -p $PATH
+#         /usr/bin/git clone --no-checkout --filter=tree:0 --depth 1 $REPOSITORY $PATH
 #       env:
 #         PATH: ${{ inputs.path }}
-#       shell: bash
-#     - name: Initializing the repository
-#       run: |
-#         set -x
-#         /usr/bin/git init
-#         /usr/bin/git remote add origin $REPOSITORY
-#         /usr/bin/git config --local http.https://github.com/.extraheader "AUTHORIZATION: token $TOKEN"
-#       env:
 #         REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git
-#         TOKEN: ${{ inputs.token }}
 #       shell: bash
+    - name: Make directory
+      run: |
+        set -x
+        /usr/bin/mkdir -p $PATH
+      env:
+        PATH: ${{ inputs.path }}
+      shell: bash
+    - name: Initializing the repository
+      run: |
+        set -x
+        /usr/bin/git init
+        /usr/bin/git remote add origin $REPOSITORY
+        /usr/bin/git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${ACTOR}:${TOKEN}"
+      env:
+#         REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git
+        REPOSITORY: https://github.com/${{ inputs.repository }}.git
+        TOKEN: ${{ inputs.token }}
+        ACTOR: ${{ inputs.actor }}
+      shell: bash
     - name: Disabling automatic garbage collection
       run: |
         set -x
@@ -129,13 +131,20 @@ runs:
         PATTERNS: ${{ inputs.patterns }}
       working-directory: ${{ inputs.path }}
       shell: bash
-#     - name: Fetching the repository
-#       run: |
-#         set -x
-#         BRANCH="${GITHUB_REF/#refs\/heads\//}" # TODO: inputs.ref
-#         /usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH}
-#       working-directory: ${{ inputs.path }}
-#       shell: bash
+    - name: Fetching the repository
+      run: |
+        set -x
+        echo $REF
+        if [ -z "$REF" ]; then
+          REF="${GITHUB_REF/#refs\/heads\//}"
+        fi
+        echo $REF
+        BRANCH="${GITHUB_REF/#refs\/heads\//}" # TODO: inputs.ref
+        /usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${REF}:refs/remotes/origin/${REF}
+      env:
+        REF: ${{ inputs.ref }}
+      working-directory: ${{ inputs.path }}
+      shell: bash
     - name: Checking out the ref
       run: |
         set -x
