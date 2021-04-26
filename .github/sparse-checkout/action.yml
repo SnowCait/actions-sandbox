@@ -110,11 +110,11 @@ runs:
         set -x
         /usr/bin/git init
         /usr/bin/git remote add origin $REPOSITORY
-        /usr/bin/git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${TOKEN}"
-        /usr/bin/git config --local http.https://github.com/.extraheader
+        # /usr/bin/git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${TOKEN}"
+        # /usr/bin/git config --local http.https://github.com/.extraheader
       env:
-        # REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}
-        REPOSITORY: https://github.com/${{ inputs.repository }}
+        REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}
+        # REPOSITORY: https://github.com/${{ inputs.repository }}
         TOKEN: ${{ inputs.token }}
         # ACTOR: ${{ github.actor }}
       working-directory: ${{ inputs.path }}
@@ -152,13 +152,11 @@ runs:
       run: |
         set -x
         echo $REF
-        if [ -n "$REF" ]; then
-          BRANCH=$REF
-        else
-          BRANCH="${GITHUB_REF/#refs\/heads\//}"
+        if [ -z "$REF" ]; then
+          REF="${GITHUB_REF/#refs\/heads\//}"
         fi
-        echo $BRANCH
-        /usr/bin/git checkout --progress --force -B $BRANCH refs/remotes/origin/$BRANCH
+        echo $REF
+        /usr/bin/git checkout --progress --force -B $REF refs/remotes/origin/$REF
       env:
         REF: ${{ inputs.ref }}
       working-directory: ${{ inputs.path }}
