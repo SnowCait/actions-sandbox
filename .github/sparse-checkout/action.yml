@@ -111,10 +111,10 @@ runs:
         /usr/bin/git init
         /usr/bin/git remote add origin $REPOSITORY
         echo $ACTOR
-        #/usr/bin/git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${ACTOR}:${TOKEN}"
+        /usr/bin/git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${ACTOR}:${TOKEN}"
       env:
-        REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git
-#         REPOSITORY: https://github.com/${{ inputs.repository }}.git
+        # REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git
+        REPOSITORY: https://github.com/${{ inputs.repository }}.git
         TOKEN: ${{ inputs.token }}
         ACTOR: ${{ github.actor }}
       working-directory: ${{ inputs.path }}
