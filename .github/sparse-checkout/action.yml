@@ -77,7 +77,7 @@ inputs:
   patterns:
     description: >
       Write a set of patterns to the sparse-checkout file.
-      
+
       [Learn more about set](https://git-scm.com/docs/git-sparse-checkout#Documentation/git-sparse-checkout.txt-emsetem)
     default: '*'
     required: true
@@ -141,7 +141,6 @@ runs:
           REF="${GITHUB_REF/#refs\/heads\//}"
         fi
         echo $REF
-        BRANCH="${GITHUB_REF/#refs\/heads\//}" # TODO: inputs.ref
         /usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${REF}:refs/remotes/origin/${REF}
       env:
         REF: ${{ inputs.ref }}
