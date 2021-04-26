@@ -42,7 +42,7 @@ jobs:
           repository: snow-actions/tweet
           patterns: 'src'
           path: tweet
-          ref: main
+          # ref: main
       - run: ls -l sparse/
 
   gogaille:
