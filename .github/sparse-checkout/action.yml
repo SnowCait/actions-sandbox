@@ -123,6 +123,7 @@ runs:
       run: |
         set -x
         /usr/bin/git config --local gc.auto 0
+      working-directory: ${{ inputs.path }}
       shell: bash
     - name: Sparse checkout
       run: |
