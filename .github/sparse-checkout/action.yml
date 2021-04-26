@@ -127,6 +127,7 @@ runs:
     - name: Sparse checkout
       run: |
         set -x
+        cat .git/config
         /usr/bin/git sparse-checkout init --cone
         /usr/bin/git sparse-checkout set $PATTERNS
       env:
