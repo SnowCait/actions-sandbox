@@ -113,8 +113,8 @@ runs:
         /usr/bin/git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${TOKEN}"
         /usr/bin/git config --local http.https://github.com/.extraheader
       env:
-        # REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git
-        REPOSITORY: https://github.com/${{ inputs.repository }}.git
+        # REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}
+        REPOSITORY: https://github.com/${{ inputs.repository }}
         TOKEN: ${{ inputs.token }}
         # ACTOR: ${{ github.actor }}
       working-directory: ${{ inputs.path }}
