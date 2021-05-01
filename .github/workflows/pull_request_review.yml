@@ -19,4 +19,4 @@ jobs:
           route: GET /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - run: "echo ${{ steps.reviews.outputs.data }}"
+      - run: "echo ${{ steps.reviews.outputs.data }}"
