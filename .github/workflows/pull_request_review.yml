@@ -10,6 +10,8 @@ jobs:
     steps:
     - run: cat $GITHUB_EVENT_PATH
     - run: echo ${{ github.event.action }}
+    - run: echo ${{ github.repository }}
+    - run: echo GET /repos/${{ github.repository }}/pulls/${{ fromJSON(github.event).pull_request.number }}/reviews
     - name: Reviews
       id: reviews
       uses: octokit/request-action@v2.0.2
