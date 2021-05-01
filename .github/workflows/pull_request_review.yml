@@ -14,5 +14,5 @@ jobs:
       id: reviews
       uses: octokit/request-action@v2.0.2
       with:
-        route: GET /repos/${{ github.repository }}/pulls/{${{ fromJSON(github.event).pull_request.number }}/reviews
+        route: GET /repos/${{ github.repository }}/pulls/${{ fromJSON(github.event).pull_request.number }}/reviews
     - run: "echo ${{ steps.reviews.outputs.data }}"
