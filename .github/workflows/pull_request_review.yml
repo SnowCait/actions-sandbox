@@ -21,3 +21,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: "echo ${{ toJSON(steps.reviews.outputs.data.*.state) }}"
       - run: exit 1
+        if: github.event.review.state != "approved"
