@@ -8,13 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - run: cat $GITHUB_EVENT_PATH
-    - run: echo ${{ github.event.action }}
-    - run: echo ${{ github.repository }}
-    - run: echo GET /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews
-    - name: Reviews
-      id: reviews
-      uses: octokit/request-action@v2.0.2
-      with:
-        route: GET /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews
+      - run: cat $GITHUB_EVENT_PATH
+      - run: echo ${{ github.event.action }}
+      - run: echo ${{ github.repository }}
+      - run: echo GET /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews
+      - name: Reviews
+        id: reviews
+        uses: octokit/request-action@v2.0.2
+        with:
+          route: GET /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - run: "echo ${{ steps.reviews.outputs.data }}"
