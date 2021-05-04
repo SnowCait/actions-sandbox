@@ -3,6 +3,7 @@ name: GitHub CLI
 on:
   push:
     paths: .github/workflows/gh.yml
+  workflow_dispatch:
 
 jobs:
   build:
@@ -10,8 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install GitHub CLI
-      run: |
-        curl -fsSL -O https://github.com/github/homebrew-gh/releases/download/v0.5.0/gh_0.5.0_linux_amd64.deb
-        sudo dpkg -i gh_*_linux_amd64.deb
-    - run: gh help
+#     - name: Install GitHub CLI
+#       run: |
+#         curl -fsSL -O https://github.com/github/homebrew-gh/releases/download/v0.5.0/gh_0.5.0_linux_amd64.deb
+#         sudo dpkg -i gh_*_linux_amd64.deb
+    - run: gh --version
+    - run: gh --help
