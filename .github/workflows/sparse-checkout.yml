@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
 
       # 1st
       - uses: ./.github/sparse-checkout/
@@ -66,15 +66,15 @@ jobs:
 
     steps:
 #       # 1st
-#       - uses: actions/checkout@v2
+#       - uses: actions/checkout@v2.3.4
 #       - run: ls -l
 
 #       # 2nd
-#       - uses: actions/checkout@v2
+#       - uses: actions/checkout@v2.3.4
 #       - run: ls -l
 
       # another
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
         with:
           repository: snow-actions/tweet
       - run: ls -l

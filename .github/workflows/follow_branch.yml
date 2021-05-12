@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2.3.4
     - run: git fetch --no-tags --prune --unshallow
     - run: git checkout -B default origin/default
     - run: git merge --ff-only origin/master
