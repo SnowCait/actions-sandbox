@@ -3,9 +3,9 @@ name: Branch
 on:
   pull_request_target:
 #     types: [ opened ]
-    branches:
-      - feature/**
-      - fix/**
+#     branches:
+#       - feature/**
+#       - fix/**
 
 jobs:
   build:
@@ -14,3 +14,4 @@ jobs:
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - run: echo $GITHUB_REF
+      - run: echo ${{ github.event.head.ref }}
