@@ -1,0 +1,15 @@
+name: Branch
+
+on:
+  pull_request_target:
+    types: [ opened ]
+    branches:
+      - feature/**
+      - fix/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
