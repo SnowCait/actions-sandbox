@@ -1,0 +1,14 @@
+name: MySQL
+
+on:
+  push:
+    paths:
+      - .githhub/workflows/mysql.yml
+  workflow_dispatch:
+
+jobs:
+  mysql:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: mysql -V
