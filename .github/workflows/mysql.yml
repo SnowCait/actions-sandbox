@@ -12,3 +12,4 @@ jobs:
 
     steps:
       - run: mysql -V
+      - run: docker image ls
