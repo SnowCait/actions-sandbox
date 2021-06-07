@@ -3,7 +3,7 @@ name: MySQL
 on:
   push:
     paths:
-      - .githhub/workflows/mysql.yml
+      - .github/workflows/mysql.yml
   workflow_dispatch:
 
 jobs:
