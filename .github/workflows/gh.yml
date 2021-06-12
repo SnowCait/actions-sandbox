@@ -20,5 +20,5 @@ jobs:
     - run: gh --help
     - run: gh repo list
       env:
-        GH_TOKEN: ${{ GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
