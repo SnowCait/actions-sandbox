@@ -2,7 +2,8 @@ name: GitHub CLI
 
 on:
   push:
-    paths: .github/workflows/gh.yml
+    paths:
+      - .github/workflows/gh.yml
   workflow_dispatch:
 
 jobs:
@@ -17,3 +18,5 @@ jobs:
 #         sudo dpkg -i gh_*_linux_amd64.deb
     - run: gh --version
     - run: gh --help
+    - run: gh repo list
+
