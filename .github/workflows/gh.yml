@@ -19,4 +19,6 @@ jobs:
     - run: gh --version
     - run: gh --help
     - run: gh repo list
+      env:
+        GH_TOKEN: ${{ GITHUB_TOKEN }}
 
