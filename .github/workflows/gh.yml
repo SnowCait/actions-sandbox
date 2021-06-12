@@ -34,10 +34,15 @@ jobs:
         GH_REPO: ${{ github.repository }}
     - run: ls -la
 #     - uses: actions/checkout@v2
-    - run: gh repo clone $GITHUB_REPOSITORY . -- --depth 1
+#     - run: gh repo clone $GITHUB_REPOSITORY . -- --depth 1
+#       env:
+#         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - run: gh repo clone . -- --depth 1
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_REPO: ${{ github.repository }}
     - run: ls -la
+    - run: ls -la .github/
     - run: gh pr list
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
