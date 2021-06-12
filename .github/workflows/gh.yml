@@ -35,5 +35,5 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - run: ls -la
     - run: gh pr list
-#       env:
-#         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
