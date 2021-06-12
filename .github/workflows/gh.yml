@@ -16,6 +16,13 @@ jobs:
 #       run: |
 #         curl -fsSL -O https://github.com/github/homebrew-gh/releases/download/v0.5.0/gh_0.5.0_linux_amd64.deb
 #         sudo dpkg -i gh_*_linux_amd64.deb
+    - run: echo $GITHUB_REPOSITORY
+    - run: echo $GH_REPO
+      env:
+        GH_REPO: ${{ github.repository }}
+    - run: echo $GH_REPO
+      env:
+        GH_REPO: ${{ GITHUB_REPOSITORY }}
     - run: gh --version
     - run: gh --help
     - run: gh repo list
