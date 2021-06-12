@@ -22,7 +22,7 @@ jobs:
         GH_REPO: ${{ github.repository }}
     - run: echo $GH_REPO
       env:
-        GH_REPO: ${{ GITHUB_REPOSITORY }}
+        GH_REPO: $GITHUB_REPOSITORY
     - run: gh --version
     - run: gh --help
     - run: gh repo list
