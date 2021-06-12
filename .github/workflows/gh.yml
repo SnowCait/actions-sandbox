@@ -30,6 +30,8 @@ jobs:
         GH_REPO: SnowCait/actions-sandbox
 #     - uses: actions/checkout@v2
     - run: gh repo clone SnowCait/actions-sandbox . -- --depth 1
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - run: gh pr list
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
