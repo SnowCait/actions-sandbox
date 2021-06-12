@@ -20,24 +20,21 @@ jobs:
     - run: echo $GH_REPO
       env:
         GH_REPO: ${{ github.repository }}
-    - run: echo $GH_REPO
-      env:
-        GH_REPO: $GITHUB_REPOSITORY
     - run: gh --version
     - run: gh --help
     - run: gh repo list
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - run: gh pr list --repo SnowCait/actions-sandbox
+    - run: gh pr list --repo $GITHUB_REPOSITORY
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - run: gh pr list
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_REPO: SnowCait/actions-sandbox
+        GH_REPO: ${{ github.repository }}
     - run: ls -la
 #     - uses: actions/checkout@v2
-    - run: gh repo clone SnowCait/actions-sandbox . -- --depth 1
+    - run: gh repo clone $GITHUB_REPOSITORY . -- --depth 1
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - run: ls -la
