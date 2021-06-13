@@ -13,10 +13,12 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
+      - run: echo $GITHUB_REF
 #       - uses: actions/checkout@v2
-      - run: gh repo clone $GITHUB_REPOSITORY . -- --no-checkout --filter=blob:none
+      - run: gh repo clone $GITHUB_REPOSITORY . -- --no-checkout --filter=blob:none --branch $GITHUB_REF
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: git branch
       - run: git log -1 --oneline --pretty=format:'%s'
       - run: gh pr create --fill --assignee $AUTHOR
         env:
@@ -109,7 +111,7 @@ jobs:
             labeler
       - run: ls -la
       - run: git branch
-      - run: git switch HEAD
+      - run: git pull
       - run: ls -la
 
 #       # [REST API] Issue のタイトルリスト
