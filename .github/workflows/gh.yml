@@ -13,11 +13,12 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v2
+#       - uses: actions/checkout@v2
+      - run: gh repo clone $GITHUB_REPOSITORY . -- --no-checkout --filter=blob:none
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: git log -1 --oneline --pretty=format:'%s'
-      - run: |
-          title=
-          gh pr create --title "$(git log -1 --oneline --pretty=format:'%s')" --body '' --assignee $AUTHOR
+      - run: gh pr create --fill --assignee $AUTHOR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           AUTHOR: ${{ github.event.pusher.name }}
@@ -96,20 +97,20 @@ jobs:
 #         env:
 #           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-#       # パーシャルクローン
-#       - run: gh repo clone $GITHUB_REPOSITORY . -- --depth 1 --no-checkout --filter=tree:0
-#         env:
-#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#       - run: git sparse-checkout init --cone
-#       - run: git sparse-checkout set $PATTERNS
-#         env:
-#           PATTERNS: |
-#             docs
-#             labeler
-#       - run: ls -la
-#       - run: git branch
-#       - run: git restore .
-#       - run: ls -la
+      # パーシャルクローン
+      - run: gh repo clone $GITHUB_REPOSITORY . -- --no-checkout --filter=tree:0
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: git sparse-checkout init --cone
+      - run: git sparse-checkout set $PATTERNS
+        env:
+          PATTERNS: |
+            docs
+            labeler
+      - run: ls -la
+      - run: git branch
+      - run: git switch HEAD
+      - run: ls -la
 
 #       # [REST API] Issue のタイトルリスト
 #       - run: gh api repos/${REPOSITORY}/issues --jq '.[].title'
