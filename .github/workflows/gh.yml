@@ -36,6 +36,9 @@ jobs:
 
     # ヘルプ
     - run: gh actions --help
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - run: gh repo --help
 
     # ワークフロー
     - run: gh workflow list
