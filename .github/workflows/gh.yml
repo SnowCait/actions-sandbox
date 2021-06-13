@@ -33,10 +33,17 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_REPO: ${{ github.repository }}
+
+    # ヘルプ
+    - run: gh actions --help
+
+    # ワークフロー
     - run: gh workflow list
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_REPO: ${{ github.repository }}
+
+    # ワークフロー実行ログ
     - run: gh run list --workflow 'GitHub CLI'
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -45,10 +52,14 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_REPO: ${{ github.repository }}
+
+    # 実行中のワークフロー（無限ループするので要タイムアウト）
     - run: gh run watch $(gh run list --workflow gh.yml --limit 1 | cut -f 7)
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_REPO: ${{ github.repository }}
+      timeout-minutes: 1
+
     - run: ls -la
 #     - uses: actions/checkout@v2
     - run: gh repo clone $GITHUB_REPOSITORY . -- --depth 1
