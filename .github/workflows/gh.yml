@@ -33,6 +33,10 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_REPO: ${{ github.repository }}
+    - run: gh workflow list
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_REPO: ${{ github.repository }}
     - run: gh run list --workflow 'GitHub CLI'
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -41,11 +45,7 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_REPO: ${{ github.repository }}
-    - run: gh workflow list
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_REPO: ${{ github.repository }}
-    - run: gh run watch
+    - run: gh run watch $(gh run list --workflow gh.yml --limit 1 | cut -f 7)
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_REPO: ${{ github.repository }}
