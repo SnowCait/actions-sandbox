@@ -95,9 +95,28 @@ jobs:
 #       - run: git branch
 #       - run: git restore .
 #       - run: ls -la
-      - run: gh pr create --title "gh pr create" --body "Created by GitHub Actions." --assignee $AUTHOR
+#       - run: gh pr create --title "gh pr create" --body "Created by GitHub Actions." --assignee $AUTHOR
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+# #           GH_REPO: ${{ github.repository }}
+#           AUTHOR: ${{ github.event.pusher.name }}
+      - run: gh api repos/${REPOSITORY}/issues --jq '.[].title'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#           GH_REPO: ${{ github.repository }}
-          AUTHOR: ${{ github.event.pusher.name }}
-
+          REPOSITORY: ${{ github.repository }}
+      - run: |
+          gh api graphql --paginate -f query='
+            query($endCursor: String) {
+              viewer {
+                repositories(first: 100, after: $endCursor) {
+                  nodes { nameWithOwner }
+                  pageInfo {
+                    hasNextPage
+                    endCursor
+                  }
+                }
+              }
+            }
+          '
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
