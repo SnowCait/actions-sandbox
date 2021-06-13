@@ -2,11 +2,23 @@ name: GitHub CLI
 
 on:
   push:
-    paths:
-      - .github/workflows/gh.yml
+    branches:
+      - ci/**/*
+#     paths:
+#       - .github/workflows/gh.yml
   workflow_dispatch:
 
 jobs:
+  create-pr:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: gh pr create --title "gh pr create" --body "Created by GitHub Actions." --assignee $AUTHOR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AUTHOR: ${{ github.event.pusher.name }}
+
   github-cli:
 
     runs-on: ubuntu-20.04
@@ -95,28 +107,27 @@ jobs:
 #       - run: git branch
 #       - run: git restore .
 #       - run: ls -la
-#       - run: gh pr create --title "gh pr create" --body "Created by GitHub Actions." --assignee $AUTHOR
+
+#       # [REST API] Issue のタイトルリスト
+#       - run: gh api repos/${REPOSITORY}/issues --jq '.[].title'
 #         env:
 #           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-# #           GH_REPO: ${{ github.repository }}
-#           AUTHOR: ${{ github.event.pusher.name }}
-      - run: gh api repos/${REPOSITORY}/issues --jq '.[].title'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPOSITORY: ${{ github.repository }}
-      - run: |
-          gh api graphql --paginate -f query='
-            query($endCursor: String) {
-              viewer {
-                repositories(first: 100, after: $endCursor) {
-                  nodes { nameWithOwner }
-                  pageInfo {
-                    hasNextPage
-                    endCursor
-                  }
-                }
-              }
-            }
-          '
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           REPOSITORY: ${{ github.repository }}
+
+#       # [GraphQL] リポジトリのリスト
+#       - run: |
+#           gh api graphql --paginate -f query='
+#             query($endCursor: String) {
+#               viewer {
+#                 repositories(first: 100, after: $endCursor) {
+#                   nodes { nameWithOwner }
+#                   pageInfo {
+#                     hasNextPage
+#                     endCursor
+#                   }
+#                 }
+#               }
+#             }
+#           '
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
