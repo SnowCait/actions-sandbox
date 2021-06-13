@@ -32,6 +32,10 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_REPO: ${{ github.repository }}
+    - run: gh workflow list
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_REPO: ${{ github.repository }}
     - run: ls -la
 #     - uses: actions/checkout@v2
     - run: gh repo clone $GITHUB_REPOSITORY . -- --depth 1
