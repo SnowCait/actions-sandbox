@@ -61,14 +61,13 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         GH_REPO: ${{ github.repository }}
-      timeout-minutes: 1
 
-    # watch は無限ループするので注意（試す場合は要タイムアウト）
-    - run: gh run watch $(gh run list --workflow gh.yml --limit 1 | cut -f 7)
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_REPO: ${{ github.repository }}
-      timeout-minutes: 1
+#     # watch は無限ループするので注意（試す場合は要タイムアウト）
+#     - run: gh run watch $(gh run list --workflow gh.yml --limit 1 | cut -f 7)
+#       env:
+#         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         GH_REPO: ${{ github.repository }}
+#       timeout-minutes: 1
 
     - run: ls -la
 #     - uses: actions/checkout@v2
