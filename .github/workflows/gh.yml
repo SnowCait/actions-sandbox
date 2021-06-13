@@ -3,7 +3,7 @@ name: GitHub CLI
 on:
   push:
     branches:
-      - ci/**/*
+      - fix/**/*
 #     paths:
 #       - .github/workflows/gh.yml
   workflow_dispatch:
