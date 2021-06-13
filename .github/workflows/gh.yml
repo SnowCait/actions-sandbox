@@ -14,7 +14,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: gh pr create --title "gh pr create" --body "Created by GitHub Actions." --assignee $AUTHOR
+      - run: git log -1 --oneline --pretty=format:'%s'
+      - run: |
+          title=
+          gh pr create --title "$(git log -1 --oneline --pretty=format:'%s')" --body '' --assignee $AUTHOR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           AUTHOR: ${{ github.event.pusher.name }}
