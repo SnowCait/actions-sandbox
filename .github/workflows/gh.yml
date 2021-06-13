@@ -91,5 +91,6 @@ jobs:
           docs
           labeler
     - run: ls -la
-    - run: git switch master
+    - run: git branch
+    - run: git restore
     - run: ls -la
