@@ -81,22 +81,23 @@ jobs:
 #         env:
 #           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # パーシャルクローン
-      - run: gh repo clone $GITHUB_REPOSITORY . -- --depth 1 --no-checkout --filter=tree:0
+#       # パーシャルクローン
+#       - run: gh repo clone $GITHUB_REPOSITORY . -- --depth 1 --no-checkout --filter=tree:0
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - run: git sparse-checkout init --cone
+#       - run: git sparse-checkout set $PATTERNS
+#         env:
+#           PATTERNS: |
+#             docs
+#             labeler
+#       - run: ls -la
+#       - run: git branch
+#       - run: git restore .
+#       - run: ls -la
+      - run: gh pr create --title "gh pr create" --body "Created by GitHub Actions." --assignee $AUTHOR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: git sparse-checkout init --cone
-      - run: git sparse-checkout set $PATTERNS
-        env:
-          PATTERNS: |
-            docs
-            labeler
-      - run: ls -la
-      - run: git branch
-      - run: git restore .
-      - run: ls -la
-      - run: gh pr create --title "CI_story" --body "Created by GitHub Actions." --assignee $AUTHOR
-        env:
           GH_REPO: ${{ github.repository }}
           AUTHOR: ${{ github.event.pusher.name }}
 
