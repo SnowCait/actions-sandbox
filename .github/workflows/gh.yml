@@ -71,7 +71,7 @@ jobs:
 # #         timeout-minutes: 1
 
       - run: ls -la
-# #       - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 #       - run: gh repo clone $GITHUB_REPOSITORY . -- --depth 1
 #         env:
 #           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -98,6 +98,6 @@ jobs:
       - run: gh pr create --title "gh pr create" --body "Created by GitHub Actions." --assignee $AUTHOR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
+#           GH_REPO: ${{ github.repository }}
           AUTHOR: ${{ github.event.pusher.name }}
 
