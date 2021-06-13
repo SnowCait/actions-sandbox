@@ -82,6 +82,8 @@ jobs:
 
     # パーシャルクローン
     - run: gh repo clone $GITHUB_REPOSITORY . -- --depth 1 --no-checkout --filter=tree:0
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - run: git sparse-checkout init --cone
     - run: git sparse-checkout set $PATTERNS
       env:
