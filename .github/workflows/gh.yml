@@ -93,7 +93,7 @@ jobs:
             labeler
       - run: ls -la
       - run: git branch
-      - run: git restore
+      - run: git restore .
       - run: ls -la
       - run: gh pr create --title "CI_story" --body "Created by GitHub Actions." --assignee $AUTHOR
         env:
