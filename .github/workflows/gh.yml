@@ -37,7 +37,7 @@ jobs:
     # ヘルプ
     - run: gh actions --help
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # なぜか認証が要る
     - run: gh repo --help
 
     # ワークフロー
