@@ -16,8 +16,8 @@ jobs:
       - uses: actions/checkout@v2
       - run: git log -1 --oneline --pretty=format:'%s'
       - run: |
-          title=$(git log -1 --oneline --pretty=format:"%s")
-          gh pr create --fill --assignee $AUTHOR
+          title=
+          gh pr create --title "$(git log -1 --oneline --pretty=format:'%s')" --body '' --assignee $AUTHOR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           AUTHOR: ${{ github.event.pusher.name }}
