@@ -2,12 +2,24 @@ name: GitHub CLI
 
 on:
   push:
-    paths:
-      - .github/workflows/gh.yml
+    branches:
+      - ci/**/*
+#     paths:
+#       - .github/workflows/gh.yml
   workflow_dispatch:
 
 jobs:
-  build:
+  create-pr:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: gh pr create --title "gh pr create" --body "Created by GitHub Actions." --assignee $AUTHOR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AUTHOR: ${{ github.event.pusher.name }}
+
+  github-cli:
 
     runs-on: ubuntu-20.04
     timeout-minutes: 3
@@ -71,7 +83,7 @@ jobs:
 # #         timeout-minutes: 1
 
       - run: ls -la
-# #       - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 #       - run: gh repo clone $GITHUB_REPOSITORY . -- --depth 1
 #         env:
 #           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -81,22 +93,41 @@ jobs:
 #         env:
 #           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # パーシャルクローン
-      - run: gh repo clone $GITHUB_REPOSITORY . -- --depth 1 --no-checkout --filter=tree:0
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: git sparse-checkout init --cone
-      - run: git sparse-checkout set $PATTERNS
-        env:
-          PATTERNS: |
-            docs
-            labeler
-      - run: ls -la
-      - run: git branch
-      - run: git restore .
-      - run: ls -la
-      - run: gh pr create --title "CI_story" --body "Created by GitHub Actions." --assignee $AUTHOR
-        env:
-          GH_REPO: ${{ github.repository }}
-          AUTHOR: ${{ github.event.pusher.name }}
+#       # パーシャルクローン
+#       - run: gh repo clone $GITHUB_REPOSITORY . -- --depth 1 --no-checkout --filter=tree:0
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - run: git sparse-checkout init --cone
+#       - run: git sparse-checkout set $PATTERNS
+#         env:
+#           PATTERNS: |
+#             docs
+#             labeler
+#       - run: ls -la
+#       - run: git branch
+#       - run: git restore .
+#       - run: ls -la
 
+#       # [REST API] Issue のタイトルリスト
+#       - run: gh api repos/${REPOSITORY}/issues --jq '.[].title'
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           REPOSITORY: ${{ github.repository }}
+
+#       # [GraphQL] リポジトリのリスト
+#       - run: |
+#           gh api graphql --paginate -f query='
+#             query($endCursor: String) {
+#               viewer {
+#                 repositories(first: 100, after: $endCursor) {
+#                   nodes { nameWithOwner }
+#                   pageInfo {
+#                     hasNextPage
+#                     endCursor
+#                   }
+#                 }
+#               }
+#             }
+#           '
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
