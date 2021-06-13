@@ -13,84 +13,90 @@ jobs:
     timeout-minutes: 3
 
     steps:
-#     - name: Install GitHub CLI
-#       run: |
-#         curl -fsSL -O https://github.com/github/homebrew-gh/releases/download/v0.5.0/gh_0.5.0_linux_amd64.deb
-#         sudo dpkg -i gh_*_linux_amd64.deb
-    - run: echo $GITHUB_REPOSITORY
-    - run: echo $GH_REPO
-      env:
-        GH_REPO: ${{ github.repository }}
-    - run: gh --version
-#     - run: gh --help
-#     - run: gh repo list
-#       env:
-#         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#     - run: gh pr list --repo $GITHUB_REPOSITORY
-#       env:
-#         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#     - run: gh pr list
-#       env:
-#         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         GH_REPO: ${{ github.repository }}
+      - run: echo $GITHUB_REPOSITORY
 
-#     # ヘルプ
-#     - run: gh actions --help
-#       env:
-#         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # なぜか認証が要る
-#     - run: gh repo --help
+      # バージョン、ヘルプ
+      - run: gh --version
+#       - run: gh --help
 
-#     # ワークフロー
-#     - run: gh workflow list
-#       env:
-#         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         GH_REPO: ${{ github.repository }}
+#       # リポジトリ
+#       - run: gh repo list
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-#     # ワークフロー実行ログ
-#     - run: gh run list --workflow 'GitHub CLI'
-#       env:
-#         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         GH_REPO: ${{ github.repository }}
-#     - run: gh run list --workflow gh.yml
-#       env:
-#         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         GH_REPO: ${{ github.repository }}
+#       # PR 1
+#       - run: gh pr list --repo $GITHUB_REPOSITORY
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-#     # 実行中のワークフロー
-#     - run: gh run view $(gh run list --workflow gh.yml --limit 1 | cut -f 7)
-#       env:
-#         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         GH_REPO: ${{ github.repository }}
+#       # PR 2
+#       - run: gh pr list
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           GH_REPO: ${{ github.repository }}
 
-#     # watch は無限ループするので注意（試す場合は要タイムアウト）
-#     - run: gh run watch $(gh run list --workflow gh.yml --limit 1 | cut -f 7)
-#       env:
-#         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         GH_REPO: ${{ github.repository }}
-#       timeout-minutes: 1
+#       # ヘルプ
+#       - run: gh actions --help
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # なぜか認証が要る
+#       - run: gh repo --help
 
-    - run: ls -la
-# #     - uses: actions/checkout@v2
-#     - run: gh repo clone $GITHUB_REPOSITORY . -- --depth 1
-#       env:
-#         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#     - run: ls -la
-#     - run: ls -la .github/
-#     - run: gh pr list
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       # ワークフロー
+#       - run: gh workflow list
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           GH_REPO: ${{ github.repository }}
 
-    # パーシャルクローン
-    - run: gh repo clone $GITHUB_REPOSITORY . -- --depth 1 --no-checkout --filter=tree:0
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - run: git sparse-checkout init --cone
-    - run: git sparse-checkout set $PATTERNS
-      env:
-        PATTERNS: |
-          docs
-          labeler
-    - run: ls -la
-    - run: git branch
-    - run: git restore
-    - run: ls -la
+#       # ワークフロー実行ログ
+#       - run: gh run list --workflow 'GitHub CLI'
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           GH_REPO: ${{ github.repository }}
+#       - run: gh run list --workflow gh.yml
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           GH_REPO: ${{ github.repository }}
+
+#       # 実行中のワークフロー
+#       - run: gh run view $(gh run list --workflow gh.yml --limit 1 | cut -f 7)
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           GH_REPO: ${{ github.repository }}
+
+# #       # watch は無限ループするので注意（試す場合は要タイムアウト）
+# #       - run: gh run watch $(gh run list --workflow gh.yml --limit 1 | cut -f 7)
+# #         env:
+# #           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+# #           GH_REPO: ${{ github.repository }}
+# #         timeout-minutes: 1
+
+      - run: ls -la
+# #       - uses: actions/checkout@v2
+#       - run: gh repo clone $GITHUB_REPOSITORY . -- --depth 1
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - run: ls -la
+#       - run: ls -la .github/
+#       - run: gh pr list
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # パーシャルクローン
+      - run: gh repo clone $GITHUB_REPOSITORY . -- --depth 1 --no-checkout --filter=tree:0
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: git sparse-checkout init --cone
+      - run: git sparse-checkout set $PATTERNS
+        env:
+          PATTERNS: |
+            docs
+            labeler
+      - run: ls -la
+      - run: git branch
+      - run: git restore
+      - run: ls -la
+      - run: gh pr create --title "CI_story" --body "Created by GitHub Actions." --assignee $AUTHOR
+        env:
+          GH_REPO: ${{ github.repository }}
+          AUTHOR: ${{ github.event.pusher.name }}
+
