@@ -3,9 +3,9 @@ name: GitHub CLI
 on:
   push:
     branches:
-      - ci/**/*
-#     paths:
-#       - .github/workflows/gh.yml
+      - fix/**/*
+    paths:
+      - .github/workflows/gh.yml
   workflow_dispatch:
 
 jobs:
