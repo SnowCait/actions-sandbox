@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - fix/**/*
-#     paths:
-#       - .github/workflows/gh.yml
+    paths:
+      - .github/workflows/gh.yml
   workflow_dispatch:
 
 jobs:
