@@ -9,26 +9,25 @@ on:
   workflow_dispatch:
 
 jobs:
-  create-pr:
-    runs-on: ubuntu-20.04
+#   create-pr:
+#     runs-on: ubuntu-20.04
 
-    steps:
-      - run: echo $GITHUB_REF
-      - uses: actions/checkout@v2
-      - run: git branch
-      - run: git log -1 --oneline --pretty=format:'%s'
-      - run: gh pr create --draft --title "$(git log -1 --oneline --pretty=format:'%s')" --body "" --assignee $AUTHOR
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          AUTHOR: ${{ github.event.pusher.name }}
+#     steps:
+#       - run: echo $GITHUB_REF
+#       - uses: actions/checkout@v2
+#       - run: git branch
+#       - run: git log -1 --oneline --pretty=format:'%s'
+#       - run: gh pr create --draft --title "$(git log -1 --oneline --pretty=format:'%s')" --body "" --assignee $AUTHOR
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           AUTHOR: ${{ github.event.pusher.name }}
   create-pr-fill:
     runs-on: ubuntu-20.04
 
     steps:
       - run: echo $GITHUB_REF
-#       - uses: actions/checkout@v2
       # title と body を自動入力
-      - run: gh repo clone $GITHUB_REPOSITORY . -- --no-checkout --filter=blob:none --branch ${GITHUB_REF#refs/heads/}
+      - run: gh repo clone $GITHUB_REPOSITORY . -- --no-checkout --filter=tree:0 --branch ${GITHUB_REF#refs/heads/}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: git branch
