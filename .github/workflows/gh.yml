@@ -26,7 +26,6 @@ jobs:
 
     steps:
       - run: echo $GITHUB_REF
-#       - uses: actions/checkout@v2
       # title と body を自動入力
       - run: gh repo clone $GITHUB_REPOSITORY . -- --no-checkout --filter=tree:0 --branch ${GITHUB_REF#refs/heads/}
         env:
