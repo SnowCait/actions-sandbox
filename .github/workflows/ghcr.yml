@@ -4,12 +4,16 @@ on:
   push:
     paths:
       - .github/workflows/ghcr.yml
+      - ghcr/**/*
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ghcr/
 
     steps:
       - uses: actions/checkout@v2
-
+      - run: docker build
