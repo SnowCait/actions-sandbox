@@ -1,0 +1,15 @@
+name: GitHub Container registory
+
+on:
+  push:
+    paths:
+      - .github/workflows/ghcr.yml
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
