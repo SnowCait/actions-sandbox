@@ -8,11 +8,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-runner:
     runs-on: windows-latest
     defaults:
       run:
-        working-directory: ghcr/
+        working-directory: ghcr/github-runner/
         shell: bash
 
     steps:
