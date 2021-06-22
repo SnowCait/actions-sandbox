@@ -16,4 +16,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: docker build .
+      - run: docker build -t github-runner .
+      - run: docker images
+      - run: docker images --quiet
+      - run: docker tag $(docker images --quiet) ghcr.io/SnowCait/github-runner:latest
