@@ -16,6 +16,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: docker build -t github-runner .
+      - run: docker build -t ghcr.io/snowcait/github-runner:latest .
       - run: docker images
-      - run: docker tag github-runner:latest ghcr.io/snowcait/github-runner:latest
+      - run: echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
+        env:
+          CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+      - run: docker push ghcr.io/snowcait/github-runner:latest
