@@ -13,6 +13,7 @@ jobs:
     defaults:
       run:
         working-directory: ghcr/
+        shell: bash
 
     steps:
       - uses: actions/checkout@v2
