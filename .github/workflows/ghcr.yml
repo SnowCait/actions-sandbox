@@ -23,3 +23,18 @@ jobs:
         env:
           CR_PAT: ${{ secrets.GITHUB_TOKEN }}
       - run: docker push ghcr.io/snowcait/github-runner:latest
+
+  build-php:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ghcr/php/
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker build -t ghcr.io/snowcait/php-fpm:latest .
+      - run: docker images
+      - run: echo $CR_PAT | docker login ghcr.io -u snowcait --password-stdin
+        env:
+          CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+      - run: docker push ghcr.io/snowcait/php-fpm:latest
