@@ -1,0 +1,18 @@
+name: Assign
+
+on:
+  pull_request:
+
+jobs:
+  assign:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - run: echo ${{ toJSON(github.event.pull_request.assignees) }}
+      - run: gh pr edit $PR_NUMBER --add-assignee @me
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        if: ${{ toJSON(github.event.pull_request.assignees) == '[]' }}
