@@ -10,9 +10,10 @@ jobs:
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - run: echo ${{ toJSON(github.event.pull_request.assignees) }}
-      - run: gh pr edit $PR_NUMBER --add-assignee @me
+      - run: gh pr edit $NUMBER --add-assignee $ASSIGNEE
         env:
-          PR_NUMBER: ${{ github.event.pull_request.number }}
+          NUMBER: ${{ github.event.pull_request.number }}
+          ASSIGNEE: ${{ github.event.pull_request.user.login }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
         if: ${{ toJSON(github.event.pull_request.assignees) == '[]' }}
