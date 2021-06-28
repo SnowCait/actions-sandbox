@@ -36,7 +36,7 @@ jobs:
           ref: 1068da213d7ecfae787d21630bc0955e31a6659a
       - run: ls -l sparse/
 
-      - name: sparse-checkout another
+      - name: sparse-checkout other repo
         uses: ./.github/sparse-checkout/
         with:
           repository: snow-actions/tweet
