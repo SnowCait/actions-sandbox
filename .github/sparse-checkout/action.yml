@@ -85,6 +85,7 @@ inputs:
 runs:
   using: composite
   steps:
+    - run: echo "::group::Getting Git version info"
     - name: Getting Git version info
       run: /usr/bin/git version
       shell: bash
@@ -94,6 +95,7 @@ runs:
 #         PATH: ${{ inputs.path }}
 #         REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git
 #       shell: bash
+    - run: echo "::endgroup::"
     - name: Make directory
       run: /usr/bin/mkdir -p $PATH
       env:
