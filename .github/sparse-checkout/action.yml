@@ -103,8 +103,9 @@ runs:
       env:
         PATH: ${{ inputs.path }}
       shell: bash
-    - name: Initializing the repository
-      run: |
+    - run: echo "::group::Initializing the repository"
+      shell: bash
+    - run: |
         /usr/bin/git init
         /usr/bin/git remote add origin $REPOSITORY
         # /usr/bin/git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${TOKEN}"
@@ -116,6 +117,7 @@ runs:
         # ACTOR: ${{ github.actor }}
       working-directory: ${{ inputs.path }}
       shell: bash
+    - run: echo "::endgroup::"
     - name: Disabling automatic garbage collection
       run: /usr/bin/git config --local gc.auto 0
       working-directory: ${{ inputs.path }}
