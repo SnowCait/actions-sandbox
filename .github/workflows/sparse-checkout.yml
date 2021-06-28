@@ -56,11 +56,12 @@ jobs:
           patterns: 'docs packer'
       - run: ls -l
 
-      - name: 2nd
-        uses: gogaille/sparse-checkout@v0
-        with:
-          patterns: 'docs packer'
-      - run: ls -l
+# fatal: destination path '.' already exists and is not an empty directory.
+#       - name: 2nd
+#         uses: gogaille/sparse-checkout@v0
+#         with:
+#           patterns: 'docs packer'
+#       - run: ls -l
 
   checkout:
     runs-on: ubuntu-latest
