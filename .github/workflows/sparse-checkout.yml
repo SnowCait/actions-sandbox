@@ -28,16 +28,16 @@ jobs:
 #           path: sparse
 #       - run: ls -l sparse/
 
-      # sha
-      - uses: ./.github/sparse-checkout/
+      - name: sparse-checkout sha
+        uses: ./.github/sparse-checkout/
         with:
           patterns: 'docs packer'
           path: sha
           ref: 1068da213d7ecfae787d21630bc0955e31a6659a
       - run: ls -l sparse/
 
-      # another
-      - uses: ./.github/sparse-checkout/
+      - name: sparse-checkout another
+        uses: ./.github/sparse-checkout/
         with:
           repository: snow-actions/tweet
           patterns: 'src'
