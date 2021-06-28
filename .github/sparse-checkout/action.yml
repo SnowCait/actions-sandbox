@@ -86,28 +86,21 @@ runs:
   using: composite
   steps:
     - name: Getting Git version info
-      run: |
-        #set -x
-        /usr/bin/git version
+      run: /usr/bin/git version
       shell: bash
 #     - name: Cloning the repository
-#       run: |
-#         set -x
-#         /usr/bin/git clone --no-checkout --filter=tree:0 --depth 1 $REPOSITORY $PATH
+#       run: /usr/bin/git clone --no-checkout --filter=tree:0 --depth 1 $REPOSITORY $PATH
 #       env:
 #         PATH: ${{ inputs.path }}
 #         REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git
 #       shell: bash
     - name: Make directory
-      run: |
-        set -x
-        /usr/bin/mkdir -p $PATH
+      run: /usr/bin/mkdir -p $PATH
       env:
         PATH: ${{ inputs.path }}
       shell: bash
     - name: Initializing the repository
       run: |
-        set -x
         /usr/bin/git init
         /usr/bin/git remote add origin $REPOSITORY
         # /usr/bin/git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${TOKEN}"
@@ -120,9 +113,7 @@ runs:
       working-directory: ${{ inputs.path }}
       shell: bash
     - name: Disabling automatic garbage collection
-      run: |
-        set -x
-        /usr/bin/git config --local gc.auto 0
+      run: /usr/bin/git config --local gc.auto 0
       working-directory: ${{ inputs.path }}
       shell: bash
     - name: Sparse checkout
