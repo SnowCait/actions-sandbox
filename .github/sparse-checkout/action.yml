@@ -87,7 +87,7 @@ runs:
   steps:
     - name: Getting Git version info
       run: |
-        set -x
+        #set -x
         /usr/bin/git version
       shell: bash
 #     - name: Cloning the repository
