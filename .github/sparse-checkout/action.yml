@@ -121,6 +121,7 @@ runs:
       working-directory: ${{ inputs.path }}
       shell: bash
     - run: echo "::endgroup::"
+      shell: bash
     - name: Disabling automatic garbage collection
       run: /usr/bin/git config --local gc.auto 0
       working-directory: ${{ inputs.path }}
