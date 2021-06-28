@@ -14,15 +14,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
 
-      # 1st
-      - uses: ./.github/sparse-checkout/
+      - name: sparse-checkout 1st
+        uses: ./.github/sparse-checkout/
         with:
           patterns: 'docs packer'
           path: sparse
       - run: ls -l sparse/
 
-#       # 2nd
-#       - uses: ./.github/sparse-checkout/
+#       - name: sparse-checkout 2nd
+#         uses: ./.github/sparse-checkout/
 #         with:
 #           patterns: 'docs packer'
 #           path: sparse
