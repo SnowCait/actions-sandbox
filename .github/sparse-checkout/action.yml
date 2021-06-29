@@ -108,6 +108,7 @@ runs:
     - run: echo "::group::Initializing the repository"
       shell: bash
     - run: /usr/bin/git init
+      working-directory: ${{ inputs.path }}
       shell: bash
     - run: /usr/bin/git remote add origin $REPOSITORY
       env:
