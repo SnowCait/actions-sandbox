@@ -136,7 +136,7 @@ runs:
     - run: echo "::group::Setting up auth"
       shell: bash
     - run: |
-        BASIC_CREDENTIAL="x-access-token:$(echo $TOKEN | xxd -p -c 256)"
+        BASIC_CREDENTIAL="$(echo "x-access-token:" | xxd -p -c 256)$(echo $TOKEN | xxd -p -c 256)"
         echo "::add-mask::${BASIC_CREDENTIAL}"
         $GIT config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${BASIC_CREDENTIAL}"
       env:
