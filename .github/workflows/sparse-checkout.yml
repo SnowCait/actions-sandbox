@@ -17,6 +17,7 @@ jobs:
           patterns: |
             docs
             packer
+          token: ${{ github.token }}
       - run: |
           set -x
           git sparse-checkout list
