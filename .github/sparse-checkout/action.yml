@@ -50,6 +50,14 @@ runs:
 #         REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git
 #       shell: bash
 
+    - name: Env
+      run: |
+        echo "MKDIR=/bin/mkdir" >> $GITHUB_ENV
+        echo "GIT=/usr/bin/git" >> $GITHUB_ENV
+        echo $MKDIR
+        echo $GIT
+        echo $GITHUB_ENV
+        
     - name: Debug
       run: |
         gh api rate_limit
