@@ -164,15 +164,6 @@ runs:
 
     - run: echo "::group::Determining the default branch"
       shell: bash
-    - id: checkout
-      run: echo "::set-output name=ref::$REF"
-      env:
-        REF: ${{ inputs.ref }}
-      shell: bash
-    - run: echo "ref: $R"
-      env:
-        R: ${{ steps.checkout.outputs.ref }}
-      shell: bash
     - run: echo "::endgroup::"
       shell: bash
 
@@ -182,12 +173,22 @@ runs:
       run: |
         echo $REF
         if [ -z "$REF" ]; then
-          REF="${GITHUB_REF/#refs\/heads\//}"
+          echo "REPOSITORY: $REPOSITORY"
+          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+          if [ $REPOSITORY == $GITHUB_REPOSITORY ]]; then
+            echo "=="
+            REF="${GITHUB_REF/#refs\/heads\//}"
+          else
+            echo "!="
+            gh api /repos/$REPOSITORY --jq '.default_branch'
+            REF=$(gh api /repos/$REPOSITORY --jq '.default_branch')
+          fi
         fi
         echo $REF
         /usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${REF}:refs/remotes/origin/${REF}
       env:
         REF: ${{ inputs.ref }}
+        REPOSITORY: ${{ inputs.repository }}
       working-directory: ${{ inputs.path }}
       shell: bash
     - run: echo "::endgroup::"
