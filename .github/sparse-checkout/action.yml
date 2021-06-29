@@ -140,9 +140,10 @@ runs:
     - run: echo "::endgroup::"
       shell: bash
 
+    - run: echo "::group::Setting up sparse checkout"
+      shell: bash
     - name: Sparse checkout
       run: |
-        set -x
         cat .git/config
         /usr/bin/git sparse-checkout init --cone
         /usr/bin/git sparse-checkout set $PATTERNS
@@ -150,9 +151,18 @@ runs:
         PATTERNS: ${{ inputs.patterns }}
       working-directory: ${{ inputs.path }}
       shell: bash
+    - run: echo "::endgroup::"
+      shell: bash
+
+    - run: echo "::group::Determining the default branch"
+      shell: bash
+    - run: echo "::endgroup::"
+      shell: bash
+
+    - run: echo "::group::Fetching the repository"
+      shell: bash
     - name: Fetching the repository
       run: |
-        set -x
         echo $REF
         if [ -z "$REF" ]; then
           REF="${GITHUB_REF/#refs\/heads\//}"
@@ -163,6 +173,9 @@ runs:
         REF: ${{ inputs.ref }}
       working-directory: ${{ inputs.path }}
       shell: bash
+    - run: echo "::endgroup::"
+      shell: bash
+
     - name: Checking out the ref
       run: |
         set -x
