@@ -164,6 +164,14 @@ runs:
 
     - run: echo "::group::Determining the default branch"
       shell: bash
+    - run: echo $REF
+      env:
+        REF: ${{ inputs.ref }}
+    - run: echo "== ''"
+      if: ${{ inputs.ref == '' }}
+    - run: echo "!"
+      if: ${{ !inputs.ref }}
+      shell: bash
     - run: echo "::endgroup::"
       shell: bash
 
