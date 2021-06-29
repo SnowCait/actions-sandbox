@@ -50,7 +50,11 @@ runs:
 #         REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git
 #       shell: bash
 
-    - run: gh api rate_limit --jq '.'
+    - name: Debug
+      run: |
+        gh api rate_limit
+        echo $GITHUB_PATH
+        printenv
       env:
         GH_TOKEN: ${{ inputs.token }}
       shell: bash
