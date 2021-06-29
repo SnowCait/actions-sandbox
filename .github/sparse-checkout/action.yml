@@ -74,6 +74,8 @@ runs:
           /usr/bin/git branch -a
         else
           # first clone
+          echo "/usr/bin" >> $GITHUB_PATH
+          echo "/bin" >> $GITHUB_PATH
           mkdir -p $PATH
           cd $PATH
           /usr/bin/git init
