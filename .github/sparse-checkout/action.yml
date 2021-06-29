@@ -172,14 +172,9 @@ runs:
       run: |
         echo $REF
         if [ -z "$REF" ]; then
-          echo "REPOSITORY: $REPOSITORY"
-          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
           if [ "$REPOSITORY" == "$GITHUB_REPOSITORY" ]; then
-            echo "=="
             REF="${GITHUB_REF/#refs\/heads\//}"
           else
-            echo "!="
-            gh api /repos/$REPOSITORY --jq '.default_branch'
             REF=$(gh api /repos/$REPOSITORY --jq '.default_branch')
           fi
         fi
@@ -199,7 +194,11 @@ runs:
         set -x
         echo $REF
         if [ -z "$REF" ]; then
-          REF="${GITHUB_REF/#refs\/heads\//}"
+          if [ "$REPOSITORY" == "$GITHUB_REPOSITORY" ]; then
+            REF="${GITHUB_REF/#refs\/heads\//}"
+          else
+            REF=$(gh api /repos/$REPOSITORY --jq '.default_branch')
+          fi
         fi
         echo $REF
         /usr/bin/git checkout --progress --force -B $REF refs/remotes/origin/$REF
