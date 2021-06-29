@@ -135,6 +135,8 @@ runs:
 
     - run: echo "::group::Setting up auth"
       shell: bash
+    - run: echo $RUNNER_TEMP
+      shell: bash
     - run: /usr/bin/git config --local --name-only --get-regexp core\\\.sshCommand
       shell: bash
     - run: echo "::endgroup::"
