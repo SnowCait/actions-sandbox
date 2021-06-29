@@ -57,6 +57,7 @@ runs:
         echo $MKDIR
         echo $GIT
         echo $GITHUB_ENV
+      shell: bash
         
     - name: Debug
       run: |
