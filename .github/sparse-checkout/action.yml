@@ -167,8 +167,10 @@ runs:
     - run: echo $REF
       env:
         REF: ${{ inputs.ref }}
+      shell: bash
     - run: echo "== ''"
       if: ${{ inputs.ref == '' }}
+      shell: bash
     - run: echo "!"
       if: ${{ !inputs.ref }}
       shell: bash
