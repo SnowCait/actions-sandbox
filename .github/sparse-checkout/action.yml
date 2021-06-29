@@ -110,7 +110,7 @@ runs:
           /usr/bin/git config --local --get remote.origin.url
         else
           # first clone
-          mkdir -p $PATH
+          /usr/bin/mkdir -p $PATH
           cd $PATH
           /usr/bin/git init
           /usr/bin/git remote add origin $REPOSITORY
