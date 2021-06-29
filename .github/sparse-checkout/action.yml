@@ -46,7 +46,7 @@ runs:
 #         REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git
 #       shell: bash
 
-    - run: gh api rate_limit
+    - run: gh api rate_limit --jq '.'
       env:
         GH_TOKEN: ${{ inputs.token }}
       shell: bash
