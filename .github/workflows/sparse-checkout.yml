@@ -95,13 +95,13 @@ jobs:
           # ref: main
       - run: ls -l other/
 
-#       - name: private
-#         uses: ./.github/sparse-checkout/
-#         with:
-#           repository: SnowCait/github-actions-self-hosted-runner-sandbox
-#           path: private
-#           token: ${{ secrets.PAT }}
-#       - run: ls -l private/
+      - name: private
+        uses: ./.github/sparse-checkout/
+        with:
+          repository: SnowCait/github-actions-self-hosted-runner-sandbox
+          path: private
+          token: ${{ secrets.PAT }}
+      - run: ls -l private/
 
 #   gogaille:
 #     runs-on: ubuntu-latest
