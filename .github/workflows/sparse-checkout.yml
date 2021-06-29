@@ -32,6 +32,7 @@ jobs:
       - run: git sparse-checkout init --cone
       - run: git sparse-checkout set docs
       - run: git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +master:refs/remotes/origin/master
+      - run: git checkout --progress --force -B master refs/remotes/origin/master
 
   local:
     runs-on: ${{ matrix.os }}
