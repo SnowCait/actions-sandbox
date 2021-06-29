@@ -144,6 +144,7 @@ runs:
     - run: |
         BASIC_CREDENTIAL=x-access-token:$(echo $TOKEN | xxd -p)
         echo ${#BASIC_CREDENTIAL}
+        echo ${BASIC_CREDENTIAL:0:3}
         echo "::add-mask::${BASIC_CREDENTIAL}"
         /usr/bin/git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${BASIC_CREDENTIAL}"
       env:
