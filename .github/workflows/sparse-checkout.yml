@@ -129,6 +129,7 @@ jobs:
         with:
           path: twice
       - run: ls -l twice/
+      - run: git remote -v
 
       - name: 2nd
         uses: actions/checkout@v2.3.4
