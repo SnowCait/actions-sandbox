@@ -37,7 +37,7 @@ jobs:
           ls -la
         working-directory: default
       - run: |
-          if [ ! -d docs ]; then
+          if [ -d docs ]; then
             exit 1
           fi
         working-directory: default
