@@ -8,6 +8,20 @@ on:
   workflow_dispatch:
 
 jobs:
+  snow-actions:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: snow-actions/sparse-checkout@v1.0.0
+        with:
+          patterns: |
+            docs
+            packer
+      - run: |
+          set -x
+          git sparse-checkout list
+          git log
+          ls -la
   local:
     runs-on: ${{ matrix.os }}
     strategy:
