@@ -104,6 +104,7 @@ runs:
     - run: |
         set -x
         pwd
+        echo $GITHUB_SERVER_URL
         if [ -d $PATH ]; then
           # already exists
           cd $PATH
@@ -113,36 +114,36 @@ runs:
           /usr/bin/mkdir -p $PATH
           cd $PATH
           /usr/bin/git init
-          /usr/bin/git remote add origin $REPOSITORY
+          /usr/bin/git remote add origin ${GITHUB_SERVER_URL}/${REPOSITORY}
         fi
       env:
-        REPOSITORY: ${{ env.GITHUB_SERVER_URL }}/${{ inputs.repository }}
+        REPOSITORY: ${{ inputs.repository }}
         PATH: ${{ inputs.path }}
       shell: bash
     - run: echo "::endgroup::"
       shell: bash
 
-    - name: Make directory
-      run: /usr/bin/mkdir -p $PATH
-      env:
-        PATH: ${{ inputs.path }}
-      shell: bash
+#     - name: Make directory
+#       run: /usr/bin/mkdir -p $PATH
+#       env:
+#         PATH: ${{ inputs.path }}
+#       shell: bash
 
-    - run: echo "::group::Initializing the repository"
-      shell: bash
-    - run: /usr/bin/git init
-      working-directory: ${{ inputs.path }}
-      shell: bash
-    - run: /usr/bin/git remote add origin $REPOSITORY
-      env:
-        REPOSITORY: ${{ env.GITHUB_SERVER_URL }}/${{ inputs.repository }}
-      working-directory: ${{ inputs.path }}
-      shell: bash
-    - run: /usr/bin/git remote -v
-      working-directory: ${{ inputs.path }}
-      shell: bash
-    - run: echo "::endgroup::"
-      shell: bash
+#     - run: echo "::group::Initializing the repository"
+#       shell: bash
+#     - run: /usr/bin/git init
+#       working-directory: ${{ inputs.path }}
+#       shell: bash
+#     - run: /usr/bin/git remote add origin $REPOSITORY
+#       env:
+#         REPOSITORY: ${{ env.GITHUB_SERVER_URL }}/${{ inputs.repository }}
+#       working-directory: ${{ inputs.path }}
+#       shell: bash
+#     - run: /usr/bin/git remote -v
+#       working-directory: ${{ inputs.path }}
+#       shell: bash
+#     - run: echo "::endgroup::"
+#       shell: bash
 
     - run: echo "::group::Disabling automatic garbage collection"
       shell: bash
