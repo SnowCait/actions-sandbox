@@ -169,7 +169,9 @@ runs:
       env:
         REF: ${{ inputs.ref }}
       shell: bash
-    - run: echo "ref: ${{ steps.checkout.outputs.ref }}"
+    - run: echo "ref: $R"
+      env:
+        R: ${{ steps.checkout.outputs.ref }}
       shell: bash
     - run: echo "::endgroup::"
       shell: bash
