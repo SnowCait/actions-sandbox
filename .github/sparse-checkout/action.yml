@@ -38,7 +38,7 @@ inputs:
 
       [Learn more about set](https://git-scm.com/docs/git-sparse-checkout#Documentation/git-sparse-checkout.txt-emsetem)
     default: '*'
-    required: true
+    required: false
 
 runs:
   using: composite
