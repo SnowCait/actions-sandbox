@@ -99,6 +99,25 @@ runs:
     - run: echo "::endgroup::"
       shell: bash
 
+    - run: echo "::group::Preparing the repository"
+      shell: bash
+    - run: |
+        pwd
+        #if []; then
+          # first clone
+          /usr/bin/git init
+          /usr/bin/git remote add origin $REPOSITORY
+        #else
+          # already exists
+          /usr/bin/git config --local --get remote.origin.url
+        #fi
+      env:
+        REPOSITORY: https://github.com/${{ inputs.repository }}
+      working-directory: ${{ inputs.path }}
+      shell: bash
+    - run: echo "::endgroup::"
+      shell: bash
+
     - name: Make directory
       run: /usr/bin/mkdir -p $PATH
       env:
