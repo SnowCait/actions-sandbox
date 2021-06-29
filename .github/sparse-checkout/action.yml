@@ -55,7 +55,7 @@ runs:
         if [ "$RUNNER_OS" == "macOS" ]; then
           echo "GIT=/usr/local/bin/git" >> $GITHUB_ENV
         elif [ "$RUNNER_OS" == "Windows" ]; then
-          echo "GIT='C:\Program Files\Git\bin\git.exe'" >> $GITHUB_ENV
+          echo 'GIT="C:\Program Files\Git\bin\git.exe"' >> $GITHUB_ENV
         else
           echo "GIT=/usr/bin/git" >> $GITHUB_ENV
         fi
