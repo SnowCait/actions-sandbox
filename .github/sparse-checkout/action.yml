@@ -135,12 +135,16 @@ runs:
       shell: bash
     - run: echo $RUNNER_TEMP
       shell: bash
-    - run: GIT_TRACE=1 GIT_TRANSFER_TRACE=1 GIT_CURL_VERBOSE=1 /usr/bin/git config --local --name-only --get-regexp core\\\.sshCommand
+    - run: echo "abc" | xxd
+      shell: bash
+    - run: echo "abc" | xxd -p
+      shell: bash
+    - run: /usr/bin/git config --local --name-only --get-regexp core\\\.sshCommand || :
       shell: bash
 #     - run: /usr/bin/git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${TOKEN}"
 #       env:
 #         TOKEN: ${{ inputs.token }}
-      shell: bash
+#       shell: bash
         # /usr/bin/git config --local http.https://github.com/.extraheader
     - run: echo "::endgroup::"
       shell: bash
