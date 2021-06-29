@@ -18,9 +18,16 @@ jobs:
       - name: 1st
         uses: ./.github/sparse-checkout/
         with:
-          patterns: 'docs packer'
+          patterns: |
+            docs
+            packer
           path: twice
-      - run: ls -l twice/
+      - run: |
+          set -x
+          git sparse-checkout list
+          git log
+          ls -la
+        working-directory: twice
 
 #       - name: 2nd
 #         uses: ./.github/sparse-checkout/
