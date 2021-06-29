@@ -74,9 +74,7 @@ runs:
           /usr/bin/git branch -a
         else
           # first clone
-          echo "/usr/bin" >> $GITHUB_PATH
-          echo "/bin" >> $GITHUB_PATH
-          mkdir -p $PATH
+          /usr/bin/mkdir -p $PATH
           cd $PATH
           /usr/bin/git init
           /usr/bin/git remote add origin ${GITHUB_SERVER_URL}/${REPOSITORY}
