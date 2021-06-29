@@ -113,7 +113,6 @@ runs:
       env:
         # REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}
         REPOSITORY: https://github.com/${{ inputs.repository }}
-        # TOKEN: ${{ inputs.token }}
         # ACTOR: ${{ github.actor }}
       working-directory: ${{ inputs.path }}
       shell: bash
@@ -175,7 +174,7 @@ runs:
         if [ -z "$REF" ]; then
           echo "REPOSITORY: $REPOSITORY"
           echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
-          if [ $REPOSITORY == $GITHUB_REPOSITORY ]]; then
+          if [ "$REPOSITORY" == "$GITHUB_REPOSITORY" ]; then
             echo "=="
             REF="${GITHUB_REF/#refs\/heads\//}"
           else
