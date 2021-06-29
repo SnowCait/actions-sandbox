@@ -29,7 +29,7 @@ jobs:
     steps:
       - run: git init
       - run: git remote add origin https://github.com/SnowCait/actions-sandbox
-      - run: git fetch
+      - run: git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +master:refs/remotes/origin/master
 
   local:
     runs-on: ${{ matrix.os }}
