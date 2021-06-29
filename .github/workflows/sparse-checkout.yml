@@ -18,7 +18,7 @@ jobs:
       - name: Checkout .github/sparse-checkout/
         uses: actions/checkout@v2.3.4
       
-      - run: witch mkdir
+      - run: which mkdir
 
       - name: 1st
         uses: ./.github/sparse-checkout/
