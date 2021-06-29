@@ -47,6 +47,8 @@ runs:
 #       shell: bash
 
     - run: gh api rate_limit
+      env:
+        GH_TOKEN: ${{ inputs.token }}
       shell: bash
 
     - run: echo "::group::Getting Git version info"
