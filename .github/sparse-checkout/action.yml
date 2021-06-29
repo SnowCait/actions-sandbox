@@ -133,16 +133,10 @@ runs:
 
     - run: echo "::group::Setting up auth"
       shell: bash
-    - run: echo $RUNNER_TEMP
+    - run: '/usr/bin/git config --local --name-only --get-regexp core\\\.sshCommand || :'
       shell: bash
-    - run: echo "abc" | xxd
-      shell: bash
-    - run: echo "abc" | xxd -p
-      shell: bash
-#     - run: /usr/bin/git config --local --name-only --get-regexp core\\\.sshCommand || :
-#       shell: bash
     - run: |
-        BASIC_CREDENTIAL=x-access-token:$(echo $TOKEN | xxd -p)
+        BASIC_CREDENTIAL="x-access-token:$(echo $TOKEN | xxd -p)"
         echo ${#BASIC_CREDENTIAL}
         echo ${BASIC_CREDENTIAL:0:3}
         echo "::add-mask::${BASIC_CREDENTIAL}"
