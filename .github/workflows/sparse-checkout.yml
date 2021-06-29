@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: snow-actions/sparse-checkout@auth
+      - uses: snow-actions/sparse-checkout@v1.0.1
         with:
           patterns: |
             docs
@@ -24,7 +24,7 @@ jobs:
           git log
           ls -la
         working-directory: sparse
-      - uses: snow-actions/sparse-checkout@auth
+      - uses: snow-actions/sparse-checkout@v1.0.1
         with:
           repository: snow-actions/tweet
           patterns: |
@@ -36,18 +36,18 @@ jobs:
           git log
           ls -la
         working-directory: tweet
-      - uses: snow-actions/sparse-checkout@auth
-        with:
-          repository: SnowCait/github-actions-self-hosted-runner-sandbox
-          patterns: |
-            runner
-          path: private
-      - run: |
-          set -x
-          git sparse-checkout list
-          git log
-          ls -la
-        working-directory: private
+#       - uses: snow-actions/sparse-checkout@v1.0.1
+#         with:
+#           repository: SnowCait/github-actions-self-hosted-runner-sandbox
+#           patterns: |
+#             runner
+#           path: private
+#       - run: |
+#           set -x
+#           git sparse-checkout list
+#           git log
+#           ls -la
+#         working-directory: private
 
   sandbox:
     runs-on: ubuntu-latest
