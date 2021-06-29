@@ -131,6 +131,8 @@ jobs:
       - run: ls -l twice/
       - run: git remote -v
         working-directory: twice
+      - run: git config --local -l
+        working-directory: twice
 
       - name: 2nd
         uses: actions/checkout@v2.3.4
