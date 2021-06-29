@@ -22,12 +22,12 @@ jobs:
           path: sparse
       - run: ls -l sparse/
 
-#       - name: 2nd
-#         uses: ./.github/sparse-checkout/
-#         with:
-#           patterns: 'docs packer'
-#           path: sparse
-#       - run: ls -l sparse/
+      - name: 2nd
+        uses: ./.github/sparse-checkout/
+        with:
+          patterns: 'docs packer'
+          path: sparse
+      - run: ls -l sparse/
 
       - name: sha
         uses: ./.github/sparse-checkout/
