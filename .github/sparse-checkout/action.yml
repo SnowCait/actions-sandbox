@@ -116,7 +116,7 @@ runs:
           /usr/bin/git config --local --get remote.origin.url
         fi
       env:
-        REPOSITORY: https://github.com/${{ inputs.repository }}
+        REPOSITORY: ${{ env.GITHUB_SERVER_URL }}/${{ inputs.repository }}
         PATH: ${{ inputs.path }}
       shell: bash
     - run: echo "::endgroup::"
