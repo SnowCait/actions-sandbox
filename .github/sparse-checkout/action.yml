@@ -191,7 +191,7 @@ runs:
 
     - name: Checking out the ref
       run: |
-        set -x
+        # FIXME: duplication with fetch
         echo $REF
         if [ -z "$REF" ]; then
           if [ "$REPOSITORY" == "$GITHUB_REPOSITORY" ]; then
@@ -204,6 +204,8 @@ runs:
         /usr/bin/git checkout --progress --force -B $REF refs/remotes/origin/$REF
       env:
         REF: ${{ inputs.ref }}
+        REPOSITORY: ${{ inputs.repository }}
+        GH_TOKEN: ${{ inputs.token }}
       working-directory: ${{ inputs.path }}
       shell: bash
     - run: |
