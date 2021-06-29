@@ -51,6 +51,7 @@ jobs:
         with:
           repository: SnowCait/github-actions-self-hosted-runner-sandbox
           path: private
+          token: ${{ secrets.PAT }}
       - run: ls -l private/
 
   gogaille:
@@ -102,5 +103,6 @@ jobs:
         with:
           repository: SnowCait/github-actions-self-hosted-runner-sandbox
           path: private
+          token: ${{ secrets.PAT }}
       - run: ls -l private/
 
