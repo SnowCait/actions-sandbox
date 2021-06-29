@@ -85,17 +85,18 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: echo "::group::Getting Git version info"
-      shell: bash
-    - name: Getting Git version info
-      run: /usr/bin/git version
-      shell: bash
 #     - name: Cloning the repository
 #       run: /usr/bin/git clone --no-checkout --filter=tree:0 --depth 1 $REPOSITORY $PATH
 #       env:
 #         PATH: ${{ inputs.path }}
 #         REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git
 #       shell: bash
+
+    - run: echo "::group::Getting Git version info"
+      shell: bash
+    - name: Getting Git version info
+      run: /usr/bin/git version
+      shell: bash
     - run: echo "::endgroup::"
       shell: bash
 
@@ -109,6 +110,7 @@ runs:
           # already exists
           cd $PATH
           /usr/bin/git config --local --get remote.origin.url
+          /usr/bin/git branch -a
         else
           # first clone
           /usr/bin/mkdir -p $PATH
