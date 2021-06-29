@@ -102,18 +102,22 @@ runs:
     - run: echo "::group::Preparing the repository"
       shell: bash
     - run: |
+        set -x
         pwd
-        #if []; then
+        if [ -d $PATH ]; then
           # first clone
+          mkdir -p $PATH
+          cd $PATH
           /usr/bin/git init
           /usr/bin/git remote add origin $REPOSITORY
-        #else
+        else
           # already exists
+          cd $PATH
           /usr/bin/git config --local --get remote.origin.url
-        #fi
+        fi
       env:
         REPOSITORY: https://github.com/${{ inputs.repository }}
-      working-directory: ${{ inputs.path }}
+        PATH: ${{ inputs.path }}
       shell: bash
     - run: echo "::endgroup::"
       shell: bash
