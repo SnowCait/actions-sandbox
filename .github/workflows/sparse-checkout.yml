@@ -86,4 +86,6 @@ jobs:
           path: other
       - run: ls -l other/
       - run: git config http.https://github.com/.extraheader
+        working-directory: other
       - run: cat .git/config
+        working-directory: other
