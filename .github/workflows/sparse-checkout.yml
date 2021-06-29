@@ -9,7 +9,10 @@ on:
 
 jobs:
   local:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-20.04, ubuntu-18.04 ]
 
     steps:
       - name: Checkout .github/sparse-checkout/
@@ -61,22 +64,22 @@ jobs:
 #           token: ${{ secrets.PAT }}
 #       - run: ls -l private/
 
-  gogaille:
-    runs-on: ubuntu-latest
+#   gogaille:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: 1st
-        uses: gogaille/sparse-checkout@v0
-        with:
-          patterns: 'docs packer'
-      - run: ls -l
-
-# fatal: destination path '.' already exists and is not an empty directory.
-#       - name: 2nd
+#     steps:
+#       - name: 1st
 #         uses: gogaille/sparse-checkout@v0
 #         with:
 #           patterns: 'docs packer'
 #       - run: ls -l
+
+# # fatal: destination path '.' already exists and is not an empty directory.
+# #       - name: 2nd
+# #         uses: gogaille/sparse-checkout@v0
+# #         with:
+# #           patterns: 'docs packer'
+# #       - run: ls -l
 
   checkout:
     runs-on: ubuntu-latest
