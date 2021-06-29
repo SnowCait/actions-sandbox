@@ -12,12 +12,11 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: snow-actions/sparse-checkout@v1.0.0
+      - uses: snow-actions/sparse-checkout@auth
         with:
           patterns: |
             docs
             packer
-          token: ${{ github.token }}
       - run: |
           set -x
           git sparse-checkout list
