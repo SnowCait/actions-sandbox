@@ -105,15 +105,15 @@ runs:
         set -x
         pwd
         if [ -d $PATH ]; then
+          # already exists
+          cd $PATH
+          /usr/bin/git config --local --get remote.origin.url
+        else
           # first clone
           mkdir -p $PATH
           cd $PATH
           /usr/bin/git init
           /usr/bin/git remote add origin $REPOSITORY
-        else
-          # already exists
-          cd $PATH
-          /usr/bin/git config --local --get remote.origin.url
         fi
       env:
         REPOSITORY: ${{ env.GITHUB_SERVER_URL }}/${{ inputs.repository }}
@@ -135,7 +135,7 @@ runs:
       shell: bash
     - run: /usr/bin/git remote add origin $REPOSITORY
       env:
-        REPOSITORY: https://github.com/${{ inputs.repository }}
+        REPOSITORY: ${{ env.GITHUB_SERVER_URL }}/${{ inputs.repository }}
       working-directory: ${{ inputs.path }}
       shell: bash
     - run: /usr/bin/git remote -v
