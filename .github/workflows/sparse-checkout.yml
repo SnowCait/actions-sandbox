@@ -17,11 +17,37 @@ jobs:
           patterns: |
             docs
             packer
+          path: sparse
       - run: |
           set -x
           git sparse-checkout list
           git log
           ls -la
+        working-directory: sparse
+      - uses: snow-actions/sparse-checkout@auth
+        with:
+          repository: snow-actions/tweet
+          patterns: |
+            src
+          path: tweet
+      - run: |
+          set -x
+          git sparse-checkout list
+          git log
+          ls -la
+        working-directory: tweet
+      - uses: snow-actions/sparse-checkout@auth
+        with:
+          repository: SnowCait/github-actions-self-hosted-runner-sandbox
+          patterns: |
+            src
+          path: private
+      - run: |
+          set -x
+          git sparse-checkout list
+          git log
+          ls -la
+        working-directory: private
 
   sandbox:
     runs-on: ubuntu-latest
