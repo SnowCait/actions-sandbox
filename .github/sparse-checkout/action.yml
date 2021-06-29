@@ -64,11 +64,9 @@ runs:
     - name: Debug
       run: |
         gh api rate_limit
-        #printenv
-        echo $P
+        printenv
       env:
         GH_TOKEN: ${{ inputs.token }}
-        P: ${{ inputs.path }}
       shell: bash
 #     - run: echo $GITHUB_PATH
 #       shell: bash
@@ -89,28 +87,28 @@ runs:
         set -x
         echo "::group::Preparing the repository"
         echo $GITHUB_SERVER_URL
-        if [ -d $PATH ]; then
+        if [ -d $DIRECTORY ]; then
           # already exists
-          cd $PATH
+          cd $DIRECTORY
           $GIT config --local --get remote.origin.url
           $GIT branch -a
         else
           # first clone
-          /bin/mkdir -p $PATH
-          cd $PATH
+          /bin/mkdir -p $DIRECTORY
+          cd $DIRECTORY
           $GIT init
           $GIT remote add origin ${GITHUB_SERVER_URL}/${REPOSITORY}
         fi
         echo "::endgroup::"
       env:
         REPOSITORY: ${{ inputs.repository }}
-        PATH: ${{ inputs.path }}
+        DIRECTORY: ${{ inputs.path }}
       shell: bash
 
 #     - name: Make directory
-#       run: /usr/bin/mkdir -p $PATH
+#       run: /usr/bin/mkdir -p $DIRECTORY
 #       env:
-#         PATH: ${{ inputs.path }}
+#         DIRECTORY: ${{ inputs.path }}
 #       shell: bash
 
 #     - run: echo "::group::Initializing the repository"
