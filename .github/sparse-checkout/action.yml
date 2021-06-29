@@ -189,6 +189,8 @@ runs:
     - run: echo "::endgroup::"
       shell: bash
 
+    - run: echo "::group::Checking out the ref"
+      shell: bash
     - name: Checking out the ref
       run: |
         # FIXME: duplication with fetch
@@ -208,7 +210,8 @@ runs:
         GH_TOKEN: ${{ inputs.token }}
       working-directory: ${{ inputs.path }}
       shell: bash
-    - run: |
-        set -x
-        /usr/bin/git log -1 --format='%H'
+    - run: echo "::endgroup::"
+      shell: bash
+
+    - run: /usr/bin/git log -1 --format='%H'
       shell: bash
