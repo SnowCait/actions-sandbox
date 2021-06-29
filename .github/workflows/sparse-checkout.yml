@@ -36,6 +36,7 @@ jobs:
           git log
           ls -la
         working-directory: twice
+        shell: bash
 
 #       - name: 2nd
 #         uses: ./.github/sparse-checkout/
