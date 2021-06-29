@@ -107,13 +107,11 @@ runs:
 
     - run: echo "::group::Initializing the repository"
       shell: bash
-    - run: |
-        /usr/bin/git init
-        /usr/bin/git remote add origin $REPOSITORY
+    - run: /usr/bin/git init
+      shell: bash
+    - run: /usr/bin/git remote add origin $REPOSITORY
       env:
-        # REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}
         REPOSITORY: https://github.com/${{ inputs.repository }}
-        # ACTOR: ${{ github.actor }}
       working-directory: ${{ inputs.path }}
       shell: bash
     - run: /usr/bin/git remote -v
