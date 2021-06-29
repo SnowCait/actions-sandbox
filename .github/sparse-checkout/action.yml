@@ -55,19 +55,17 @@ runs:
         GH_TOKEN: ${{ inputs.token }}
       shell: bash
 
-    - run: echo "::group::Getting Git version info"
-      shell: bash
     - name: Getting Git version info
-      run: /usr/bin/git version
-      shell: bash
-    - run: echo "::endgroup::"
+      run: |
+        echo "::group::Getting Git version info"
+        /usr/bin/git version
+        echo "::endgroup::"
       shell: bash
 
-    - run: echo "::group::Preparing the repository"
-      shell: bash
-    - run: |
+    - name: Preparing the repository
+      run: |
         set -x
-        pwd
+        echo "::group::Preparing the repository"
         echo $GITHUB_SERVER_URL
         if [ -d $PATH ]; then
           # already exists
@@ -81,11 +79,10 @@ runs:
           /usr/bin/git init
           /usr/bin/git remote add origin ${GITHUB_SERVER_URL}/${REPOSITORY}
         fi
+        echo "::endgroup::"
       env:
         REPOSITORY: ${{ inputs.repository }}
         PATH: ${{ inputs.path }}
-      shell: bash
-    - run: echo "::endgroup::"
       shell: bash
 
 #     - name: Make directory
@@ -110,12 +107,12 @@ runs:
 #     - run: echo "::endgroup::"
 #       shell: bash
 
-    - run: echo "::group::Disabling automatic garbage collection"
-      shell: bash
-    - run: /usr/bin/git config --local gc.auto 0
+    - name: Disabling automatic garbage collection
+      run: |
+        echo "::group::Disabling automatic garbage collection"
+        /usr/bin/git config --local gc.auto 0
+        echo "::endgroup::"
       working-directory: ${{ inputs.path }}
-      shell: bash
-    - run: echo "::endgroup::"
       shell: bash
 
     - run: echo "::group::Setting up auth"
