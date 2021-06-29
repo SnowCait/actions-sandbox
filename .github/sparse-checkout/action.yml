@@ -168,12 +168,6 @@ runs:
       env:
         REF: ${{ inputs.ref }}
       shell: bash
-    - run: echo "== ''"
-      if: ${{ inputs.ref == '' }}
-      shell: bash
-    - run: echo "!"
-      if: ${{ !inputs.ref }}
-      shell: bash
     - run: echo "::endgroup::"
       shell: bash
 
