@@ -188,6 +188,7 @@ runs:
       env:
         REF: ${{ inputs.ref }}
         REPOSITORY: ${{ inputs.repository }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       working-directory: ${{ inputs.path }}
       shell: bash
     - run: echo "::endgroup::"
