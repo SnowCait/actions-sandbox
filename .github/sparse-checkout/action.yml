@@ -135,13 +135,13 @@ runs:
 
     - run: echo "::group::Setting up auth"
       shell: bash
-    - run: |
-        BASIC_CREDENTIAL="$(echo "x-access-token:" | xxd -p -c 256)$(echo $TOKEN | xxd -p -c 256)"
-        echo "::add-mask::${BASIC_CREDENTIAL}"
-        $GIT config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${BASIC_CREDENTIAL}"
-      env:
-        TOKEN: ${{ inputs.token }}
-      shell: bash
+#     - run: |
+#         BASIC_CREDENTIAL="$(echo "x-access-token:" | xxd -p -c 256)$(echo $TOKEN | xxd -p -c 256)"
+#         echo "::add-mask::${BASIC_CREDENTIAL}"
+#         $GIT config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${BASIC_CREDENTIAL}"
+#       env:
+#         TOKEN: ${{ inputs.token }}
+#       shell: bash
     - name: debug
       run: |
         $GIT config --local http.https://github.com/.extraheader
