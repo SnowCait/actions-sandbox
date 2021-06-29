@@ -78,7 +78,7 @@ runs:
     - name: Getting Git version info
       run: |
         echo "::group::Getting Git version info"
-        /usr/bin/git version
+        $GIT version
         echo "::endgroup::"
       shell: bash
 
@@ -90,14 +90,14 @@ runs:
         if [ -d $PATH ]; then
           # already exists
           cd $PATH
-          /usr/bin/git config --local --get remote.origin.url
-          /usr/bin/git branch -a
+          $GIT config --local --get remote.origin.url
+          $GIT branch -a
         else
           # first clone
           /bin/mkdir -p $PATH
           cd $PATH
-          /usr/bin/git init
-          /usr/bin/git remote add origin ${GITHUB_SERVER_URL}/${REPOSITORY}
+          $GIT init
+          $GIT remote add origin ${GITHUB_SERVER_URL}/${REPOSITORY}
         fi
         echo "::endgroup::"
       env:
@@ -130,7 +130,7 @@ runs:
     - name: Disabling automatic garbage collection
       run: |
         echo "::group::Disabling automatic garbage collection"
-        /usr/bin/git config --local gc.auto 0
+        $GIT config --local gc.auto 0
         echo "::endgroup::"
       working-directory: ${{ inputs.path }}
       shell: bash
@@ -140,13 +140,13 @@ runs:
     - run: |
         BASIC_CREDENTIAL="x-access-token:$(echo $TOKEN | xxd -p -c 256)"
         echo "::add-mask::${BASIC_CREDENTIAL}"
-        /usr/bin/git config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${BASIC_CREDENTIAL}"
+        $GIT config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ${BASIC_CREDENTIAL}"
       env:
         TOKEN: ${{ inputs.token }}
       shell: bash
     - name: debug
       run: |
-        /usr/bin/git config --local http.https://github.com/.extraheader
+        $GIT config --local http.https://github.com/.extraheader
         cat .git/config
       shell: bash
     - run: echo "::endgroup::"
@@ -157,8 +157,8 @@ runs:
     - name: Sparse checkout
       run: |
         cat .git/config
-        /usr/bin/git sparse-checkout init --cone
-        /usr/bin/git sparse-checkout set $PATTERNS
+        $GIT sparse-checkout init --cone
+        $GIT sparse-checkout set $PATTERNS
       env:
         PATTERNS: ${{ inputs.patterns }}
       working-directory: ${{ inputs.path }}
@@ -184,7 +184,7 @@ runs:
           fi
         fi
         echo $REF
-        /usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${REF}:refs/remotes/origin/${REF}
+        $GIT -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +${REF}:refs/remotes/origin/${REF}
       env:
         REF: ${{ inputs.ref }}
         REPOSITORY: ${{ inputs.repository }}
@@ -208,7 +208,7 @@ runs:
           fi
         fi
         echo $REF
-        /usr/bin/git checkout --progress --force -B $REF refs/remotes/origin/$REF
+        $GIT checkout --progress --force -B $REF refs/remotes/origin/$REF
       env:
         REF: ${{ inputs.ref }}
         REPOSITORY: ${{ inputs.repository }}
