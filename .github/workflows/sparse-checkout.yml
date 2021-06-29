@@ -26,6 +26,17 @@ jobs:
 #       - run: $(which mkdir) abc
 #       - run: mkdir def
 
+      - name: default
+        uses: ./.github/sparse-checkout/
+        with:
+          path: default
+      - run: |
+          set -x
+          git sparse-checkout list
+          git log
+          ls -la
+        working-directory: default
+
       - name: 1st
         uses: ./.github/sparse-checkout/
         with:
