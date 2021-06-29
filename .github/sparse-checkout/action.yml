@@ -113,15 +113,15 @@ runs:
 
 #     - run: echo "::group::Initializing the repository"
 #       shell: bash
-#     - run: /usr/bin/git init
+#     - run: $GIT init
 #       working-directory: ${{ inputs.path }}
 #       shell: bash
-#     - run: /usr/bin/git remote add origin $REPOSITORY
+#     - run: $GIT remote add origin $REPOSITORY
 #       env:
 #         REPOSITORY: ${{ env.GITHUB_SERVER_URL }}/${{ inputs.repository }}
 #       working-directory: ${{ inputs.path }}
 #       shell: bash
-#     - run: /usr/bin/git remote -v
+#     - run: $GIT remote -v
 #       working-directory: ${{ inputs.path }}
 #       shell: bash
 #     - run: echo "::endgroup::"
@@ -218,5 +218,5 @@ runs:
     - run: echo "::endgroup::"
       shell: bash
 
-    - run: /usr/bin/git log -1 --format='%H'
+    - run: $GIT log -1 --format='%H'
       shell: bash
