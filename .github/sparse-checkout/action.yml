@@ -137,7 +137,7 @@ runs:
       shell: bash
     - run: echo $RUNNER_TEMP
       shell: bash
-    - run: /usr/bin/git config --local --name-only --get-regexp core\\\.sshCommand
+    - run: GIT_TRACE=1 GIT_TRANSFER_TRACE=1 GIT_CURL_VERBOSE=1 /usr/bin/git config --local --name-only --get-regexp core\\\.sshCommand
       shell: bash
     - run: echo "::endgroup::"
       shell: bash
