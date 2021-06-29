@@ -140,7 +140,10 @@ runs:
       env:
         TOKEN: ${{ inputs.token }}
       shell: bash
-    - run: /usr/bin/git config --local http.https://github.com/.extraheader
+    - name: debug
+      run: |
+        /usr/bin/git config --local http.https://github.com/.extraheader
+        cat .git/config
       shell: bash
     - run: echo "::endgroup::"
       shell: bash
