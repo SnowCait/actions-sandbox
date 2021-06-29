@@ -98,11 +98,13 @@ runs:
 #       shell: bash
     - run: echo "::endgroup::"
       shell: bash
+
     - name: Make directory
       run: /usr/bin/mkdir -p $PATH
       env:
         PATH: ${{ inputs.path }}
       shell: bash
+
     - run: echo "::group::Initializing the repository"
       shell: bash
     - run: |
@@ -122,6 +124,7 @@ runs:
       shell: bash
     - run: echo "::endgroup::"
       shell: bash
+
     - run: echo "::group::Disabling automatic garbage collection"
       shell: bash
     - run: /usr/bin/git config --local gc.auto 0
@@ -129,6 +132,14 @@ runs:
       shell: bash
     - run: echo "::endgroup::"
       shell: bash
+
+    - run: echo "::group::Setting up auth"
+      shell: bash
+    - run: /usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+      shell: bash
+    - run: echo "::endgroup::"
+      shell: bash
+
     - name: Sparse checkout
       run: |
         set -x
