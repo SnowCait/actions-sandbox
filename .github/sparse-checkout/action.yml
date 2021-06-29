@@ -50,7 +50,7 @@ runs:
 #         REPOSITORY: https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.repository }}.git
 #       shell: bash
 
-    - name: Env
+    - name: Setting git path
       run: |
         if [ "$RUNNER_OS" == "macOS" ]; then
           echo "GIT=/usr/local/bin/git" >> $GITHUB_ENV
@@ -60,7 +60,7 @@ runs:
           echo "GIT=/usr/bin/git" >> $GITHUB_ENV
         fi
       shell: bash
-        
+
     - name: Debug
       run: |
         gh api rate_limit
@@ -84,7 +84,6 @@ runs:
 
     - name: Preparing the repository
       run: |
-        set -x
         echo "::group::Preparing the repository"
         echo $GITHUB_SERVER_URL
         if [ -d $DIRECTORY ]; then
