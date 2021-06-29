@@ -36,6 +36,11 @@ jobs:
           git log
           ls -la
         working-directory: default
+      - run: |
+          if [ ! -d docs ]; then
+            exit 1
+          fi
+        working-directory: default
 
       - name: 1st
         uses: ./.github/sparse-checkout/
