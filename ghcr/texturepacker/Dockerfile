@@ -13,4 +13,4 @@ COPY TexturePacker.deb /tmp
 RUN /usr/bin/dpkg -i /tmp/TexturePacker.deb
 
 # Uncomment this line if you agree to the license terms
-# RUN echo agree | TexturePacker --version
+RUN echo agree | TexturePacker --version
