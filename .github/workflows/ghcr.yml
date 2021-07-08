@@ -8,6 +8,41 @@ on:
   workflow_dispatch:
 
 jobs:
+  build-texturepacker:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ghcr/texturepacker/
+
+    steps:
+      - uses: snow-actions/sparse-checkout@v1.1.0
+        with:
+          patterns: |
+            ghcr/texturepacker/
+      - run: |
+          wget --output-file=TexturePacker.deb \
+            https://www.codeandweb.com/download/texturepacker/5.5.0/TexturePacker-5.5.0-ubuntu64.deb
+      - run: ls -la
+      - run: docker build -t ghcr.io/snowcait/texturepacker:latest .
+      - run: docker images
+      - run: echo $CR_PAT | docker login ghcr.io -u snowcait --password-stdin
+        env:
+          CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+      - run: docker push ghcr.io/snowcait/texturepacker:latest
+
+  use-texturepacker:
+    runs-on: ubuntu-latest
+    needs: [ build-texturepacker ]
+    defaults:
+      run:
+        working-directory: ghcr/texturepacker/
+
+    steps:
+      - run: ls -la
+      - run: docker inspect ghcr.io/snowcait/texturepacker
+      - run: docker pull ghcr.io/snowcait/texturepacker
+      - run: docker images
+
   build-runner:
     runs-on: windows-latest
     defaults:
