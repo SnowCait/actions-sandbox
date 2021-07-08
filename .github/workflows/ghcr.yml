@@ -41,7 +41,7 @@ jobs:
 
     steps:
       - run: ls -la
-      - run: docker inspect ghcr.io/snowcait/texturepacker:5.5.0
+#       - run: docker inspect ghcr.io/snowcait/texturepacker:5.5.0
       - run: docker pull ghcr.io/snowcait/texturepacker:5.5.0
       - run: docker images
       - run: docker run ghcr.io/snowcait/texturepacker:5.5.0 TexturePacker
