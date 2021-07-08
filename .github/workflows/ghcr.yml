@@ -21,7 +21,7 @@ jobs:
           patterns: |
             ghcr/texturepacker/
       - run: |
-          wget --output-file=TexturePacker.deb \
+          curl -o TexturePacker.deb \
             https://www.codeandweb.com/download/texturepacker/5.5.0/TexturePacker-5.5.0-ubuntu64.deb
       - run: ls -la
       - run: docker build -t ghcr.io/snowcait/texturepacker:latest .
