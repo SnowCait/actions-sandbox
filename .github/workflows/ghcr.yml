@@ -9,7 +9,7 @@ on:
 
 jobs:
   build-texturepacker:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     timeout-minutes: 5
     strategy:
       matrix:
@@ -25,9 +25,14 @@ jobs:
             ghcr/texturepacker/
       - run: |
           curl -o TexturePacker.deb \
-            https://www.codeandweb.com/download/texturepacker/${{ matrix.version }}/TexturePacker-${{ matrix.version }}-ubuntu64.deb
+            https://www.codeandweb.com/download/texturepacker/${VERSION}/TexturePacker-${VERSION}-ubuntu64.deb
+        env:
+          VERSION: ${{ matrix.version }}
       - run: ls -la
-      - run: docker build -t ghcr.io/snowcait/texturepacker:${{ matrix.version }} .
+      - run: docker build -t ghcr.io/${ACTOR}/texturepacker:${VERSION} .
+        env:
+          ACTOR: ${{ github.actor }}
+          VERSION: ${{ matrix.version }}
       - run: docker images
       - run: echo $CR_PAT | docker login ghcr.io -u snowcait --password-stdin
         env:
