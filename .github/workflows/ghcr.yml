@@ -45,26 +45,40 @@ jobs:
           VERSION: ${{ matrix.version }}
 
   use-texturepacker:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: [ build-texturepacker ]
     timeout-minutes: 5
 
     steps:
       - run: ls -la
 #       - run: docker inspect ghcr.io/snowcait/texturepacker:5.5.0
-      - run: docker pull ghcr.io/${OWNER,,}/texturepacker:${VERSION}
+      - name: Pull
+        run: docker pull ghcr.io/${OWNER,,}/texturepacker:${VERSION}
         env:
           OWNER: ${{ github.repository_owner }}
           VERSION: 5.5.0
       - run: docker images
-      - run: docker run ghcr.io/${OWNER,,}/texturepacker:${VERSION} TexturePacker --version
+      - name: Help
+        run: docker run ghcr.io/${OWNER,,}/texturepacker:${VERSION} TexturePacker --help
         env:
           OWNER: ${{ github.repository_owner }}
           VERSION: 5.5.0
-      - run: docker run ghcr.io/${OWNER,,}/texturepacker:${VERSION} TexturePacker --license-info
+      - name: Version
+        run: docker run ghcr.io/${OWNER,,}/texturepacker:${VERSION} TexturePacker --version
         env:
           OWNER: ${{ github.repository_owner }}
           VERSION: 5.5.0
+      - name: License
+        run: docker run ghcr.io/${OWNER,,}/texturepacker:${VERSION} TexturePacker --license-info
+        env:
+          OWNER: ${{ github.repository_owner }}
+          VERSION: 5.5.0
+      - name: License
+        run: docker run ghcr.io/${OWNER,,}/texturepacker:${VERSION} TexturePacker --activate-license ${LICENSE_KEY} --license-info
+        env:
+          OWNER: ${{ github.repository_owner }}
+          VERSION: 5.5.0
+          LICENSE_KEY: ${{ secrets.TEXTUREPACKER_LICENSE_KEY }}
 
   build-runner:
     runs-on: windows-latest
