@@ -23,21 +23,23 @@ jobs:
         with:
           patterns: |
             ghcr/texturepacker/
-      - run: |
+      - name: Download TexturePacker.deb
+        run: |
           curl -o TexturePacker.deb \
             https://www.codeandweb.com/download/texturepacker/${VERSION}/TexturePacker-${VERSION}-ubuntu64.deb
         env:
           VERSION: ${{ matrix.version }}
-      - run: ls -la
-      - run: docker build -t ghcr.io/${OWNER,,}/texturepacker:${VERSION} .
+      - name: Build
+        run: docker build -t ghcr.io/${OWNER,,}/texturepacker:${VERSION} .
         env:
           OWNER: ${{ github.repository_owner }}
           VERSION: ${{ matrix.version }}
-      - run: docker images
-      - run: echo $CR_PAT | docker login ghcr.io -u snowcait --password-stdin
+      - name: Login
+        run: echo $CR_PAT | docker login ghcr.io -u snowcait --password-stdin
         env:
           CR_PAT: ${{ secrets.GITHUB_TOKEN }}
-      - run: docker push ghcr.io/${OWNER,,}/texturepacker:${VERSION}
+      - name: Push
+        run: docker push ghcr.io/${OWNER,,}/texturepacker:${VERSION}
         env:
           OWNER: ${{ github.repository_owner }}
           VERSION: ${{ matrix.version }}
