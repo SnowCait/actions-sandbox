@@ -6,8 +6,8 @@ jobs:
   test1:
     runs-on: ubuntu-latest
     steps:
-#       - uses: actions/checkout@v2
-#         name: "チェックアウト"
+      - uses: actions/checkout@v2
+        name: "チェックアウト"
       - name: set git config
         env:
           READONLY_GITHUB_TOKEN: ${{ secrets.READONLY_GITHUB_TOKEN }}
