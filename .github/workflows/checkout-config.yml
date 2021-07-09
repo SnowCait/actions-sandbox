@@ -8,6 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: "チェックアウト"
+      - run: git config --local -l
       - name: set git config
         env:
           READONLY_GITHUB_TOKEN: ${{ secrets.READONLY_GITHUB_TOKEN }}
