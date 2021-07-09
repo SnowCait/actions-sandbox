@@ -55,7 +55,11 @@ jobs:
           OWNER: ${{ github.repository_owner }}
           VERSION: 5.5.0
       - run: docker images
-      - run: docker run ghcr.io/${OWNER,,}/texturepacker:${VERSION} TexturePacker
+      - run: docker run ghcr.io/${OWNER,,}/texturepacker:${VERSION} TexturePacker --version
+        env:
+          OWNER: ${{ github.repository_owner }}
+          VERSION: 5.5.0
+      - run: docker run ghcr.io/${OWNER,,}/texturepacker:${VERSION} TexturePacker --license-info
         env:
           OWNER: ${{ github.repository_owner }}
           VERSION: 5.5.0
