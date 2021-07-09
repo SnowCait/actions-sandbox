@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v2
         name: "チェックアウト"
       - run: git config --local -l
-      - run: git config --global -l
+#       - run: git config --global -l
       - name: set git config
         env:
           READONLY_GITHUB_TOKEN: ${{ secrets.READONLY_GITHUB_TOKEN }}
