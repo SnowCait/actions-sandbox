@@ -1,0 +1,14 @@
+name: Approve
+
+on:
+  pull_request:
+    types: [ review_requested ]
+
+jobs:
+  approve:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: gh pr review --approve
+        env:
+          GH_TOKEN: ${{ github.token }}
