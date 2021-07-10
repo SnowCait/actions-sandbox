@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - run: echo ${{ github.actor }}
       - run: gh pr review --approve
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        if: ${{ github.actor == "SnowCait" }}
