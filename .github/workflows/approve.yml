@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: gh pr review --approve $NUMBER
+      - run: gh pr review $NUMBER --approve
       - run: gh pr edit $NUMBER --remove-reviewer $REVIEWER
         env:
           REVIEWER: ${{ github.event.requested_reviewer.login }}
