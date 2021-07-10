@@ -6,12 +6,13 @@ on:
 
 jobs:
   approve:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - uses: actions/checkout@v2
-      - run: gh pr review --approve ${{ github.event.number }}
+      - run: gh pr review --approve $NUMBER
         env:
           GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.number }}
         if: ${{ github.event.requested_reviewer.login == 'SnowCait' }}
