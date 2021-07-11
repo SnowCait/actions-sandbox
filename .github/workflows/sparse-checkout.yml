@@ -13,12 +13,12 @@ jobs:
 
     steps:
       - name: Empty path
-        uses: snow-actions/sparse-checkout@v1.1.0
+        uses: snow-actions/sparse-checkout@allow-empty-path
         with:
           path: ''
       - run: ls -la
       - name: .
-        uses: snow-actions/sparse-checkout@v1.1.0
+        uses: snow-actions/sparse-checkout@allow-empty-path
         with:
           path: '.'
       - run: ls -la
