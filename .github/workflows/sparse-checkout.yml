@@ -12,11 +12,11 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - name: Empty path
-        uses: snow-actions/sparse-checkout@allow-empty-path
-        with:
-          path: ''
-      - run: ls -la
+#       - name: Empty path
+#         uses: snow-actions/sparse-checkout@allow-empty-path
+#         with:
+#           path: ''
+#       - run: ls -la
       - name: .
         uses: snow-actions/sparse-checkout@allow-empty-path
         with:
