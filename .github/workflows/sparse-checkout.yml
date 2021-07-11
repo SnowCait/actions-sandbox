@@ -17,10 +17,15 @@ jobs:
 #         with:
 #           path: ''
 #       - run: ls -la
-      - name: .
+#       - name: .
+#         uses: snow-actions/sparse-checkout@allow-empty-path
+#         with:
+#           path: '.'
+#       - run: ls -la
+      - name: gist
         uses: snow-actions/sparse-checkout@allow-empty-path
         with:
-          path: '.'
+          repository: https://gist.github.com/ee80c65ecb2387c407cc0b0753835245
       - run: ls -la
 #       - uses: snow-actions/sparse-checkout@v1.1.0
 #         with:
@@ -167,20 +172,20 @@ jobs:
 # #           patterns: 'docs packer'
 # #       - run: ls -l
 
-  checkout:
-    runs-on: ubuntu-latest
+#   checkout:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Empty path
-        uses: actions/checkout@v2
-        with:
-          path: ''
-      - run: ls -la
-      - name: .
-        uses: actions/checkout@v2
-        with:
-          path: '.'
-      - run: ls -la
+#     steps:
+#       - name: Empty path
+#         uses: actions/checkout@v2
+#         with:
+#           path: ''
+#       - run: ls -la
+#       - name: .
+#         uses: actions/checkout@v2
+#         with:
+#           path: '.'
+#       - run: ls -la
 
 #       - name: 1st
 #         uses: actions/checkout@v2.3.4
