@@ -1,0 +1,35 @@
+name: Checkout
+
+
+on:
+  push:
+    paths:
+      - .github/workflows/checkout.yml
+  workflow_dispatch:
+
+jobs:
+  checkout:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo a > a.txt
+      - run: ls -la
+      - uses: actions/checkout@v2
+        with:
+          clean: true
+      - run: echo b > b.txt
+      - run: ls -la
+      - uses: actions/checkout@v2
+        with:
+          clean: false
+      - run: ls -la
+
+  gist:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: https://gist.github.com/ee80c65ecb2387c407cc0b0753835245
+      - run: ls -la
