@@ -10,20 +10,21 @@ on:
 jobs:
   snow-actions:
     runs-on: ubuntu-20.04
+    timeout-minutes: 1
 
     steps:
 #       - name: Empty path
-#         uses: snow-actions/sparse-checkout@allow-empty-path
+#         uses: snow-actions/sparse-checkout@main
 #         with:
 #           path: ''
 #       - run: ls -la
 #       - name: .
-#         uses: snow-actions/sparse-checkout@allow-empty-path
+#         uses: snow-actions/sparse-checkout@main
 #         with:
 #           path: '.'
 #       - run: ls -la
       - name: gist
-        uses: snow-actions/sparse-checkout@allow-empty-path
+        uses: snow-actions/sparse-checkout@main
         with:
           repository: https://gist.github.com/ee80c65ecb2387c407cc0b0753835245
       - run: ls -la
