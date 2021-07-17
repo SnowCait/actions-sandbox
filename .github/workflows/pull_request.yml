@@ -3,7 +3,7 @@ on:
   pull_request:
 #     paths: .github/workflows/pull_request.yml
 jobs:
-  build:
+  always-success:
     runs-on: ubuntu-latest
     steps:
       - run: |
