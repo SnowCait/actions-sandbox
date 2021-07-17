@@ -1,7 +1,7 @@
 name: Pull Request
 on:
   pull_request:
-    paths: .github/workflows/pull_request.yml
+#     paths: .github/workflows/pull_request.yml
 jobs:
   build:
     runs-on: ubuntu-latest
