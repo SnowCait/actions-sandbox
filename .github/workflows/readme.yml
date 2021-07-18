@@ -14,8 +14,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          sed -i -e "s|uses: ${REPOSITORY}@v[0-9.]\+|uses: ${REPOSITORY}@${TAG}|g" readme/README.md
+      # YAML のエスケープが必要なので複数行またはシングルクオートで囲う
+      # s/aaa/bbb/g だと REPOSITORY に含まれる / をエスケープしないといけないので代わりに | を使用
+      - run: 'sed -i -e "s|uses: ${REPOSITORY}@v[0-9.]\+|uses: ${REPOSITORY}@${TAG}|g" readme/README.md'
         env:
           REPOSITORY: snow-actions/tweet
           TAG: v1.1.1
