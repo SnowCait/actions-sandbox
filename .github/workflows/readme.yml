@@ -15,9 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          sed -i -e "s|uses: ${REPOSITORY}@v1.1.0|uses: ${REPOSITORY}@v1.1.1|g" readme/README.md
+          sed -i -e "s|uses: ${REPOSITORY}@v[0-9.]\+|uses: ${REPOSITORY}@${TAG}|g" readme/README.md
         env:
           REPOSITORY: snow-actions/tweet
+          TAG: v1.1.1
       - run: git diff
 #       - run: git commit -a -m "${VERSION}"
 #         env:
