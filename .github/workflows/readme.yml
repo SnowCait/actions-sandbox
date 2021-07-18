@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          sed -i -s "s/uses: ${REPOSITORY}@v1.1.0/uses: ${REPOSITORY}@v1.1.1/g" readme/README.md
+          sed -i -e "s/uses: ${REPOSITORY}@v1.1.0/uses: ${REPOSITORY}@v1.1.1/g" readme/README.md
         env:
           REPOSITORY: ${{ github.repository }}
       - run: git diff
