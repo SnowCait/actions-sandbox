@@ -1,0 +1,24 @@
+name: README latest version
+
+on:
+  push:
+#     tags:
+#       - v*
+    paths:
+      - .github/workflows/readme.yml
+  workflow_dispatch:
+
+jobs:
+  update-readme-version:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: sed -i -s "s/uses: ${REPOSITORY}@v1.1.0/uses: ${REPOSITORY}@v1.1.1/g" readme/README.md
+        env:
+          REPOSITORY: ${{ github.repository }}
+      - run: git diff
+#       - run: git commit -a -m "${VERSION}"
+#         env:
+#           VERSION: v1.1.1
+#       - run: git push
