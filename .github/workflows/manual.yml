@@ -1,0 +1,19 @@
+name: Manual Trigger
+
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        required: true
+        description: ログレベル
+        default: warning
+      tags:
+
+jobs:
+  printInputs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - run: |
+        echo "Log level: ${{ github.event.inputs.logLevel }}"
+        echo "Tags: ${{ github.event.inputs.tags }}" 

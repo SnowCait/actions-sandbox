@@ -1,0 +1,21 @@
+name: Approve
+
+on:
+  pull_request:
+    types: [ review_requested ]
+
+jobs:
+  approve:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 1
+    if: ${{ github.event.requested_reviewer.login == 'SnowCait-Test1' }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      NUMBER: ${{ github.event.number }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: gh pr review $NUMBER --approve
+      - run: gh pr edit $NUMBER --remove-reviewer $REVIEWER
+        env:
+          REVIEWER: ${{ github.event.requested_reviewer.login }}

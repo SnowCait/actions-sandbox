@@ -1,0 +1,21 @@
+name: Trigger branches
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - .github/workflows/trigger-branches.yml
+  pull_request:
+    paths:
+      - .github/workflows/trigger-branches.yml
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo $GITHUB_EVENT_NAME
+      - run: cat $GITHUB_EVENT_PATH

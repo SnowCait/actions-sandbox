@@ -1,0 +1,16 @@
+name: Labeler
+
+on:
+  pull_request:
+    paths:
+      - labeler/**/*
+      - .github/workflows/labeler.yml
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/labeler@v3
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"

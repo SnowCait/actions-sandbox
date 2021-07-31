@@ -1,0 +1,17 @@
+name: github-script
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/github-script@v4.0.2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          github.issues.createComment({...context.issue, body: '👋 Thanks for reporting! via [github-script.yml](https://github.com/SnowCait/action-sandbox/blob/master/.github/workflows/github-script.yml)'})

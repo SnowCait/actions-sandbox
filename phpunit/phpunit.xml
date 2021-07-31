@@ -1,0 +1,10 @@
+<phpunit defaultTestSuite="default">
+    <testsuites>
+        <testsuite name="default">
+            <directory suffix="Test.php">./test</directory>
+        </testsuite>
+    </testsuites>
+    <logging>
+        <log type="junit" target="logs/junit.xml"/>
+    </logging>
+</phpunit>

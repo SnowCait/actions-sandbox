@@ -1,0 +1,15 @@
+name: MySQL
+
+on:
+  push:
+    paths:
+      - .github/workflows/mysql.yml
+  workflow_dispatch:
+
+jobs:
+  mysql:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: mysql -V
+      - run: docker image ls

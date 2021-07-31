@@ -1,0 +1,53 @@
+name: Git Commands
+
+on:
+  push:
+    paths: .github/workflows/git.yml
+  workflow_dispatch:
+
+jobs:
+  first:
+
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.changes.outputs.count > 0 }}
+    
+    steps:
+    - uses: actions/checkout@v2.3.4
+      with:
+        ref: feature/git-commands
+    - run: git remote -v
+    - name: git config の代替
+      uses: dawidd6/action-git-user-config@v1.0.0
+#     - name: git config
+#       run: |
+#         git config user.email email@example.com
+#         git config user.name example
+    - run: mkdir -p files
+    - run: |
+        #echo 'content' >> files/file.txt
+        #echo 'content2' >> files/file2.txt
+        git diff --name-only
+    - run: echo "::set-output name=count::$(git diff --name-only | wc -l)"
+      id: changes
+    - run: echo ${{ steps.changes.outputs.count > 0 }}
+    - run: git diff --name-only
+      if: steps.changes.outputs.count > 0
+    - run: |
+        git add -A
+        git commit -m 'try commit'
+        git push
+      if: steps.changes.outputs.count > 0
+
+  second:
+
+    runs-on: ubuntu-latest
+    needs: [first]
+    
+    steps:
+      - run: echo ${{ needs.first.outputs.changed }}
+      - run: echo "true"
+        if: needs.first.outputs.changed
+    
+  
+  

@@ -1,0 +1,29 @@
+name: QRCode
+on:
+  push:
+    paths:
+      - .github/workflows/qrcode.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2.3.4
+      with:
+        ref: qrcode
+    - uses: SnowCait/qrcode@v1.0.0
+      with:
+        text: ${{ github.run_id }}
+        path: qrcode.png
+    - run: |
+        git config --global user.email "you@example.com"
+        git config --global user.name "Your Name"
+        git add qrcode.png
+        git commit -m "QR Code"
+        git push origin qrcode
+    - name: You can upload the QR Code file to artifact.
+      uses: actions/upload-artifact@v1
+      with:
+        name: qrcode
+        path: qrcode.png

@@ -1,0 +1,197 @@
+name: Sparse checkout
+
+on:
+  push:
+    paths:
+      - .github/workflows/sparse-checkout.yml
+      - .github/sparse-checkout/action.yml
+  workflow_dispatch:
+
+jobs:
+  snow-actions:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: snow-actions/sparse-checkout@v1.1.0
+        with:
+          patterns: |
+            docs
+            packer
+          path: sparse
+      - run: |
+          set -x
+          git sparse-checkout list
+          git log
+          ls -la
+        working-directory: sparse
+      - uses: snow-actions/sparse-checkout@v1.1.0
+        with:
+          repository: snow-actions/tweet
+          patterns: |
+            src
+          path: tweet
+      - run: |
+          set -x
+          git sparse-checkout list
+          git log
+          ls -la
+        working-directory: tweet
+#       - uses: snow-actions/sparse-checkout@v1.1.0
+#         with:
+#           repository: SnowCait/github-actions-self-hosted-runner-sandbox
+#           patterns: |
+#             runner
+#           path: private
+#       - run: |
+#           set -x
+#           git sparse-checkout list
+#           git log
+#           ls -la
+#         working-directory: private
+
+  sandbox:
+    runs-on: ubuntu-latest
+    steps:
+      - run: git init
+      - run: git remote add origin https://github.com/SnowCait/actions-sandbox
+      - run: git sparse-checkout init --cone
+      - run: git sparse-checkout set docs
+      - run: git -c protocol.version=2 fetch --no-tags --prune --progress --depth=1 origin +master:refs/remotes/origin/master
+      - run: git checkout --progress --force -B master refs/remotes/origin/master
+
+  local:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-20.04 ]
+#         os: [ ubuntu-20.04, ubuntu-18.04, windows-2019, windows-2016, macos-10.15 ]
+      fail-fast: false
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout .github/sparse-checkout/
+        uses: actions/checkout@v2.3.4
+      
+      - run: which git
+#       - run: $(which mkdir) abc
+#       - run: mkdir def
+
+      - name: default
+        uses: ./.github/sparse-checkout/
+        with:
+          path: default
+      - run: |
+          set -x
+          git sparse-checkout list
+          git log
+          ls -la
+        working-directory: default
+      - run: |
+          if [ -d docs ]; then
+            exit 1
+          fi
+        working-directory: default
+
+      - name: 1st
+        uses: ./.github/sparse-checkout/
+        with:
+          patterns: |
+            docs
+            packer
+          path: twice
+      - run: |
+          set -x
+          git sparse-checkout list
+          git log
+          ls -la
+        working-directory: twice
+
+#       - name: 2nd
+#         uses: ./.github/sparse-checkout/
+#         with:
+#           patterns: 'docs packer'
+#           path: twice
+#       - run: ls -l twice/
+
+      - name: sha
+        uses: ./.github/sparse-checkout/
+        with:
+          patterns: 'docs packer'
+          path: sha
+          ref: 1068da213d7ecfae787d21630bc0955e31a6659a
+      - run: ls -l sha/
+
+      - name: other repo
+        uses: ./.github/sparse-checkout/
+        with:
+          repository: snow-actions/tweet
+          patterns: 'src'
+          path: other
+          # ref: main
+      - run: ls -l other/
+
+      - name: private
+        uses: ./.github/sparse-checkout/
+        with:
+          repository: SnowCait/github-actions-self-hosted-runner-sandbox
+          path: private
+          token: ${{ secrets.PAT }}
+      - run: ls -l private/
+
+#   gogaille:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: 1st
+#         uses: gogaille/sparse-checkout@v0
+#         with:
+#           patterns: 'docs packer'
+#       - run: ls -l
+
+# # fatal: destination path '.' already exists and is not an empty directory.
+# #       - name: 2nd
+# #         uses: gogaille/sparse-checkout@v0
+# #         with:
+# #           patterns: 'docs packer'
+# #       - run: ls -l
+
+  checkout:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1st
+        uses: actions/checkout@v2.3.4
+        with:
+          path: twice
+      - run: ls -l twice/
+      - run: git remote -v
+        working-directory: twice
+      - run: git config --local -l
+        working-directory: twice
+
+      - name: 2nd
+        uses: actions/checkout@v2.3.4
+        with:
+          path: twice
+      - run: ls -l twice/
+
+      - name: other repo
+        uses: actions/checkout@v2.3.4
+        with:
+          repository: snow-actions/tweet
+          path: other
+      - run: ls -l other/
+      - run: git config http.https://github.com/.extraheader
+        working-directory: other
+      - run: cat .git/config
+        working-directory: other
+
+#       - name: private
+#         uses: actions/checkout@v2.3.4
+#         with:
+#           repository: SnowCait/github-actions-self-hosted-runner-sandbox
+#           path: private
+#           token: ${{ secrets.PAT }}
+#       - run: ls -l private/

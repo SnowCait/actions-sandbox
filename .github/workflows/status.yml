@@ -1,0 +1,123 @@
+name: Status Trigger
+
+on:
+  status:
+
+jobs:
+  status:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'status'
+
+    steps:
+#       - uses: actions/checkout@v2
+
+      - run: echo $GITHUB_EVENT_NAME
+      - run: cat $GITHUB_EVENT_PATH
+      - run: echo '${{ toJson(github.event.branches) }}'
+      - run: |
+          echo ${{ join(github.event.branches.*.name, ', ') }}
+          echo '::set-output name=names::${{ join(github.event.branches.*.name) }}'
+        id: branches
+      - run: echo ${{ steps.branches.outputs.names }}
+      
+      # state が success なら commit 全体の state を見に行く
+      - name: GET /repos/{owner}/{repo}/commits/{sha}/status
+        uses: octokit/request-action@v2.0.26
+        id: commit_state
+        with:
+          route: GET /repos/{owner}/{repo}/commits/{sha}/status
+          owner: SnowCait
+          repo: action-sandbox
+          sha: ${{ github.event.sha }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: github.event.state == 'success'
+      - run: echo '${{ steps.commit_state.outputs.data }}'
+        if: github.event.state == 'success' && steps.commit_state.outputs.status == 200
+      - run: |
+          echo 'state: ${{ fromJson(steps.commit_state.outputs.data).state }}'
+        if: github.event.state == 'success' && steps.commit_state.outputs.status == 200
+      - run: |
+          echo 'sha: ${{ fromJson(steps.commit_state.outputs.data).sha }}'
+        if: github.event.state == 'success' && steps.commit_state.outputs.status == 200
+      
+      # コミットが含まれる PR を見に行く
+      - name: GET /repos/{owner}/{repo}/commits/{sha}/pulls
+        uses: octokit/request-action@v2.0.26
+        id: pulls
+        with:
+          route: GET /repos/{owner}/{repo}/commits/{sha}/pulls
+          owner: SnowCait
+          repo: action-sandbox
+          sha: ${{ github.event.sha }}
+          mediaType: |
+            previews:
+              - groot
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: github.event.state == 'success'
+      - run: echo '${{ steps.pulls.outputs.data }}'
+        if: github.event.state == 'success' && steps.pulls.outputs.status == 200
+      - run: |
+          echo 'number: ${{ fromJson(steps.pulls.outputs.data)[0].number }}'
+        if: github.event.state == 'success' && steps.pulls.outputs.status == 200
+      - run: |
+          echo 'state: ${{ fromJson(steps.pulls.outputs.data)[0].state }}'
+        if: github.event.state == 'success' && steps.pulls.outputs.status == 200
+      - run: |
+          echo 'draft: ${{ fromJson(steps.pulls.outputs.data)[0].draft }}'
+        if: github.event.state == 'success' && steps.pulls.outputs.status == 200
+      - run: |
+          echo 'head.sha: ${{ fromJson(steps.pulls.outputs.data)[0].head.sha }}'
+        if: github.event.state == 'success' && steps.pulls.outputs.status == 200
+      - run: |
+          echo 'reviewers: ${{ toJson(fromJson(steps.pulls.outputs.data)[0].requested_reviewers) }}'
+        if: github.event.state == 'success' && steps.pulls.outputs.status == 200
+      
+      # ブランチ保護
+# Error: Resource not accessible by integration
+#       - name: GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
+#         uses: octokit/request-action@v2.0.26
+#         id: protection
+#         with:
+#           route: GET /repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts
+#           owner: SnowCait
+#           repo: action-sandbox
+#           branch: ${{ toJson(fromJson(steps.pulls.outputs.data)[0].base.ref) }}
+#           mediaType: |
+#             previews:
+#               - groot
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         if: github.event.state == 'success'
+#       - run: |
+#           echo 'contexts: ${{ toJson(fromJson(steps.pulls.outputs.data)) }}'
+#         if: github.event.state == 'success' && steps.pulls.outputs.status == 200
+
+      # PR の最新コミットかつ reviewres が全員 Approve していたらコメントで通知する
+      - name: POST /repos/{owner}/{repo}/commits/{sha}/comments
+        uses: octokit/request-action@v2.0.26
+        with:
+          route: POST /repos/{owner}/{repo}/issues/{issue_number}/comments
+          owner: SnowCait
+          repo: action-sandbox
+          issue_number: ${{ fromJson(steps.pulls.outputs.data)[0].number }}
+          body: |
+            ${{ fromJson(steps.pulls.outputs.data)[0].user.login }}
+            @${{ join(fromJson(steps.pulls.outputs.data)[0].assignees.*.login, ' @') }}
+            draft ${{ fromJson(steps.pulls.outputs.data)[0].draft }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        if: |
+          github.event.state == 'success' &&
+          fromJson(steps.commit_state.outputs.data).state == 'success' &&
+          fromJson(steps.commit_state.outputs.data).sha == fromJson(steps.pulls.outputs.data)[0].head.sha &&
+          fromJson(steps.pulls.outputs.data)[0].state == 'open'
+          
+  review:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request_review'
+
+    steps:
+      - run: echo $GITHUB_EVENT_NAME
+      - run: cat $GITHUB_EVENT_PATH

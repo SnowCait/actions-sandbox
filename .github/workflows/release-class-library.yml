@@ -1,0 +1,62 @@
+name: Release .NET Core Class Library
+
+on:
+  push:
+    branches: [ master ]
+    paths: 
+      - class-library/ClassLibrary1/ClassLibrary1/ClassLibrary1.csproj
+      - .github/workflows/release-class-library.yml
+
+jobs:
+  release:
+
+    runs-on: ubuntu-latest
+    defaults:
+        run:
+            working-directory: class-library/ClassLibrary1/
+
+    steps:
+    - uses: actions/checkout@v2.3.4
+
+    - name: XML to JSON
+      id: csproj
+      uses: fabasoad/yaml-json-xml-converter-action@v1.0.11
+      with:
+        path: class-library/ClassLibrary1/ClassLibrary1/ClassLibrary1.csproj
+        from: xml
+        to: json
+    - run: echo ${{ fromJson(steps.csproj.outputs.data).Project._.PropertyGroup.Version }}
+
+    - name: Fetch releases
+      id: releases
+      uses: actions/github-script@v4.0.2
+      with:
+        github-token: ${{ github.token }}
+        script: |
+          return github.repos.listReleases({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+          });
+    - run: echo ${{ fromJson(steps.releases.outputs.result).data[0].tag_name }}
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1.8.1
+      with:
+        dotnet-version: 3.1.301
+    - name: Install dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
+
+    - name: Create a Release
+      uses: actions/create-release@v1.1.4
+      if: fromJson(steps.csproj.outputs.data).Project._.PropertyGroup.Version != fromJson(steps.releases.outputs.result).data[0].tag_name
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ fromJson(steps.csproj.outputs.data).Project._.PropertyGroup.Version }}
+        release_name: ${{ fromJson(steps.csproj.outputs.data).Project._.PropertyGroup.Version }}
+        draft: true
+        prerelease: true

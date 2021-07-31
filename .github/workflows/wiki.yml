@@ -1,0 +1,66 @@
+name: Wiki
+
+on:
+  gollum
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - name: Slack 新形式 secure
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\": \"Wiki ${ACTION}: ${TITLE}\n${HTML_URL}\"}" \
+            ${WEBHOOK_URL}
+        env:
+          ACTION: ${{ github.event.pages[0].action }}
+          TITLE: ${{ github.event.pages[0].title }}
+          HTML_URL: ${{ github.event.pages[0].html_url }}
+          WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_3 }}
+#       - name: Slack 新形式 not secure
+#         run: |
+#           curl -X POST -H 'Content-type: application/json' \
+#             --data "{\"text\": \"Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}\"}" \
+#             ${{ secrets.SLACK_WEBHOOK_3 }}
+      - name: Slack 旧型式
+        run: |
+          json="{
+            'channel': '#sandbox',
+            'username': 'bot',
+            'text': 'Wiki ${ACTION}: ${TITLE}\n${HTML_URL}',
+            'icon_emoji': ':ghost:'
+          }"
+          curl -X POST --data-urlencode "payload=$json" ${WEBHOOK_URL}
+        env:
+          ACTION: ${{ github.event.pages[0].action }}
+          TITLE: ${{ github.event.pages[0].title }}
+          HTML_URL: ${{ github.event.pages[0].html_url }}
+          WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_2 }}
+      - uses: actions/checkout@v2.3.4
+        with:
+          repository: ${{ github.event.repository.full_name }}.wiki
+          ref: ${{ github.event.pages[0].sha }}
+          fetch-depth: 2
+      - name: Slack 新形式
+        run: |
+          url=${HTML_URL}/_compare/$(git rev-parse HEAD^)...$(git rev-parse HEAD)
+          echo $url
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\": \"[New] Wiki ${ACTION}: ${TITLE}\n${url}\"}" \
+            ${WEBHOOK_URL}
+        env:
+          ACTION: ${{ github.event.pages[0].action }}
+          TITLE: ${{ github.event.pages[0].title }}
+          HTML_URL: ${{ github.event.pages[0].html_url }}
+          WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_3 }}
+      - name: Slack 旧型式
+        run: |
+          json="{
+            'channel': '#sandbox',
+            'username': 'bot',
+            'text': '[Old] Wiki ${{ github.event.pages[0].action }}: ${{ github.event.pages[0].title }}\n${{ github.event.pages[0].html_url }}/_compare/$(git rev-parse HEAD^)...$(git rev-parse HEAD)',
+            'icon_emoji': ':ghost:'
+          }"
+          curl -X POST --data-urlencode "payload=$json" ${{ secrets.SLACK_WEBHOOK_2 }}

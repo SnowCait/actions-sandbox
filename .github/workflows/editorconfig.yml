@@ -1,0 +1,34 @@
+name: EditorConfig
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    steps:
+    - uses: actions/checkout@v2.3.4
+#     - uses: greut/eclint-action@v0.0.5
+#       with:
+#         args: fix
+#     - uses: docker://greut/eclint
+#     - uses: zbeekman/EditorConfig-Action@v1.1.1
+#       env:
+#         ALWAYS_LINT_ALL_FILES: true
+    - uses: snow-actions/eclint@v1.0.1
+      with:
+        args: '--version'
+    - uses: snow-actions/eclint@v1.0.1
+      with:
+        args: 'fix *.json'
+    - run: git status
+#     - uses: peter-evans/create-pull-request@v1.2.0
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         PULL_REQUEST_BRANCH: 'feature/fix-file-format'
+#         COMMIT_MESSAGE: 'Fix file format'
+

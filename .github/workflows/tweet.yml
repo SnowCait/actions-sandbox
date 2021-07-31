@@ -1,0 +1,30 @@
+name: Tweet
+
+on:
+  workflow_dispatch:
+  push:
+    paths: [ .github/workflows/tweet.yml ]
+
+jobs:
+  tweet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - run: pwd
+      - name: Tweet
+        id: tweet
+        uses: snow-actions/tweet@v1.1.1
+        env:
+          CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
+          CONSUMER_API_SECRET_KEY: ${{ secrets.TWITTER_CONSUMER_API_SECRET_KEY }}
+          ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+        with:
+          status: |
+            ${{ github.run_id }}-${{ github.run_number }}
+            ${{ github.sha }}
+#           media_paths: |
+#             pusher.csv
+      - run: echo ${{ steps.tweet.outputs.response }}
+      - run: echo ${{ fromJSON(steps.tweet.outputs.response).id_str }}
+      - run: echo ${{ fromJSON(steps.tweet.outputs.response).text }}

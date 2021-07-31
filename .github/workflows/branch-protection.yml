@@ -1,0 +1,11 @@
+name: Branch protection
+
+on:
+  pull_request:
+
+jobs:
+  success:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "Always success"

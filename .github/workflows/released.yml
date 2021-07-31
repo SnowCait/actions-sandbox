@@ -1,0 +1,26 @@
+name: Released
+
+on:
+  workflow_dispatch:
+  release:
+    types: [released]
+
+jobs:
+  tweet:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: cat ${{ github.event_path }}
+      - uses: snow-actions/tweet@v1.1.1
+        id: tweet
+        env:
+          CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
+          CONSUMER_API_SECRET_KEY: ${{ secrets.TWITTER_CONSUMER_API_SECRET_KEY }}
+          ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+        with:
+          status: |
+            Released ${{ github.event.release.name }}
+            ${{ github.event.release.html_url }}
+      - run: echo ${{ steps.tweet.outputs.response }}
+      - run: echo ${{ fromJSON(steps.tweet.outputs.response).text }}

@@ -1,0 +1,109 @@
+name: GitHub Container registory
+
+on:
+  push:
+    paths:
+      - .github/workflows/ghcr.yml
+      - ghcr/**/*
+  workflow_dispatch:
+
+jobs:
+  build-texturepacker:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        version: [ 5.5.0, 5.4.0 ]
+    defaults:
+      run:
+        working-directory: ghcr/texturepacker/
+
+    steps:
+      - uses: snow-actions/sparse-checkout@v1.1.0
+        with:
+          patterns: |
+            ghcr/texturepacker/
+      - name: Download TexturePacker.deb
+        run: |
+          curl -o TexturePacker.deb \
+            https://www.codeandweb.com/download/texturepacker/${VERSION}/TexturePacker-${VERSION}-ubuntu64.deb
+        env:
+          VERSION: ${{ matrix.version }}
+      - name: Build
+        run: docker build -t ghcr.io/${OWNER,,}/texturepacker:${VERSION} .
+        env:
+          OWNER: ${{ github.repository_owner }}
+          VERSION: ${{ matrix.version }}
+      - name: Login
+        run: echo $CR_PAT | docker login ghcr.io -u snowcait --password-stdin
+        env:
+          CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push
+        run: docker push ghcr.io/${OWNER,,}/texturepacker:${VERSION}
+        env:
+          OWNER: ${{ github.repository_owner }}
+          VERSION: ${{ matrix.version }}
+
+  use-texturepacker:
+    runs-on: ubuntu-20.04
+    needs: [ build-texturepacker ]
+    timeout-minutes: 5
+    env:
+      TEXTUREPACKER_VERSION: 5.5.0
+
+    steps:
+      - run: ls -la
+#       - run: docker inspect ghcr.io/snowcait/texturepacker:5.5.0
+      - name: Pull
+        run: docker pull ghcr.io/${OWNER,,}/texturepacker:${TEXTUREPACKER_VERSION}
+        env:
+          OWNER: ${{ github.repository_owner }}
+      - run: docker images
+      - name: Help
+        run: docker run ghcr.io/${OWNER,,}/texturepacker:${TEXTUREPACKER_VERSION} TexturePacker --help
+        env:
+          OWNER: ${{ github.repository_owner }}
+      - name: Version
+        run: docker run ghcr.io/${OWNER,,}/texturepacker:${TEXTUREPACKER_VERSION} TexturePacker --version
+        env:
+          OWNER: ${{ github.repository_owner }}
+      - name: License
+        run: docker run ghcr.io/${OWNER,,}/texturepacker:${TEXTUREPACKER_VERSION} TexturePacker --license-info
+        env:
+          OWNER: ${{ github.repository_owner }}
+      - name: License
+        run: docker run ghcr.io/${OWNER,,}/texturepacker:${TEXTUREPACKER_VERSION} TexturePacker --activate-license ${LICENSE_KEY} --license-info
+        env:
+          OWNER: ${{ github.repository_owner }}
+          LICENSE_KEY: ${{ secrets.TEXTUREPACKER_LICENSE_KEY }}
+
+  build-runner:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ghcr/github-runner/
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker build -t ghcr.io/snowcait/github-runner:latest .
+      - run: docker images
+      - run: echo $CR_PAT | docker login ghcr.io -u snowcait --password-stdin
+        env:
+          CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+      - run: docker push ghcr.io/snowcait/github-runner:latest
+
+  build-php:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ghcr/php/
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker build -t ghcr.io/snowcait/php-fpm:latest .
+      - run: docker images
+      - run: echo $CR_PAT | docker login ghcr.io -u snowcait --password-stdin
+        env:
+          CR_PAT: ${{ secrets.GITHUB_TOKEN }}
+      - run: docker push ghcr.io/snowcait/php-fpm:latest

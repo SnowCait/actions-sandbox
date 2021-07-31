@@ -1,0 +1,61 @@
+name: Artifact
+
+on:
+  push:
+    paths: .github/workflows/artifact.yml
+  workflow_dispatch:
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2.3.4
+
+      - run: mkdir -p path/to/artifact
+
+      - run: echo hello > path/to/artifact/world.txt
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact-1
+          path: path/to/artifact/world.txt
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact-2
+          path: path/to/artifact/
+
+      - run: echo $GITHUB_SHA > path/to/artifact/sha.txt
+        
+      - uses: actions/upload-artifact@v2
+        with:
+          path: path/to/artifact/
+
+  download:
+    runs-on: ubuntu-latest
+    needs: [upload]
+
+    steps:
+      - uses: actions/checkout@v2.3.4
+        with:
+          ref: master
+
+      - uses: actions/download-artifact@v2
+        with:
+          path: docs
+
+      - run: ls -R
+        working-directory: docs
+      
+      - name: Deploy to GitHub Pages
+        run: |
+          git config user.email github-actions@github.com
+          git config user.name github-actions
+          git add -A
+          git commit -m "$GITHUB_SHA"
+          git push
+        
+      - run: |
+          echo https://snowcait.github.io/action-sandbox/artifact/sha.txt
+          echo https://snowcait.github.io/action-sandbox/artifact/world.txt

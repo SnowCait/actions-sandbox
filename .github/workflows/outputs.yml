@@ -1,0 +1,21 @@
+name: Outputs
+
+on:
+  push:
+    paths: .github/workflows/outputs.yml
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2.3.4
+    - name: Read a file
+      id: readfile
+      run: echo "::set-output name=text::$(<.github/workflows/outputs.yml)";
+    - name: Output
+      run: echo "${{ steps.readfile.outputs.text }}"
+    - name: Set env
+      run: export TEXT=test
+    - run: echo ${TEXT}

@@ -1,0 +1,14 @@
+name: Unanimously Approved
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, review_requested, review_request_removed]
+  pull_request_review:
+    types: [submitted, dismissed]
+
+jobs:
+  unanimously-approved:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: snow-actions/unanimously-approved@main
