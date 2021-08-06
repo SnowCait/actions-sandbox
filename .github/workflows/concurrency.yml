@@ -1,0 +1,20 @@
+name: Concurrency
+
+on:
+  push:
+    paths:
+      - .github/workflows/concurrency.yml
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Control concurrency
+        run: gh run list
+
+      - name: Sleep 10 minutes
+        run: sleep 600
