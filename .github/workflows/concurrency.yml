@@ -1,4 +1,4 @@
-# name: Concurrency
+name: Concurrency
 
 on:
   push:
@@ -16,6 +16,8 @@ jobs:
 
     steps:
       - run: gh run list --workflow ${WORKFLOW}
+
+      - run: gh api -X GET repos/${GITHUB_REPOSITORY}/actions/runs --field status=in_progress
 
       - run: gh api -X GET repos/${GITHUB_REPOSITORY}/actions/runs --field status=in_progress
 
