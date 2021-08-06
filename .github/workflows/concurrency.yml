@@ -26,9 +26,5 @@ jobs:
         env:
           max: 3
 
-#       - run: gh api repos/${GITHUB_REPOSITORY}/actions/runs | jq '.workflow_runs[].status'
-#       - run: gh api repos/${GITHUB_REPOSITORY}/actions/runs?status=in_progress
-#       - run: gh api -X GET repos/${GITHUB_REPOSITORY}/actions/runs --field workflow_id=${WORKFLOW}
-
       - name: Sleep 10 minutes
         run: sleep 600
