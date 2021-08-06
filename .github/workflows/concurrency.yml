@@ -19,7 +19,7 @@ jobs:
       - run: gh run list --workflow ${WORKFLOW} | grep -v '^completed' | sed '1,1d' | cut -f 1-2,7
       - run: gh run list --workflow ${WORKFLOW} | grep -v '^completed' | sed '1,1d' | wc -l
       - run: |
-          while [[ $(gh run list --workflow ${WORKFLOW} | grep -v '^completed' | sed '1,1d' | wc -l) >= $max ]]; do
+          while [ $(gh run list --workflow ${WORKFLOW} | grep -v '^completed' | sed '1,1d' | wc -l) -ge $max ]; do
             echo "sleep"
             sleep 60
           done
