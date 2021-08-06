@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - run: gh run list --workflow ${WORKFLOW}
-      - run: gh run list --workflow ${WORKFLOW} | cut -f 1-2,7
+      - run: gh run list --workflow ${WORKFLOW} | grep -v '^completed' | cut -f 1-2,7
 
       - run: gh api repos/${GITHUB_REPOSITORY}/actions/runs | jq '.workflow_runs[].status'
 
