@@ -1,0 +1,30 @@
+name: Concurrency
+
+on:
+  push:
+    paths:
+      - .github/workflows/concurrency.yml
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      WORKFLOW: ${{ github.workflow }}
+
+    steps:
+      - run: gh run list --workflow ${WORKFLOW}
+      - run: gh run list --workflow ${WORKFLOW} | grep -v '^completed' | sed '1,1d' | cut -f 1-2,7
+      - run: gh run list --workflow ${WORKFLOW} | grep -v '^completed' | sed '1,1d' | wc -l
+      - run: |
+          while [ $(gh run list --workflow ${WORKFLOW} | grep -v '^completed' | sed '1,1d' | wc -l) -ge $max ]; do
+            echo "sleep"
+            sleep 60
+          done
+        env:
+          max: 3
+
+      - name: Sleep 10 minutes
+        run: sleep 600
