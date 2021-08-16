@@ -13,7 +13,7 @@ jobs:
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - id: event
-        run: echo '::set-output name=json::$(cat $GITHUB_EVENT_PATH)'
+        run: echo "::set-output name=json::$(cat $GITHUB_EVENT_PATH)"
       - run: echo $JSON
         env:
           JSON: ${{ steps.event.outputs.json }}
