@@ -19,7 +19,9 @@ jobs:
         env:
           JSON: ${{ steps.event.outputs.json }}
       - name: Replace newline character
+        run: echo todo
       - name: Use GITHUB_ENV
+        run: echo todo
       - name: Original
         run: echo $JSON
         env:
