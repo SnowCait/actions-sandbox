@@ -14,9 +14,13 @@ jobs:
       - run: cat $GITHUB_EVENT_PATH
       - id: event
         run: echo "::set-output name=json::$(cat $GITHUB_EVENT_PATH)"
-      - run: echo $JSON
+      - name: Only first line...
+        run: echo $JSON
         env:
           JSON: ${{ steps.event.outputs.json }}
-      - run: echo $JSON
+      - name: Replace newline character
+      - name: Use GITHUB_ENV
+      - name: Original
+        run: echo $JSON
         env:
           JSON: ${{ toJSON(github.event) }}
