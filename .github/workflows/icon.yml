@@ -10,7 +10,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FILE: Twitter_Logo_Blue.png
 
     steps:
       - uses: actions/checkout@v2
-      - run: identify Twitter_Logo_Blue.png
+      - run: identify $FILE
+      - run: identify $FILE | cut -f 2,6
