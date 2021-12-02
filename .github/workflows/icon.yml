@@ -15,6 +15,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      # Info
       - run: identify $FILE
       - run: identify -verbose $FILE
+      - run: file $FILE
+
+      # Validate
       - run: test "$(identify $FILE | cut -f 2,6 -d ' ')" = "PNG sRGB"
