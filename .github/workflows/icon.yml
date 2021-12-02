@@ -16,4 +16,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: identify $FILE
-      - run: test $(identify $FILE | cut -f 2,6 -d ' ') = 'PNG sRGB'
+      - run: test "$(identify $FILE | cut -f 2,6 -d ' ')" = "PNG sRGB"
