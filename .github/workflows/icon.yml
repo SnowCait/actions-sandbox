@@ -18,6 +18,7 @@ jobs:
 
       # Info
       - run: identify $FILE
+      - run: identify -format '%m %r' $FILE
       - run: identify -verbose $FILE
       - run: file $FILE
 
