@@ -19,8 +19,9 @@ jobs:
       # Info
       - run: identify $FILE
       - run: identify -format '%m %r' $FILE
+      - run: identify $FILE | cut -f 2,6 -d ' '
       - run: identify -verbose $FILE
       - run: file $FILE
 
       # Validate
-      - run: test "$(identify -format '%m %r' $FILE)" = "PNG sRGB"
+      - run: test "$(identify $FILE | cut -f 2,6 -d ' ')" = "PNG sRGB"
