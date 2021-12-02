@@ -1,0 +1,16 @@
+name: Icon
+
+on:
+  push:
+    paths:
+      - .github/workflows/icon.yml
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: identify Twitter_Logo_Blue.png
