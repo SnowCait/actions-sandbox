@@ -18,8 +18,6 @@ jobs:
 
       # Info
       - run: identify -version
-      - run: magick -version
-      - run: magick identify $FILE
       - run: identify $FILE
       - run: identify -format '%m %r' $FILE
       - run: identify $FILE | cut -f 2,6 -d ' '
