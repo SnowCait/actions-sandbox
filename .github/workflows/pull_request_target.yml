@@ -1,0 +1,17 @@
+name: Pull Request Target
+
+on:
+  pull_request_target:
+    paths: .github/workflows/pull_request_target.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo $GITHUB_SHA
+          echo $GITHUB_REF
+          echo $GITHUB_EVENT_NAME
+          echo $GITHUB_EVENT_PATH
+          echo $GITHUB_WORKSPACE
+      - run: cat $GITHUB_EVENT_PATH
