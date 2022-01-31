@@ -22,3 +22,4 @@ jobs:
       - run: gh workflow list --all
       - run: gh workflow view "${WORKFLOW}"
       - run: gh run list --workflow "${WORKFLOW}"
+      - run: gh run list --workflow "${WORKFLOW}" --json status,workflowDatabaseId
