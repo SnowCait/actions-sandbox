@@ -10,7 +10,7 @@ on:
 
 jobs:
   delete:
-    runs-on: mac-latest
+    runs-on: macos-latest
     timeout-minutes: 1
     env:
       GH_TOKEN: ${{ github.token }}
