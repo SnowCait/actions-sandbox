@@ -22,5 +22,8 @@ jobs:
       - run: gh workflow list --all
       - run: gh workflow view "${WORKFLOW}"
       - run: gh run list --workflow "${WORKFLOW}"
-      - run: gh run list --workflow "${WORKFLOW}" --json status,workflowDatabaseId
-      - run: gh run list --workflow "${WORKFLOW}" --json status,workflowDatabaseId --jq '.[] | select(.status != "in_progress") | .workflowDatabaseId'
+      - run: gh run list --workflow "${WORKFLOW}" --json databaseId,status,workflowDatabaseId
+      - run: gh run list --workflow "${WORKFLOW}" --json databaseId,status --jq '.[] | select(.status != "in_progress") | .databaseId'
+      - run: |
+          gh run list --workflow "${WORKFLOW}" --json databaseId,status --jq '.[] | select(.status != "in_progress") | .databaseId'
+            | xargs echo "run_id: "
