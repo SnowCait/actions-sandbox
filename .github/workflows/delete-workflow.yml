@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 1
     env:
+      GH_TOKEN: ${{ github.token }}
       WORKFLOW: ${{ github.event.inputs.workflow }}
 
     steps:
