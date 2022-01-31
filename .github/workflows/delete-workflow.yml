@@ -1,0 +1,22 @@
+name: Delete workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      workflow:
+        description: workflow-id, workflow-name or filename
+        required: true
+        type: string
+
+jobs:
+  delete:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 1
+    env:
+      WORKFLOW: ${{ github.event.inputs.workflow }}
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - run: gh workflow list --all
+      - run: gh workflow view ${WORKFLOW}
+      - run: gh run list --workflow ${WORKFLOW}
