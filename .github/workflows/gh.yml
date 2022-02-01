@@ -9,18 +9,23 @@ on:
   workflow_dispatch:
 
 jobs:
-#   create-pr:
-#     runs-on: ubuntu-20.04
+  create-pr:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 1
+    env:
+      GH_REPO: ${{ github.repository }}
 
-#     steps:
-#       - run: echo $GITHUB_REF
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - run: echo $GITHUB_REF
+      - run: gh --version
 #       - uses: actions/checkout@v2
-#       - run: git branch
-#       - run: git log -1 --oneline --pretty=format:'%s'
-#       - run: gh pr create --draft --title "$(git log -1 --oneline --pretty=format:'%s')" --body "" --assignee $AUTHOR
-#         env:
-#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#           AUTHOR: ${{ github.event.pusher.name }}
+      - run: git branch
+      - run: git log -1 --oneline --pretty=format:'%s'
+      - run: gh pr create --draft --title "$(git log -1 --oneline --pretty=format:'%s')" --body "" --assignee $AUTHOR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AUTHOR: ${{ github.event.pusher.name }}
 #   create-pr-fill:
 #     runs-on: ubuntu-20.04
 
