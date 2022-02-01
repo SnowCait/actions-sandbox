@@ -48,7 +48,7 @@ jobs:
 
       # バージョン、ヘルプ
       - run: gh --version
-#       - run: gh --help
+      - run: gh --help
       - run: gh help actions
       - run: gh actions --help
 
