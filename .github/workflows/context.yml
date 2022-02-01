@@ -3,7 +3,7 @@ name: Context
 on:
   push:
     paths:
-      - .github/workflows/steps-outcome.yml
+      - .github/workflows/context.yml
 
 jobs:
   build:
