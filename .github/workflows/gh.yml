@@ -19,7 +19,7 @@ jobs:
       - run: cat $GITHUB_EVENT_PATH
       - run: echo $GITHUB_REF
       - run: gh --version
-#       - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 #       - run: git branch
 #       - run: git log -1 --oneline --pretty=format:'%s'
 #       - run: gh pr create --draft --title "$(git log -1 --oneline --pretty=format:'%s')" --body "" --assignee $AUTHOR
