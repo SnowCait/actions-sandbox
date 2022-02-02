@@ -9,11 +9,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    container:
-      image: jenkins/jenkins:lts-jdk11
-      ports:
-        - 8080
-        - 50000
+    services:
+      jenkins:
+        image: jenkins/jenkins:lts-jdk11
+        ports:
+          - 8080:8080
+          - 50000:50000
 
     steps:
-      - run: cat /var/jenkins_home/secrets/initialAdminPassword
+      - run: curl -sSL http://localhost:8080/
