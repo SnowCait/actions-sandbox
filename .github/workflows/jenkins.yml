@@ -17,4 +17,4 @@ jobs:
           - 50000:50000
 
     steps:
-      - run: curl -sSL http://localhost:8080/
+      - run: curl -sSL http://0.0.0.0:8080/
