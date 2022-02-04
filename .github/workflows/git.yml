@@ -65,8 +65,12 @@ jobs:
       - run: git diff --exit-code
         id: diff
         continue-on-error: true
-      - uses: dawidd6/action-git-user-config@v1.0.0
+      - name: git config
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
       - run: |
+          set -x
           git add -A
           git commit -m 'commit'
           git push
