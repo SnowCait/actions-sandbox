@@ -53,21 +53,22 @@ jobs:
     timeout-minutes: 5
     
     steps:
-    - uses: actions/checkout@v2.3.4
-      with:
-        ref: feature/git-commands
-    - run: mkdir -p files
-    - run: |
-        echo 'content' >> files/file.txt
-        echo 'content2' >> files/file2.txt
-        git diff --name-only
-    - run: git diff --exit-code
-      id: diff
-      continue-on-error: true
-    - uses: dawidd6/action-git-user-config@v1.0.0
-    - run: |
-        git add -A
-        git commit -m 'commit'
-        git push
-        git log -1
-      if: steps.diff.outcome == 'failure'
+      - run: cat $GITHUB_EVENT_PATH
+      - uses: actions/checkout@v2.3.4
+        with:
+          ref: feature/git-commands
+      - run: mkdir -p files
+      - run: |
+          echo 'content' >> files/file.txt
+          echo 'content2' >> files/file2.txt
+          git diff --name-only
+      - run: git diff --exit-code
+        id: diff
+        continue-on-error: true
+      - uses: dawidd6/action-git-user-config@v1.0.0
+      - run: |
+          git add -A
+          git commit -m 'commit'
+          git push
+          git log -1
+        if: steps.diff.outcome == 'failure'
