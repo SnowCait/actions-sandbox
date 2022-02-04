@@ -68,6 +68,7 @@ jobs:
           mkdir -p files
           echo 'content' >> files/file.txt
           echo 'content2' >> files/file2.txt
+          ls -l files
       - run: git diff
       - run: git diff --name-only --exit-code
         id: diff
