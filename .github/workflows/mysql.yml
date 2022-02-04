@@ -13,3 +13,7 @@ jobs:
     steps:
       - run: mysql -V
       - run: docker image ls
+      - run: |
+          <?php
+          phpinfo();
+        shell: php {0}
