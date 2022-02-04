@@ -73,4 +73,4 @@ jobs:
         git add -A
         git commit -m 'commit'
         git push
-      if: failure() && !steps.diff.conclusion
+      if: failure() && steps.diff.conclusion == 'failure'
