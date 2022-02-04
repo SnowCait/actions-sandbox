@@ -14,6 +14,7 @@ jobs:
       - run: mysql -V
       - run: docker image ls
       - run: |
+          <?php
           $driver = new mysqli_driver();
           var_dump($driver);
           var_dump($driver->client_info);
