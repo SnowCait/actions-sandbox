@@ -72,7 +72,7 @@ jobs:
       - run: |
           set -x
           git add -A
-          git commit --author ${author} -m 'commit'
+          git commit --author "${author}" -m 'commit'
           git push
           git log -1
           git log -1 --pretty=full
