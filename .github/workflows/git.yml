@@ -71,4 +71,5 @@ jobs:
           git commit -m 'commit'
           git push
           git log -1
+          git log -1 --pretty=full
         if: steps.diff.outcome == 'failure'
