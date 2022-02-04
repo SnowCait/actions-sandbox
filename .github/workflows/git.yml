@@ -82,4 +82,4 @@ jobs:
           author: ${{ github.event.head_commit.author.name }} <${{ github.event.head_commit.author.email }}>
       - run: echo ${step}
         env:
-          step: ${{ toJSON(steps.diff) }}
+          step: ${{ toJSON(steps) }}
