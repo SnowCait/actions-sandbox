@@ -72,7 +72,7 @@ jobs:
       - name: Diff
         id: diff
         run: |
-          git diff -N .
+          git add -N .
           git diff --name-only --exit-code
         continue-on-error: true
       - name: Commit & Push
