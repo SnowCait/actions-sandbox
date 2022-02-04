@@ -1,8 +1,9 @@
 name: Git Commands
 
 on:
-  push:
-    paths: .github/workflows/git.yml
+#   push:
+#     paths: .github/workflows/git.yml
+  pull_request:
   workflow_dispatch:
 
 jobs:
