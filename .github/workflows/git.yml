@@ -58,10 +58,10 @@ jobs:
         with:
           ref: feature/git-commands
       - run: mkdir -p files
-#       - name: Write
-#         run: |
-#           echo 'content' >> files/file.txt
-#           echo 'content2' >> files/file2.txt
+      - name: Write
+        run: |
+          echo 'content' >> files/file.txt
+          echo 'content2' >> files/file2.txt
       - run: git diff
       - run: git diff --name-only --exit-code
         id: diff
@@ -80,3 +80,6 @@ jobs:
         if: steps.diff.outcome == 'failure'
         env:
           author: ${{ github.event.head_commit.author.name }} <${{ github.event.head_commit.author.email }}>
+      - run: echo ${step}
+        env:
+          step: ${{ toJSON(steps.diff) }}
