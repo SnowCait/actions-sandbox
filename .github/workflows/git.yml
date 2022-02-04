@@ -93,7 +93,7 @@ jobs:
           git add .
           git commit --author "$(git log --pretty=format:"%an <%ae>")" -m 'generated'
           git push
-        if: steps.diff.outcome == 'failure' && github.event_name == 'pull_request'
+        if: failure() && steps.diff.outcome == 'failure' && github.event_name == 'pull_request'
       - name: Log
         run: |
           set -x
