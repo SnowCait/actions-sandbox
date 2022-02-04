@@ -63,8 +63,11 @@ jobs:
         git diff --name-only
     - run: git diff --exit-code
       id: diff
+      continue-on-error: true
+    - uses: dawidd6/action-git-user-config@v1.0.0
     - run: |
         git add -A
         git commit -m 'commit'
         git push
-      if: failure() && steps.diff.conclusion == 'failure'
+        git log -1
+      if: steps.diff.outcome == 'failure'
