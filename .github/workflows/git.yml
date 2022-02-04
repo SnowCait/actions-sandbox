@@ -63,12 +63,11 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
         if: github.event_name == 'pull_request'
-#       - name: Write
-#         run: |
-#           mkdir -p files
-#           echo 'content' >> files/file.txt
-#           echo 'content2' >> files/file2.txt
-#           ls -l files
+      - name: Write
+        run: |
+          mkdir -p files
+          echo 'content' >> files/file.txt
+          echo 'content2' >> files/file2.txt
       - name: Diff
         id: diff
         run: |
