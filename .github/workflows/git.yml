@@ -58,11 +58,12 @@ jobs:
         with:
           ref: feature/git-commands
       - run: mkdir -p files
-      - run: |
+      - name: Write
+        run: |
           echo 'content' >> files/file.txt
           echo 'content2' >> files/file2.txt
-          git diff --name-only
-      - run: git diff --exit-code
+      - run: git diff
+      - run: git diff --name-only --exit-code
         id: diff
         continue-on-error: true
       - name: git config
