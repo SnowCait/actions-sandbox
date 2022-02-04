@@ -1,8 +1,9 @@
 name: Git Commands
 
 on:
-  push:
-    paths: .github/workflows/git.yml
+#   push:
+#     paths: .github/workflows/git.yml
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -57,26 +58,43 @@ jobs:
       - uses: actions/checkout@v2.4.0
         with:
           ref: feature/git-commands
+        if: github.event_name == 'push'
+      - uses: actions/checkout@v2.4.0
+        with:
+          ref: ${{ github.head_ref }}
+        if: github.event_name == 'pull_request'
       - name: Write
         run: |
           mkdir -p files
           echo 'content' >> files/file.txt
           echo 'content2' >> files/file2.txt
-      - run: git diff
-      - run: git diff --name-only --exit-code
+      - name: Diff
         id: diff
+        run: |
+          git add -N .
+          git diff --name-only --exit-code
         continue-on-error: true
-      - run: |
+      - name: Commit & Push
+        run: |
           set -x
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
           git commit --author "${AUTHOR}" -m 'generated'
           git push
-        if: steps.diff.outcome == 'failure'
+        if: steps.diff.outcome == 'failure' && github.event_name == 'push'
         env:
           AUTHOR: ${{ github.event.head_commit.author.name }} <${{ github.event.head_commit.author.email }}>
-      - name: git log
+      - name: Commit & Push
+        run: |
+          set -x
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit --author "$(git log --pretty=format:"%an <%ae>")" -m 'generated'
+          git push
+        if: steps.diff.outcome == 'failure' && github.event_name == 'pull_request'
+      - name: Log
         run: |
           set -x
           git log -1
