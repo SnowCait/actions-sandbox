@@ -26,22 +26,22 @@ jobs:
         git add -N .
         git diff --name-only
 
+    - run: mkdir -p ~/output
     - run: ./configure --help
-    - run: ./configure
+    - run: ./configure --prefix=~/output
     - name: diff
       run: |
         git add -N .
         git diff --name-only
     - run: cat Makefile
 
-    - run: make DESTDIR=~/output
+    - run: make
     - name: diff
       run: |
         git add -N .
         git diff --name-only
 
-    - run: mkdir -p ~/output
-    - run: make install DESTDIR=~/output
+    - run: make install
     - name: diff
       run: |
         git add -N .
