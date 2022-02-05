@@ -58,3 +58,16 @@ jobs:
       run: |
         git add -N .
         git diff --name-only
+
+    - uses: actions/upload-artifact@v2.3.1
+      with:
+        path:
+          ~/output/lib/php/20210902/stats.so
+
+  php:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+
+    steps:
+      - run: php -v
+      - run: php -m
