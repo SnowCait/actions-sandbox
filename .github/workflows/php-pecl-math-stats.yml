@@ -13,7 +13,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         repository: php/pecl-math-stats
-        ref: 2.0.3
+#         ref: 2.0.3
     - run: git log -5
     - run: ls -la
 
@@ -21,13 +21,25 @@ jobs:
     - run: phpize --help
 
     - run: phpize
-    - run: ls -la
+    - name: diff
+      run: |
+        git add -N
+        git diff --name-only
 
     - run: ./configure
-    - run: ls -la
+    - name: diff
+      run: |
+        git add -N
+        git diff --name-only
 
     - run: make
-    - run: ls -la
+    - name: diff
+      run: |
+        git add -N
+        git diff --name-only
 
     - run: make install
-    - run: ls -la
+    - name: diff
+      run: |
+        git add -N
+        git diff --name-only
