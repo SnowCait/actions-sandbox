@@ -14,5 +14,20 @@ jobs:
       with:
         repository: php/pecl-math-stats
         ref: 2.0.3
+    - run: git log -5
     - run: ls -la
+
     - run: phpize --version
+    - run: phpize --help
+
+    - run: phpize
+    - run: ls -la
+
+    - run: ./configure
+    - run: ls -la
+
+    - run: make
+    - run: ls -la
+
+    - run: make install
+    - run: ls -la
