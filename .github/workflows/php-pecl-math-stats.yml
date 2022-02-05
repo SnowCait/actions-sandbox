@@ -26,13 +26,15 @@ jobs:
         git add -N .
         git diff --name-only
 
+    - run: ./configure --help
     - run: ./configure
     - name: diff
       run: |
         git add -N .
         git diff --name-only
+    - run: cat Makefile
 
-    - run: make
+    - run: make DESTDIR=~/output
     - name: diff
       run: |
         git add -N .
