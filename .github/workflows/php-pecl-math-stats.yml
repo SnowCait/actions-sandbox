@@ -8,12 +8,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    strategy:
+      matrix:
+        ref:
+          - main
+          - 1.0.5
+          - 2.0.3
 
     steps:
     - uses: actions/checkout@v2
       with:
         repository: php/pecl-math-stats
-        ref: 2.0.3
+        ref: ${{ matrix.ref }}
     - run: git log -5
     - run: ls -la
 
