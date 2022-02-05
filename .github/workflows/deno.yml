@@ -1,0 +1,13 @@
+name: Deno
+
+on:
+  push:
+    paths:
+      - .github/workflows/deno.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: deno --version
