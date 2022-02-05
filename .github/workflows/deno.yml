@@ -17,4 +17,4 @@ jobs:
               return a + b;
           };
           console.info(add(1, 2));
-        shell: deno {0}
+        shell: deno run {0}
