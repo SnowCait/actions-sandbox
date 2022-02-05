@@ -13,9 +13,9 @@ jobs:
       fail-fast: false
       matrix:
         ref:
-          - main
-          - 1.0.5
-          - 2.0.3
+          - master
+#           - 1.0.5
+#           - 2.0.3
 
     steps:
     - uses: actions/checkout@v2
