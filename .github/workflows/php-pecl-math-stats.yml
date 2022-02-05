@@ -37,7 +37,7 @@ jobs:
     - run: pwd
     - run: mkdir -p ~/output
     - run: ./configure --help
-    - run: ./configure --prefix=$(pwd)/output # 反映されない？
+    - run: ./configure --prefix=$(pwd)/output # オプションは反映されてなさそう
     - name: diff
       run: |
         git add -N .
@@ -45,7 +45,7 @@ jobs:
     - run: cat Makefile
     - run: sed -i -e 's|prefix = /usr|prefix = /home/runner/work/actions-sandbox/actions-sandbox/output|' Makefile
     - run: sed -i -e 's|EXTENSION_DIR = /usr/lib/php/20210902|EXTENSION_DIR = /home/runner/work/actions-sandbox/actions-sandbox/output/lib/php/20210902|' Makefile
-    - run: git diff Makefile
+    - run: cat Makefile
 
     - run: make
     - name: diff
