@@ -29,11 +29,14 @@ jobs:
     - run: pwd
     - run: mkdir -p ~/output
     - run: ./configure --help
-    - run: ./configure --prefix=$(pwd)/output
+    - run: ./configure --prefix=$(pwd)/output # 反映されない？
     - name: diff
       run: |
         git add -N .
         git diff --name-only
+    - run: cat Makefile
+    - run: sed -e 's|prefix = /usr|prefix = /home/runner/work/actions-sandbox/actions-sandbox/output|' Makefile
+    - run: sed -i -e 's|prefix = /usr|prefix = /home/runner/work/actions-sandbox/actions-sandbox/output|' Makefile
     - run: cat Makefile
 
     - run: make
