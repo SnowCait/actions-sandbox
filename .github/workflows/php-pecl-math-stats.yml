@@ -26,9 +26,10 @@ jobs:
         git add -N .
         git diff --name-only
 
+    - run: pwd
     - run: mkdir -p ~/output
     - run: ./configure --help
-    - run: ./configure --prefix=~/output
+    - run: ./configure --prefix=$(pwd)/output
     - name: diff
       run: |
         git add -N .
