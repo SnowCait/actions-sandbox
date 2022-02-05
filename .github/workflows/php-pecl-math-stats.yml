@@ -23,23 +23,24 @@ jobs:
     - run: phpize
     - name: diff
       run: |
-        git add -N
+        git add -N .
         git diff --name-only
 
     - run: ./configure
     - name: diff
       run: |
-        git add -N
+        git add -N .
         git diff --name-only
 
     - run: make
     - name: diff
       run: |
-        git add -N
+        git add -N .
         git diff --name-only
 
-    - run: make install
+    - run: mkdir -p ~/output
+    - run: make install DESTDIR=~/output
     - name: diff
       run: |
-        git add -N
+        git add -N .
         git diff --name-only
