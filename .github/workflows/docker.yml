@@ -46,4 +46,4 @@ jobs:
     steps:
       - run: docker ps
       - run: mysql -V
-      - run: mysql –protocol=tcp -hlocalhost -P3306 -uroot -e "SHOW DATABASES"
+      - run: mysql -–protocol=tcp -hlocalhost -P3306 -uroot -e "SHOW DATABASES"
