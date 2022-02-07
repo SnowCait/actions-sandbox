@@ -18,13 +18,14 @@ jobs:
       - uses: actions/checkout@v2
       - run: docker-compose up -d
       - run: docker-compose ps
-      - run: sleep 60
-      - run: docker-compose ps
+#       - run: sleep 60
+#       - run: docker-compose ps
       - run: docker-compose exec -T mysql mysql -V
       - run: docker-compose exec -T --env MYSQL_PWD=abcdef mysql mysql -uroot -e "SHOW DATABASES"
       - run: docker-compose logs
         if: always()
       - run: ls -la
+      - run: ls -la .database/
 
   service:
     runs-on: ubuntu-latest
