@@ -21,7 +21,7 @@ jobs:
       - run: sleep 120
       - run: docker-compose ps
       - run: docker-compose exec -T mysql mysql -V
-      - run: docker-compose exec -T mysql mysql -uroot -e "SHOW DATABASES"
+      - run: docker-compose exec -T --env MYSQL_PWD=abcdef mysql mysql -uroot -e "SHOW DATABASES"
       - run: docker-compose logs
         if: always()
 
