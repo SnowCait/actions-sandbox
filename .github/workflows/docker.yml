@@ -43,7 +43,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     env:
-      MYSQL_PASSWORD: abcdef
+      MYSQL_PWD: abcdef
 
     steps:
       - run: docker ps
