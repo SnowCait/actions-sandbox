@@ -51,6 +51,8 @@ jobs:
         env:
           JSON: ${{ toJSON(job.services) }}
       - run: mysql -V
-      - run: mysql -–protocol=tcp -hlocalhost -P3306 -uroot -e "SHOW DATABASES"
-      - run: docker logs $(docker ps -q)
+      - run: mysql --protocol=tcp -hlocalhost -P3306 -uroot -e "SHOW DATABASES"
+      - run: docker logs $CONTAINER_ID
+        env:
+          CONTAINER_ID: ${{ job.services.mysql.id }}
         if: always()
