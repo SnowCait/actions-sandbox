@@ -31,6 +31,8 @@ jobs:
         image: mysql:5.7
         ports:
           - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: abcdef
         options: >-
           --health-cmd "mysqladmin ping"
           --health-interval 10s
@@ -40,4 +42,4 @@ jobs:
     steps:
       - run: docker ps
       - run: mysql -V
-      - run: mysql -uroot -e "SHOW DATABASES"
+      - run: mysql –protocol=tcp -uroot -pabcdef -e "SHOW DATABASES"
