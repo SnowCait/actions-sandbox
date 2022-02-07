@@ -1,0 +1,20 @@
+name: Docker Image CI
+
+on:
+  push:
+    paths:
+      - .github/workflows/docker.yml
+      - docker/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: docker
+
+    steps:
+    - uses: actions/checkout@v2
+    - run: docker-compose up -d
+    - run: sleep 60
+    - run: mysql -uroot -e "SHOW DATABASES"
