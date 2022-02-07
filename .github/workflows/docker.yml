@@ -10,6 +10,8 @@ jobs:
   docker-compose:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    env:
+      COMPOSE_INTERACTIVE_NO_CLI: true
     defaults:
       run:
         working-directory: docker
