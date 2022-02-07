@@ -7,17 +7,37 @@ on:
       - docker/**
 
 jobs:
-  build:
+  docker-compose:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     defaults:
       run:
         working-directory: docker
 
     steps:
-    - uses: actions/checkout@v2
-    - run: docker-compose up -d
-    - run: sleep 120
-    - run: docker-compose exec mysql mysql -V
-    - run: docker-compose exec mysql mysql -uroot -e "SHOW DATABASES"
-    - run: docker-compose logs
-      if: always()
+      - uses: actions/checkout@v2
+      - run: docker-compose up -d
+      - run: sleep 120
+      - run: docker-compose exec mysql mysql -V
+      - run: docker-compose exec mysql mysql -uroot -e "SHOW DATABASES"
+      - run: docker-compose logs
+        if: always()
+
+  service:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    services:
+      mysql:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd "mysqladmin ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - run: docker ps
+      - run: mysql -V
+      - run: mysql -uroot -e "SHOW DATABASES"
