@@ -16,5 +16,5 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: docker-compose up -d
-    - run: sleep 60
-    - run: mysql -uroot -e "SHOW DATABASES"
+    - run: sleep 120
+    - run: docker-compose exec mysql mysql -uroot -e "SHOW DATABASES"
