@@ -45,5 +45,10 @@ jobs:
 
     steps:
       - run: docker ps
+      - run: echo $JSON
+        env:
+          JSON: ${{ toJSON(job.services) }}
       - run: mysql -V
       - run: mysql -–protocol=tcp -hlocalhost -P3306 -uroot -e "SHOW DATABASES"
+      - run: docker logs $(docker ps -q)
+        if: always()
