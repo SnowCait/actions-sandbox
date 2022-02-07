@@ -19,6 +19,12 @@ jobs:
       - run: docker-compose up -d
       - run: docker-compose ps
       - run: docker inspect $(docker-compose ps -q mysql)
+      - run: docker inspect $(docker-compose ps -q mysql) | jq '.[] | first'
+      - run: docker inspect $(docker-compose ps -q mysql) | jq '.[] | first | .State.Health.Status'
+      - run: |
+          if [ "$(docker inspect $(docker-compose ps -q mysql) | jq '.[] | first | .State.Health.Status')" == 'starting' ]; then
+            echo "Container is starting..."
+          fi
       - run: sleep 60
       - run: docker-compose ps
       - run: docker-compose exec -T mysql mysql -V
