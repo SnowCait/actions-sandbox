@@ -10,8 +10,8 @@ jobs:
   docker-compose:
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    env:
-      COMPOSE_INTERACTIVE_NO_CLI: true
+#     env:
+#       COMPOSE_INTERACTIVE_NO_CLI: true
     defaults:
       run:
         working-directory: docker
@@ -22,8 +22,8 @@ jobs:
       - run: docker-compose ps
       - run: sleep 120
       - run: docker-compose ps
-      - run: docker-compose exec mysql mysql -V
-      - run: docker-compose exec mysql mysql -uroot -e "SHOW DATABASES"
+      - run: docker-compose exec -T mysql mysql -V
+      - run: docker-compose exec -T mysql mysql -uroot -e "SHOW DATABASES"
       - run: docker-compose logs
         if: always()
 
