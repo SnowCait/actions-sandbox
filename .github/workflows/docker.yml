@@ -38,8 +38,10 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+    env:
+      MYSQL_PASSWORD: abcdef
 
     steps:
       - run: docker ps
       - run: mysql -V
-      - run: mysql –protocol=tcp -uroot -pabcdef -e "SHOW DATABASES"
+      - run: mysql –protocol=tcp -hlocalhost -uroot -e "SHOW DATABASES"
