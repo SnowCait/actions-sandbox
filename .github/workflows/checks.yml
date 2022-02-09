@@ -60,12 +60,7 @@ jobs:
           gh api -X PATCH repos/${repository}/check-runs/${check_run_id} --input - << JSON | jq -r '.'
           {
             "status": "completed",
-            "conclusion": "success",
-            "output": {
-              "title": "title test updated",
-              "summary": "summary test updated",
-              "text": "text test updated"
-            }
+            "conclusion": "success"
           }
           JSON
       - name: Get check-suite
