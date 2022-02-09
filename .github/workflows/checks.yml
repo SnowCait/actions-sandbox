@@ -1,6 +1,7 @@
 name: Checks API
 
 on:
+  pull_request:
   push:
     paths:
       - .github/workflows/checks.yml
@@ -33,7 +34,14 @@ jobs:
             "head_sha": "${head}",
             "output": {
               "title": "title test",
-              "summary": "summary test"
+              "summary": "summary test",
+              "text": "text test",
+              "images": [
+                {
+                  "alt": "alt test"
+                  "url": "https://avatars.githubusercontent.com/u/55940572"
+                }
+              ]
             }
           }
           JSON
