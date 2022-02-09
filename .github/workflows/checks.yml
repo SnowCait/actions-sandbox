@@ -5,15 +5,16 @@ on:
     paths:
       - .github/workflows/checks.yml
 
+env:
+  GH_TOKEN: ${{ github.token }}
+  GH_REPO: ${{ github.repository }}
+  repository: ${{ github.repository }}
+  head: ${{ github.ref }}
+
 jobs:
-  build:
+  create-check-run:
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    env:
-      GH_TOKEN: ${{ github.token }}
-      GH_REPO: ${{ github.repository }}
-      repository: ${{ github.repository }}
-      head: ${{ github.ref }}
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
@@ -22,9 +23,9 @@ jobs:
           gh api -X POST repos/${repository}/check-runs \
             -f name="checks test" \
             -f head_sha=${head} \
+            -f external_id=${GITHUB_RUN_ID}
             > check-run.json
           cat check-run.json | jq -r '.'
-          cat check-run.json | jq -r '.html_url'
       - name: Get check-suite
         run: |
           check_suite_id=$(cat check-run.json | jq -r '.check_suite.id')
@@ -43,3 +44,14 @@ jobs:
         run: |
           check_suite_id=$(cat check-run.json | jq -r '.check_suite.id')
           gh api -X GET repos/${repository}/check-suites/${check_suite_id} | jq -r '.'
+
+  create-check-suite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - name: Create check-suite
+        run: |
+          gh api -X POST repos/${repository}/check-suites > check-suite.json
+          cat check-suite.json | jq -r '.'
