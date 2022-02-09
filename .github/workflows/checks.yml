@@ -29,9 +29,11 @@ jobs:
         run: |
           gh api -X POST repos/${repository}/check-runs << JSON > check-run.json
           {
-            "name":"checks json test",
-            "head_sha":"${head}",
-            "e
+            "name": "checks json test",
+            "head_sha": "${head}",
+            "output": {
+              "title": "title test"
+            }
           }
           JSON
           cat check-run.json | jq -r '.'
