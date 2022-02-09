@@ -22,8 +22,8 @@ jobs:
           gh api -X POST repos/${repository}/check-runs \
             -f name="checks test" \
             -f head_sha=${head} \
-            -f status=completed
-            -f conclusion=success
+            -f status=in_progress
+            #-f conclusion=success
             > check-run.json
           cat check-run.json | jq -r '.'
           cat check-run.json | jq -r '.html_url'
