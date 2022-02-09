@@ -27,12 +27,13 @@ jobs:
 #           cat check-run.json | jq -r '.'
       - name: Create check-run
         run: |
-          gh api -X POST repos/${repository}/check-runs << JSON > check-run.json
+          gh api -X POST repos/${repository}/check-runs --input - << JSON > check-run.json
           {
             "name": "checks json test",
             "head_sha": "${head}",
             "output": {
-              "title": "title test"
+              "title": "title test",
+              "summary": "summary test"
             }
           }
           JSON
