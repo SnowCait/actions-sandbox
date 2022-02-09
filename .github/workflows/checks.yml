@@ -23,7 +23,7 @@ jobs:
           gh api -X POST repos/${repository}/check-runs \
             -f name="checks test" \
             -f head_sha=${head} \
-            -f external_id=${GITHUB_RUN_ID}
+            -f external_id=${GITHUB_RUN_ID} \
             > check-run.json
           cat check-run.json | jq -r '.'
       - name: Get check-suite
@@ -53,5 +53,7 @@ jobs:
       - run: cat $GITHUB_EVENT_PATH
       - name: Create check-suite
         run: |
-          gh api -X POST repos/${repository}/check-suites > check-suite.json
+          gh api -X POST repos/${repository}/check-suites \
+            -f head_sha=${head} \
+            > check-suite.json
           cat check-suite.json | jq -r '.'
