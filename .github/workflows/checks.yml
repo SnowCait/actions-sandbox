@@ -35,13 +35,7 @@ jobs:
             "output": {
               "title": "title test",
               "summary": "summary test",
-              "text": "text test",
-              "images": [
-                {
-                  "alt": "alt test",
-                  "image_url": "https://avatars.githubusercontent.com/u/55940572"
-                }
-              ]
+              "text": "text test"
             }
           }
           JSON
@@ -53,13 +47,27 @@ jobs:
       - name: Get check-suites
         run: |
           gh api -X GET repos/${repository}/commits/${head}/check-suites | jq -r '.'
+#       - name: Update check-run
+#         run: |
+#           check_run_id=$(cat check-run.json | jq -r '.id')
+#           gh api -X PATCH /repos/${repository}/check-runs/${check_run_id} \
+#             -f status=completed \
+#             -f conclusion=success \
+#             | jq -r '.'
       - name: Update check-run
         run: |
-          check_run_id=$(cat check-run.json | jq -r '.id')
-          gh api -X PATCH /repos/${repository}/check-runs/${check_run_id} \
-            -f status=completed \
-            -f conclusion=success \
-            | jq -r '.'
+          gh api -X POST repos/${repository}/check-runs --input - << JSON > check-run.json
+          {
+            "name": "checks json test",
+            "head_sha": "${head}",
+            "output": {
+              "status": "completed",
+              "conclusion": "success",
+              "text": "text test updated"
+            }
+          }
+          JSON
+          cat check-run.json | jq -r '.'
       - name: Get check-suite
         run: |
           check_suite_id=$(cat check-run.json | jq -r '.check_suite.id')
