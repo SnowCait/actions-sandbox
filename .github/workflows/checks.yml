@@ -39,7 +39,7 @@ jobs:
               "images": [
                 {
                   "alt": "alt test",
-                  "url": "https://avatars.githubusercontent.com/u/55940572"
+                  "image_url": "https://avatars.githubusercontent.com/u/55940572"
                 }
               ]
             }
