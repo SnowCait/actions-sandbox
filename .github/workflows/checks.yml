@@ -59,11 +59,11 @@ jobs:
           check_run_id=$(cat check-run.json | jq -r '.id')
           gh api -X PATCH repos/${repository}/check-runs/${check_run_id} --input - << JSON | jq -r '.'
           {
-            "name": "checks json test",
-            "head_sha": "${head}",
+            "status": "completed",
+            "conclusion": "success",
             "output": {
-              "status": "completed",
-              "conclusion": "success",
+              "title": "title test updated",
+              "summary": "summary test updated",
               "text": "text test updated"
             }
           }
