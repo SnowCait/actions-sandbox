@@ -56,7 +56,8 @@ jobs:
 #             | jq -r '.'
       - name: Update check-run
         run: |
-          gh api -X POST repos/${repository}/check-runs --input - << JSON > check-run.json
+          check_run_id=$(cat check-run.json | jq -r '.id')
+          gh api -X PATCH repos/${repository}/check-runs/${check_run_id} --input - << JSON | jq -r '.'
           {
             "name": "checks json test",
             "head_sha": "${head}",
@@ -67,21 +68,20 @@ jobs:
             }
           }
           JSON
-          cat check-run.json | jq -r '.'
       - name: Get check-suite
         run: |
           check_suite_id=$(cat check-run.json | jq -r '.check_suite.id')
           gh api -X GET repos/${repository}/check-suites/${check_suite_id} | jq -r '.'
 
-  create-check-suite:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
+#   create-check-suite:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 5
 
-    steps:
-      - run: cat $GITHUB_EVENT_PATH
-      - name: Create check-suite
-        run: |
-          gh api -X POST repos/${repository}/check-suites \
-            -f head_sha=${head} \
-            > check-suite.json
-          cat check-suite.json | jq -r '.'
+#     steps:
+#       - run: cat $GITHUB_EVENT_PATH
+#       - name: Create check-suite
+#         run: |
+#           gh api -X POST repos/${repository}/check-suites \
+#             -f head_sha=${head} \
+#             > check-suite.json
+#           cat check-suite.json | jq -r '.'
