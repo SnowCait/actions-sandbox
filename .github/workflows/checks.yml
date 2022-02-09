@@ -12,15 +12,21 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
+      repository: ${{ github.repository }}
+      head: ${{ github.ref }}
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - run: |
-          json=$(gh api -X POST repos/${repository}/check-runs -f name="checks test" -f head_sha=${head})
-          echo $json | jq '.html_url'
-          check_suite_id=$(echo $json | jq '.check_suite.id')
+      - name: Create check-run
+        run: |
+          gh api -X POST repos/${repository}/check-runs -f name="checks test" -f head_sha=${head} > check-run.json
+          cat check-run.json | jq -r '.'
+          cat check-run.json | jq -r '.html_url'
+      - name: Get check-suite
+        run: |
+          check_suite_id=$(cat check-run.json | jq -r '.check_suite.id')
           echo $check_suite_id
-          gh api -X GET repos/${repository}/check-suites/${check_suite_id}
-        env:
-          repository: ${{ github.repository }}
-          head: ${{ github.ref }}
+          gh api -X GET repos/${repository}/check-suites/${check_suite_id} | jq -r '.'
+      - name: Get check-suites
+        run: |
+          gh api -X GET repos/${repository}/commits/${head}/check-suites | jq -r '.'
