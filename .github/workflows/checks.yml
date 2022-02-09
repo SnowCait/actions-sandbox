@@ -28,7 +28,6 @@ jobs:
       - name: Get check-suite
         run: |
           check_suite_id=$(cat check-run.json | jq -r '.check_suite.id')
-          echo $check_suite_id
           gh api -X GET repos/${repository}/check-suites/${check_suite_id} | jq -r '.'
       - name: Get check-suites
         run: |
@@ -36,8 +35,11 @@ jobs:
       - name: Update check-run
         run: |
           check_run_id=$(cat check-run.json | jq -r '.id')
-          echo $check_run_id
           gh api -X PATCH /repos/${repository}/check-runs/${check_run_id} \
             -f status=completed \
             -f conclusion=success \
             | jq -r '.'
+      - name: Get check-suite
+        run: |
+          check_suite_id=$(cat check-run.json | jq -r '.check_suite.id')
+          gh api -X GET repos/${repository}/check-suites/${check_suite_id} | jq -r '.'
