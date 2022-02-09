@@ -19,7 +19,12 @@ jobs:
       - run: cat $GITHUB_EVENT_PATH
       - name: Create check-run
         run: |
-          gh api -X POST repos/${repository}/check-runs -f name="checks test" -f head_sha=${head} > check-run.json
+          gh api -X POST repos/${repository}/check-runs \
+            -f name="checks test" \
+            -f head_sha=${head} \
+            -f status=completed
+            -f conclusion=success
+            > check-run.json
           cat check-run.json | jq -r '.'
           cat check-run.json | jq -r '.html_url'
       - name: Get check-suite
