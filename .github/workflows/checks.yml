@@ -16,7 +16,11 @@ jobs:
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - run: |
-          gh api -X POST repos/${repository}/check-runs -f name="checks test" -f head_sha=${head}
+          json=$(gh api -X POST repos/${repository}/check-runs -f name="checks test" -f head_sha=${head})
+          echo $json | jq '.html_url'
+          check_suite_id=$(echo $json | jq '.check_suite.id')
+          echo $check_suite_id
+          gh api -X GET repos/${repository}/check-suites/${check_suite_id}
         env:
           repository: ${{ github.repository }}
           head: ${{ github.ref }}
