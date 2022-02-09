@@ -22,8 +22,6 @@ jobs:
           gh api -X POST repos/${repository}/check-runs \
             -f name="checks test" \
             -f head_sha=${head} \
-            -f status=in_progress
-            #-f conclusion=success
             > check-run.json
           cat check-run.json | jq -r '.'
           cat check-run.json | jq -r '.html_url'
@@ -35,3 +33,11 @@ jobs:
       - name: Get check-suites
         run: |
           gh api -X GET repos/${repository}/commits/${head}/check-suites | jq -r '.'
+      - name: Update check-run
+        run: |
+          check_run_id=$(cat check-run.json | jq -r '.id')
+          echo $check_run_id
+          gh api -X PATCH /repos/${repository}/check-runs/${check_run_id} \
+            -f status=completed \
+            -f conclusion=success \
+            | jq -r '.'
