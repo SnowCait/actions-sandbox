@@ -8,6 +8,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
@@ -15,4 +19,4 @@ jobs:
           gh api -X POST repos/${repository}/check-runs -f name="checks test" -f head_sha=${head}
         env:
           repository: ${{ github.repository }}
-          head: ${{ github.head_ref }}
+          head: ${{ github.ref }}
