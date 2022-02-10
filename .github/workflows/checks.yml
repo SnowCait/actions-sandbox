@@ -2,9 +2,11 @@ name: Checks API
 
 on:
   pull_request:
-  push:
     paths:
       - .github/workflows/checks.yml
+#   push:
+#     paths:
+#       - .github/workflows/checks.yml
 
 env:
   GH_TOKEN: ${{ github.token }}
