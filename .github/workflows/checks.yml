@@ -12,7 +12,8 @@ env:
   GH_TOKEN: ${{ github.token }}
   GH_REPO: ${{ github.repository }}
   repository: ${{ github.repository }}
-  head: ${{ github.ref }}
+#   head: ${{ github.ref }} # push
+  head: ${{ github.head_ref }} # pull_request
 
 jobs:
   create-check-run:
