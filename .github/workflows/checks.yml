@@ -22,9 +22,10 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - name: Get check-run
+      - name: Get workflow run
         run: |
-          gh api -X GET repos/${repository}/check-runs/${GITHUB_RUN_ID} | jq '.'
+          gh run view ${GITHUB_RUN_ID}
+          gh run view ${GITHUB_RUN_ID} --json
 #       - name: Create check-run
 #         run: |
 #           gh api -X POST repos/${repository}/check-runs \
