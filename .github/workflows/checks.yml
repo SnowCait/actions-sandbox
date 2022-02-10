@@ -35,7 +35,7 @@ jobs:
           {
             "name": "checks json test",
             "head_sha": "${head}",
-            "external_id": "${GITHUB_RUN_ID}",
+            "external_id": "5243131472",
             "output": {
               "title": "title test",
               "summary": "summary test",
