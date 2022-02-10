@@ -22,10 +22,6 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - name: Get workflow run
-        run: |
-          gh run view ${GITHUB_RUN_ID}
-          gh run view ${GITHUB_RUN_ID} --json
 #       - name: Create check-run
 #         run: |
 #           gh api -X POST repos/${repository}/check-runs \
@@ -39,6 +35,7 @@ jobs:
           {
             "name": "checks json test",
             "head_sha": "${head}",
+            "external_id": "${GITHUB_RUN_ID}",
             "output": {
               "title": "title test",
               "summary": "summary test",
