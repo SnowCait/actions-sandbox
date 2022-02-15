@@ -16,6 +16,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
 
     steps:
+      - run: gh --version
       - uses: actions/checkout@v2
       - run: gh pr merge $PR_NUMBER --merge --delete-branch
         env:
