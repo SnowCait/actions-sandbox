@@ -1,0 +1,25 @@
+name: mermaid
+# https://mermaid-js.github.io/mermaid/#/?id=git-graph-exclamation-experimental
+
+on:
+  push:
+    paths:
+      - mermaid/**
+      - .github/workflows/mermaid.yml
+
+jobs:
+  git:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker run --rm -v mermaid:/data minlag/mermaid-cli -i /data/diagram.mmd
+      - run: ls -la mermaid/
+      - name: Commit
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "mermaid"
+          git push
