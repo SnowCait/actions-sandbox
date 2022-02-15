@@ -1,0 +1,19 @@
+name: Merge
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        type: number
+        required: true
+        description: PR number
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: gh pr merge $PR_NUMBER --delete-branch
+        env:
+          PR_NUMBER: ${{ github.event.inputs.pr_number }}
