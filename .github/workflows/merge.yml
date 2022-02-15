@@ -12,26 +12,25 @@ jobs:
   merge:
     runs-on: ubuntu-latest
     timeout-minutes: 1
-    env:
-      GH_TOKEN: ${{ github.token }}
 
     steps:
       - run: gh --version
       - uses: actions/checkout@v2
 #       - run: gh pr merge $PR_NUMBER --merge --delete-branch
 #         env:
+#           GH_TOKEN: ${{ github.token }}
 #           PR_NUMBER: ${{ github.event.inputs.pr_number }}
       - run: |
           set -x
           gh pr merge $PR_NUMBER --merge
           json=$(gh pr view $PR_NUMBER --json baseRefName,headRefName)
-          #head=$(echo $json | jq -r '.headRefName')
-          #base=$(echo $json | jq -r '.baseRefName')
-          #numbers=$(gh pr list --base ${head} --limit 100 --json number --jq '.[].number')
-          #for number in ${numbers[@]}; do
-          #  gh pr edit $number --base ${base}
-          #done
-          #gh api -X DELETE repos/${REPOSITORY}/git/refs/heads/${head}
+          head=$(echo $json | jq -r '.headRefName')
+          base=$(echo $json | jq -r '.baseRefName')
+          numbers=$(gh pr list --base ${head} --limit 100 --json number --jq '.[].number')
+          for number in ${numbers[@]}; do
+            gh pr edit $number --base ${base}
+          done
+          gh api -X DELETE repos/${REPOSITORY}/git/refs/heads/${head}
         env:
           GH_TOKEN: ${{ github.token }} # Should be secrets.YOUR_TOKEN if you want to trigger next workflow.
           REPOSITORY: ${{ github.repository }}
