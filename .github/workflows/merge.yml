@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: gh pr merge $PR_NUMBER --delete-branch
+      - run: gh pr merge $PR_NUMBER --merge --delete-branch
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.inputs.pr_number }}
