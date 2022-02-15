@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: ls -la mermaid/
-      - run: docker run --rm -v mermaid:/data ls -la /data
+      - run: docker run --rm -v mermaid:/data --entrypoint ls minlag/mermaid-cli /data
       - run: docker run --rm -v mermaid:/data minlag/mermaid-cli -i /data/diagram.mmd
       - run: ls -la mermaid/
       - name: Commit
