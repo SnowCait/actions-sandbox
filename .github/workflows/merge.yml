@@ -20,7 +20,8 @@ jobs:
 #         env:
 #           GH_TOKEN: ${{ github.token }}
 #           PR_NUMBER: ${{ github.event.inputs.pr_number }}
-      - run: |
+      - name: Instead of gh pr merge $PR_NUMBER --merge --delete-branch
+        run: |
           set -x
           gh pr merge $PR_NUMBER --merge
           json=$(gh pr view $PR_NUMBER --json baseRefName,headRefName)
