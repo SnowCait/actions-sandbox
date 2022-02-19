@@ -80,7 +80,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
-          git commit --author "${AUTHOR}" -m 'generated'
+          git commit --author="${AUTHOR}" -m 'generated'
           git push
         if: steps.diff.outcome == 'failure' && github.event_name == 'push'
         env:
@@ -88,10 +88,11 @@ jobs:
       - name: Commit & Push
         run: |
           set -x
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add .
-          git commit --author "$(git log --pretty=format:"%an <%ae>")" -m 'generated'
+          git commit --author=. -m '--author=.'
+          #git commit --author="$(git log --pretty=format:"%an <%ae>")" -m 'generated'
           git push
         if: steps.diff.outcome == 'failure' && github.event_name == 'pull_request'
       - name: Log
