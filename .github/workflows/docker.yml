@@ -1,0 +1,66 @@
+name: Docker
+
+on:
+  push:
+    paths:
+      - .github/workflows/docker.yml
+      - docker/**
+
+jobs:
+  docker-compose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: docker
+
+    steps:
+      - uses: actions/checkout@v2
+      - run: docker-compose up -d
+      - run: docker-compose ps
+      - run: docker inspect $(docker-compose ps -q mysql)
+      - run: docker inspect $(docker-compose ps -q mysql) | jq -r '.[0]'
+      - run: docker inspect $(docker-compose ps -q mysql) | jq -r '.[0].State.Health.Status'
+      - run: |
+          while [ "$(docker inspect $(docker-compose ps -q mysql) | jq -r '.[0].State.Health.Status')" == 'starting' ]; do
+            echo "Container is starting..."
+            sleep 2
+          done
+#       - run: sleep 60
+      - run: docker-compose ps
+      - run: docker-compose exec -T mysql mysql -V
+      - run: docker-compose exec -T --env MYSQL_PWD=abcdef mysql mysql -uroot -e "SHOW DATABASES"
+      - run: docker-compose logs
+        if: always()
+      - run: ls -la
+      - run: ls -la .database/
+
+  service:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    services:
+      mysql:
+        image: mysql:5.7
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: abcdef
+        options: >-
+          --health-cmd "mysqladmin ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      MYSQL_PWD: abcdef
+
+    steps:
+      - run: docker ps
+      - run: echo $JSON
+        env:
+          JSON: ${{ toJSON(job.services) }}
+      - run: mysql -V
+      - run: mysql --protocol=tcp -hlocalhost -P3306 -uroot -e "SHOW DATABASES"
+      - run: docker logs $CONTAINER_ID
+        env:
+          CONTAINER_ID: ${{ job.services.mysql.id }}
+        if: always()

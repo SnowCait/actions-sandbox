@@ -1,0 +1,13 @@
+name: Ephemeral self-hosted runner
+
+on:
+  push:
+    paths:
+      - .github/workflows/ephemeral.yml
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH

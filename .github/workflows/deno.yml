@@ -1,0 +1,20 @@
+name: Deno
+
+on:
+  push:
+    paths:
+      - .github/workflows/deno.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: denoland/setup-deno@v1
+      - run: deno --version
+#       - run: |
+#           const add = (a: number, b: number) => {
+#               return a + b;
+#           };
+#           console.info(add(1, 2));
+#         shell: deno run {0}

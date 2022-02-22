@@ -13,3 +13,13 @@ jobs:
     steps:
       - run: mysql -V
       - run: docker image ls
+      - run: |
+          <?php
+          $driver = new mysqli_driver();
+          var_dump($driver);
+          var_dump($driver->client_info);
+          var_dump($driver->client_version);
+          var_dump($driver->report_mode);
+          $driver->report_mode = MYSQLI_REPORT_OFF;
+          var_dump($driver->report_mode);
+        shell: php {0}

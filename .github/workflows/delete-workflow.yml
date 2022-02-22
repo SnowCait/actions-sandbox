@@ -1,0 +1,53 @@
+name: Delete workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      workflow:
+        description: workflow-id, workflow-name or filename
+        required: true
+        type: string
+
+jobs:
+  delete:
+    runs-on: macos-latest
+    timeout-minutes: 1
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      WORKFLOW: ${{ github.event.inputs.workflow }}
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - run: gh workflow list --all
+      - run: gh workflow view "${WORKFLOW}"
+      - run: gh run list --workflow "${WORKFLOW}"
+      - run: gh run list --workflow "${WORKFLOW}" --json databaseId,status,workflowDatabaseId
+      - run: gh run list --workflow "${WORKFLOW}" --json databaseId,status --jq '.[] | select(.status != "in_progress") | .databaseId'
+      - run: |
+          gh run list --workflow "${WORKFLOW}" --json databaseId,status --jq '.[] | select(.status != "in_progress") | .databaseId' \
+            | xargs -n 1 -I {} gh api -X DELETE repos/${REPOSITORY}/actions/runs/{}
+        env:
+          REPOSITORY: ${{ github.repository }}
+
+  windows:
+    if: false
+    runs-on: windows-2019
+    timeout-minutes: 1
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      WORKFLOW: ${{ github.event.inputs.workflow }}
+
+    steps:
+#       - run: cat $GITHUB_EVENT_PATH
+      - run: gh workflow list --all
+      - run: gh workflow view "${env:WORKFLOW}"
+      - run: gh run list --workflow "${env:WORKFLOW}"
+      - run: gh run list --workflow "${env:WORKFLOW}" --json databaseId,status,workflowDatabaseId
+      - run: gh run list --workflow "${env:WORKFLOW}" --json databaseId,status --jq '.[] | select(.status != \"in_progress\") | .databaseId'
+      - run: |
+          gh run list --workflow "${env:WORKFLOW}" --json databaseId,status --jq '.[] | select(.status != \"in_progress\") | .databaseId' `
+            | % { gh api -X DELETE repos/${env:REPOSITORY}/actions/runs/$_ }
+        env:
+          REPOSITORY: ${{ github.repository }}

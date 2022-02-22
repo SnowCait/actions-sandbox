@@ -1,0 +1,43 @@
+name: Context
+
+on:
+  push:
+    paths:
+      - .github/workflows/context.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # steps
+      - run: cat $GITHUB_EVENT_PATH
+        id: success
+      - name: success result
+        run: |
+          echo $conclusion # success
+          echo $outcome # success
+        env:
+          conclusion: ${{ steps.success.conclusion }}
+          outcome: ${{ steps.success.outcome }}
+      - run: exit 1
+        id: continue
+        continue-on-error: true
+      - name: continue result
+        run: |
+          echo $conclusion # success
+          echo $outcome # failure
+        env:
+          conclusion: ${{ steps.continue.conclusion }}
+          outcome: ${{ steps.continue.outcome }}
+      - run: exit 1
+        id: failure
+      - name: continue result
+        run: |
+          echo $conclusion # failure
+          echo $outcome # failure
+        env:
+          conclusion: ${{ steps.failure.conclusion }}
+          outcome: ${{ steps.failure.outcome }}
+        if: failure()
+        

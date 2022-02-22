@@ -1,0 +1,14 @@
+name: Workflow Run
+
+on:
+  workflow_run:
+    workflows: [ Push ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH

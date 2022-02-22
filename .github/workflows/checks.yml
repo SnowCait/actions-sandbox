@@ -1,0 +1,86 @@
+name: Checks API
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/checks.yml
+#   push:
+#     paths:
+#       - .github/workflows/checks.yml
+
+env:
+  GH_TOKEN: ${{ github.token }}
+  GH_REPO: ${{ github.repository }}
+  repository: ${{ github.repository }}
+#   head: ${{ github.ref }} # push
+  head: ${{ github.head_ref }} # pull_request
+
+jobs:
+  create-check-run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+#       - name: Create check-run
+#         run: |
+#           gh api -X POST repos/${repository}/check-runs \
+#             -f name="checks test" \
+#             -f head_sha=${head} \
+#             > check-run.json
+#           cat check-run.json | jq -r '.'
+      - name: Create check-run
+        run: |
+          gh api -X POST repos/${repository}/check-runs --input - << JSON > check-run.json
+          {
+            "name": "checks json test",
+            "head_sha": "${head}",
+            "external_id": "5243131472",
+            "output": {
+              "title": "title test",
+              "summary": "summary test",
+              "text": "text test"
+            }
+          }
+          JSON
+          cat check-run.json | jq -r '.'
+      - name: Get check-suite
+        run: |
+          check_suite_id=$(cat check-run.json | jq -r '.check_suite.id')
+          gh api -X GET repos/${repository}/check-suites/${check_suite_id} | jq -r '.'
+      - name: Get check-suites
+        run: |
+          gh api -X GET repos/${repository}/commits/${head}/check-suites | jq -r '.'
+#       - name: Update check-run
+#         run: |
+#           check_run_id=$(cat check-run.json | jq -r '.id')
+#           gh api -X PATCH /repos/${repository}/check-runs/${check_run_id} \
+#             -f status=completed \
+#             -f conclusion=success \
+#             | jq -r '.'
+      - name: Update check-run
+        run: |
+          check_run_id=$(cat check-run.json | jq -r '.id')
+          gh api -X PATCH repos/${repository}/check-runs/${check_run_id} --input - << JSON | jq -r '.'
+          {
+            "status": "completed",
+            "conclusion": "success"
+          }
+          JSON
+      - name: Get check-suite
+        run: |
+          check_suite_id=$(cat check-run.json | jq -r '.check_suite.id')
+          gh api -X GET repos/${repository}/check-suites/${check_suite_id} | jq -r '.'
+
+#   create-check-suite:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 5
+
+#     steps:
+#       - run: cat $GITHUB_EVENT_PATH
+#       - name: Create check-suite
+#         run: |
+#           gh api -X POST repos/${repository}/check-suites \
+#             -f head_sha=${head} \
+#             > check-suite.json
+#           cat check-suite.json | jq -r '.'
