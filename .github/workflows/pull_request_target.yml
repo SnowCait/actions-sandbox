@@ -2,7 +2,7 @@ name: Pull Request Target
 
 on:
   pull_request_target:
-#     paths: .github/workflows/pull_request_target.yml
+    paths: .github/workflows/pull_request_target.yml
 
 jobs:
   build:
