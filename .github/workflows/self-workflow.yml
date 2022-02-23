@@ -46,6 +46,7 @@ jobs:
       - run: sleep 30
       - run: |
           echo cancelled
+          gh run view $GITHUB_RUN_ID
           if gh run view $GITHUB_RUN_ID | grep 'The run was canceled by'; then
             echo "This is manually cancel."
           fi
