@@ -22,7 +22,9 @@ jobs:
           echo $timeout_seconds
           created_at=$(gh run view $GITHUB_RUN_ID --json createdAt,updatedAt \
             --jq '.createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime')
+          echo $created_at
           now=$(date '+%s')
+          echo $now
           if ((now > created_at + timeout_seconds)); then
             echo "This is timed-out."
           fi
