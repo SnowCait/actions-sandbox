@@ -36,12 +36,27 @@ jobs:
           echo $TIMEOUT_MINUTES
           echo $((TIMEOUT_MINUTES ** 60))
           echo $((TIMEOUT_MINUTES * 60))
+          date '+%s'
         env:
           TIMEOUT_MINUTES: ${{ steps.timeout.outputs.minutes }}
 #       - run: gh run view $GITHUB_RUN_ID --json createdAt,updatedAt
 #       - run: gh run view $GITHUB_RUN_ID --json createdAt,updatedAt --jq '.createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime'
 #       - run: gh run view $GITHUB_RUN_ID --json createdAt,updatedAt --jq '(.updatedAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) - (.createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime)'
       - run: sleep 60
+      - run: |
+          echo cancelled
+          createdAt=$(gh run view $GITHUB_RUN_ID --json createdAt,updatedAt \
+            --jq '.createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime')
+          echo $createdAt
+          echo $((TIMEOUT_MINUTES * 60))
+          date '+%s'
+          now=$(date '+%s')
+          if ((now >= createdAt + TIMEOUT_MINUTES * 60)); then
+            echo "This is timed-out."
+          fi
+        env:
+          TIMEOUT_MINUTES: ${{ steps.timeout.outputs.minutes }}
+        if: cancelled()
       - run: |
           echo cancelled
           seconds=$(gh run view $GITHUB_RUN_ID --json createdAt,updatedAt \
@@ -53,4 +68,4 @@ jobs:
           fi
         env:
           TIMEOUT_MINUTES: ${{ steps.timeout.outputs.minutes }}
-        if: cancelled()
+        if: cancelled() && false
