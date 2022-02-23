@@ -9,6 +9,8 @@ on:
 jobs:
   unanimously-approved:
     runs-on: ubuntu-20.04
+    timeout-minutes: 1
 
     steps:
-      - uses: snow-actions/unanimously-approved@main
+      - run: cat $GITHUB_EVENT_PATH
+      - uses: snow-actions/unanimously-approved@npm-check-updates
