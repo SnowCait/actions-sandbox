@@ -54,16 +54,13 @@ jobs:
           fi
         if: cancelled() && false
       - run: |
-          echo cancelled
-          echo $JOB
-          echo $STEPS
-          createdAt=$(gh run view $GITHUB_RUN_ID --json createdAt,updatedAt \
+          gh workflow view "$GITHUB_WORKFLOW" --yaml > workflow.yml
+          timeout_seconds=$(yq '.jobs.build.timeout-minutes * 60' workflow.yml)
+          echo $timeout_seconds
+          created_at=$(gh run view $GITHUB_RUN_ID --json createdAt,updatedAt \
             --jq '.createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime')
-          echo $createdAt
-          echo $((TIMEOUT_MINUTES * 60))
-          date '+%s'
           now=$(date '+%s')
-          if ((now >= createdAt + TIMEOUT_MINUTES * 60)); then
+          if ((now > created_at + timeout_seconds)); then
             echo "This is timed-out."
           fi
         env:
