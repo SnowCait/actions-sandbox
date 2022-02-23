@@ -1,0 +1,48 @@
+name: Composite Action
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/composite-action.yml
+      - .github/actions/composite-action/**
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 1
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-20.04, ubuntu-18.04, windows-2022, windows-2019, windows-2016, macos-11, macos-10.15 ]
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # default
+      - uses: ./.github/actions/composite-action/
+      - run: git config --local -l
+      - name: Can commit
+        run: |
+          echo "test" >> test
+          git add .
+          git commit -m "test"
+      - run: '[[ "$(git config user.name)" == "github-actions[bot]" ]]'
+      - run: '[[ "$(git config user.email)" == "41898282+github-actions[bot]@users.noreply.github.com" ]]'
+
+      # with parameters
+      - uses: ./.github/actions/composite-action/
+        with:
+          name: SnowCait
+          email: SnowCait@example.com
+      - run: git config --local -l
+      - name: Can commit
+        run: |
+          echo "test" >> test
+          git add .
+          git commit -m "test"
+      - run: '[[ "$(git config user.name)" == "SnowCait" ]]'
+      - run: '[[ "$(git config user.email)" == "SnowCait@example.com" ]]'
