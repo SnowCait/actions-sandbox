@@ -36,7 +36,8 @@ jobs:
         env:
           TIMEOUT_MINUTES: ${{ steps.timeout.outputs.minutes }}
       - run: gh run view $GITHUB_RUN_ID --json createdAt,updatedAt
-      - run: gh run view $GITHUB_RUN_ID --json createdAt,updatedAt --jq '.createdAt | strptime("%Y-%m-%dT%H:%M:%SZ")'
+      - run: gh run view $GITHUB_RUN_ID --json createdAt,updatedAt --jq '.createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime'
+      - run: gh run view $GITHUB_RUN_ID --json createdAt,updatedAt --jq '(.updatedAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) - (.createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime)'
       - run: sleep 60
       - run: |
           echo cancelled
