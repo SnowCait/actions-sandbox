@@ -11,4 +11,4 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: snow-actions/unanimously-approved@main
+      - uses: snow-actions/unanimously-approved@npm-audit-fix
