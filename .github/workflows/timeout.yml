@@ -17,7 +17,8 @@ jobs:
     steps:
       - run: sleep 60
       - run: |
-          timeout_seconds=$(gh workflow view "$GITHUB_WORKFLOW" --yaml | yq '.jobs.build.timeout-minutes * 60')
+          timeout_seconds=$(gh workflow view "$GITHUB_WORKFLOW" --yaml \
+            | yq '.jobs.build.timeout-minutes * 60')
           echo $timeout_seconds
           created_at=$(gh run view $GITHUB_RUN_ID --json createdAt,updatedAt \
             --jq '.createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime')
