@@ -11,8 +11,14 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    timeout-minutes: 1
+    env:
+      GH_TOKEN: ${{ github.token }}
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
+      - run: echo $JSON
+        env:
+          JSON: ${{ toJSON(github) }}
       - run: gh workflow list
