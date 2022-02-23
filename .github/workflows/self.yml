@@ -6,8 +6,8 @@ on:
       - .github/workflows/self.yml
   workflow_dispatch:
     inputs:
-      input1:
-        default: value1
+      id:
+        default: '123'
 
 jobs:
   build:
@@ -27,5 +27,5 @@ jobs:
       - run: gh workflow view $GITHUB_WORKFLOW | head -1 | cut -d ' ' -f 3
       - run: gh workflow view $GITHUB_WORKFLOW | head -2 | tail -1 | cut -d ' ' -f 2
       - run: gh workflow view $GITHUB_WORKFLOW --yaml | tee workflow.yml
-      - run: yq '.on.workflow_dispatch.inputs.input1.default' workflow.yml
+      - run: yq '.on.workflow_dispatch.inputs.id.default' workflow.yml
         id: workflow
