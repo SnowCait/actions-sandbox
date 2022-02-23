@@ -21,3 +21,9 @@ jobs:
         if: |
           true ||
           false
+      - run: echo '${{ }}'
+        if: >-
+          ${{
+            true ||
+            false
+          }}
