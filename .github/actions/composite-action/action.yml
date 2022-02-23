@@ -28,6 +28,9 @@ runs:
     - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
       shell: bash
     - run: |
-        git config user.name $INPUT_NAME
-        git config user.email $INPUT_EMAIL
+        git config user.name $NAME
+        git config user.email $EMAIL
       shell: bash
+      env:
+        NAME: ${{ inputs.name }}
+        EMAIL: ${{ inputs.email }}
