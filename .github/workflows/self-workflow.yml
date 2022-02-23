@@ -1,9 +1,9 @@
-name: Self
+name: Self workflow
 
 on:
   push:
     paths:
-      - .github/workflows/self.yml
+      - .github/workflows/self-workflow.yml
   workflow_dispatch:
     inputs:
       id:
