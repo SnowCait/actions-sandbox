@@ -3,7 +3,7 @@ name: Syntax
 on:
   push:
     paths:
-      - .github/workflows/sytax.yml
+      - .github/workflows/syntax.yml
   workflow_dispatch:
 
 jobs:
