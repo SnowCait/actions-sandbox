@@ -27,10 +27,11 @@ jobs:
       - run: gh workflow view "$GITHUB_WORKFLOW" | head -1 | cut -d ' ' -f 3
       - run: gh workflow view "$GITHUB_WORKFLOW" | head -2 | tail -1 | cut -d ' ' -f 2
       - run: gh workflow view "$GITHUB_WORKFLOW" --yaml | tee workflow.yml
+      - run: yq '.on.workflow_dispatch.inputs.id.default' workflow.yml
       - run: |
-          id=$(yq '.on.workflow_dispatch.inputs.id.default' workflow.yml)
-          echo "::set-output name=id::${id}"
-        id: inputs-default
-      - run: echo $ID
+          minutes=$(yq '.jobs.build.timeout-minutes' workflow.yml)
+          echo "::set-output name=minutes::${minutes}"
+        id: timeout
+      - run: echo $TIMEOUT_MINUTES
         env:
-          ID: ${{ steps.inputs-default.outputs.id }}
+          TIMEOUT_MINUTES: ${{ steps.timeout.outputs.minutes }}
