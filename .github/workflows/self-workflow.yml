@@ -46,7 +46,7 @@ jobs:
       - run: sleep 30
       - run: |
           echo cancelled
-          echo $JOBS
+          echo $JOB
           echo $STEPS
           createdAt=$(gh run view $GITHUB_RUN_ID --json createdAt,updatedAt \
             --jq '.createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime')
@@ -59,7 +59,7 @@ jobs:
           fi
         env:
           TIMEOUT_MINUTES: ${{ steps.timeout.outputs.minutes }}
-          JOBS: ${{ toJSON(jobs) }}
+          JOB: ${{ toJSON(job) }}
           STEPS: ${{ toJSON(steps) }}
         if: cancelled()
       - run: |
