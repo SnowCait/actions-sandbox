@@ -15,10 +15,13 @@ jobs:
     timeout-minutes: 1
     env:
       GH_TOKEN: ${{ github.token }}
+      WORKFLOW: ${{ github.workflow }}
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - run: echo $JSON
         env:
           JSON: ${{ toJSON(github) }}
-      - run: gh workflow list
+      - run: gh workflow view $WORKFLOW
+      - run: gh workflow view $WORKFLOW --yaml
+      - run: gh workflow view $GITHUB_WORKFLOW
