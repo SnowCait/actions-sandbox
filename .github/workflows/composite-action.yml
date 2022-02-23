@@ -27,8 +27,8 @@ jobs:
           echo "test" >> test
           git add .
           git commit -m "test"
-      - run: '[[ git config user.name == "github-actions[bot]" ]]'
-      - run: '[[ git config user.email == "41898282+github-actions[bot]@users.noreply.github.com" ]]'
+      - run: '[[ "$(git config user.name)" == "github-actions[bot]" ]]'
+      - run: '[[ "$(git config user.email)" == "41898282+github-actions[bot]@users.noreply.github.com" ]]'
 
       # with parameters
       - uses: ./.github/actions/composite-action/
@@ -41,5 +41,5 @@ jobs:
           echo "test" >> test
           git add .
           git commit -m "test"
-      - run: '[[ git config user.name == "SnowCait" ]]'
-      - run: '[[ git config user.email == "SnowCait@example.com" ]]'
+      - run: '[[ "$(git config user.name)" == "SnowCait" ]]'
+      - run: '[[ "$(git config user.email)" == "SnowCait@example.com" ]]'
