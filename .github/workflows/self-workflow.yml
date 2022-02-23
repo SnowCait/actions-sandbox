@@ -42,8 +42,7 @@ jobs:
 #       - run: gh run view $GITHUB_RUN_ID --json createdAt,updatedAt
 #       - run: gh run view $GITHUB_RUN_ID --json createdAt,updatedAt --jq '.createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime'
 #       - run: gh run view $GITHUB_RUN_ID --json createdAt,updatedAt --jq '(.updatedAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) - (.createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime)'
-      - run: sleep 30
-      - run: sleep 40
+      - run: sleep 0
       - run: |
           echo cancelled
           gh run view $GITHUB_RUN_ID
