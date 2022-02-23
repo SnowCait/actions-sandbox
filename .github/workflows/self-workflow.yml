@@ -46,10 +46,10 @@ jobs:
       - run: sleep 30
       - run: |
           echo cancelled
-          if ! gh run view $GITHUB_RUN_ID | grep 'The run was canceled by'; then
+          if gh run view $GITHUB_RUN_ID | grep 'The run was canceled by'; then
             echo "This is manually cancel."
           fi
-          if ! gh run view $GITHUB_RUN_ID | grep 'has exceeded the maximum execution time of'; then
+          if gh run view $GITHUB_RUN_ID | grep 'has exceeded the maximum execution time of'; then
             echo "This is timed out."
           fi
         if: cancelled()
