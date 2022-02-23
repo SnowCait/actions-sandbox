@@ -32,7 +32,8 @@ jobs:
           minutes=$(yq '.jobs.build.timeout-minutes' workflow.yml)
           echo "::set-output name=minutes::${minutes}"
         id: timeout
-      - run: echo $TIMEOUT_MINUTES
+      - run: |
+          echo $TIMEOUT_MINUTES
           echo $((TIMEOUT_MINUTES ** 60))
           echo $((TIMEOUT_MINUTES * 60))
         env:
@@ -46,8 +47,8 @@ jobs:
           seconds=$(gh run view $GITHUB_RUN_ID --json createdAt,updatedAt \
             --jq '(.updatedAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) - (.createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime)')
           echo $seconds
-          echo $((TIMEOUT_MINUTES ** 60))
-          if ((seconds >= TIMEOUT_MINUTES ** 60)); then
+          echo $((TIMEOUT_MINUTES * 60))
+          if ((seconds >= TIMEOUT_MINUTES * 60)); then
             echo "This is timed-out."
           fi
         env:
