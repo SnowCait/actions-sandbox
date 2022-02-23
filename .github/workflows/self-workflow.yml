@@ -23,9 +23,9 @@ jobs:
         env:
           JSON: ${{ toJSON(github) }}
       - run: printenv
-      - run: gh workflow view $GITHUB_WORKFLOW
-      - run: gh workflow view $GITHUB_WORKFLOW | head -1 | cut -d ' ' -f 3
-      - run: gh workflow view $GITHUB_WORKFLOW | head -2 | tail -1 | cut -d ' ' -f 2
-      - run: gh workflow view $GITHUB_WORKFLOW --yaml | tee workflow.yml
+      - run: gh workflow view "$GITHUB_WORKFLOW"
+      - run: gh workflow view "$GITHUB_WORKFLOW" | head -1 | cut -d ' ' -f 3
+      - run: gh workflow view "$GITHUB_WORKFLOW" | head -2 | tail -1 | cut -d ' ' -f 2
+      - run: gh workflow view "$GITHUB_WORKFLOW" --yaml | tee workflow.yml
       - run: yq '.on.workflow_dispatch.inputs.id.default' workflow.yml
         id: workflow
