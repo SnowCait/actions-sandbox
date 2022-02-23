@@ -15,15 +15,15 @@ jobs:
         if: true
       - run: echo ">-"
         if: >-
-          true ||
+          false ||
           false
       - run: echo "|"
         if: |
-          true ||
+          false ||
           false
       - run: echo '$'
         if: >-
           ${{
-            true ||
+            false ||
             false
           }}
