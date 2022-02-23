@@ -1,0 +1,23 @@
+name: Syntax
+
+on:
+  push:
+    paths:
+      - .github/workflow/sytax.yml
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "one line"
+        if: true
+      - run: echo ">-"
+        if: >-
+          true ||
+          fales
+      - run: echo "|"
+        if: |
+          true ||
+          false
