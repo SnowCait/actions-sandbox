@@ -27,7 +27,7 @@ jobs:
       - uses: the-coding-turtle/ga-yaml-parser@v0.1
         id: workflow
         with:
-          file: "workflow.yaml"
-      - run: cat $YAML
+          file: "workflow.yml"
+      - run: cat $JSON
         env:
-          YAML: ${{ steps.workflow.outputs.result }}
+          JSON: ${{ toJSON(steps.workflow.outputs.result) }}
