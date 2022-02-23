@@ -2,7 +2,6 @@ name: Unanimously Approved
 
 on:
   pull_request:
-#     types: [opened, synchronize, reopened, review_requested, review_request_removed]
     types: [review_requested, review_request_removed]
   pull_request_review:
     types: [submitted, dismissed]
