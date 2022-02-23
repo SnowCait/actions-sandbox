@@ -63,10 +63,6 @@ jobs:
           if ((now > created_at + timeout_seconds)); then
             echo "This is timed-out."
           fi
-        env:
-          TIMEOUT_MINUTES: ${{ steps.timeout.outputs.minutes }}
-          JOB: ${{ toJSON(job) }}
-          STEPS: ${{ toJSON(steps) }}
         if: cancelled()
       - run: |
           echo cancelled
