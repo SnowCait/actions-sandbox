@@ -18,5 +18,24 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      # default
       - uses: ./.github/actions/composite-action/
       - run: git config --local -l
+      - name: Can commit
+        run: |
+          echo "test" >> test
+          git add .
+          git commit -m "test"
+
+      # with parameters
+      - uses: ./.github/actions/composite-action/
+        with:
+          name: SnowCait
+          email: SnowCait@example.com
+      - run: git config --local -l
+      - name: Can commit
+        run: |
+          echo "test" >> test
+          git add .
+          git commit -m "test"
