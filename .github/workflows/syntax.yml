@@ -21,7 +21,7 @@ jobs:
         if: |
           true ||
           false
-      - run: echo '\${{ }}'
+      - run: echo '$'
         if: >-
           ${{
             true ||
