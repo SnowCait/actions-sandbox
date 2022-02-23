@@ -16,7 +16,7 @@ jobs:
       - run: echo ">-"
         if: >-
           true ||
-          fales
+          false
       - run: echo "|"
         if: |
           true ||
