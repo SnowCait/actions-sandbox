@@ -43,7 +43,7 @@ jobs:
 #       - run: gh run view $GITHUB_RUN_ID --json createdAt,updatedAt --jq '.createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime'
 #       - run: gh run view $GITHUB_RUN_ID --json createdAt,updatedAt --jq '(.updatedAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) - (.createdAt | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime)'
       - run: sleep 30
-      - run: sleep 30
+      - run: sleep 40
       - run: |
           echo cancelled
           gh run view $GITHUB_RUN_ID
@@ -53,7 +53,7 @@ jobs:
           if gh run view $GITHUB_RUN_ID | grep 'has exceeded the maximum execution time of'; then
             echo "This is timed out."
           fi
-        if: cancelled()
+        if: cancelled() && false
       - run: |
           echo cancelled
           echo $JOB
@@ -71,7 +71,7 @@ jobs:
           TIMEOUT_MINUTES: ${{ steps.timeout.outputs.minutes }}
           JOB: ${{ toJSON(job) }}
           STEPS: ${{ toJSON(steps) }}
-        if: cancelled() && false
+        if: cancelled()
       - run: |
           echo cancelled
           seconds=$(gh run view $GITHUB_RUN_ID --json createdAt,updatedAt \
