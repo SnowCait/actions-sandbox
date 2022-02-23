@@ -16,13 +16,18 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
-      WORKFLOW: ${{ github.workflow }}
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - run: echo $JSON
         env:
           JSON: ${{ toJSON(github) }}
-      - run: gh workflow view $WORKFLOW
-      - run: gh workflow view $WORKFLOW --yaml
-      - run: gh workflow view $GITHUB_WORKFLOW
+      - run: printenv
+      - run: gh workflow view $GITHUB_WORKFLOW --yaml | tee workflow.yml
+      - uses: the-coding-turtle/ga-yaml-parser@v0.1
+        id: workflow
+        with:
+          file: "workflow.yaml"
+      - run: cat $YAML
+        env:
+          YAML: ${{ steps.workflow.outputs.result }}
