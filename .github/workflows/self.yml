@@ -24,10 +24,5 @@ jobs:
           JSON: ${{ toJSON(github) }}
       - run: printenv
       - run: gh workflow view $GITHUB_WORKFLOW --yaml | tee workflow.yml
-      - uses: the-coding-turtle/ga-yaml-parser@v0.1
+      - run: yq workflow.yml
         id: workflow
-        with:
-          file: "workflow.yml"
-      - run: cat $JSON
-        env:
-          JSON: ${{ toJSON(steps.workflow.outputs.result) }}
