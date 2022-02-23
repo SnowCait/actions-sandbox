@@ -27,7 +27,7 @@ jobs:
       - run: gh workflow view "$GITHUB_WORKFLOW" | head -1 | cut -d ' ' -f 3
       - run: gh workflow view "$GITHUB_WORKFLOW" | head -2 | tail -1 | cut -d ' ' -f 2
       - run: gh workflow view "$GITHUB_WORKFLOW" --yaml | tee workflow.yml
-      - run: echo '::set-output name=id::$(yq '.on.workflow_dispatch.inputs.id.default' workflow.yml)'
+      - run: echo "::set-output name=id::$(yq '.on.workflow_dispatch.inputs.id.default' workflow.yml)"
         id: inputs
       - run: echo $ID
         env:
