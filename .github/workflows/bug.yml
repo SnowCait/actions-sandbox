@@ -14,11 +14,11 @@ jobs:
         run: echo "::set-output name=json::[]"
       - run: echo $JSON
         env:
-          JSON: ${{ steps.stepA.outputs.json }}
+          JSON: ${{ toJSON(fromJSON(steps.stepA.outputs.json) }}
       - id: stepB
         run: echo "::set-output name=json::[]"
         if: false
       - run: echo $JSON
         env:
-          JSON: ${{ steps.stepB.outputs.json }}
+          JSON: ${{ toJSON(fromJSON(steps.stepB.outputs.json) }}
         if: false
