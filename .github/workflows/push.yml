@@ -9,7 +9,7 @@ jobs:
     steps:
       - run: echo $GITHUB_EVENT_NAME
       - run: cat $GITHUB_EVENT_PATH
-      - uses: actions/checkout@v2.3.4
+      - uses: actions/checkout@v3
       - run: printenv
       - name: HELLO
         run: echo 'hello, action'

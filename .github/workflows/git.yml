@@ -14,7 +14,7 @@ jobs:
       changed: ${{ steps.changes.outputs.count > 0 }}
     
     steps:
-    - uses: actions/checkout@v2.3.4
+    - uses: actions/checkout@v3
       with:
         ref: feature/git-commands
     - run: git remote -v
@@ -55,11 +55,11 @@ jobs:
     
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
         with:
           ref: feature/git-commands
         if: github.event_name == 'push'
-      - uses: actions/checkout@v2.4.0
+      - uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
         if: github.event_name == 'pull_request'
