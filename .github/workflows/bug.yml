@@ -12,13 +12,13 @@ jobs:
     steps:
       - id: stepA
         run: echo "::set-output name=json::[]"
-      - run: echo $JSON
+      - run: echo $STR
         env:
-          JSON: ${{ toJSON(fromJSON(steps.stepA.outputs.json) }}
+          STR: ${{ join(fromJSON(steps.stepA.outputs.json)) }}
       - id: stepB
         run: echo "::set-output name=json::[]"
         if: false
-      - run: echo $JSON
+      - run: echo $STR
         env:
-          JSON: ${{ toJSON(fromJSON(steps.stepB.outputs.json) }}
+          STR: ${{ join(fromJSON(steps.stepB.outputs.json)) }}
         if: false
