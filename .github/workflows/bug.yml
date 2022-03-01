@@ -10,9 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - id: stepA
+      - id: step1
         run: echo '::set-output name=json::{"a":1}'
       - run: echo $A
         env:
-          A: ${{ fromJSON(steps.stepA.outputs.json).a }}
+          A: ${{ fromJSON(steps.step1.outputs.json).a }}
+      - run: echo $A
+        env:
+          A: ${{ fromJSON(steps.step1.outputs.json).a }}
         if: false
