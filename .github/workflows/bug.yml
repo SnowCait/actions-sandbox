@@ -15,6 +15,10 @@ jobs:
       - run: echo $STR
         env:
           STR: ${{ join(fromJSON(steps.stepA.outputs.json)) }}
+      - run: echo $STR
+        env:
+          STR: ${{ join(fromJSON(steps.stepA.outputs.json)) }}
+        if: false
       - id: stepB
         run: echo "::set-output name=json::[]"
         if: false
