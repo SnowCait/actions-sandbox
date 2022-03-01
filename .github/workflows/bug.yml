@@ -11,22 +11,7 @@ jobs:
 
     steps:
       - id: stepA
-        run: echo "::set-output name=json::[1,2]"
-      - run: echo $STR
+        run: echo '::set-output name=json::{"a":1}'
+      - run: echo $VALUE
         env:
-          STR: ${{ join(fromJSON(steps.stepA.outputs.json)) }}
-      - run: echo $STR
-        env:
-          STR: ${{ join(fromJSON(steps.stepA.outputs.json)) }}
-        if: false
-      - id: stepB
-        run: echo "::set-output name=json::[1,2]"
-        if: false
-      - run: echo $STR
-        env:
-          STR: ${{ steps.stepB.outputs.json }}
-        if: false
-      - run: echo $STR
-        env:
-          STR: ${{ join(fromJSON(steps.stepB.outputs.json)) }}
-        if: false
+          VALUE: ${{ fromJSON(steps.stepA.outputs.json).a }}
