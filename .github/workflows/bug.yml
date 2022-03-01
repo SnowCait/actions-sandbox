@@ -1,0 +1,24 @@
+name: Bug
+
+on:
+  push:
+    paths:
+      - .github/workflows/bug.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: stepA
+        run: echo "::set-output name=json::[]"
+      - run: echo $JSON
+        env:
+          JSON: ${{ steps.stepA.outputs.json }}
+      - id: stepB
+        run: echo "::set-output name=json::[]"
+        if: false
+      - run: echo $JSON
+        env:
+          JSON: ${{ steps.stepB.outputs.json }}
+        if: false
