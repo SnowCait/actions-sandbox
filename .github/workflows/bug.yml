@@ -12,6 +12,7 @@ jobs:
     steps:
       - id: stepA
         run: echo '::set-output name=json::{"a":1}'
-      - run: echo $VALUE
+      - run: echo $A
         env:
-          VALUE: ${{ fromJSON(steps.stepA.outputs.json).a }}
+          A: ${{ fromJSON(steps.stepA.outputs.json).a }}
+        if: false
