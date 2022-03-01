@@ -15,3 +15,5 @@ jobs:
         env:
           A: ${{ fromJSON(steps.step1.outputs.json).a }}
         if: false
+      - run: cat ../_diag/*
+        if: failure()
