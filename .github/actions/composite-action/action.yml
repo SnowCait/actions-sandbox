@@ -34,3 +34,6 @@ runs:
       env:
         NAME: ${{ inputs.name }}
         EMAIL: ${{ inputs.email }}
+branding:
+  icon: 'award'  
+  color: 'green'
