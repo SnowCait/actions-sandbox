@@ -1,10 +1,12 @@
-<phpunit defaultTestSuite="default">
-    <testsuites>
-        <testsuite name="default">
-            <directory suffix="Test.php">./test</directory>
-        </testsuite>
-    </testsuites>
-    <logging>
-        <log type="junit" target="logs/junit.xml"/>
-    </logging>
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" defaultTestSuite="default" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage/>
+  <testsuites>
+    <testsuite name="default">
+      <directory suffix="Test.php">./test</directory>
+    </testsuite>
+  </testsuites>
+  <logging>
+    <junit outputFile="logs/junit.xml"/>
+  </logging>
 </phpunit>
