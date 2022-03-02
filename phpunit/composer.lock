@@ -4,8 +4,70 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5f02d8913b99deebd6e05230babc50fa",
+    "content-hash": "c23ae0cc9fc1b3e2ed9a01380c054b98",
     "packages": [
+        {
+            "name": "athari/yalinqo",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Athari/YaLinqo.git",
+                "reference": "939469772b36d4d454836681e0be2f220cf1e5cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Athari/YaLinqo/zipball/939469772b36d4d454836681e0be2f220cf1e5cb",
+                "reference": "939469772b36d4d454836681e0be2f220cf1e5cb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "require-dev": {
+                "phpdocumentor/phpdocumentor": "^2.8",
+                "phpunit/phpunit": "^6.5",
+                "satooshi/php-coveralls": "^2.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "YaLinqo/Linq.php"
+                ],
+                "psr-4": {
+                    "YaLinqo\\": "YaLinqo/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Prokhorov",
+                    "homepage": "https://github.com/Athari/"
+                }
+            ],
+            "description": "YaLinqo, a LINQ-to-objects library for PHP",
+            "homepage": "http://athari.github.io/YaLinqo",
+            "keywords": [
+                "linq",
+                "linqo",
+                "query",
+                "statistic"
+            ],
+            "support": {
+                "docs": "http://athari.github.io/YaLinqo",
+                "issues": "https://github.com/Athari/YaLinqo/issues",
+                "source": "https://github.com/Athari/YaLinqo"
+            },
+            "time": "2018-05-11T22:30:22+00:00"
+        },
         {
             "name": "ginq/ginq",
             "version": "dev-master",
@@ -3151,7 +3213,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "ginq/ginq": 20
+        "ginq/ginq": 20,
+        "athari/yalinqo": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

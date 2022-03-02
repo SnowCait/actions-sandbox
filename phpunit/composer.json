@@ -3,6 +3,7 @@
         "phpunit/phpunit": "^9.4"
     },
     "require": {
-        "ginq/ginq": "dev-master"
+        "ginq/ginq": "dev-master",
+        "athari/yalinqo": "dev-master"
     }
 }
