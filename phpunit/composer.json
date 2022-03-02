@@ -4,6 +4,7 @@
     },
     "require": {
         "ginq/ginq": "dev-master",
-        "athari/yalinqo": "dev-master"
+        "athari/yalinqo": "dev-master",
+        "timetoogo/pinq": "dev-master"
     }
 }
