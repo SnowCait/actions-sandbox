@@ -2,6 +2,8 @@ name: Bug
 
 on:
   push:
+    paths:
+      - .github/workflows/bug.yml
 
 jobs:
   build:
