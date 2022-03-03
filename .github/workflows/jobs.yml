@@ -12,11 +12,11 @@ jobs:
 
     steps:
       - run: echo job1
-#       - run: exit 1
+      - run: exit 1
 
   job2:
     needs: [ job1 ]
-    if: success()
+    if: failure()
     runs-on: ubuntu-latest
     timeout-minutes: 1
 
