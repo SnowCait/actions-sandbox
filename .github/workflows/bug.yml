@@ -12,14 +12,8 @@ jobs:
     steps:
       - id: step1
         run: echo '::set-output name=json::{"a":1}'
-        if: false
+#         if: false
       - run: echo $A
         env:
-          A: ${{ fromJSON(steps.step1.outputs.json).a }}
-        if: false
-      - run: |
-          ls -la .
-          ls -la ..
-        if: failure()
-      - run: cat _diag/*
-        if: failure()
+          A: ${{ steps.step1.outputs.json && fromJSON(steps.step1.outputs.json).a }}
+#         if: false
