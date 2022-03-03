@@ -15,10 +15,18 @@ jobs:
 #       - run: exit 1
 
   job2:
-    needs: [ job1 ]
-    if: failure()
     runs-on: ubuntu-latest
     timeout-minutes: 1
 
     steps:
       - run: echo job2
+#       - run: exit 1
+
+  job3:
+    needs: [ job1, job2 ]
+    if: failure()
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+
+    steps:
+      - run: echo job3
