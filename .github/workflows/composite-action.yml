@@ -58,11 +58,10 @@ jobs:
       # Template
       - uses: snow-actions/composite-action-template@main
         id: template
-      - run: echo "${at}"
-        env:
-          at: ${{ steps.template.outputs.time }}
       - name: Convert to timestamp
         run: |
+          set -x
+          echo "${TIME}"
           echo "GREETED_AT=$(date --date '${TIME}' +%s)" >> $GITHUB_ENV
           echo "NOW=$(date +%s)" >> $GITHUB_ENV
         env:
