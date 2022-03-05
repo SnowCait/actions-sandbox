@@ -16,5 +16,9 @@ jobs:
       with:
         myInput: container action!
     - uses: actions/hello-world-docker-action@main
+      id: hello
       with:
         who-to-greet: 'Mona the Octocat'
+    - run: $at
+      env:
+        at: ${{ steps.hello.outputs.time }}
