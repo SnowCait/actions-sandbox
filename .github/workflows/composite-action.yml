@@ -1,6 +1,10 @@
 name: Composite Action
 
 on:
+  push:
+    paths:
+      - .github/workflows/composite-action.yml
+      - .github/actions/composite-action/**
   pull_request:
     paths:
       - .github/workflows/composite-action.yml
