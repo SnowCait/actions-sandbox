@@ -62,8 +62,9 @@ jobs:
         env:
           at: ${{ steps.template.outputs.time }}
       - run: |
+          set -x
           greeted_at=$(date --date "${at}" "+%s")
           now=$(date "+%s")
-          test $greeted_at -eq $now
+          test $greeted_at -le $now
         env:
           at: ${{ steps.template.outputs.time }}
