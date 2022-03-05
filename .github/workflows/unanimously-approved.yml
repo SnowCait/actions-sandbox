@@ -1,4 +1,5 @@
 name: Unanimously Approved
+# https://github.com/snow-actions/unanimously-approved
 
 on:
   pull_request:
