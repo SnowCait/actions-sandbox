@@ -28,6 +28,10 @@ jobs:
 
       # default
       - uses: ./.github/actions/composite-action/
+        id: composite
+      - run: echo "${number}"
+        env:
+          number: ${{ steps.comopsite.outputs.random-number }}
       - run: git config --local -l
       - name: Can commit
         run: |
