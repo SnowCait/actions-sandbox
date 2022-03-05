@@ -21,4 +21,4 @@ jobs:
       - run: test "${TEXT}" != "b"
       - run: '[ "${TEXT}" != "b" ]'
       - run: '[[ "${TEXT}" != "b" ]]'
-      - run: (( ${NUMBER} != 2 ))
+      - run: (( ${NUMBER} == 2 ))
