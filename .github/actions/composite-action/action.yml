@@ -22,6 +22,10 @@ runs:
   steps:
     - run: echo Hello ${{ inputs.who-to-greet }}.
       shell: bash
+    - run: echo "Hello, ${who}."
+      shell: bash
+      env:
+        who: ${{ inputs.who-to-greet }}
     - id: random-number-generator
       run: echo "::set-output name=random-id::$(echo $RANDOM)"
       shell: bash
