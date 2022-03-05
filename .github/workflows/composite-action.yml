@@ -61,13 +61,15 @@ jobs:
       - run: echo "${at}"
         env:
           at: ${{ steps.template.outputs.time }}
+      - name: Convert to timestamp
+        run: |
+          echo "GREETED_AT=$(date --date '${TIME}' +%s)" >> $GITHUB_ENV
+          echo "NOW=$(date +%s)" >> $GITHUB_ENV
+        env:
+          TIME: ${{ steps.template.outputs.time }}
       - run: |
           set -x
-          greeted_at=$(date --date "${at}" "+%s")
-          now=$(date "+%s")
-          test $greeted_at -le $now
-        env:
-          at: ${{ steps.template.outputs.time }}
-      - run: gh run view $GITHUB_RUN_ID --log
-        env:
-          GH_TOKEN: ${{ github.token }}
+          test $GREETED_AT -le $NOW
+      - run: |
+          set -x
+          test $GREETED_AT -ge ($NOW - 1)
