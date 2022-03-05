@@ -12,10 +12,11 @@ jobs:
     timeout-minutes: 1
 
     steps:
-      - uses: snow-actions/git-config-user@git-config-user
-      - run: |
-          git config user.name
-          git config user.email
+# fatal: not in a git directory
+#       - uses: snow-actions/git-config-user@git-config-user
+#       - run: |
+#           git config user.name
+#           git config user.email
       - uses: actions/checkout@v3
       - uses: snow-actions/git-config-user@git-config-user
       - run: |
