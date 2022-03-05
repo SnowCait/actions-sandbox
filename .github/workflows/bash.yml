@@ -1,0 +1,17 @@
+name: Bash
+
+on:
+  push:
+    paths:
+      - .github/workflows/bash.yml
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: test "a" = "a"
+      - run: '[ "b" = "b" ]'
+      - run: '[[ "b" = "b" ]]'
+      - run: (( 1 == 1 ))
