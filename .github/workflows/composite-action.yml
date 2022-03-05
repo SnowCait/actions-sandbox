@@ -58,18 +58,7 @@ jobs:
       # Template
       - uses: snow-actions/composite-action-template@main
         id: template
-      - name: Convert to timestamp
-        run: |
-          set -x
-          echo "${TIME}"
-          TIMESTAMP=$(date --date "${TIME}" +%s)
-          echo "GREETED_AT=${TIMESTAMP}" >> $GITHUB_ENV
-          echo "NOW=$(date +%s)" >> $GITHUB_ENV
+      - run: test "${GREET}" = "Hello World"
         env:
-          TIME: ${{ steps.template.outputs.time }}
-      - run: |
-          set -x
-          test $GREETED_AT -le $NOW
-      - run: |
-          set -x
-          test $GREETED_AT -ge (($NOW - 1))
+          GREET: ${{ steps.template.outputs.greet }}
+      - run: test "$(cat greet.txt)" = "Hello World"
