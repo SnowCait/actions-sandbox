@@ -1,0 +1,17 @@
+name: Container action
+
+on:
+  push:
+    paths:
+      - .github/workflows/container-action.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+
+    steps:
+    - uses: actions/container-action@main
+    - uses: actions/container-action@main
+      with:
+        myInput: container action!
