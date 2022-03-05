@@ -14,4 +14,4 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - uses: snow-actions/unanimously-approved@4a524eda64f1bb7e7ae0a6a4461f61662571b3cf
+      - uses: snow-actions/unanimously-approved@independent-check-status
