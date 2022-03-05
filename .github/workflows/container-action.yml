@@ -15,3 +15,6 @@ jobs:
     - uses: actions/container-action@main
       with:
         myInput: container action!
+    - uses: actions/hello-world-docker-action@main
+      with:
+        who-to-greet: 'Mona the Octocat'
