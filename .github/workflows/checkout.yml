@@ -12,15 +12,15 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: echo a > a.txt
       - run: ls -la
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           clean: true
       - run: echo b > b.txt
       - run: ls -la
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           clean: false
       - run: ls -la
@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           repository: https://gist.github.com/ee80c65ecb2387c407cc0b0753835245
       - run: ls -la
