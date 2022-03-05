@@ -61,3 +61,6 @@ jobs:
       - run: echo "${at}"
         env:
           at: ${{ steps.template.outputs.time }}
+      - run: test "${at}" = "$(date)"
+        env:
+          at: ${{ steps.template.outputs.time }}
