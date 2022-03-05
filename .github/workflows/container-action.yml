@@ -19,6 +19,6 @@ jobs:
       id: hello
       with:
         who-to-greet: 'Mona the Octocat'
-    - run: $at
+    - run: echo "${at}"
       env:
         at: ${{ steps.hello.outputs.time }}
