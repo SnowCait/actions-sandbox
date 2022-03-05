@@ -13,4 +13,4 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - uses: snow-actions/unanimously-approved@npm-check-updates
+      - uses: snow-actions/unanimously-approved@independent-check-status
