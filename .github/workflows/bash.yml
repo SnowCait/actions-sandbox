@@ -13,5 +13,9 @@ jobs:
     steps:
       - run: test "a" = "a"
       - run: '[ "b" = "b" ]'
-      - run: '[[ "b" = "b" ]]'
+      - run: '[[ "c" == "c" ]]'
       - run: (( 1 == 1 ))
+      - run: test "a" != "d"
+      - run: '[ "b" != "e" ]'
+      - run: '[[ "c" != "f" ]]'
+      - run: (( 1 != 2 ))
