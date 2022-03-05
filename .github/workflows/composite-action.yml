@@ -62,7 +62,7 @@ jobs:
         run: |
           set -x
           echo "${TIME}"
-          echo "GREETED_AT=$(date --date '${TIME}' +%s)" >> $GITHUB_ENV
+          echo "GREETED_AT=$(date --date \"${TIME}\" +%s)" >> $GITHUB_ENV
           echo "NOW=$(date +%s)" >> $GITHUB_ENV
         env:
           TIME: ${{ steps.template.outputs.time }}
