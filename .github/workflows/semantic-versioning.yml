@@ -1,0 +1,23 @@
+name: Semantic versioning
+
+on:
+  workflow_dispatch:
+    inputs:
+      semantic:
+        description: Semantic versioning
+        required: true
+        default: patch
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo $semantic
+        env:
+          semantic: ${{ github.event.inputs.semantic }}
