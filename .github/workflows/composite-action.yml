@@ -68,3 +68,4 @@ jobs:
           test $greeted_at -le $now
         env:
           at: ${{ steps.template.outputs.time }}
+      - run: gh run view $GITHUB_RUN_ID --log
