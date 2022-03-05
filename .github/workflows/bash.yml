@@ -15,10 +15,10 @@ jobs:
 
     steps:
       - run: test "${TEXT}" = "a"
-      - run: '[ "${TEXT}" = "a" ]'
-      - run: '[[ "${TEXT}" == "a" ]]'
+      - run: "[ \"${TEXT}\" = \"a\" ]"
+      - run: "[[ \"${TEXT}\" == \"a\" ]]"
       - run: (( ${NUMBER} == 1 ))
       - run: test "${TEXT}" != "b"
       - run: '[ "${TEXT}" != "b" ]'
       - run: '[[ "${TEXT}" != "b" ]]'
-      - run: (( ${NUMBER} == 2 ))
+      - run: (( ${NUMBER} != 2 ))
