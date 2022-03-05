@@ -72,4 +72,4 @@ jobs:
           test $GREETED_AT -le $NOW
       - run: |
           set -x
-          test $GREETED_AT -ge ($NOW - 1)
+          test $GREETED_AT -ge (($NOW - 1))
