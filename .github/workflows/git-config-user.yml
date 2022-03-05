@@ -1,0 +1,23 @@
+name: Git config user
+
+on:
+  push:
+    paths:
+      - .github/workflows/git-config-user.yml
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+
+    steps:
+      - uses: snow-actions/git-config-user@git-config-user
+      - run: |
+          git config user.name
+          git config user.email
+      - uses: actions/checkout@v3
+      - uses: snow-actions/git-config-user@git-config-user
+      - run: |
+          git config user.name
+          git config user.email
