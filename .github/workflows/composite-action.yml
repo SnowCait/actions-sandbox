@@ -31,7 +31,7 @@ jobs:
         id: composite
       - run: echo "${number}"
         env:
-          number: ${{ steps.comopsite.outputs.random-number }}
+          number: ${{ steps.composite.outputs.random-number }}
       - run: git config --local -l
       - name: Can commit
         run: |
