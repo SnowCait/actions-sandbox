@@ -9,6 +9,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 1
     env:
       TEXT: a
       NUMBER: 1
@@ -22,3 +23,11 @@ jobs:
       - run: '[ "${TEXT}" != "b" ]'
       - run: '[[ "${TEXT}" != "b" ]]'
       - run: (( ${NUMBER} != 2 ))
+
+  sleep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+      - run: sleep 30
+      - run: sleep 1m 30s
