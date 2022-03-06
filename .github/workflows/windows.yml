@@ -14,3 +14,4 @@ jobs:
       - run: cat $env:GITHUB_EVENT_PATH
       - run: echo "test" > test
       - run: Test-Path test
+      - run: Test-Path none
