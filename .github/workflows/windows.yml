@@ -1,0 +1,14 @@
+name: Windows
+
+on:
+  push:
+    paths:
+      - .github/workflows/windows.yml
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 1
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
