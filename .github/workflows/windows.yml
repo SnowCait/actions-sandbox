@@ -6,9 +6,11 @@ on:
       - .github/workflows/windows.yml
 
 jobs:
-  build:
+  powershell:
     runs-on: windows-latest
     timeout-minutes: 1
 
     steps:
       - run: cat $env:GITHUB_EVENT_PATH
+      - run: echo "test" > test
+      - run: Test-Path test
