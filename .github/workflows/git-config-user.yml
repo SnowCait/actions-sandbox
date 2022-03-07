@@ -41,3 +41,4 @@ jobs:
       - run: test "${GREET}" = "hello"
         env:
           GREET: hello
+        if: runner.os != 'Windows'
