@@ -10,7 +10,7 @@ jobs:
   test-bash:
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-2022, windows-2019, windows-2016 ]
+        os: [ ubuntu-latest, windows-2022, windows-2019 ]
     runs-on: ${{ matrix.os }}
     timeout-minutes: 5
 
