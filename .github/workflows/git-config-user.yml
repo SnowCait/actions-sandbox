@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  test-bash:
     runs-on: ubuntu-latest
     timeout-minutes: 1
 
@@ -17,6 +17,22 @@ jobs:
 #       - run: |
 #           git config user.name
 #           git config user.email
+      - uses: actions/checkout@v3
+      - uses: snow-actions/git-config-user@v1.0.0
+      - run: |
+          git config user.name
+          git config user.email
+      - run: test "$(git config user.name)" = "github-actions[bot]"
+      - run: test "$(git config user.email)" = "41898282+github-actions[bot]@users.noreply.github.com"
+      - run: echo "test" > test
+      - run: git add .
+      - run: git commit -m "test"
+
+  test-powershell:
+    runs-on: windows-latest
+    timeout-minutes: 1
+
+    steps:
       - uses: actions/checkout@v3
       - uses: snow-actions/git-config-user@v1.0.0
       - run: |
