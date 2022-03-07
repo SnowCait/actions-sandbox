@@ -34,7 +34,7 @@ jobs:
       - run: echo "${GREET}"
         env:
           GREET: hello
-      - run: test $env::GREET = "hello"
+      - run: test $env:GREET = "hello"
         env:
           GREET: hello
         if: runner.os == 'Windows'
