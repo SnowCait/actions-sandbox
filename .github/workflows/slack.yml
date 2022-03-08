@@ -7,17 +7,21 @@ on:
   workflow_dispatch:
 
 jobs:
-  post:
+  app:
     runs-on: ubuntu-latest
     timeout-minutes: 1
+    env:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    if: false
 
     steps:
       - uses: slackapi/slack-github-action@v1.18.0
         id: slack
         with:
+          channel-id: '#sandbox'
           payload: |
             {
-              "text": "Hello, GitHub Actions!",
+              "text": "Hello, Slack App!",
               "attachments": [
                 {
                   "color": "good",
@@ -27,9 +31,41 @@ jobs:
                 }
               ]
             }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
-      - run: echo $json
-        env:
-          json: ${{ steps.slack.outputs.time }}
+      - uses: slackapi/slack-github-action@v1.18.0
+        with:
+          payload: |
+            {
+              "text": "Reply",
+              "thread_ts": "${{ steps.slack.outputs.time }}"
+            }
+
+  incoming-webhook:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+
+    steps:
+      - uses: slackapi/slack-github-action@v1.18.0
+        id: slack
+        with:
+          payload: |
+            {
+              "text": "Hello, Incoming Webhook!",
+              "attachments": [
+                {
+                  "color": "good",
+                  "title": "title",
+                  "title_link": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                  "text": "description"
+                }
+              ]
+            }
+      - uses: slackapi/slack-github-action@v1.18.0
+        with:
+          payload: |
+            {
+              "text": "Reply",
+              "thread_ts": "${{ steps.slack.outputs.time }}"
+            }
