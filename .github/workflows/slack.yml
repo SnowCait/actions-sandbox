@@ -12,7 +12,6 @@ jobs:
     timeout-minutes: 1
     env:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-    if: false
 
     steps:
       - uses: slackapi/slack-github-action@v1.18.0
@@ -33,6 +32,7 @@ jobs:
             }
       - uses: slackapi/slack-github-action@v1.18.0
         with:
+          channel-id: '#sandbox'
           payload: |
             {
               "text": "Reply",
@@ -62,10 +62,10 @@ jobs:
                 }
               ]
             }
-      - uses: slackapi/slack-github-action@v1.18.0
-        with:
-          payload: |
-            {
-              "text": "Reply",
-              "thread_ts": "${{ steps.slack.outputs.time }}"
-            }
+#       - uses: slackapi/slack-github-action@v1.18.0
+#         with:
+#           payload: |
+#             {
+#               "text": "Reply",
+#               "thread_ts": "${{ steps.slack.outputs.time }}"
+#             }
