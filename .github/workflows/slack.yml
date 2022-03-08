@@ -21,7 +21,7 @@ jobs:
                 {
                   "color": "good",
                   "title": "title",
-                  "title_link": "${{ env.GITHUB_SERVER_URL }}/${{ env.GITHUB_REPOSITORY }}/actions/runs/${{ env.GITHUB_RUN_ID }}"
+                  "title_link": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
                   "text": "description"
                 }
               ]
