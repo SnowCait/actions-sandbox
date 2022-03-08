@@ -17,7 +17,7 @@ jobs:
       - uses: slackapi/slack-github-action@v1.18.0
         id: slack
         with:
-          channel-id: '#sandbox'
+          channel-id: 'CMRERPC4E'
           payload: |
             {
               "text": "Hello, Slack App!",
@@ -32,7 +32,7 @@ jobs:
             }
       - uses: slackapi/slack-github-action@v1.18.0
         with:
-          channel-id: '#sandbox'
+          channel-id: 'CMRERPC4E'
           payload: |
             {
               "text": "Reply",
