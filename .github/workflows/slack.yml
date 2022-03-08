@@ -17,7 +17,7 @@ jobs:
       - uses: slackapi/slack-github-action@v1.18.0
         id: slack
         with:
-          channel-id: 'CMRERPC4E'
+          channel-id: '#sandbox'
           payload: |
             {
               "text": "Hello, Slack App!",
@@ -30,14 +30,14 @@ jobs:
                 }
               ]
             }
-      - uses: slackapi/slack-github-action@v1.18.0
-        with:
-          channel-id: 'CMRERPC4E'
-          payload: |
-            {
-              "text": "Reply",
-              "thread_ts": "${{ steps.slack.outputs.time }}"
-            }
+#       - uses: slackapi/slack-github-action@v1.18.0
+#         with:
+#           channel-id: '#sandbox'
+#           payload: |
+#             {
+#               "text": "Reply",
+#               "thread_ts": "${{ steps.slack.outputs.time }}"
+#             }
 
   incoming-webhook:
     runs-on: ubuntu-latest
