@@ -16,7 +16,14 @@ jobs:
         with:
           payload: |
             {
-              "text": "Hello, GitHub Actions!"
+              "text": "Hello, GitHub Actions!",
+              "attachments": [
+                {
+                  "color": "good",
+                  "title": "title",
+                  "text": "description"
+                }
+              ]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
