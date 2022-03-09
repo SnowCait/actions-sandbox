@@ -18,7 +18,7 @@ jobs:
       - run: |
           docker run \
             --name mysql \
-            -v .database:/var/lib/mysql
+            -v "${PWD}/.database":/var/lib/mysql \
             -e MYSQL_ROOT_PASSWORD \
             -d \
             --health-cmd 'mysqladmin ping' \
