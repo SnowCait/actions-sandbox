@@ -33,6 +33,7 @@ jobs:
           JSON: ${{ toJSON(job.services) }}
       - run: mysql -V
       - run: mysql --protocol=tcp -hlocalhost -P3306 -uroot -e "SHOW DATABASES"
+      - run: mysql --protocol=tcp -P3306 -uroot -e "SHOW DATABASES"
       - run: docker logs $CONTAINER_ID
         env:
           CONTAINER_ID: ${{ job.services.mysql.id }}
