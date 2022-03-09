@@ -24,7 +24,7 @@ jobs:
             --health-cmd 'mysqladmin ping' \
             --health-interval 10s \
             --health-retries 5 \
-            --health-timeout 5s
+            --health-timeout 5s \
             mysql:8.0
       - run: docker inspect --format='{{.State.Health.Status}}' mysql
       - run: |
