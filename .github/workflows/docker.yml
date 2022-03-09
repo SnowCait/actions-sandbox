@@ -19,7 +19,9 @@ jobs:
         ports:
           - 3306:3306
         env:
-          MYSQL_ROOT_PASSWORD: abcdef
+          MYSQL_ROOT_PASSWORD: root_password
+          MYSQL_USER: test-user
+          MYSQL_PASSWORD: test-user_password
         options: >-
           --health-cmd "mysqladmin ping"
           --health-interval 10s
@@ -32,8 +34,8 @@ jobs:
         env:
           JSON: ${{ toJSON(job.services) }}
       - run: mysql -V
-      - run: mysql --protocol=tcp -hlocalhost -P3306 -uroot -e "SHOW DATABASES"
-      - run: mysql --protocol=tcp -P3306 -uroot -e "SHOW DATABASES"
+      - run: mysql --protocol=tcp -hlocalhost -P3306 -utest-user -e "SHOW DATABASES"
+      - run: mysql --protocol=tcp -P3306 -utest-user -e "SHOW DATABASES"
       - run: docker logs $CONTAINER_ID
         env:
           CONTAINER_ID: ${{ job.services.mysql.id }}
