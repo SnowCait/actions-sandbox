@@ -42,7 +42,7 @@ jobs:
         env:
           JSON: ${{ toJSON(job.services) }}
       - run: mysql -V
-      - run: cat /var/run/mysqld/mysqld.sock
+#       - run: cat /var/run/mysqld/mysqld.sock
       - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
       - run: docker logs $CONTAINER_ID
         env:
