@@ -7,6 +7,40 @@ on:
       - docker/**
 
 jobs:
+  docker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      MYSQL_ROOT_PASSWORD: abcdef
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          docker run \
+            --name mysql \
+            -v .database:/var/lib/mysql
+            -e MYSQL_ROOT_PASSWORD \
+            -d \
+            --health-cmd 'mysqladmin ping' \
+            --health-interval 10s \
+            --health-retries 5 \
+            --health-timeout 5s
+            mysql:8.0
+      - run: docker inspect --format='{{.State.Health.Status}}' mysql
+      - run: |
+          set -x
+          until [ "$(docker inspect --format='{{.State.Health.Status}}' mysql)" = 'healthy' ]; do
+            echo "Container is starting..."
+            sleep 1s
+          done
+      - run: docker ps
+      - run: docker exec mysql mysql -V
+      - run: docker exec -e MYSQL_PWD=${MYSQL_ROOT_PASSWORD} mysql mysql -uroot -e "SHOW DATABASES"
+      - run: docker logs mysql
+        if: always()
+      - run: ls -la
+      - run: ls -la .database/
+
   docker-compose:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -44,12 +78,12 @@ jobs:
       - run: ls -la
       - run: ls -la .database/
 
-  service:
+  service-container:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:8.0
         ports:
           - 3306:3306
         env:
