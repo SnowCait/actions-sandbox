@@ -16,12 +16,13 @@ jobs:
     steps:
       - run: sudo systemctl start mysql.service
       - run: mysql --protocol=tcp -P3306 -uroot -e "SHOW DATABASES"
+      - run: mysql -P3306 -uroot -e "SHOW DATABASES"
 
   service-container:
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     env:
-      MYSQL_PWD: test-user_password
+      MYSQL_PWD: root
 
     services:
       mysql:
@@ -29,9 +30,7 @@ jobs:
         ports:
           - 3306:3306
         env:
-          MYSQL_ROOT_PASSWORD: root_password
-          MYSQL_USER: test-user
-          MYSQL_PASSWORD: ${{ env.MYSQL_PWD }}
+          MYSQL_ROOT_PASSWORD: ${{ env.MYSQL_PWD }}
         options: >-
           --health-cmd "mysqladmin ping"
           --health-interval 10s
@@ -44,8 +43,7 @@ jobs:
         env:
           JSON: ${{ toJSON(job.services) }}
       - run: mysql -V
-      - run: mysql --protocol=tcp -hlocalhost -P3306 -utest-user -e "SHOW DATABASES"
-      - run: mysql --protocol=tcp -P3306 -utest-user -e "SHOW DATABASES"
+      - run: mysql --protocol=tcp -P3306 -uroot -e "SHOW DATABASES"
       - run: docker logs $CONTAINER_ID
         env:
           CONTAINER_ID: ${{ job.services.mysql.id }}
@@ -55,7 +53,7 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     env:
-      MYSQL_ROOT_PASSWORD: abcdef
+      MYSQL_PWD: root
 
     steps:
       - uses: actions/checkout@v3
@@ -63,7 +61,7 @@ jobs:
           docker run \
             --name mysql \
             -v "${PWD}/.database":/var/lib/mysql \
-            -e MYSQL_ROOT_PASSWORD \
+            -e MYSQL_ROOT_PASSWORD=${MYSQL_PWD} \
             -d \
             --health-cmd 'mysqladmin ping' \
             --health-interval 10s \
@@ -77,9 +75,7 @@ jobs:
             echo "Container is starting..."
             sleep 1s
           done
-      - run: docker ps
-      - run: docker exec mysql mysql -V
-      - run: docker exec -e MYSQL_PWD=${MYSQL_ROOT_PASSWORD} mysql mysql -uroot -e "SHOW DATABASES"
+      - run: docker exec -e MYSQL_PWD mysql mysql -uroot -e "SHOW DATABASES"
       - run: docker logs mysql
         if: always()
       - run: ls -la
@@ -89,7 +85,7 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     env:
-      MYSQL_ROOT_PASSWORD: abcdef
+      MYSQL_PWD: root
     defaults:
       run:
         working-directory: docker
@@ -97,26 +93,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: docker-compose up -d
-#       - run: docker-compose ps
-#       - run: docker inspect $(docker-compose ps -q mysql)
-#       - run: docker inspect $(docker-compose ps -q mysql) | jq -r '.[0]'
-#       - run: docker inspect $(docker-compose ps -q mysql) | jq -r '.[0].State.Health.Status'
-      - run: docker inspect --format='{{.State.Health.Status}}' $(docker-compose ps -q mysql)
-      - run: |
+      - name: Wait for starting
+        run: |
           set -x
           until [ "$(docker inspect --format='{{.State.Health.Status}}' $(docker-compose ps -q mysql))" = 'healthy' ]; do
             echo "Container is starting..."
             sleep 1s
           done
-#       - run: |
-#           while [ "$(docker inspect $(docker-compose ps -q mysql) | jq -r '.[0].State.Health.Status')" == 'starting' ]; do
-#             echo "Container is starting..."
-#             sleep 2
-#           done
-#       - run: sleep 60
-      - run: docker-compose ps
-      - run: docker-compose exec -T mysql mysql -V
-      - run: docker-compose exec -T --env MYSQL_PWD=${MYSQL_ROOT_PASSWORD} mysql mysql -uroot -e "SHOW DATABASES"
+      - run: docker-compose exec -T --env MYSQL_PWD mysql mysql -uroot -e "SHOW DATABASES"
       - run: docker-compose logs
         if: always()
       - run: ls -la
