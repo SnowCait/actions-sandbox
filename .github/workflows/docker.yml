@@ -10,6 +10,8 @@ jobs:
   docker-compose:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    env:
+      MYSQL_ROOT_PASSWORD: abcdef
     defaults:
       run:
         working-directory: docker
@@ -17,10 +19,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: docker-compose up -d
-      - run: docker-compose ps
-      - run: docker inspect $(docker-compose ps -q mysql)
-      - run: docker inspect $(docker-compose ps -q mysql) | jq -r '.[0]'
-      - run: docker inspect $(docker-compose ps -q mysql) | jq -r '.[0].State.Health.Status'
+#       - run: docker-compose ps
+#       - run: docker inspect $(docker-compose ps -q mysql)
+#       - run: docker inspect $(docker-compose ps -q mysql) | jq -r '.[0]'
+#       - run: docker inspect $(docker-compose ps -q mysql) | jq -r '.[0].State.Health.Status'
       - run: docker inspect --format='{{.State.Health.Status}}' $(docker-compose ps -q mysql)
       - run: |
           set -x
@@ -36,7 +38,7 @@ jobs:
 #       - run: sleep 60
       - run: docker-compose ps
       - run: docker-compose exec -T mysql mysql -V
-      - run: docker-compose exec -T --env MYSQL_PWD=abcdef mysql mysql -uroot -e "SHOW DATABASES"
+      - run: docker-compose exec -T --env MYSQL_PWD=${MYSQL_ROOT_PASSWORD} mysql mysql -uroot -e "SHOW DATABASES"
       - run: docker-compose logs
         if: always()
       - run: ls -la
