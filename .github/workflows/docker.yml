@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     env:
-      MYSQL_PWD: abcdef
+      MYSQL_PWD: test-user_password
 
     services:
       mysql:
