@@ -26,7 +26,7 @@ jobs:
           set -x
           until [ "$(docker inspect --format='{{.State.Health.Status}}' $(docker-compose ps -q mysql))" = 'healthy' ]; do
             echo "Container is starting..."
-            sleep 1
+            sleep 1s
           done
 #       - run: |
 #           while [ "$(docker inspect $(docker-compose ps -q mysql) | jq -r '.[0].State.Health.Status')" == 'starting' ]; do
