@@ -18,18 +18,23 @@ jobs:
         id: slack
         with:
           channel-id: '#sandbox'
-          payload: |
-            {
-              "text": "Hello, Slack App!",
-              "attachments": [
-                {
-                  "color": "good",
-                  "title": "title",
-                  "title_link": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-                  "text": "description"
-                }
-              ]
-            }
+          slack-message: "Hello, Slack App!"
+#       - uses: slackapi/slack-github-action@v1.18.0
+#         id: slack
+#         with:
+#           channel-id: '#sandbox'
+#           payload: |
+#             {
+#               "text": "Hello, Slack App!",
+#               "attachments": [
+#                 {
+#                   "color": "good",
+#                   "title": "title",
+#                   "title_link": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+#                   "text": "description"
+#                 }
+#               ]
+#             }
 #       - uses: slackapi/slack-github-action@v1.18.0
 #         with:
 #           channel-id: '#sandbox'
