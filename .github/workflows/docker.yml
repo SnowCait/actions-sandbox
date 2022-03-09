@@ -38,6 +38,7 @@ jobs:
 
     steps:
       - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
+      - run: docker exec -e MYSQL_PWD mysql mysql -uroot -e "SHOW DATABASES"
       - run: echo $JSON
         env:
           JSON: ${{ toJSON(job.services) }}
