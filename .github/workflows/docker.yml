@@ -15,8 +15,7 @@ jobs:
 
     steps:
       - run: sudo systemctl start mysql.service
-      - run: mysql --protocol=tcp -P3306 -uroot -e "SHOW DATABASES"
-      - run: mysql -P3306 -uroot -e "SHOW DATABASES"
+      - run: mysql -uroot -e "SHOW DATABASES"
 
   service-container:
     runs-on: ubuntu-20.04
