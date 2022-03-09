@@ -37,13 +37,10 @@ jobs:
           --health-retries 5
 
     steps:
-      - run: docker ps
+      - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
       - run: echo $JSON
         env:
           JSON: ${{ toJSON(job.services) }}
-      - run: mysql -V
-#       - run: cat /var/run/mysqld/mysqld.sock
-      - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
       - run: docker logs $CONTAINER_ID
         env:
           CONTAINER_ID: ${{ job.services.mysql.id }}
