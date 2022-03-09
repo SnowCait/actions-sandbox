@@ -60,7 +60,6 @@ jobs:
       - run: |
           docker run \
             --name mysql \
-            -v "${PWD}/.database":/var/lib/mysql \
             -e MYSQL_ROOT_PASSWORD=${MYSQL_PWD} \
             -d \
             --health-cmd 'mysqladmin ping' \
@@ -78,8 +77,6 @@ jobs:
       - run: docker exec -e MYSQL_PWD mysql mysql -uroot -e "SHOW DATABASES"
       - run: docker logs mysql
         if: always()
-      - run: ls -la
-      - run: ls -la .database/
 
   docker-compose:
     runs-on: ubuntu-20.04
@@ -103,5 +100,3 @@ jobs:
       - run: docker-compose exec -T --env MYSQL_PWD mysql mysql -uroot -e "SHOW DATABASES"
       - run: docker-compose logs
         if: always()
-      - run: ls -la
-      - run: ls -la .database/
