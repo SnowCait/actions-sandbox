@@ -7,6 +7,36 @@ on:
       - docker/**
 
 jobs:
+  service-container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    services:
+      mysql:
+        image: mysql:8.0.28
+        ports:
+          - 3306:3306
+        env:
+          MYSQL_ROOT_PASSWORD: abcdef
+        options: >-
+          --health-cmd "mysqladmin ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      MYSQL_PWD: abcdef
+
+    steps:
+      - run: docker ps
+      - run: echo $JSON
+        env:
+          JSON: ${{ toJSON(job.services) }}
+      - run: mysql -V
+      - run: mysql --protocol=tcp -hlocalhost -P3306 -uroot -e "SHOW DATABASES"
+      - run: docker logs $CONTAINER_ID
+        env:
+          CONTAINER_ID: ${{ job.services.mysql.id }}
+        if: always()
+
   docker:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -77,33 +107,3 @@ jobs:
         if: always()
       - run: ls -la
       - run: ls -la .database/
-
-  service-container:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    services:
-      mysql:
-        image: mysql:8.0.28
-        ports:
-          - 3306:3306
-        env:
-          MYSQL_ROOT_PASSWORD: abcdef
-        options: >-
-          --health-cmd "mysqladmin ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-    env:
-      MYSQL_PWD: abcdef
-
-    steps:
-      - run: docker ps
-      - run: echo $JSON
-        env:
-          JSON: ${{ toJSON(job.services) }}
-      - run: mysql -V
-      - run: mysql --protocol=tcp -hlocalhost -P3306 -uroot -e "SHOW DATABASES"
-      - run: docker logs $CONTAINER_ID
-        env:
-          CONTAINER_ID: ${{ job.services.mysql.id }}
-        if: always()
