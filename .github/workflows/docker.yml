@@ -7,6 +7,16 @@ on:
       - docker/**
 
 jobs:
+  pre-installed:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    env:
+      MYSQL_PWD: root
+
+    steps:
+      - run: sudo systemctl start mysql.service
+      - run: mysql --protocol=tcp -P3306 -uroot -e "SHOW DATABASES"
+
   service-container:
     runs-on: ubuntu-20.04
     timeout-minutes: 5
