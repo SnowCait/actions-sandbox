@@ -37,10 +37,10 @@ jobs:
           --health-retries 5
 
     steps:
-      - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
       - run: docker exec -e MYSQL_PWD ${CONTAINER_ID} mysql -uroot -e "SHOW DATABASES"
         env:
           CONTAINER_ID: ${{ job.services.mysql.id }}
+      - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
       - run: echo $JSON
         env:
           JSON: ${{ toJSON(job.services) }}
@@ -75,6 +75,7 @@ jobs:
             sleep 1s
           done
       - run: docker exec -e MYSQL_PWD mysql mysql -uroot -e "SHOW DATABASES"
+      - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
       - run: docker logs mysql
         if: always()
 
@@ -98,5 +99,6 @@ jobs:
             sleep 1s
           done
       - run: docker-compose exec -T --env MYSQL_PWD mysql mysql -uroot -e "SHOW DATABASES"
+      - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
       - run: docker-compose logs
         if: always()
