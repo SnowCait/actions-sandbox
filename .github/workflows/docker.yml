@@ -69,7 +69,7 @@ jobs:
 
     steps:
       - run: mysql -hmysql -uroot -e "SHOW DATABASES"
-      - run: mysql -uroot -e "SHOW DATABASES"
+      - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
 
   docker:
     runs-on: ubuntu-20.04
