@@ -95,7 +95,14 @@ jobs:
           until [ "$(docker inspect --format='{{.State.Health.Status}}' mysql-server)" = 'healthy' ]; do
             sleep 1s
           done
-      - run: docker run --name mysql-client --rm -e MYSQL_PWD --network bridge-network mysql:8.0.28 mysql -hmysql-server -uroot -e "SHOW DATABASES"
+      - run: |
+          docker run \
+            --name mysql-client \
+            --rm \
+            -e MYSQL_PWD \
+            --network bridge-network \
+            mysql:8.0.28 \
+            mysql -hmysql-server -uroot -e "SHOW DATABASES"
       - run: docker exec -e MYSQL_PWD mysql-server mysql -uroot -e "SHOW DATABASES"
       - run: docker logs mysql-server
         if: always()
