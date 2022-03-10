@@ -61,6 +61,7 @@ jobs:
           docker run \
             --name mysql \
             -e MYSQL_ROOT_PASSWORD=${MYSQL_PWD} \
+            -p 3306:3306
             -d \
             --health-cmd 'mysqladmin ping' \
             --health-interval 10s \
