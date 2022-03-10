@@ -93,7 +93,7 @@ jobs:
       - run: docker inspect --format='{{.State.Health.Status}}' mysql-server
       - run: |
           set -x
-          until [ "$(docker inspect --format='{{.State.Health.Status}}' mysql)" = 'healthy' ]; do
+          until [ "$(docker inspect --format='{{.State.Health.Status}}' mysql-server)" = 'healthy' ]; do
             echo "Container is starting..."
             sleep 1s
           done
