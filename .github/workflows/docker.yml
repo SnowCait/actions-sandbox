@@ -26,8 +26,8 @@ jobs:
     services:
       mysql:
         image: mysql:8.0.28
-        ports:
-          - 3306:3306
+#         ports:
+#           - 3306:3306
         env:
           MYSQL_ROOT_PASSWORD: ${{ env.MYSQL_PWD }}
         options: >-
@@ -40,7 +40,7 @@ jobs:
       - run: docker exec -e MYSQL_PWD ${CONTAINER_ID} mysql -uroot -e "SHOW DATABASES"
         env:
           CONTAINER_ID: ${{ job.services.mysql.id }}
-      - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
+#       - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
       - run: echo $JSON
         env:
           JSON: ${{ toJSON(job.services) }}
