@@ -112,8 +112,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: docker-compose up -d
       - run: docker run --name mysql-client --rm -e MYSQL_PWD mysql:8.0.28 mysql -V
+      - run: docker-compose up -d
       - name: Wait for starting
         run: |
           set -x
@@ -121,7 +121,7 @@ jobs:
             echo "Container is starting..."
             sleep 1s
           done
-      - run: docker-compose exec -T --env MYSQL_PWD mysql-client mysql -uroot -e "SHOW DATABASES"
+      - run: docker-compose exec -T --env MYSQL_PWD mysql-client mysql -hmysql-server -uroot -e "SHOW DATABASES"
       - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
       - run: docker-compose logs
         if: always()
