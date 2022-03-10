@@ -32,7 +32,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: ${{ env.MYSQL_PWD }}
         options: >-
           --health-cmd "mysqladmin ping"
-          --health-interval 10s
+          --health-interval 1s
           --health-timeout 5s
           --health-retries 5
 
@@ -63,7 +63,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: ${{ env.MYSQL_PWD }}
         options: >-
           --health-cmd "mysqladmin ping"
-          --health-interval 10s
+          --health-interval 1s
           --health-timeout 5s
           --health-retries 5
 
@@ -85,7 +85,7 @@ jobs:
             -p 3306:3306 \
             -d \
             --health-cmd 'mysqladmin ping' \
-            --health-interval 10s \
+            --health-interval 1s \
             --health-retries 5 \
             --health-timeout 5s \
             mysql:8.0.28
