@@ -126,7 +126,6 @@ jobs:
           until [ "$(docker inspect --format='{{.State.Health.Status}}' $(docker compose ps -q mysql-server))" = 'healthy' ]; do
             sleep 1s
           done
-      - run: docker compose exec -T -e MYSQL_PWD mysql-client mysql -V
       - run: docker compose exec -T -e MYSQL_PWD mysql-client mysql -hmysql-server -uroot -e "SHOW DATABASES"
       - run: docker compose logs
         if: always()
