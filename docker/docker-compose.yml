@@ -5,6 +5,8 @@ services:
     image: mysql:8.0.28
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_PWD}
+    ports:
+      - "3306:3306"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping"]
       interval: 10s
