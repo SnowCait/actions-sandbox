@@ -80,7 +80,7 @@ jobs:
       - run: docker network create bridge-network
       - run: |
           docker run \
-            --name mysql \
+            --name mysql-server \
             -e MYSQL_ROOT_PASSWORD=${MYSQL_PWD} \
             -p 3306:3306 \
             --network bridge-network \
@@ -90,7 +90,7 @@ jobs:
             --health-retries 5 \
             --health-timeout 5s \
             mysql:8.0.28
-      - run: docker inspect --format='{{.State.Health.Status}}' mysql
+      - run: docker inspect --format='{{.State.Health.Status}}' mysql-server
       - run: |
           set -x
           until [ "$(docker inspect --format='{{.State.Health.Status}}' mysql)" = 'healthy' ]; do
@@ -98,9 +98,9 @@ jobs:
             sleep 1s
           done
       - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
-      - run: docker exec -e MYSQL_PWD mysql mysql -uroot -e "SHOW DATABASES"
-      - run: docker run --name client --rm -e MYSQL_PWD --network bridge-network mysql:8.0.28 mysql -hmysql -uroot -e "SHOW DATABASES"
-      - run: docker logs mysql
+      - run: docker exec -e MYSQL_PWD mysql-server mysql -uroot -e "SHOW DATABASES"
+      - run: docker run --name mysql-client --rm -e MYSQL_PWD --network bridge-network mysql:8.0.28 mysql -hmysql-server -uroot -e "SHOW DATABASES"
+      - run: docker logs mysql-server
         if: always()
 
   docker-compose:
