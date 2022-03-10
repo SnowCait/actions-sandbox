@@ -96,8 +96,9 @@ jobs:
             echo "Container is starting..."
             sleep 1s
           done
-      - run: docker exec -e MYSQL_PWD mysql mysql -uroot -e "SHOW DATABASES"
       - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
+      - run: docker exec -e MYSQL_PWD mysql mysql -uroot -e "SHOW DATABASES"
+      - run: docker run --name client --rm -e MYSQL_PWD mysql mysql -uroot -e "SHOW DATABASES"
       - run: docker logs mysql
         if: always()
 
