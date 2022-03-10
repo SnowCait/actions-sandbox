@@ -119,14 +119,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: docker run --name mysql-client --rm -e MYSQL_PWD mysql:8.0.28 mysql -V
-      - run: docker-compose up -d
+      - run: docker compose up -d
       - name: Wait for starting
         run: |
           set -x
-          until [ "$(docker inspect --format='{{.State.Health.Status}}' $(docker-compose ps -q mysql-server))" = 'healthy' ]; do
+          until [ "$(docker inspect --format='{{.State.Health.Status}}' $(docker compose ps -q mysql-server))" = 'healthy' ]; do
             sleep 1s
           done
-      - run: docker-compose exec -T -e MYSQL_PWD mysql-client mysql -V
-      - run: docker-compose exec -T -e MYSQL_PWD mysql-client mysql -hmysql-server -uroot -e "SHOW DATABASES"
-      - run: docker-compose logs
+      - run: docker compose exec -T -e MYSQL_PWD mysql-client mysql -V
+      - run: docker compose exec -T -e MYSQL_PWD mysql-client mysql -hmysql-server -uroot -e "SHOW DATABASES"
+      - run: docker compose logs
         if: always()
