@@ -57,7 +57,7 @@ jobs:
       MYSQL_PWD: root
 
     services:
-      mysql:
+      mysql-container:
         image: mysql:8.0.28
         env:
           MYSQL_ROOT_PASSWORD: ${{ env.MYSQL_PWD }}
@@ -68,8 +68,7 @@ jobs:
           --health-retries 5
 
     steps:
-      - run: mysql -hmysql -uroot -e "SHOW DATABASES"
-      - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
+      - run: mysql -hmysql-container -uroot -e "SHOW DATABASES"
 
   docker:
     runs-on: ubuntu-20.04
