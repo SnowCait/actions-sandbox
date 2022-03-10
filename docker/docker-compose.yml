@@ -1,14 +1,16 @@
 version: "3.9"
 
 services:
-  mysql:
+  mysql-server:
     image: mysql:8.0.28
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_PWD}
-    ports:
-      - "3306:3306"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
+  mysql-client: # 実際は Node.js や PHP のコンテナ
+    image: mysql:8.0.28
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PWD}
