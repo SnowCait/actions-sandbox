@@ -83,6 +83,7 @@ jobs:
             --name mysql \
             -e MYSQL_ROOT_PASSWORD=${MYSQL_PWD} \
             -p 3306:3306 \
+            --network net \
             -d \
             --health-cmd 'mysqladmin ping' \
             --health-interval 10s \
@@ -98,7 +99,7 @@ jobs:
           done
       - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
       - run: docker exec -e MYSQL_PWD mysql mysql -uroot -e "SHOW DATABASES"
-      - run: docker run --name client --rm -e MYSQL_PWD mysql:8.0.28 mysql -hmysql -uroot -e "SHOW DATABASES"
+      - run: docker run --name client --rm -e MYSQL_PWD --network net mysql:8.0.28 mysql -hmysql -uroot -e "SHOW DATABASES"
       - run: docker logs mysql
         if: always()
 
