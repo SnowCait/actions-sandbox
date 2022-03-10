@@ -82,7 +82,6 @@ jobs:
           docker run \
             --name mysql-server \
             -e MYSQL_ROOT_PASSWORD=${MYSQL_PWD} \
-            -p 3306:3306 \
             --network bridge-network \
             -d \
             --health-cmd 'mysqladmin ping' \
@@ -98,8 +97,8 @@ jobs:
             sleep 1s
           done
       - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
-      - run: docker exec -e MYSQL_PWD mysql-server mysql -uroot -e "SHOW DATABASES"
       - run: docker run --name mysql-client --rm -e MYSQL_PWD --network bridge-network mysql:8.0.28 mysql -hmysql-server -uroot -e "SHOW DATABASES"
+      - run: docker exec -e MYSQL_PWD mysql-server mysql -uroot -e "SHOW DATABASES"
       - run: docker logs mysql-server
         if: always()
 
