@@ -89,8 +89,8 @@ jobs:
             --health-retries 5 \
             --health-timeout 5s \
             mysql:8.0.28
-      - run: docker inspect --format='{{.State.Health.Status}}' mysql-server
-      - run: |
+      - name: Wait for starting
+        run: |
           set -x
           until [ "$(docker inspect --format='{{.State.Health.Status}}' mysql-server)" = 'healthy' ]; do
             echo "Container is starting..."
@@ -113,14 +113,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: docker-compose up -d
+      - run: docker run --name mysql-client --rm -e MYSQL_PWD mysql:8.0.28 mysql -V
       - name: Wait for starting
         run: |
           set -x
-          until [ "$(docker inspect --format='{{.State.Health.Status}}' $(docker-compose ps -q mysql))" = 'healthy' ]; do
+          until [ "$(docker inspect --format='{{.State.Health.Status}}' $(docker-compose ps -q mysql-server))" = 'healthy' ]; do
             echo "Container is starting..."
             sleep 1s
           done
-      - run: docker-compose exec -T --env MYSQL_PWD mysql mysql -uroot -e "SHOW DATABASES"
+      - run: docker-compose exec -T --env MYSQL_PWD mysql-client mysql -uroot -e "SHOW DATABASES"
       - run: mysql --protocol=tcp -uroot -e "SHOW DATABASES"
       - run: docker-compose logs
         if: always()
