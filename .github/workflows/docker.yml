@@ -68,7 +68,8 @@ jobs:
           --health-retries 5
 
     steps:
-      - run: mysql --protocol=tcp -hmysql -uroot -e "SHOW DATABASES"
+      - run: mysql -hmysql -uroot -e "SHOW DATABASES"
+      - run: mysql -uroot -e "SHOW DATABASES"
 
   docker:
     runs-on: ubuntu-20.04
