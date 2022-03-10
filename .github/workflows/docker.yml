@@ -84,7 +84,7 @@ jobs:
             -e MYSQL_ROOT_PASSWORD=${MYSQL_PWD} \
             --network bridge-network \
             -d \
-            --health-cmd 'mysqladmin ping' \
+            --health-cmd "mysqladmin ping" \
             --health-interval 10s \
             --health-retries 5 \
             --health-timeout 5s \
