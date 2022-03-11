@@ -41,13 +41,13 @@ jobs:
 #       - run: docker exec -e MYSQL_PWD ${CONTAINER_ID} mysql -uroot -e "SHOW DATABASES"
 #         env:
 #           CONTAINER_ID: ${{ job.services.mysql-server.id }}
-      - run: echo $JSON
-        env:
-          JSON: ${{ toJSON(job.services) }}
-      - run: docker logs $CONTAINER_ID
-        env:
-          CONTAINER_ID: ${{ job.services.mysql-server.id }}
-        if: always()
+#       - run: echo $JSON
+#         env:
+#           JSON: ${{ toJSON(job.services) }}
+#       - run: docker logs $CONTAINER_ID
+#         env:
+#           CONTAINER_ID: ${{ job.services.mysql-server.id }}
+#         if: always()
 
   service-container-on-container:
     runs-on: ubuntu-20.04
@@ -105,8 +105,8 @@ jobs:
             mysql:8.0.28 \
             mysql -hmysql-server -uroot -e "SHOW DATABASES"
 #       - run: docker exec -e MYSQL_PWD mysql-server mysql -uroot -e "SHOW DATABASES"
-      - run: docker logs mysql-server
-        if: always()
+#       - run: docker logs mysql-server
+#         if: always()
 
   docker-compose:
     runs-on: ubuntu-20.04
@@ -119,14 +119,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: docker-compose up -d
+      - run: docker compose up -d
       - name: Wait for starting
         run: |
           set -x
-          until [ "$(docker inspect --format='{{.State.Health.Status}}' $(docker-compose ps -q mysql-server))" = 'healthy' ]; do
+          until [ "$(docker inspect --format='{{.State.Health.Status}}' $(docker compose ps -q mysql-server))" = 'healthy' ]; do
             sleep 1s
           done
-      - run: docker-compose exec -T -e MYSQL_PWD=${MYSQL_PWD} mysql-client mysql -hmysql-server -uroot -e "SHOW DATABASES"
-      - run: docker-compose exec -T -e MYSQL_PWD=${MYSQL_PWD} mysql-server mysql -uroot -e "SHOW DATABASES"
-      - run: docker-compose logs
-        if: always()
+      - run: docker compose exec -T -e MYSQL_PWD=${MYSQL_PWD} mysql-client mysql -hmysql-server -uroot -e "SHOW DATABASES"
+      - run: docker compose exec -T -e MYSQL_PWD=${MYSQL_PWD} mysql-server mysql -uroot -e "SHOW DATABASES"
+#       - run: docker compose logs
+#         if: always()
