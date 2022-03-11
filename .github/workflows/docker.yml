@@ -51,7 +51,7 @@ jobs:
 
   service-container-on-container:
     runs-on: ubuntu-20.04
-    container: mysql:8.0.28
+    container: mysql:8.0.28 # 実際は Node.js や PHP などのアプリコンテナ
     timeout-minutes: 5
     env:
       MYSQL_PWD: root
@@ -95,6 +95,7 @@ jobs:
           until [ "$(docker inspect --format='{{.State.Health.Status}}' mysql-server)" = 'healthy' ]; do
             sleep 1s
           done
+      # 実際は Node.js や PHP などのアプリコンテナ
       - run: |
           docker run \
             --name mysql-client \
