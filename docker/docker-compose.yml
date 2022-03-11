@@ -10,7 +10,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  mysql-client: # 実際は Node.js や PHP のコンテナ
+  mysql-client: # 実際は Node.js や PHP などのアプリコンテナ
     image: mysql:8.0.28
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_PWD}
