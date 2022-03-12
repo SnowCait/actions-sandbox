@@ -9,18 +9,13 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     timeout-minutes: 1
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      PR_NUMBER: ${{ github.event.number }}
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - run: gh --version
-      - run: |
-          set -x
-          echo ${GITHUB_REF}
-          echo ${GITHUB_BASE_REF}
-          echo ${GITHUB_HEAD_REF}
-          MILESTONE=${GITHUB_BASE_REF:milestone/}
-          gh pr edit ${PR_NUMBER} --milestone ${MILESTONE} --add-label ${MILESTONE}
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-          PR_NUMBER: ${{ github.event.number }}
+      - run: gh pr edit ${PR_NUMBER} --milestone ${GITHUB_BASE_REF#milestone/}
+      - run: gh pr edit ${PR_NUMBER} --add-label ${GITHUB_BASE_REF#milestone/}
