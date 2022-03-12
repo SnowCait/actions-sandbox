@@ -1,4 +1,4 @@
-name: Milestone branch
+name: Milestone
 
 on:
   create:
