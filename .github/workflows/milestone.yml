@@ -1,0 +1,27 @@
+name: Milestone
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/milestone.yml
+    branches:
+      - milestone/**
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 1
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - run: gh --version
+      - run: |
+          set -x
+          echo ${GITHUB_REF}
+          echo ${GITHUB_BASE_REF}
+          echo ${GITHUB_HEAD_REF}
+          MILESTONE=${GITHUB_BASE_REF:refs/heads/milestone/}
+          gh pr edit ${PR_NUMBER} --milestone ${MILESTONE} --add-label ${LABEL}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.number }}
