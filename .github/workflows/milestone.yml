@@ -3,6 +3,10 @@ name: Milestone
 on:
   create:
   delete:
+  pull_request:
+    types: [ opened, edited ]
+    branches:
+      - milestone/**
   milestone:
     types: [ deleted ]
 
@@ -43,6 +47,20 @@ jobs:
           milestone_number=$(gh api -X GET /repos/${GITHUB_REPOSITORY}/milestones --jq ". | map(select(.title == \"${BRANCH#milestone/}\")) | first | .number")
           gh api -X PATCH repos/${GITHUB_REPOSITORY}/milestones/${milestone_number} -f state=closed
           # gh api -X DELETE repos/${GITHUB_REPOSITORY}/milestones/${milestone_number}
+
+  set-milestone:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-20.04
+    timeout-minutes: 1
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      PR_NUMBER: ${{ github.event.number }}
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - name: Set milestone
+        run: gh pr edit ${PR_NUMBER} --milestone ${GITHUB_BASE_REF#milestone/}
 
   delete-branch:
     if: github.event_name == 'milestone'
