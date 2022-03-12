@@ -16,5 +16,6 @@ jobs:
       PR_NUMBER: ${{ github.event.number }}
 
     steps:
+      - run: cat $GITHUB_EVENT_PATH
       - run: gh pr edit ${PR_NUMBER} --milestone ${GITHUB_BASE_REF#milestone/}
       - run: gh pr edit ${PR_NUMBER} --add-label ${GITHUB_BASE_REF#milestone/}
