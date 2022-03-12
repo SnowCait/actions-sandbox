@@ -1,0 +1,16 @@
+name: Milestone branch
+
+on:
+  push:
+    branches:
+      - milestone/**
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 1
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - run: echo $GITHUB_REF
+      - run: gh api -X POST repos/${GITHUB_REPOSITORY}/milestones -f title=${GITHUB_REF#milestone/}
