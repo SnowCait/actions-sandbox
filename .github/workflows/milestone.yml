@@ -2,6 +2,7 @@ name: Milestone
 
 on:
   pull_request:
+    types: [ opened, edited ]
     branches:
       - milestone/**
 
