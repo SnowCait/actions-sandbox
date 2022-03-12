@@ -28,8 +28,11 @@ jobs:
       - name: Create a milestone
         run: |
           set -x
-          if ! $(gh api -X GET /repos/${GITHUB_REPOSITORY}/milestones --jq ". | any(.title == \"${BRANCH#milestone/}\")"); then
+          milestones=$(gh api -X GET /repos/${GITHUB_REPOSITORY}/milestones -f state=all)
+          if ! $(echo "${milestones}" | jq ". | any(.title == '${BRANCH#milestone/}')"); then
             gh api -X POST repos/${GITHUB_REPOSITORY}/milestones -f title=${BRANCH#milestone/}
+          elif $(echo "${milestones}" | jq ". | any(.title == '${BRANCH#milestone/}' and .state == 'closed')")
+            gh api -X PATCH repos/${GITHUB_REPOSITORY}/milestones/${milestone_number} -f state=open
           fi
 
   close-milestone:
@@ -59,7 +62,8 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - name: Set milestone
+      - run: gh --version
+      - name: Set a milestone
         run: gh pr edit ${PR_NUMBER} --milestone ${GITHUB_BASE_REF#milestone/}
 
   delete-branch:
