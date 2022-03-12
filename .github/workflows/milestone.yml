@@ -13,18 +13,16 @@ on:
 env:
   GH_TOKEN: ${{ github.token }}
   GH_REPO: ${{ github.repository }}
-  BRANCH: ${{ github.event.ref }}
 
 jobs:
   create-milestone:
     if: github.event_name == 'create' && startsWith(github.event.ref, 'milestone/')
     runs-on: ubuntu-20.04
     timeout-minutes: 1
+    env:
+      BRANCH: ${{ github.event.ref }}
 
     steps:
-      - run: cat $GITHUB_EVENT_PATH
-      - run: echo $GITHUB_REF
-      - run: echo $GITHUB_EVENT_NAME
       - name: Create a milestone
         run: |
           set -x
@@ -36,11 +34,10 @@ jobs:
     if: github.event_name == 'delete' && startsWith(github.event.ref, 'milestone/')
     runs-on: ubuntu-20.04
     timeout-minutes: 1
+    env:
+      BRANCH: ${{ github.event.ref }}
 
     steps:
-      - run: cat $GITHUB_EVENT_PATH
-      - run: echo $GITHUB_REF
-      - run: echo $GITHUB_EVENT_NAME
       - name: Close a milestone
         run: |
           set -x
@@ -53,8 +50,6 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 1
     env:
-      GH_TOKEN: ${{ github.token }}
-      GH_REPO: ${{ github.repository }}
       PR_NUMBER: ${{ github.event.number }}
 
     steps:
