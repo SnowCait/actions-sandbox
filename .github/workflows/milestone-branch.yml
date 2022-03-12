@@ -11,6 +11,7 @@ env:
 
 jobs:
   create:
+    if: github.event_name == 'create' && startsWith(github.event.ref, 'milestone/')
     runs-on: ubuntu-20.04
     timeout-minutes: 1
 
@@ -23,9 +24,9 @@ jobs:
           if ! $(gh api -X GET /repos/${GITHUB_REPOSITORY}/milestones --jq ". | any(.title == \"${BRANCH#milestone/}\")"); then
             gh api -X POST repos/${GITHUB_REPOSITORY}/milestones -f title=${BRANCH#milestone/}
           fi
-        if: github.event_name == 'create' && startsWith(github.event.ref, 'milestone/')
 
   delete:
+    if: github.event_name == 'delete' && startsWith(github.event.ref, 'milestone/')
     runs-on: ubuntu-20.04
     timeout-minutes: 1
 
@@ -37,4 +38,3 @@ jobs:
           set -x
           milestone_number=$(gh api -X GET /repos/${GITHUB_REPOSITORY}/milestones --jq ". | map(select(.title == \"${BRANCH#milestone/}\")") | first | .number")
           gh api -X DELETE /repos/${GITHUB_REPOSITORY}/milestones/${milestone_number}
-        if: github.event_name == 'delete' && startsWith(github.event.ref, 'milestone/')
