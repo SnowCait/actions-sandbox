@@ -1,4 +1,4 @@
-name: Milestone
+name: Milestone of PR
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
       - milestone/**
 
 jobs:
-  build:
+  set-milestone:
     runs-on: ubuntu-20.04
     timeout-minutes: 1
     env:
