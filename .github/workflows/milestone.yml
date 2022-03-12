@@ -62,6 +62,7 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
+      - run: gh --version
       - name: Set a milestone
         run: gh pr edit ${PR_NUMBER} --milestone ${GITHUB_BASE_REF#milestone/}
 
