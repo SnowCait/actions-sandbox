@@ -18,7 +18,11 @@ jobs:
       - run: cat $GITHUB_EVENT_PATH
       - run: echo $GITHUB_REF
       - run: echo $GITHUB_EVENT_NAME
-      - run: gh api -X POST repos/${GITHUB_REPOSITORY}/milestones -f title=${BRANCH#milestone/}
+      - run: |
+          set -x
+          if ! $(gh api -X GET /repos/${GITHUB_REPOSITORY}/milestones --jq ". | any(.title == "${BRANCH#milestone/}")); then
+            gh api -X POST repos/${GITHUB_REPOSITORY}/milestones -f title=${BRANCH#milestone/}
+          fi
         if: github.event_name == 'create' && startsWith(github.event.ref, 'milestone/')
 
   delete:
