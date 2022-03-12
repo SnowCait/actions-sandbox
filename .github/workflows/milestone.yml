@@ -2,8 +2,6 @@ name: Milestone
 
 on:
   pull_request:
-    paths:
-      - .github/workflows/milestone.yml
     branches:
       - milestone/**
 
@@ -20,8 +18,9 @@ jobs:
           echo ${GITHUB_REF}
           echo ${GITHUB_BASE_REF}
           echo ${GITHUB_HEAD_REF}
-          MILESTONE=${GITHUB_BASE_REF:refs/heads/milestone/}
-          gh pr edit ${PR_NUMBER} --milestone ${MILESTONE} --add-label ${LABEL}
+          MILESTONE=${GITHUB_BASE_REF:milestone/}
+          gh pr edit ${PR_NUMBER} --milestone ${MILESTONE} --add-label ${MILESTONE}
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
           PR_NUMBER: ${{ github.event.number }}
