@@ -3,6 +3,8 @@ name: Milestone branch
 on:
   create:
   delete:
+  milestone:
+    types: [ deleted ]
 
 env:
   GH_TOKEN: ${{ github.token }}
@@ -10,7 +12,7 @@ env:
   BRANCH: ${{ github.event.ref }}
 
 jobs:
-  create:
+  create-milestone:
     if: github.event_name == 'create' && startsWith(github.event.ref, 'milestone/')
     runs-on: ubuntu-20.04
     timeout-minutes: 1
@@ -25,7 +27,7 @@ jobs:
             gh api -X POST repos/${GITHUB_REPOSITORY}/milestones -f title=${BRANCH#milestone/}
           fi
 
-  delete:
+  delete-milestone:
     if: github.event_name == 'delete' && startsWith(github.event.ref, 'milestone/')
     runs-on: ubuntu-20.04
     timeout-minutes: 1
@@ -37,4 +39,17 @@ jobs:
       - run: |
           set -x
           milestone_number=$(gh api -X GET /repos/${GITHUB_REPOSITORY}/milestones --jq ". | map(select(.title == \"${BRANCH#milestone/}\")) | first | .number")
-          gh api -X DELETE /repos/${GITHUB_REPOSITORY}/milestones/${milestone_number}
+          gh api -X DELETE repos/${GITHUB_REPOSITORY}/milestones/${milestone_number}
+
+  delete-branch:
+    if: github.event_name == 'milestone'
+    runs-on: ubuntu-20.04
+    timeout-minutes: 1
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - run: echo $GITHUB_REF
+      - run: echo $GITHUB_EVENT_NAME
+      - run: gh api -X DELETE repos/${GITHUB_REPOSITORY}/git/refs/heads/milestone/${MILESTONE}
+        env:
+          MILESTONE: ${{ github.event.milestone.title }}
