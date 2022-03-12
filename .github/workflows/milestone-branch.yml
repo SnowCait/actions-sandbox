@@ -13,4 +13,7 @@ jobs:
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - run: echo $GITHUB_REF
-      - run: gh api -X POST repos/${GITHUB_REPOSITORY}/milestones -f title=${GITHUB_REF#milestone/}
+      - run: gh api -X POST repos/${GITHUB_REPOSITORY}/milestones -f title=${GITHUB_REF#refs/heads/milestone/}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
