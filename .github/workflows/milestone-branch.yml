@@ -39,6 +39,7 @@ jobs:
       - run: |
           set -x
           milestone_number=$(gh api -X GET /repos/${GITHUB_REPOSITORY}/milestones --jq ". | map(select(.title == \"${BRANCH#milestone/}\")) | first | .number")
+          gh api -X PATCH repos/${GITHUB_REPOSITORY}/milestones/${milestone_number} -f state=closed
           gh api -X DELETE repos/${GITHUB_REPOSITORY}/milestones/${milestone_number}
 
   delete-branch:
