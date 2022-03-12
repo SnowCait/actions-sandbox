@@ -7,6 +7,7 @@ on:
 env:
   GH_TOKEN: ${{ github.token }}
   GH_REPO: ${{ github.repository }}
+  BRANCH: ${{ github.event.ref }}
 
 jobs:
   create:
@@ -17,8 +18,8 @@ jobs:
       - run: cat $GITHUB_EVENT_PATH
       - run: echo $GITHUB_REF
       - run: echo $GITHUB_EVENT_NAME
-      - run: gh api -X POST repos/${GITHUB_REPOSITORY}/milestones -f title=${GITHUB_REF#refs/heads/milestone/}
-        if: github.event_name == 'create' && startsWith(github.event.ref, 'refs/heads/milestone/')
+      - run: gh api -X POST repos/${GITHUB_REPOSITORY}/milestones -f title=${BRANCH#milestone/}
+        if: github.event_name == 'create' && startsWith(github.event.ref, 'milestone/')
 
   delete:
     runs-on: ubuntu-20.04
@@ -28,5 +29,5 @@ jobs:
       - run: cat $GITHUB_EVENT_PATH
       - run: echo $GITHUB_REF
       - run: echo $GITHUB_EVENT_NAME
-      - run: gh api -X DELETE /repos/${GITHUB_REPOSITORY}/milestones/${GITHUB_REF#refs/heads/milestone/}
+      - run: gh api -X DELETE /repos/${GITHUB_REPOSITORY}/milestones/${BRANCH#milestone/}
         if: github.event_name == 'delete' && startsWith(github.event.ref, 'milestone/')
