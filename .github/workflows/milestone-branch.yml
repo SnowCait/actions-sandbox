@@ -4,7 +4,7 @@ on:
   create:
   delete:
   milestone:
-    types: [ closed, deleted ]
+    types: [ deleted ]
 
 env:
   GH_TOKEN: ${{ github.token }}
@@ -21,13 +21,14 @@ jobs:
       - run: cat $GITHUB_EVENT_PATH
       - run: echo $GITHUB_REF
       - run: echo $GITHUB_EVENT_NAME
-      - run: |
+      - name: Create a milestone
+        run: |
           set -x
           if ! $(gh api -X GET /repos/${GITHUB_REPOSITORY}/milestones --jq ". | any(.title == \"${BRANCH#milestone/}\")"); then
             gh api -X POST repos/${GITHUB_REPOSITORY}/milestones -f title=${BRANCH#milestone/}
           fi
 
-  delete-milestone:
+  close-milestone:
     if: github.event_name == 'delete' && startsWith(github.event.ref, 'milestone/')
     runs-on: ubuntu-20.04
     timeout-minutes: 1
@@ -36,7 +37,8 @@ jobs:
       - run: cat $GITHUB_EVENT_PATH
       - run: echo $GITHUB_REF
       - run: echo $GITHUB_EVENT_NAME
-      - run: |
+      - name: Close a milestone
+        run: |
           set -x
           milestone_number=$(gh api -X GET /repos/${GITHUB_REPOSITORY}/milestones --jq ". | map(select(.title == \"${BRANCH#milestone/}\")) | first | .number")
           gh api -X PATCH repos/${GITHUB_REPOSITORY}/milestones/${milestone_number} -f state=closed
