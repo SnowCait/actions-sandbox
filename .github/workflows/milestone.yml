@@ -7,8 +7,8 @@ on:
     types: [ opened, edited ]
     branches:
       - milestone/**
-  milestone:
-    types: [ deleted ]
+#   milestone:
+#     types: [ deleted ]
 
 env:
   GH_TOKEN: ${{ github.token }}
@@ -58,19 +58,23 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
+      - run: echo $GITHUB_HEAD_REF
+      - run: echo ${{ github.head_ref }}
       - run: gh --version
+      - run: exit 1
+        if: startsWith(github.head_ref, 'milestone/') || github.event.pull_request.base.ref == 'main'
       - name: Set a milestone
         run: gh pr edit ${PR_NUMBER} --milestone ${GITHUB_BASE_REF#milestone/}
 
-  delete-branch:
-    if: github.event_name == 'milestone'
-    runs-on: ubuntu-20.04
-    timeout-minutes: 1
+#   delete-branch:
+#     if: github.event_name == 'milestone'
+#     runs-on: ubuntu-20.04
+#     timeout-minutes: 1
 
-    steps:
-      - run: cat $GITHUB_EVENT_PATH
-      - run: echo $GITHUB_REF
-      - run: echo $GITHUB_EVENT_NAME
-      - run: gh api -X DELETE repos/${GITHUB_REPOSITORY}/git/refs/heads/milestone/${MILESTONE}
-        env:
-          MILESTONE: ${{ github.event.milestone.title }}
+#     steps:
+#       - run: cat $GITHUB_EVENT_PATH
+#       - run: echo $GITHUB_REF
+#       - run: echo $GITHUB_EVENT_NAME
+#       - run: gh api -X DELETE repos/${GITHUB_REPOSITORY}/git/refs/heads/milestone/${MILESTONE}
+#         env:
+#           MILESTONE: ${{ github.event.milestone.title }}
