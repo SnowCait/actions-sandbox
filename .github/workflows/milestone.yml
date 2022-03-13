@@ -27,9 +27,9 @@ jobs:
         run: |
           set -x
           milestones=$(gh api -X GET /repos/${GITHUB_REPOSITORY}/milestones -f state=all)
-          if ! $(echo "${milestones}" | jq ". | any(.title == '${BRANCH#milestone/}')"); then
+          if ! $(echo "${milestones}" | jq ". | any(.title == \"${BRANCH#milestone/}\")"); then
             gh api -X POST repos/${GITHUB_REPOSITORY}/milestones -f title=${BRANCH#milestone/}
-          elif $(echo "${milestones}" | jq ". | any(.title == '${BRANCH#milestone/}' and .state == 'closed')"); then
+          elif $(echo "${milestones}" | jq ". | any(.title == \"${BRANCH#milestone/}\" and .state == \"closed\")"); then
             gh api -X PATCH repos/${GITHUB_REPOSITORY}/milestones/${milestone_number} -f state=open
           fi
 
