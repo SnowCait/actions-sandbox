@@ -7,7 +7,6 @@ on:
 
 env:
   GH_TOKEN: ${{ github.token }}
-  GH_REPO: ${{ github.repository }}
   MILESTONE: milestone1
 
 jobs:
@@ -21,6 +20,7 @@ jobs:
         run: |
           milestone_number=$(gh api -X GET /repos/${GITHUB_REPOSITORY}/milestones --jq ". | map(select(.title == \"${MILESTONE}\")) | first | .number")
           gh api -X PATCH repos/${GITHUB_REPOSITORY}/milestones/${milestone_number} -f state=closed
+      - uses: actions/checkout@v3
       - name: Commit something
         run: |
           git config user.name github-actions[bot]
