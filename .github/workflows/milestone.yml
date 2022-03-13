@@ -18,7 +18,7 @@ jobs:
   create-milestone:
     if: github.event_name == 'create' && startsWith(github.event.ref, 'milestone/')
     runs-on: ubuntu-20.04
-    timeout-minutes: 1
+    timeout-minutes: 2
     env:
       BRANCH: ${{ github.event.ref }}
 
@@ -37,7 +37,7 @@ jobs:
   close-milestone:
     if: github.event_name == 'delete' && startsWith(github.event.ref, 'milestone/')
     runs-on: ubuntu-20.04
-    timeout-minutes: 1
+    timeout-minutes: 2
     env:
       BRANCH: ${{ github.event.ref }}
 
@@ -52,7 +52,7 @@ jobs:
   set-milestone:
     if: github.event_name == 'pull_request' && !startsWith(github.head_ref, 'milestone/') && github.event.pull_request.base.ref != 'main'
     runs-on: ubuntu-20.04
-    timeout-minutes: 1
+    timeout-minutes: 2
     env:
       PR_NUMBER: ${{ github.event.number }}
 
@@ -65,7 +65,7 @@ jobs:
 #   delete-branch:
 #     if: github.event_name == 'milestone'
 #     runs-on: ubuntu-20.04
-#     timeout-minutes: 1
+#     timeout-minutes: 2
 
 #     steps:
 #       - run: cat $GITHUB_EVENT_PATH
