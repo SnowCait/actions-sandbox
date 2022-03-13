@@ -58,9 +58,11 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
+      - run: echo $GITHUB_HEAD_REF
+      - run: echo ${{ github.head_ref }}
       - run: gh --version
       - run: exit 1
-        if: startsWith(github.event.pull_request.base.ref, 'milestone/') || github.event.pull_request.base.ref == 'main'
+        if: startsWith(github.head_ref, 'milestone/') || github.event.pull_request.base.ref == 'main'
       - name: Set a milestone
         run: gh pr edit ${PR_NUMBER} --milestone ${GITHUB_BASE_REF#milestone/}
 
