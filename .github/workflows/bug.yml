@@ -34,4 +34,4 @@ jobs:
           git add .
           git commit -m "milestone test"
           git push origin milestone-test
-      - run: gh pr create --base ${GITHUB_REF} --head milestone-test --fill --milestone "${MILESTONE}"
+      - run: gh pr create --base ${GITHUB_REF} --head milestone-test --title "milestone test" --body "" --milestone "${MILESTONE}"
