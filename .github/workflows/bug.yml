@@ -5,15 +5,29 @@ on:
     paths:
       - .github/workflows/bug.yml
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+env:
+  GH_TOKEN: ${{ github.token }}
+  GH_REPO: ${{ github.repository }}
+  MILESTONE: milestone1
 
+jobs:
+  gh-pr:
+    runs-on: ubuntu-latest
+    
     steps:
-      - id: step1
-        run: echo '::set-output name=json::{"a":1}'
-#         if: false
-      - run: echo $A
-        env:
-          A: ${{ steps.step1.outputs.json && fromJSON(steps.step1.outputs.json).a }}
-#         if: false
+      - name: Create a milestone
+        run: gh api -X POST repos/${GITHUB_REPOSITORY}/milestones -f title=${MILESTONE}
+      - name: Close the milestone
+        run: |
+          milestone_number=$(gh api -X GET /repos/${GITHUB_REPOSITORY}/milestones --jq ". | map(select(.title == \"${MILESTONE}\")) | first | .number")
+          gh api -X PATCH repos/${GITHUB_REPOSITORY}/milestones/${milestone_number} -f state=closed
+      - name: Commit something
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git switch -c milestone-test
+          echo "test" > test
+          git add .
+          git commit -m "milestone test"
+          git push origin milestone-test
+      - run: gh pr create --base ${GITHUB_REF} --head milestone-test --fill --milestone "${MILESTONE}"
