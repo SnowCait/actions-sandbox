@@ -31,7 +31,9 @@ jobs:
           git commit -m "milestone test"
           git push origin milestone-test
       - run: gh pr create --base ${GITHUB_REF} --head milestone-test --title "milestone test" --body "" --milestone "${MILESTONE}"
-      - name: Delete the milestone
+      - run: gh api -X GET /repos/${GITHUB_REPOSITORY}/milestones -f state=all --jq ". | map(select(.title == \"${MILESTONE}\"))
+        if: failure()
+      - name: Cleanup
         run: |
           milestone_number=$(gh api -X GET /repos/${GITHUB_REPOSITORY}/milestones -f state=all --jq ". | map(select(.title == \"${MILESTONE}\")) | first | .number")
           gh api -X DELETE repos/${GITHUB_REPOSITORY}/milestones/${milestone_number}
