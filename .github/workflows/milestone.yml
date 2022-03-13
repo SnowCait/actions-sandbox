@@ -50,7 +50,10 @@ jobs:
           # gh api -X DELETE repos/${GITHUB_REPOSITORY}/milestones/${milestone_number}
 
   set-milestone:
-    if: github.event_name == 'pull_request' && !startsWith(github.head_ref, 'milestone/') && github.event.pull_request.base.ref != 'main'
+    if: >-
+      github.event_name == 'pull_request' &&
+      !startsWith(github.head_ref, 'milestone/') &&
+      github.event.pull_request.base.ref != 'main'
     runs-on: ubuntu-20.04
     timeout-minutes: 2
     env:
