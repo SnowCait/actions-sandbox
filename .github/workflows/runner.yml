@@ -1,0 +1,19 @@
+name: Runner
+
+on:
+  push:
+    paths:
+      - .github/workflows/runner.yml
+
+jobs:
+  info:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+
+    steps:
+      - run: arch
+      - run: uname -a
+      - run: uname -m
+      - run: uname -i
+      - run: getconf LONG_BIT
+      - run: cat /etc/lsb-release
