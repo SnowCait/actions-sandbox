@@ -4,7 +4,11 @@ on:
     paths: .github/workflows/pull_request.yml
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PR_NUMBER: ${{ github.event.number }}
     steps:
       - run: |
           echo $GITHUB_SHA
@@ -13,6 +17,12 @@ jobs:
           echo $GITHUB_EVENT_PATH
           echo $GITHUB_WORKSPACE
       - run: cat $GITHUB_EVENT_PATH
+
+      - run: gh --version
+      - run: gh pr view $PR_NUMBER
+      - run: gh pr view $PR_NUMBER --json files
+      - run: gh pr view $PR_NUMBER --json files --jq '.files | map(select(.path | endswith(".yml"))) | map(.additions + .deletions) | add'
+
       - uses: actions/checkout@v3
       - run: git status
       - uses: actions/checkout@v3
