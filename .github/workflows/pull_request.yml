@@ -25,9 +25,9 @@ jobs:
       - run: gh pr view $PR_NUMBER --json files --jq '.files | map(select(.path | endswith(".yml"))) | map(.additions + .deletions) | add'
       - run: |
           json=$(gh pr view $PR_NUMBER --json additions,deletions,changedFiles)
-          echo "$(echo "${json}" | jq '.changedFiles') files changed, " > body
-          echo "$(echo "${json}" | jq '.additions') insertions(+), " >> body
-          echo "$(echo "${json}" | jq '.deletions') deletions(-)" >> body
+          echo -n "$(echo "${json}" | jq '.changedFiles') files changed, " > body
+          echo -n "$(echo "${json}" | jq '.additions') insertions(+), " >> body
+          echo -n "$(echo "${json}" | jq '.deletions') deletions(-)" >> body
           gh pr comment $PR_NUMBER --body-file body
           gh pr comment $PR_NUMBER --body-file - <<EOS
           $(echo "${json}" | jq '.changedFiles') files changed, $(echo "${json}" | jq '.additions') insertions(+), $(echo "${json}" | jq '.deletions') deletions(-)
