@@ -24,7 +24,7 @@ jobs:
       - run: gh pr view $PR_NUMBER --json files
       - run: gh pr view $PR_NUMBER --json files --jq '.files | map(select(.path | endswith(".yml"))) | map(.additions + .deletions) | add'
       - run: |
-          json=$(gh pr view $PR_NUMBER --json additions,deletions,changedFiles
+          json=$(gh pr view $PR_NUMBER --json additions,deletions,changedFiles)
           gh pr comment $PR_NUMBER --body "$(echo "${json}" | jq '.changedFiles') files changed, $(echo "${json}" | jq '.additions') insertions(+), $(echo "${json}" | jq '.deletions') deletions(-)"
 
       - uses: actions/checkout@v3
