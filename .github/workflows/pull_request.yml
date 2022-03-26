@@ -32,6 +32,17 @@ jobs:
           #gh pr comment $PR_NUMBER --body-file - <<EOS
           #$(echo "${json}" | jq '.changedFiles') files changed, $(echo "${json}" | jq '.additions') insertions(+), $(echo "${json}" | jq '.deletions') deletions(-)
           #EOS
+      - run: |
+          gh pr view $PR_NUMBER --json files \
+            --jq '.files | group_by(.path | split(".") | last) | map({ extension: (. | first | .path | split(".") | last), changedFiles: (map(.additions + .deletions) | add) })'
+      - run: |
+          json=$(gh pr view $PR_NUMBER --json additions,deletions,changedFiles,files)
+          echo -n "$(echo "${json}" | jq '.changedFiles') files changed, " > comment
+          echo -n "$(echo "${json}" | jq '.additions') insertions(+), " >> comment
+          echo    "$(echo "${json}" | jq '.deletions') deletions(-)" >> comment
+          info=$(echo "${json}" | \
+            jq '.files | group_by(.path | split(".") | last) | map({ extension: (. | first | .path | split(".") | last), changedFiles: (map(.additions + .deletions) | add) })')
+          echo "${info}" | jq '.[] | "+- [." + .extension + "] " + .changedFiles + " files changed"
 
       - uses: actions/checkout@v3
       - run: git status
