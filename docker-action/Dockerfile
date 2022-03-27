@@ -1,2 +1,2 @@
-FROM php:7.2-cli
+FROM php:7.4-cli
 CMD [ "php", "-i"]
