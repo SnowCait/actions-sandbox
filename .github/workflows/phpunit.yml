@@ -8,8 +8,8 @@ on:
 
 jobs:
   phpunit:
-
     runs-on: ubuntu-latest
+    container: php:7.4-cli
     defaults:
       run:
         working-directory: phpunit
