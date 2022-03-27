@@ -4,7 +4,12 @@ on:
     paths: .github/workflows/pull_request.yml
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      PR_NUMBER: ${{ github.event.number }}
     steps:
       - run: |
           echo $GITHUB_SHA
@@ -13,6 +18,33 @@ jobs:
           echo $GITHUB_EVENT_PATH
           echo $GITHUB_WORKSPACE
       - run: cat $GITHUB_EVENT_PATH
+
+      - run: gh --version
+      - run: gh pr view $PR_NUMBER
+      - run: gh pr view $PR_NUMBER --json files
+      - run: gh pr view $PR_NUMBER --json files --jq '.files | map(select(.path | endswith(".yml"))) | map(.additions + .deletions) | add'
+      - run: |
+          json=$(gh pr view $PR_NUMBER --json additions,deletions,changedFiles)
+          echo -n "$(echo "${json}" | jq '.changedFiles') files changed, " > comment
+          echo -n "$(echo "${json}" | jq '.additions') insertions(+), " >> comment
+          echo -n "$(echo "${json}" | jq '.deletions') deletions(-)" >> comment
+          gh pr comment $PR_NUMBER --body-file comment
+          #gh pr comment $PR_NUMBER --body-file - <<EOS
+          #$(echo "${json}" | jq '.changedFiles') files changed, $(echo "${json}" | jq '.additions') insertions(+), $(echo "${json}" | jq '.deletions') deletions(-)
+          #EOS
+      - run: |
+          gh pr view $PR_NUMBER --json files \
+            --jq '.files | group_by(.path | split(".") | last) | map({ extension: (. | first | .path | split(".") | last), changedFiles: (map(.additions + .deletions) | add) })'
+      - run: |
+          json=$(gh pr view $PR_NUMBER --json additions,deletions,changedFiles,files)
+          echo -n "$(echo "${json}" | jq '.changedFiles') files changed, " > comment
+          echo -n "$(echo "${json}" | jq '.additions') insertions(+), " >> comment
+          echo    "$(echo "${json}" | jq '.deletions') deletions(-)" >> comment
+          info=$(echo "${json}" | \
+            jq '.files | group_by(.path | split(".") | last) | map({ extension: (. | first | .path | split(".") | last), changedFiles: (map(.additions + .deletions) | add) })')
+          echo "${info}" | jq -r '.[] | "+- [." + .extension + "] " + (.changedFiles | tostring) + " lines changed"' >> comment
+          gh pr comment $PR_NUMBER --body-file comment
+
       - uses: actions/checkout@v3
       - run: git status
       - uses: actions/checkout@v3
