@@ -44,6 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      - run: npm install --save twitter
       - uses: actions/github-script@v5
         with:
           script: |
