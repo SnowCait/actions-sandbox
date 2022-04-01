@@ -1,6 +1,6 @@
 {
     "require-dev": {
-        "phpunit/phpunit": "9.5.19"
+        "phpunit/phpunit": "9.5.20"
     },
     "require": {
         "ginq/ginq": "dev-master",
