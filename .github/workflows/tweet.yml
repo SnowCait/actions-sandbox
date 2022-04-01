@@ -6,15 +6,17 @@ on:
     paths:
       - .github/workflows/tweet.yml
 
+env:
+  CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
+  CONSUMER_API_SECRET_KEY: ${{ secrets.TWITTER_CONSUMER_API_SECRET_KEY }}
+  ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+  ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+
 jobs:
   tweet:
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    env:
-      CONSUMER_API_KEY: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
-      CONSUMER_API_SECRET_KEY: ${{ secrets.TWITTER_CONSUMER_API_SECRET_KEY }}
-      ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
-      ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
     steps:
       - name: Tweet
         id: tweet
@@ -37,3 +39,37 @@ jobs:
             ${{ github.sha }}
           media_paths: |
             Twitter_Logo_Blue.png
+
+  js:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/github-script@v5
+        with:
+          script: |
+            import Twitter from 'twitter'
+
+            const consumer_key = process.env.CONSUMER_API_KEY as string
+            const consumer_secret = process.env.CONSUMER_API_SECRET_KEY as string
+            const access_token_key = process.env.ACCESS_TOKEN as string
+            const access_token_secret = process.env.ACCESS_TOKEN_SECRET as string
+
+            const client = new Twitter({
+              consumer_key,
+              consumer_secret,
+              access_token_key,
+              access_token_secret
+            })
+            
+            const parameters = { status: "${{ github.run_id }}" }
+            client.post('statuses/update', parameters, (error, data, response) => {
+              if (error) {
+                throw error
+              }
+
+              console.log(response)
+              console.log('---------')
+              console.log(response.body)
+              console.log('---------')
+              console.log(response.body.id_str)
+            })
