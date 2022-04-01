@@ -72,5 +72,5 @@ jobs:
               console.log('---------')
               console.log(response.body)
               console.log('---------')
-              console.log(response.body.id_str)
+              console.log(JSON.parse(response.body).id_str)
             })
