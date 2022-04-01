@@ -47,7 +47,7 @@ jobs:
       - uses: actions/github-script@v5
         with:
           script: |
-            import Twitter from 'twitter'
+            var Twitter = require('twitter')
 
             const consumer_key = process.env.CONSUMER_API_KEY as string
             const consumer_secret = process.env.CONSUMER_API_SECRET_KEY as string
