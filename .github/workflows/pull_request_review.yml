@@ -13,9 +13,9 @@ jobs:
         with:
           script: return context.payload.review.body === null
       - run: echo "Single comment (review.body is null)"
-        if: ${{ steps.is_null.outputs.result == 'true' }}
+        if: steps.is_null.outputs.result == 'true'
       - run: echo "Review comment (review.body is not null)"
-        if: ${{ steps.is_null.outputs.result != 'true' }}
+        if: steps.is_null.outputs.result != 'true'
       - run: echo "Single comment"
         if: github.event.review.body == null
       - run: echo "Review comment"
