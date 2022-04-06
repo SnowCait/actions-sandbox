@@ -21,9 +21,9 @@ jobs:
       - run: echo "Review comment"
         if: github.event.review.body != null
       - run: echo "Single comment"
-        if: github.event.review.body != ""
+        if: github.event.review.body != ''
       - run: echo "Review comment"
-        if: github.event.review.body == ""
+        if: github.event.review.body == ''
       - run: echo "Single comment"
 
   approved:
