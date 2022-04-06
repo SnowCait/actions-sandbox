@@ -21,9 +21,10 @@ jobs:
       - run: echo "Review comment"
         if: github.event.review.body != null
       - run: echo "Single comment"
-        if: github.event.review.body === null
+        if: github.event.review.body != ""
       - run: echo "Review comment"
-        if: github.event.review.body !== null
+        if: github.event.review.body == ""
+      - run: echo "Single comment"
 
   approved:
     runs-on: ubuntu-latest
