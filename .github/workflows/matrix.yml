@@ -13,6 +13,7 @@ jobs:
         runner: [ ubuntu-20.04, ubuntu-18.04 ]
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 5
+    if: matrix.runner == 'ubuntu-20.04'
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
