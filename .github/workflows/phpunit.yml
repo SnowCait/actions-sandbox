@@ -15,7 +15,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - uses: shivammathur/setup-php@v2
+    - uses: shivammathur/setup-php@448bd61c6fe9db2113173467e4c22b87ddc2971a
       with:
         php-version: '7.4'
     - run: composer install
