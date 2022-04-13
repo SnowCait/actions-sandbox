@@ -13,3 +13,7 @@ jobs:
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - run: echo $GITHUB_HEAD_REF
+      - run: printenv
+      - run: echo $SHA
+        env:
+          SHA: ${{ github.event.pull_request.head.sha }}
