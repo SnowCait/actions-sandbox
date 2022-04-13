@@ -3,22 +3,44 @@ name: Pull Request Review
 on: [pull_request_review]
 
 jobs:
-  approved:
-
+  commented:
     runs-on: ubuntu-latest
-    
+    timeout-minutes: 5
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - run: echo ${{ github.event.action }}
-      - run: echo ${{ github.repository }}
-      - run: echo GET /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews
-      - name: Reviews
-        id: reviews
-        uses: octokit/request-action@v2.0.2
+      - uses: actions/github-script@v6
+        id: is_null
         with:
-          route: GET /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: "echo ${{ toJSON(steps.reviews.outputs.data.*.state) }}"
-      - run: exit 1
-        if: ${{ github.event.review.state != 'approved' }}
+          script: return context.payload.review.body === null
+      - run: echo "Single comment (review.body is null)"
+        if: steps.is_null.outputs.result == 'true'
+      - run: echo "Review comment (review.body is not null)"
+        if: steps.is_null.outputs.result != 'true'
+      - run: echo "Single comment"
+        if: github.event.review.body == null
+      - run: echo "Review comment"
+        if: github.event.review.body != null
+      - run: echo "Single comment"
+        if: github.event.review.body != ''
+      - run: echo "Review comment"
+        if: github.event.review.body == ''
+      - run: echo "Single comment"
+
+  approved:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+#       - run: echo ${{ github.event.action }}
+#       - run: echo ${{ github.repository }}
+#       - run: echo GET /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews
+#       - name: Reviews
+#         id: reviews
+#         uses: octokit/request-action@v2.0.2
+#         with:
+#           route: GET /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/reviews
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - run: "echo ${{ toJSON(steps.reviews.outputs.data.*.state) }}"
+#       - run: exit 1
+#         if: ${{ github.event.review.state != 'approved' }}
