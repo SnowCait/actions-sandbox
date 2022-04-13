@@ -1,22 +1,26 @@
 name: Push
 on:
   push:
+    branches: [ main ]
 #     paths:
 #       - .github/workflows/push.yml
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - run: echo $GITHUB_EVENT_NAME
       - run: cat $GITHUB_EVENT_PATH
       - uses: actions/checkout@v3
-      - run: printenv
-      - name: HELLO
-        run: echo 'hello, action'
-      - name: nodejs
-        uses: ./nodejs-action/
-      - name: php
-        uses: ./docker-action/
+        with:
+          ref: develop
+      - run: git log -n 1 origin/develop --pretty=format:"%H"
+#       - run: printenv
+#       - name: HELLO
+#         run: echo 'hello, action'
+#       - name: nodejs
+#         uses: ./nodejs-action/
+#       - name: php
+#         uses: ./docker-action/
 #       - name: packer
 #         uses: ./packer-action/
 #       - name: packer validate packer.json
