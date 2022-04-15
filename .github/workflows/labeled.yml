@@ -1,0 +1,15 @@
+name: Labeled, Unlabeled
+
+on:
+  pull_request:
+    types: [ labeled, unlabeled ]
+  issues:
+    types: [ labeled, unlabeled ]
+
+jobs:
+  labeled:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
