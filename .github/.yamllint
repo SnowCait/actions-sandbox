@@ -6,5 +6,8 @@ rules:
     max-spaces-inside: 1
   document-start:
     present: false
+  indentation:
+    spaces: 2
+    indent-sequences: true
   truthy:
     check-keys: false
