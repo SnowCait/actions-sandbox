@@ -32,6 +32,6 @@ jobs:
       - uses: reviewdog/action-yamllint@v1.5.1
         with:
 #           reviewdog_flags: -f=diff
-          yamllint_flags: -c .github/.yamllint .github/
+          yamllint_flags: -c .github/.yamllint .github/workflows/
           level: error
           filter-mode: nofilter
