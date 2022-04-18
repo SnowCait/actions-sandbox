@@ -7,10 +7,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint:
+  github-hosted-yamllint:
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v3
       - run: yamllint .github/workflows/
+
+  reviewdog-yamllint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: reviewdog/action-yamllint@v1.5.1
