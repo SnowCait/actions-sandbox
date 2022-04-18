@@ -17,7 +17,7 @@ jobs:
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - uses: actions/checkout@v3
-      - run: gh pr view $number --json
+      - run: gh pr view $number --json files
         env:
           number: ${{ github.event.number }}
       - run: yamllint workflows/
