@@ -6,6 +6,9 @@ on:
       - .github/workflows/*.yml
   workflow_dispatch:
 
+env:
+  GH_TOKEN: ${{ github.token }}
+
 jobs:
   yamllint:
     runs-on: ubuntu-latest
@@ -13,5 +16,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - run: gh pr diff --json
       - run: yamllint workflows/
         working-directory: .github/
+
+  yamllint-with-reviewdog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: reviewdog/action-yamllint@v1.5.1
+        with:
+          yamllint_flags: -c .github/.yamllint .github/workflows/
