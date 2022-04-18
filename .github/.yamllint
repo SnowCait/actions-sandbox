@@ -1,6 +1,9 @@
 extends: default
 
 rules:
+  brackets:
+    min-spaces-inside: 1
+    max-spaces-inside: 1
   document-start:
     present: false
   truthy:
