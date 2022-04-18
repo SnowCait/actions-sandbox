@@ -15,8 +15,11 @@ jobs:
     timeout-minutes: 5
 
     steps:
+      - run: cat $GITHUB_EVENT_PATH
       - uses: actions/checkout@v3
-      - run: gh pr diff --json
+      - run: gh pr view $number --json
+        env:
+          number: ${{ github.event.number }}
       - run: yamllint workflows/
         working-directory: .github/
 
