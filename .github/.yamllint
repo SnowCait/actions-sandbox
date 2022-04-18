@@ -10,5 +10,7 @@ rules:
   indentation:
     spaces: 2
     indent-sequences: true
+  line-length:
+    max: 160
   truthy:
     check-keys: false
