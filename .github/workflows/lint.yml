@@ -18,10 +18,10 @@ jobs:
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - uses: actions/checkout@v3
-      - run: gh pr view $number --json files
+      - run: gh pr view $number --json files --jq '.files[].path'
         env:
           number: ${{ github.event.number }}
-      - run: yamllint workflows/
+      - run: yamllint workflows/ $(gh pr view $number --json files --jq '.files[].path')
         working-directory: .github/
 
   yamllint-with-reviewdog:
