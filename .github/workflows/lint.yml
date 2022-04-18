@@ -23,20 +23,31 @@ jobs:
 #           number: ${{ github.event.number }}
 #       - run: yamllint -c .github/.yamllint $(gh pr view $number --json files --jq '.files[].path')
 
-  yamllint-with-reviewdog:
+#   yamllint-with-reviewdog:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 5
+
+#     steps:
+#       - uses: actions/checkout@v3
+#       - uses: reviewdog/action-yamllint@v1.5.1
+#         with:
+#           yamllint_flags: -c .github/.yamllint .github/workflows/
+
+  actionlint:
     runs-on: ubuntu-latest
     timeout-minutes: 5
-
+    
     steps:
-      - uses: actions/checkout@v3
-      - uses: reviewdog/action-yamllint@v1.5.1
-        with:
-          yamllint_flags: -c .github/.yamllint .github/workflows/
+      - name: Check workflow files
+        run: |
+          #echo "::add-matcher::.github/actionlint-matcher.json"
+          bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+          ./actionlint -color
 
-  actionlint-with-reviewdog:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
+#   actionlint-with-reviewdog:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 5
 
-    steps:
-      - uses: actions/checkout@v3
-      - uses: reviewdog/action-actionlint@v1
+#     steps:
+#       - uses: actions/checkout@v3
+#       - uses: reviewdog/action-actionlint@v1
