@@ -21,8 +21,7 @@ jobs:
       - run: gh pr view $number --json files --jq '.files[].path'
         env:
           number: ${{ github.event.number }}
-      - run: yamllint $(gh pr view $number --json files --jq '.files[].path')
-        working-directory: .github/
+      - run: yamllint -c .github/.yamllint $(gh pr view $number --json files --jq '.files[].path')
 
   yamllint-with-reviewdog:
     runs-on: ubuntu-latest
