@@ -11,17 +11,17 @@ env:
   GH_TOKEN: ${{ github.token }}
 
 jobs:
-  yamllint:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
+#   yamllint:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 5
 
-    steps:
-      - run: cat $GITHUB_EVENT_PATH
-      - uses: actions/checkout@v3
-      - run: gh pr view $number --json files --jq '.files[].path'
-        env:
-          number: ${{ github.event.number }}
-      - run: yamllint -c .github/.yamllint $(gh pr view $number --json files --jq '.files[].path')
+#     steps:
+#       - run: cat $GITHUB_EVENT_PATH
+#       - uses: actions/checkout@v3
+#       - run: gh pr view $number --json files --jq '.files[].path'
+#         env:
+#           number: ${{ github.event.number }}
+#       - run: yamllint -c .github/.yamllint $(gh pr view $number --json files --jq '.files[].path')
 
   yamllint-with-reviewdog:
     runs-on: ubuntu-latest
