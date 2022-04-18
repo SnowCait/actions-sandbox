@@ -32,3 +32,4 @@ jobs:
       - uses: reviewdog/action-yamllint@v1.5.1
         with:
           yamllint_flags: -c .github/.yamllint .github/
+          level: error
