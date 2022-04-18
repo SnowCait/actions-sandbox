@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - .github/.yamllint
+      - .github/problem-matchers/actionlint.json
       - .github/workflows/*.yml
   workflow_dispatch:
 
@@ -42,7 +43,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Check workflow files
         run: |
-          #echo "::add-matcher::.github/actionlint-matcher.json"
+          echo "::add-matcher::.github/problem-matchers/actionlint.json"
           bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
           ./actionlint -color
 
