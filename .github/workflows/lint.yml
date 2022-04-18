@@ -13,12 +13,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: yamllint .github/workflows/
+      - run: yamllint workflows/
+        working-directory: .github/
 
-  reviewdog-yamllint:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
+#   reviewdog-yamllint:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 5
 
-    steps:
-      - uses: actions/checkout@v3
-      - uses: reviewdog/action-yamllint@v1.5.1
+#     steps:
+#       - uses: actions/checkout@v3
+#       - uses: reviewdog/action-yamllint@v1.5.1
