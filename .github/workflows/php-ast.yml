@@ -1,0 +1,20 @@
+name: PHP AST
+
+on:
+  push:
+    paths:
+      - .github/workflows/php-ast.yml
+
+permissions:
+  contents: read
+
+jobs:
+  parse:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          <?php
+          echo 'hello';
+        shell: php {0}
