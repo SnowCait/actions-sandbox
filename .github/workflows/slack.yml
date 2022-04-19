@@ -18,7 +18,7 @@ jobs:
           curl -H "Authorization: Bearer $token" -F "file=@hello" -F "initial_comment=$comment" -F channels=$channels https://slack.com/api/files.upload
         env:
           token: ${{ secrets.SLACK_BOT_TOKEN }}
-          comment: '<@${{ secrets.SLACK_USER_ID }}> メンション'
+          comment: '<\@${{ secrets.SLACK_USER_ID }}> メンション'
           channels: sandbox
 
   app:
