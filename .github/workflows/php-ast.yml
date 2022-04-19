@@ -13,25 +13,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      - run: php -i
-      - run: php -m
-      - run: ls -la /usr/lib/php/20210902
-      - run: |
-          <?php
-          var_dump(extension_loaded('ast'));
-          var_dump(extension_loaded('php_ast'));
-        shell: php {0}
-
-#       - run: sudo pecl install ast
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
           extensions: ast
-      - run: php -m
-      - run: ls -la /usr/lib/php/20210902
       - run: |
           <?php
           var_dump(extension_loaded('ast'));
-          var_dump(extension_loaded('php_ast'));
         shell: php {0}
