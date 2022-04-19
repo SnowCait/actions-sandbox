@@ -26,5 +26,5 @@ jobs:
           require 'util.php'
           
           $ast = ast\parse_file('php-ast/index.php', $version = 90);
-          ast_dump($ast);
+          echo ast_dump($ast);
         shell: php {0}
