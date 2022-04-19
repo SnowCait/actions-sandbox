@@ -23,8 +23,11 @@ jobs:
           var_dump(extension_loaded('php_ast'));
         shell: php {0}
 
-      - run: whoami
-      - run: sudo pecl install ast
+#       - run: sudo pecl install ast
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: ast
       - run: php -m
       - run: ls -la /usr/lib/php/20210902
       - run: |
