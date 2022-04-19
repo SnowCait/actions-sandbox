@@ -23,7 +23,8 @@ jobs:
           var_dump(extension_loaded('php_ast'));
         shell: php {0}
 
-      - run: pecl install ast
+      - run: whoami
+      - run: sudo pecl install ast
       - run: php -m
       - run: ls -la /usr/lib/php/20210902
       - run: |
