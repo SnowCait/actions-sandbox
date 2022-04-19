@@ -23,7 +23,8 @@ jobs:
           var_dump(extension_loaded('ast'));
           
           file_put_contents('util.php', file_get_contents('https://raw.githubusercontent.com/nikic/php-ast/master/util.php'));
-          require 'util.php'
+          require 'util.php';
           
-          echo ast_dump(ast\parse_file('php-ast/index.php', $version = 90));
+          $ast = ast\parse_file('php-ast/index.php', $version = 90);
+          echo ast_dump($ast);
         shell: php {0}
