@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v3
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
@@ -20,4 +21,10 @@ jobs:
       - run: |
           <?php
           var_dump(extension_loaded('ast'));
+          
+          file_put_contents('util.php', file_get_contents('https://raw.githubusercontent.com/nikic/php-ast/master/util.php'));
+          require 'util.php'
+          
+          $ast = ast\parse_file('php-ast/index.php', $version = 90);
+          ast_dump($ast);
         shell: php {0}
