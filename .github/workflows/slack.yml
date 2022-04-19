@@ -14,9 +14,7 @@ jobs:
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - run: echo "hello" > hello
-      - run: |
-          set -x
-          curl -H "Authorization: Bearer $token" -F "file=@hello" --form-string "initial_comment=$comment" -F channels=$channels https://slack.com/api/files.upload
+      - run: 'curl -H "Authorization: Bearer $token" -F "file=@hello" --form-string "initial_comment=$comment" -F channels=$channels https://slack.com/api/files.upload'
         env:
           token: ${{ secrets.SLACK_BOT_TOKEN }}
           comment: <@${{ secrets.SLACK_USER_ID }}> メンション
