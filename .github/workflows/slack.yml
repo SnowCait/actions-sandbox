@@ -7,7 +7,21 @@ on:
   workflow_dispatch:
 
 jobs:
+  curl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - run: echo "hello" > hello
+      - run: 'curl -H "Authorization: Bearer $token" -F "file=@hello" -F "initial_comment=$comment" -F channels=$channels "initia https://slack.com/api/files.upload'
+        env:
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          comment: '<@${{ secrets.SLACK_USER_ID }}> メンション'
+          channels: sandbox
+
   app:
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 1
     env:
@@ -45,6 +59,7 @@ jobs:
 #             }
 
   incoming-webhook:
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 1
     env:
