@@ -4,6 +4,9 @@ on:
   push:
     paths:
       - .github/workflows/php-ast.yml
+  pull_request:
+    paths:
+      - '**.php'
 
 permissions:
   contents: read
@@ -11,8 +14,33 @@ permissions:
 jobs:
   parse:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
+      - uses: actions/checkout@v3
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: ast
+      - run: |
+          <?php
+          file_put_contents('util.php', file_get_contents('https://raw.githubusercontent.com/nikic/php-ast/master/util.php'));
+          require 'util.php';
+          
+          $ast = ast\parse_file('php-ast/index.php', $version = 90);
+          echo ast_dump($ast);
+          echo '-------' . PHP_EOL;
+          echo md5(ast_dump($ast));
+        shell: php {0}
+
+  diff:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - run: gh pr view ${{ github.event.number }} --json files
       - uses: actions/checkout@v3
       - uses: shivammathur/setup-php@v2
         with:
