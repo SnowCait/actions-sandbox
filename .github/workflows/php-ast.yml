@@ -53,7 +53,8 @@ jobs:
           file_put_contents('util.php', file_get_contents('https://raw.githubusercontent.com/nikic/php-ast/master/util.php'));
           require 'util.php';
 
-          $ast = ast\parse_file('php-ast/index.php', $version = 90);
+          $version = 90;
+          $ast = ast\parse_file('php-ast/index.php', $version);
           echo ast_dump($ast);
           echo PHP_EOL;
           echo '-------' . PHP_EOL;
