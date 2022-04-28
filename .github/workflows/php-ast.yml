@@ -55,6 +55,7 @@ jobs:
 
           $ast = ast\parse_file('php-ast/index.php', $version = 90);
           echo ast_dump($ast);
+          echo PHP_EOL;
           echo '-------' . PHP_EOL;
           echo md5(ast_dump($ast));
         shell: php {0}
