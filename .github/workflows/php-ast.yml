@@ -48,7 +48,7 @@ jobs:
           ref: ${{ github.head_ref }}
       - run: |
           set -x
-          if [[ $(gh pr view ${PR_NUMBER} --json changedFiles --jq '.changedFiles') > 100 ]]; then
+          if (( $(gh pr view ${PR_NUMBER} --json changedFiles --jq '.changedFiles') > 100 )); then
             echo "Changed files are more than 100."
             exit 1
           fi
