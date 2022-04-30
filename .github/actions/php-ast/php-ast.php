@@ -22,6 +22,8 @@ foreach($paths as $path) {
     file_put_contents($file, "{$hash},{$path}\n", FILE_APPEND);
 }
 
+echo __LINE__;
+
 $hashes = array_map(function (string $path) use ($version): array {
     $hash = '';
     if (file_exists($path)) {
