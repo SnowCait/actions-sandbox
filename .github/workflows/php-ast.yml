@@ -1,9 +1,9 @@
 name: PHP AST
 
 on:
-  push:
-    paths:
-      - .github/workflows/php-ast.yml
+#   push:
+#     paths:
+#       - .github/workflows/php-ast.yml
   pull_request:
     paths:
       - '**.php'
@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   parse:
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -26,7 +27,7 @@ jobs:
           <?php
           file_put_contents('util.php', file_get_contents('https://raw.githubusercontent.com/nikic/php-ast/master/util.php'));
           require 'util.php';
-          
+
           $ast = ast\parse_file('php-ast/index.php', $version = 90);
           echo ast_dump($ast);
           echo '-------' . PHP_EOL;
@@ -37,22 +38,11 @@ jobs:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PR_NUMBER: ${{ github.event.number }}
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - run: gh pr view ${{ github.event.number }} --json files
       - uses: actions/checkout@v3
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
-          extensions: ast
-      - run: |
-          <?php
-          file_put_contents('util.php', file_get_contents('https://raw.githubusercontent.com/nikic/php-ast/master/util.php'));
-          require 'util.php';
-          
-          $ast = ast\parse_file('php-ast/index.php', $version = 90);
-          echo ast_dump($ast);
-          echo '-------' . PHP_EOL;
-          echo md5(ast_dump($ast));
-        shell: php {0}
+      - uses: ./.github/actions/php-ast
