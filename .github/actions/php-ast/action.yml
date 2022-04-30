@@ -40,13 +40,13 @@ runs:
       env:
         pr_number: ${{ inputs.pr-number }}
       shell: bash
-    - run: gh pr view ${pr_number} --json files --jq '.files[].path | select(endswith(".php"))' > paths
+    - run: gh pr view ${pr_number} --json files --jq '.files[].path | select(endswith(".php"))' > ${GITHUB_ACTION_PATH}/paths
       env:
         pr_number: ${{ inputs.pr-number }}
       shell: bash
-    - run: cat paths
+    - run: cat ${GITHUB_ACTION_PATH}/paths
       shell: bash
-    - run: php ${{ github.action_path }}/php-ast.php ${version} head
+    - run: php ${GITHUB_ACTION_PATH}/php-ast.php ${version} ${GITHUB_ACTION_PATH}/paths head
       env:
         version: ${{ inputs.php-ast-version }}
       shell: bash
@@ -54,7 +54,7 @@ runs:
       shell: bash
 
     - run: |
-        cp -r ${{ github.action_path }} /tmp/php-ast
+        cp -r ${GITHUB_ACTION_PATH} /tmp/php-ast
         ls -l /tmp
         ls -l /tmp/php-ast
       shell: bash
@@ -62,10 +62,10 @@ runs:
       with:
         ref: ${{ github.base_ref }}
     - run: |
-        mv /tmp/php-ast ${{ github.action_path }}
-        ls -l ${{ github.action_path }}
+        mv /tmp/php-ast ${GITHUB_ACTION_PATH}
+        ls -l ${GITHUB_ACTION_PATH}
       shell: bash
-    - run: php ${{ github.action_path }}/php-ast.php ${version} base
+    - run: php ${GITHUB_ACTION_PATH}/php-ast.php ${version} ${GITHUB_ACTION_PATH}/paths base
       env:
         version: ${{ inputs.php-ast-version }}
       shell: bash

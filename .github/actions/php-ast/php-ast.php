@@ -3,9 +3,10 @@ file_put_contents('util.php', file_get_contents('https://raw.githubusercontent.c
 require 'util.php';
 
 $version = $argv[1];
-$file = $argv[2];
+$paths_file = $argv[2];
+$file = $argv[3];
 
-$paths = file_get_contents('paths');
+$paths = file_get_contents($paths_file);
 if ($paths === false) {
     exit(1);
 }
