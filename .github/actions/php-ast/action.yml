@@ -62,7 +62,7 @@ runs:
     - run: cat ${GITHUB_ACTION_PATH}/paths
       shell: bash
     - id: head-hashes
-      run: php ${GITHUB_ACTION_PATH}/php-ast-hashes.php ${version} head
+      run: php ${GITHUB_ACTION_PATH}/php-ast-hashes.php ${version}
       env:
         version: ${{ inputs.php-ast-version }}
         paths: ${{ steps.paths.outputs.json }}
@@ -77,22 +77,17 @@ runs:
     - uses: actions/checkout@v3
       with:
         ref: ${{ github.base_ref }}
-    # - run: git stash pop
-    #   shell: bash
     - id: base-hashes
-      run: php ${GITHUB_ACTION_PATH}/php-ast-hashes.php ${version} base
+      run: php ${GITHUB_ACTION_PATH}/php-ast-hashes.php ${version}
       env:
         version: ${{ inputs.php-ast-version }}
         paths: ${{ steps.paths.outputs.json }}
       shell: bash
-    # - run: cat base
-    #   shell: bash
     - run: echo "${{ steps.base-hashes.outputs.json }}"
       shell: bash
 
     - id: diff
       run: |
-        #if diff head base; then
         if [ "${head_hashes}" = "${base_hashes}" ]; then
           echo "::set-output name=exists::false"
         else
