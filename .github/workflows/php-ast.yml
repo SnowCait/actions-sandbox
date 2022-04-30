@@ -8,8 +8,9 @@ on:
     paths:
       - '**.php'
 
-permissions:
-  contents: read
+# permissions:
+#   contents: read
+#   repository-projects: read # https://github.com/cli/cli/discussions/5307
 
 jobs:
   parse:
@@ -40,9 +41,19 @@ jobs:
     timeout-minutes: 5
     env:
       GH_TOKEN: ${{ github.token }}
-      PR_NUMBER: ${{ github.event.number }}
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - uses: actions/checkout@v3
       - uses: ./.github/actions/php-ast
+        id: php-ast
+      - name: Label
+        run: |
+          label='needless-debug'
+          if [ "${changed}" = 'false' ]; then
+            gh pr edit ${{ github.event.number }} --add-label ${label}
+          else
+            gh pr edit ${{ github.event.number }} --remove-label ${label}
+          fi
+        env:
+          changed: steps.php-ast.outputs.changed

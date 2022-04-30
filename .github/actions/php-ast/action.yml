@@ -1,5 +1,6 @@
-name: 'PHP AST'
-description: 'PHP AST'
+name: 'PHP AST Changed'
+description: 'PHP AST in PR have changed to judge if debug is necessary or not'
+
 inputs:
   php-version:
     description: 'PHP version'
@@ -9,24 +10,31 @@ inputs:
     description: 'PHP AST version'
     required: false
     default: '90'
-  pr-number:
-    description: 'PR number'
-    required: false
-    default: ${{ github.event.number }}
-# outputs:
-#   random-number:
-#     description: "Random number"
-#     value: ${{ steps.random-number-generator.outputs.random-id }}
+
+outputs:
+  changed:
+    description: '*.php files have changed: "true" (string), not changed: "false" (string)'
+    value: ${{ steps.diff.outputs.exists }}
+
 runs:
   using: 'composite'
   steps:
-    - run: printenv
-      shell: bash
-
     - uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ inputs.php-version }}
         extensions: ast
+    - name: Download util.php
+      run: |
+        <?php
+        declare(strict_types=1);
+
+        $ast_version = phpversion('ast');
+        $url = "https://raw.githubusercontent.com/nikic/php-ast/v{$ast_version}/util.php";
+        echo $url;
+
+        $contents = file_get_contents("https://raw.githubusercontent.com/nikic/php-ast/v{$ast_version}/util.php");
+        file_put_contents('util.php', $contents);
+      shell: php {0}
 
     - uses: actions/checkout@v3
       with:
@@ -38,44 +46,61 @@ runs:
           exit 1
         fi
       env:
-        pr_number: ${{ inputs.pr-number }}
+        pr_number: ${{ github.event.number }}
       shell: bash
     - run: gh pr view ${pr_number} --json files --jq '.files[].path | select(endswith(".php"))' > ${GITHUB_ACTION_PATH}/paths
       env:
-        pr_number: ${{ inputs.pr-number }}
+        pr_number: ${{ github.event.number }}
+      shell: bash
+    - id: paths
+      run: echo "::set-output name=json::$(gh pr view ${pr_number} --json files --jq '.files | map(select(.path | endswith(".php"))) | map(.path)')"
+      env:
+        pr_number: ${{ github.event.number }}
+      shell: bash
+    - run: echo "${{ steps.paths.outputs.json }}"
       shell: bash
     - run: cat ${GITHUB_ACTION_PATH}/paths
       shell: bash
-    - run: php ${GITHUB_ACTION_PATH}/php-ast.php ${version} ${GITHUB_ACTION_PATH}/paths head
+    - id: head-hashes
+      run: php ${GITHUB_ACTION_PATH}/php-ast.php ${version} ${GITHUB_ACTION_PATH}/paths head
       env:
         version: ${{ inputs.php-ast-version }}
       shell: bash
     - run: cat head
       shell: bash
-
-    - run: |
-        cp -r ${GITHUB_ACTION_PATH} /tmp/php-ast
-        mv head /tmp/
-        ls -l /tmp
-        ls -l /tmp/php-ast
+    - run: echo "${{ steps.head-hashes.outputs.json }}"
       shell: bash
+    - run: git stash -u
+      shell: bash
+
     - uses: actions/checkout@v3
       with:
         ref: ${{ github.base_ref }}
-    - run: |
-        mv /tmp/php-ast ${GITHUB_ACTION_PATH}
-        mv /tmp/head ./
-        ls -l ${GITHUB_ACTION_PATH}
+    - run: git stash pop
       shell: bash
-    - run: php ${GITHUB_ACTION_PATH}/php-ast.php ${version} ${GITHUB_ACTION_PATH}/paths base
+    - id: base-hashes
+      run: php ${GITHUB_ACTION_PATH}/php-ast.php ${version} ${GITHUB_ACTION_PATH}/paths base
       env:
         version: ${{ inputs.php-ast-version }}
       shell: bash
     - run: cat base
       shell: bash
-
-    - run: diff head base
+    - run: echo "${{ steps.base-hashes.outputs.json }}"
       shell: bash
+
+    - id: diff
+      run: |
+        #if diff head base; then
+        if [ "${head_hashes}" = "${base_hashes}" ]; then
+          echo "::set-output name=exists::false"
+        else
+          echo "::set-output name=exists::true"
+        fi
+      env:
+        head_hashes: ${{ steps.head-hashes.outputs.json }}
+        base_hashes: ${{ steps.base-hashes.outputs.json }}
+      shell: bash
+
 branding:
-  icon: 'award'
-  color: 'green'
+  icon: 'alert-octagon'
+  color: 'gray-dark'
