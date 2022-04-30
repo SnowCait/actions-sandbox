@@ -1,5 +1,6 @@
 name: 'PHP AST'
 description: 'PHP AST'
+
 inputs:
   php-version:
     description: 'PHP version'
@@ -9,14 +10,12 @@ inputs:
     description: 'PHP AST version'
     required: false
     default: '90'
-  pr-number:
-    description: 'PR number'
-    required: false
-    default: ${{ github.event.number }}
+
 outputs:
   changed:
-    description: "Random number"
+    description: '*.php files are changed: "true" (string), not changed: "false" (string)'
     value: ${{ steps.diff.outputs.exists }}
+
 runs:
   using: 'composite'
   steps:
@@ -35,11 +34,11 @@ runs:
           exit 1
         fi
       env:
-        pr_number: ${{ inputs.pr-number }}
+        pr_number: ${{ github.event.number }}
       shell: bash
     - run: gh pr view ${pr_number} --json files --jq '.files[].path | select(endswith(".php"))' > ${GITHUB_ACTION_PATH}/paths
       env:
-        pr_number: ${{ inputs.pr-number }}
+        pr_number: ${{ github.event.number }}
       shell: bash
     - run: cat ${GITHUB_ACTION_PATH}/paths
       shell: bash
@@ -72,6 +71,7 @@ runs:
           echo "::set-output name=exists::true"
         fi
       shell: bash
+
 branding:
   icon: 'award'
   color: 'green'
