@@ -1,4 +1,5 @@
 <?php
+file_put_contents('util.php', file_get_contents("https://raw.githubusercontent.com/nikic/php-ast/v{phpversion('ast')}/util.php")); // TODO: delete
 require 'util.php';
 
 $version = $argv[1];
