@@ -37,4 +37,4 @@ $hashes = array_map(function (string $path) use ($version): array {
     ];
 }, $paths);
 $json = json_encode($hashes);
-echo "::set-output name=hashes::{$json}";
+echo "::set-output name=json::{$json}";
