@@ -13,10 +13,10 @@ inputs:
     description: 'PR number'
     required: false
     default: ${{ github.event.number }}
-# outputs:
-#   random-number:
-#     description: "Random number"
-#     value: ${{ steps.random-number-generator.outputs.random-id }}
+outputs:
+  exists:
+    description: "Random number"
+    value: ${{ steps.diff.outputs.exists }}
 runs:
   using: 'composite'
   steps:
@@ -52,22 +52,11 @@ runs:
     - run: git stash -u
       shell: bash
 
-    # - run: |
-    #     cp -r ${GITHUB_ACTION_PATH} /tmp/php-ast
-    #     mv head /tmp/
-    #     ls -l /tmp
-    #     ls -l /tmp/php-ast
-    #   shell: bash
     - uses: actions/checkout@v3
       with:
         ref: ${{ github.base_ref }}
     - run: git stash pop
       shell: bash
-    # - run: |
-    #     mv /tmp/php-ast ${GITHUB_ACTION_PATH}
-    #     mv /tmp/head ./
-    #     ls -l ${GITHUB_ACTION_PATH}
-    #   shell: bash
     - run: php ${GITHUB_ACTION_PATH}/php-ast.php ${version} ${GITHUB_ACTION_PATH}/paths base
       env:
         version: ${{ inputs.php-ast-version }}
@@ -75,7 +64,13 @@ runs:
     - run: cat base
       shell: bash
 
-    - run: diff head base
+    - id: diff
+      run: |
+        if diff head base; then
+          echo "::set-output name=exists::false"
+        else
+          echo "::set-output name=exists::true"
+        fi
       shell: bash
 branding:
   icon: 'award'

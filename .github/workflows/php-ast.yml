@@ -46,3 +46,6 @@ jobs:
       - run: cat $GITHUB_EVENT_PATH
       - uses: actions/checkout@v3
       - uses: ./.github/actions/php-ast
+        id: php-ast
+      - run: gh pr edit ${PR_NUMBER} --add-label 'needless-debug'
+        if: steps.php-ast.outputs.exists == 'false'
