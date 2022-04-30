@@ -55,6 +55,7 @@ runs:
 
     - run: |
         cp -r ${GITHUB_ACTION_PATH} /tmp/php-ast
+        mv head /tmp/
         ls -l /tmp
         ls -l /tmp/php-ast
       shell: bash
@@ -63,6 +64,7 @@ runs:
         ref: ${{ github.base_ref }}
     - run: |
         mv /tmp/php-ast ${GITHUB_ACTION_PATH}
+        mv /tmp/head ./
         ls -l ${GITHUB_ACTION_PATH}
       shell: bash
     - run: php ${GITHUB_ACTION_PATH}/php-ast.php ${version} ${GITHUB_ACTION_PATH}/paths base
