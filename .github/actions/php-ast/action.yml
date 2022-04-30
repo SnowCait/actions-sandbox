@@ -22,14 +22,14 @@ runs:
       with:
         php-version: ${{ inputs.php-version }}
         extensions: ast
-    - run: php ${{ github.action_path }}/php-ast/php-ast.php ${version} head
+    - run: php ${{ github.action_path }}/php-ast.php ${version} head
       shell: bash
     - run: cat head
       shell: bash
     - uses: actions/checkout@v3
       with:
         ref: ${{ github.base_ref }}
-    - run: php ${{ github.action_path }}/php-ast/php-ast.php ${version} base
+    - run: php ${{ github.action_path }}/php-ast.php ${version} base
       env:
         version: ${{ inputs.php-version }}
       shell: bash
