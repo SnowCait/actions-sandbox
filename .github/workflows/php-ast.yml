@@ -47,7 +47,13 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/php-ast
         id: php-ast
-      - run: gh pr edit ${{ github.event.number }} --add-label 'needless-debug'
-        if: steps.php-ast.outputs.changed == 'false'
-      - run: gh pr edit ${{ github.event.number }} --remove-label 'needless-debug'
-        if: steps.php-ast.outputs.changed != 'false'
+      - name: Label
+        run: |
+          label='needless-debug'
+          if [ "${changed}" = 'false' ]; then
+            gh pr edit ${{ github.event.number }} --add-label ${label}
+          else
+            gh pr edit ${{ github.event.number }} --remove-label ${label}
+          fi
+        env:
+          changed: steps.php-ast.outputs.changed
