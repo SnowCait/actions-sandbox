@@ -20,6 +20,9 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - run: printenv
+      shell: bash
+
     - uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ inputs.php-version }}
