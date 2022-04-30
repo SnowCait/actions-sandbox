@@ -13,7 +13,7 @@ inputs:
 
 outputs:
   changed:
-    description: '*.php files are changed: "true" (string), not changed: "false" (string)'
+    description: '*.php files have changed: "true" (string), not changed: "false" (string)'
     value: ${{ steps.diff.outputs.exists }}
 
 runs:
