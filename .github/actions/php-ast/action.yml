@@ -54,11 +54,14 @@ runs:
       shell: bash
     - run: cat ${GITHUB_ACTION_PATH}/paths
       shell: bash
-    - run: php ${GITHUB_ACTION_PATH}/php-ast.php ${version} ${GITHUB_ACTION_PATH}/paths head
+    - id: head
+      run: php ${GITHUB_ACTION_PATH}/php-ast.php ${version} ${GITHUB_ACTION_PATH}/paths head
       env:
         version: ${{ inputs.php-ast-version }}
       shell: bash
     - run: cat head
+      shell: bash
+    - run: echo "${{ steps.head.outputs.hashes }}"
       shell: bash
     - run: git stash -u
       shell: bash

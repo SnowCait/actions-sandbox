@@ -38,6 +38,5 @@ $hashes = array_map(function (string $path) use ($version): array {
         'hash' => $hash,
     ];
 }, $paths);
-var_dump(json_encode($hashes));
-echo PHP_EOL;
-var_dump(phpversion('ast'));
+$json = json_encode($hashes);
+echo "::set-output name=hashes::{$json}";
