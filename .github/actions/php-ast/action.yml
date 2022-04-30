@@ -14,7 +14,7 @@ inputs:
     required: false
     default: ${{ github.event.number }}
 outputs:
-  exists:
+  changed:
     description: "Random number"
     value: ${{ steps.diff.outputs.exists }}
 runs:
