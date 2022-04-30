@@ -49,3 +49,5 @@ jobs:
         id: php-ast
       - run: gh pr edit ${{ github.event.number }} --add-label 'needless-debug'
         if: steps.php-ast.outputs.changed == 'false'
+      - run: gh pr edit ${{ github.event.number }} --remove-label 'needless-debug'
+        if: steps.php-ast.outputs.changed != 'false'
