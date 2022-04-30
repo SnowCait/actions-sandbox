@@ -14,7 +14,10 @@ $paths = trim($paths);
 $paths = explode("\n", $paths);
 
 foreach($paths as $path) {
-    $ast = ast\parse_file($path, $version);
-    $md5 = md5(ast_dump($ast));
+    $md5 = '';
+    if (file_exists($path)) {
+        $ast = ast\parse_file($path, $version);
+        $md5 = md5(ast_dump($ast));
+    }
     file_put_contents($file, "{$md5},{$path}\n", FILE_APPEND);
 }
