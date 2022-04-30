@@ -53,12 +53,15 @@ runs:
     - run: cat head
       shell: bash
 
-    - run: cp ${{ github.action_path }}/php-ast.php /tmp/php-ast.php
+    - run: |
+        cp -r ${{ github.action_path }} /tmp/php-ast
+        ls -l /tmp
+        ls -l /tmp/php-ast
       shell: bash
     - uses: actions/checkout@v3
       with:
         ref: ${{ github.base_ref }}
-    - run: mv /tmp/php-ast.php ${{ github.action_path }}/php-ast.php
+    - run: mv /tmp/php-ast ${{ github.action_path }}
       shell: bash
     - run: php ${{ github.action_path }}/php-ast.php ${version} base
       env:
