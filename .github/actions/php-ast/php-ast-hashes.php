@@ -9,12 +9,13 @@ $version = (int)$argv[1];
 $paths_file = $argv[2];
 $file = $argv[3];
 
-$paths = file_get_contents($paths_file);
-if ($paths === false) {
-    exit(1);
-}
-$paths = trim($paths);
-$paths = explode("\n", $paths);
+// $paths = file_get_contents($paths_file);
+// if ($paths === false) {
+//     exit(1);
+// }
+// $paths = trim($paths);
+// $paths = explode("\n", $paths);
+$paths = json_decode(getenv('paths'), true);
 
 foreach($paths as $path) {
     $hash = '';
