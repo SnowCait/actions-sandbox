@@ -62,7 +62,7 @@ runs:
     - run: cat ${GITHUB_ACTION_PATH}/paths
       shell: bash
     - id: head-hashes
-      run: php ${GITHUB_ACTION_PATH}/php-ast.php ${version} ${GITHUB_ACTION_PATH}/paths head
+      run: php ${GITHUB_ACTION_PATH}/php-ast-hashes.php ${version} ${GITHUB_ACTION_PATH}/paths head
       env:
         version: ${{ inputs.php-ast-version }}
       shell: bash
