@@ -49,7 +49,7 @@ runs:
       shell: bash
     - run: cat head
       shell: bash
-    - run: git stash
+    - run: git stash -u
       shell: bash
 
     # - run: |
