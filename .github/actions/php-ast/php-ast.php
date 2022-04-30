@@ -5,7 +5,7 @@ $ast_version = phpversion('ast');
 file_put_contents('util.php', file_get_contents("https://raw.githubusercontent.com/nikic/php-ast/v{$ast_version}/util.php")); // TODO: delete
 require 'util.php';
 
-$version = $argv[1];
+$version = (int)$argv[1];
 $paths_file = $argv[2];
 $file = $argv[3];
 

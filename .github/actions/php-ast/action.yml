@@ -27,9 +27,11 @@ runs:
       run: |
         <?php
         declare(strict_types=1);
+
         $ast_version = phpversion('ast');
         $url = "https://raw.githubusercontent.com/nikic/php-ast/v{$ast_version}/util.php";
         echo $url;
+
         $contents = file_get_contents("https://raw.githubusercontent.com/nikic/php-ast/v{$ast_version}/util.php");
         file_put_contents('util.php', $contents);
       shell: php {0}
