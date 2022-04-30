@@ -55,15 +55,4 @@ jobs:
           fi
       - run: gh pr view ${PR_NUMBER} --json files --jq '.files[].path | select(endswith(".php"))' > paths
       - run: cat paths
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
-          extensions: ast
-      - run: php php-ast/php-ast.php head
-      - run: cat head
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.base_ref }}
-      - run: php php-ast/php-ast.php base
-      - run: cat base
-      - run: diff head base
+      - uses: ./.github/actions/php-ast

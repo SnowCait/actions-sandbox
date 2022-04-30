@@ -1,0 +1,42 @@
+name: 'PHP AST'
+description: 'PHP AST'
+inputs:
+  php-version:
+    description: 'PHP version'
+    required: false
+    default: '8.1'
+  php-ast-version:
+    description: 'PHP AST version'
+    required: false
+    default: '90'
+# outputs:
+#   random-number:
+#     description: "Random number"
+#     value: ${{ steps.random-number-generator.outputs.random-id }}
+runs:
+  using: 'composite'
+  steps:
+    - run: echo ${{ github.action_path }}
+      shell: bash
+    - uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ inputs.php-version }}
+        extensions: ast
+    - run: php ${{ github.action_path }}/php-ast/php-ast.php ${version} head
+      shell: bash
+    - run: cat head
+      shell: bash
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.base_ref }}
+    - run: php ${{ github.action_path }}/php-ast/php-ast.php ${version} base
+      env:
+        version: ${{ inputs.php-version }}
+      shell: bash
+    - run: cat base
+      shell: bash
+    - run: diff head base
+      shell: bash
+branding:
+  icon: 'award'
+  color: 'green'
