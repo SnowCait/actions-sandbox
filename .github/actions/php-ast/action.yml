@@ -23,6 +23,11 @@ runs:
       with:
         php-version: ${{ inputs.php-version }}
         extensions: ast
+    - run: |
+        <?php
+        $contents = file_get_contents("https://raw.githubusercontent.com/nikic/php-ast/v{phpversion('ast')}/util.php");
+        file_put_contents('util.php', $contents);
+      shell: php {0}
 
     - uses: actions/checkout@v3
       with:
