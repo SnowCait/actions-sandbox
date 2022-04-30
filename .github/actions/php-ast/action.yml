@@ -20,9 +20,6 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run: printenv
-      shell: bash
-
     - uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ inputs.php-version }}
@@ -52,21 +49,25 @@ runs:
       shell: bash
     - run: cat head
       shell: bash
-
-    - run: |
-        cp -r ${GITHUB_ACTION_PATH} /tmp/php-ast
-        mv head /tmp/
-        ls -l /tmp
-        ls -l /tmp/php-ast
+    - run: git stash
       shell: bash
+
+    # - run: |
+    #     cp -r ${GITHUB_ACTION_PATH} /tmp/php-ast
+    #     mv head /tmp/
+    #     ls -l /tmp
+    #     ls -l /tmp/php-ast
+    #   shell: bash
     - uses: actions/checkout@v3
       with:
         ref: ${{ github.base_ref }}
-    - run: |
-        mv /tmp/php-ast ${GITHUB_ACTION_PATH}
-        mv /tmp/head ./
-        ls -l ${GITHUB_ACTION_PATH}
+    - run: git stash pop
       shell: bash
+    # - run: |
+    #     mv /tmp/php-ast ${GITHUB_ACTION_PATH}
+    #     mv /tmp/head ./
+    #     ls -l ${GITHUB_ACTION_PATH}
+    #   shell: bash
     - run: php ${GITHUB_ACTION_PATH}/php-ast.php ${version} ${GITHUB_ACTION_PATH}/paths base
       env:
         version: ${{ inputs.php-ast-version }}
