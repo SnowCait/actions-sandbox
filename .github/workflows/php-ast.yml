@@ -60,3 +60,4 @@ jobs:
           php-version: '8.1'
           extensions: ast
       - run: php php-ast/php-ast.php
+      - run: cat head
