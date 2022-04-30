@@ -39,6 +39,8 @@ jobs:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
@@ -46,6 +48,4 @@ jobs:
       - uses: ./.github/actions/php-ast
         id: php-ast
       - run: gh pr edit ${{ github.event.number }} --add-label 'needless-debug'
-        env:
-          GH_TOKEN: ${{ github.token }}
         if: steps.php-ast.outputs.changed == 'false'
