@@ -1,9 +1,9 @@
 name: PHP AST
 
 on:
-  push:
-    paths:
-      - .github/workflows/php-ast.yml
+#   push:
+#     paths:
+#       - .github/workflows/php-ast.yml
   pull_request:
     paths:
       - '**.php'
@@ -13,6 +13,7 @@ permissions:
 
 jobs:
   parse:
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -64,6 +65,11 @@ jobs:
           require 'util.php';
           
           $paths = file_get_contents('paths');
+          if ($paths === false)
+          {
+            exit(1);
+          }
+          $paths = trim($paths);
           $paths = explode("\n", $paths);
           var_dump($paths);
           echo PHP_EOL;
