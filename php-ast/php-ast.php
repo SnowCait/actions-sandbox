@@ -13,11 +13,5 @@ $version = 90;
 foreach($paths as $path) {
     $ast = ast\parse_file('php-ast/index.php', $version);
     $md5 = md5(ast_dump($ast));
-    file_put_contents('head', "{$md5},{$path}", FILE_APPEND);
+    file_put_contents('head', "{$md5},{$path}\n", FILE_APPEND);
 }
-
-$ast = ast\parse_file('php-ast/index.php', $version);
-echo ast_dump($ast);
-echo PHP_EOL;
-echo '-------' . PHP_EOL;
-echo md5(ast_dump($ast));
