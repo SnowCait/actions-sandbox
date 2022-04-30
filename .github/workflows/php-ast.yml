@@ -44,15 +44,4 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
-      - run: |
-          set -x
-          if (( $(gh pr view ${PR_NUMBER} --json changedFiles --jq '.changedFiles') > 100 )); then
-            echo "Changed files are more than 100."
-            exit 1
-          fi
-      - run: gh pr view ${PR_NUMBER} --json files --jq '.files[].path | select(endswith(".php"))' > paths
-      - run: cat paths
       - uses: ./.github/actions/php-ast
