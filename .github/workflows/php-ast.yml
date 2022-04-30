@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: read
+  repository-projects: read # https://github.com/cli/cli/discussions/5307
 
 jobs:
   parse:
