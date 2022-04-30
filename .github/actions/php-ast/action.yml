@@ -67,26 +67,26 @@ runs:
         version: ${{ inputs.php-ast-version }}
         paths: ${{ steps.paths.outputs.json }}
       shell: bash
-    - run: cat head
-      shell: bash
+    # - run: cat head
+    #   shell: bash
     - run: echo "${{ steps.head-hashes.outputs.json }}"
       shell: bash
-    - run: git stash -u
-      shell: bash
+    # - run: git stash -u
+    #   shell: bash
 
     - uses: actions/checkout@v3
       with:
         ref: ${{ github.base_ref }}
-    - run: git stash pop
-      shell: bash
+    # - run: git stash pop
+    #   shell: bash
     - id: base-hashes
       run: php ${GITHUB_ACTION_PATH}/php-ast-hashes.php ${version} base
       env:
         version: ${{ inputs.php-ast-version }}
         paths: ${{ steps.paths.outputs.json }}
       shell: bash
-    - run: cat base
-      shell: bash
+    # - run: cat base
+    #   shell: bash
     - run: echo "${{ steps.base-hashes.outputs.json }}"
       shell: bash
 
