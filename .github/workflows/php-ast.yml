@@ -39,11 +39,14 @@ jobs:
     timeout-minutes: 5
     env:
       GH_TOKEN: ${{ github.token }}
+      PR_NUMBER: ${{ github.event.number }}
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - uses: actions/checkout@v3
-      - run: gh pr view ${{ github.event.number }} --json files
+      - run: |
+          gh pr view ${PR_NUMBER} --json changedFiles
+      - run: gh pr view ${PR_NUMBER} --json files --jq '.files[].path | select(endswith(".php"))'
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
