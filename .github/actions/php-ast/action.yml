@@ -1,5 +1,5 @@
 name: 'PHP AST Changed'
-description: 'PHP AST in PR have changed if need debug'
+description: 'PHP AST in PR have changed to judge if debug is necessary or not'
 
 inputs:
   php-version:
