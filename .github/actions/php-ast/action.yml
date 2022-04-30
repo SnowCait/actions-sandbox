@@ -23,9 +23,12 @@ runs:
       with:
         php-version: ${{ inputs.php-version }}
         extensions: ast
-    - run: |
+    - name: Download util.php
+      run: |
         <?php
+        declare(strict_types=1);
         $ast_version = phpversion('ast');
+        echo "v{$ast_version}";
         $contents = file_get_contents("https://raw.githubusercontent.com/nikic/php-ast/v{$ast_version}/util.php");
         file_put_contents('util.php', $contents);
       shell: php {0}
