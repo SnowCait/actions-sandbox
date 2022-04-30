@@ -59,5 +59,11 @@ jobs:
         with:
           php-version: '8.1'
           extensions: ast
-      - run: php php-ast/php-ast.php
+      - run: php php-ast/php-ast.php head
       - run: cat head
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.base_ref }}
+      - run: php php-ast/php-ast.php base
+      - run: cat base
+      - run: diff head base
