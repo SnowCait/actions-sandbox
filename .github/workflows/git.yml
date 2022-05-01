@@ -7,6 +7,20 @@ on:
   workflow_dispatch:
 
 jobs:
+  commit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+      - run: echo test >> test
+      - uses: snow-actions/git-config-user@v1.0.0
+      - run: git add .
+      - run: git commit -m "test"
+      - run: git push
+
   first:
     if: false
     runs-on: ubuntu-latest
