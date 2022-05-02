@@ -1,9 +1,6 @@
 name: PHP AST
 
 on:
-#   push:
-#     paths:
-#       - .github/workflows/php-ast.yml
   pull_request:
     paths:
       - '**.php'
