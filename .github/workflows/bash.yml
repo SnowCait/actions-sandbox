@@ -7,6 +7,13 @@ on:
   workflow_dispatch:
 
 jobs:
+  environment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - run: whoami
+
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 1
