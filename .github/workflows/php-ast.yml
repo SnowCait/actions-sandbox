@@ -49,6 +49,7 @@ jobs:
         id: php-ast
       - name: Label
         run: |
+          set -x
           label='needless-debug'
           if [ "${changed}" = 'false' ]; then
             gh pr edit ${{ github.event.number }} --add-label ${label}
