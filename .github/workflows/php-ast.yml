@@ -1,9 +1,6 @@
 name: PHP AST
 
 on:
-#   push:
-#     paths:
-#       - .github/workflows/php-ast.yml
   pull_request:
     paths:
       - '**.php'
@@ -49,6 +46,7 @@ jobs:
         id: php-ast
       - name: Label
         run: |
+          set -x
           label='needless-debug'
           if [ "${changed}" = 'false' ]; then
             gh pr edit ${{ github.event.number }} --add-label ${label}
@@ -56,4 +54,4 @@ jobs:
             gh pr edit ${{ github.event.number }} --remove-label ${label}
           fi
         env:
-          changed: steps.php-ast.outputs.changed
+          changed: ${{ steps.php-ast.outputs.changed }}
