@@ -38,7 +38,6 @@ foreach($paths as $path) {
         $ast = ast\parse_file($path, $version);
         $hash = md5(ast_dump($ast));
     }
-    $hashes);
     $hashes .= "{$hash},{$path}\n";
 //     file_put_contents($hashes_file, "{$hash},{$path}\n", FILE_APPEND);
 }
