@@ -19,3 +19,13 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
       - run: git status
+
+  diff:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+      - run: git diff --name-only ${{ github.base_ref }}
