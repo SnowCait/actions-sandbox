@@ -23,9 +23,12 @@ jobs:
   diff:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
 
     steps:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
+      - run: gh pr view --json files --jq '.files[].path'
       - run: git diff --name-only ${{ github.base_ref }}
