@@ -1,5 +1,7 @@
 <?php
-// hello
+/**
+ * hello
+ */
 echo 'hello';
 /**
  * world
