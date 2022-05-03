@@ -3,6 +3,8 @@ name: PHP AST
 on:
   pull_request:
     paths:
+      - .github/actions/php-ast/action.yml
+      - .github/workflows/php-ast.yml
       - '**.php'
 
 # permissions:
