@@ -12,11 +12,10 @@ $paths = file_get_contents($paths_file);
 if ($paths === false) {
     exit(1);
 }
+var_dump($paths);
 $paths = trim($paths);
 $paths = explode("\n", $paths);
-if (empty($paths)) {
-    $paths = [];
-}
+var_dump($paths);
 // $paths = json_decode(getenv('paths'), true);
 
 $hashes = array_map(function (string $path) use ($version): array {
