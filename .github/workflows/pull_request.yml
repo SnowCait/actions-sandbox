@@ -14,7 +14,7 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
       - run: gh pr view --json files --jq '.files[].path | select(endswith(".yml"))'
-      - run: git fetch --no-tags origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
+      - run: git fetch --depth=1 --no-tags origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
       - run: git diff --name-only origin/${{ github.base_ref }} -- '*.yml'
       - run: git diff --name-only origin/${{ github.base_ref }} -- '**.yml'
       - run: git diff --name-only origin/${{ github.base_ref }} -- '***.yml'
