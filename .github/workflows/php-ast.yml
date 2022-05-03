@@ -45,7 +45,7 @@ jobs:
       - run: cat $GITHUB_EVENT_PATH
 #       - uses: actions/checkout@v3
 #       - uses: ./.github/actions/php-ast
-      - uses: snow-actions/php-ast-changed@php-ast-changed
+      - uses: snow-actions/php-ast-changed@main
         id: php-ast
       - name: Label
         run: |
