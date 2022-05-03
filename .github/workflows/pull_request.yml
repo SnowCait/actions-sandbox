@@ -19,5 +19,8 @@ jobs:
       - run: git diff --name-only origin/${{ github.base_ref }} -- '**.yml'
       - run: git diff --name-only origin/${{ github.base_ref }} -- '***.yml'
       - run: md5sum .github/workflows/pull_request.yml
+      - run: git log -n 5
       - run: git switch ${{ github.base_ref }}
       - run: md5sum .github/workflows/pull_request.yml
+      - run: git log -n 5
+      - run: cat .git/config
