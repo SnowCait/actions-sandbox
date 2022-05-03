@@ -71,12 +71,10 @@ runs:
         version: ${{ inputs.php-ast-version }}
         paths: ${{ steps.paths.outputs.json }}
       shell: bash
-    # - run: cat head
-    #   shell: bash
+    - run: cat ${GITHUB_ACTION_PATH}/head
+      shell: bash
     - run: echo "${{ steps.head-hashes.outputs.json }}"
       shell: bash
-    # - run: git stash -u
-    #   shell: bash
 
 #     - uses: actions/checkout@v3
 #       with:
@@ -90,6 +88,8 @@ runs:
         paths: ${{ steps.paths.outputs.json }}
       shell: bash
     - run: echo "${{ steps.base-hashes.outputs.json }}"
+      shell: bash
+    - run: cat ${GITHUB_ACTION_PATH}/base
       shell: bash
 
     - id: diff
