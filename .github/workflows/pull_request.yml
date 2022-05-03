@@ -3,19 +3,24 @@ on:
   pull_request:
     paths: .github/workflows/pull_request.yml
 jobs:
-  build:
+  diff:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+
     steps:
-      - run: |
-          echo $GITHUB_SHA
-          echo $GITHUB_REF
-          echo $GITHUB_EVENT_NAME
-          echo $GITHUB_EVENT_PATH
-          echo $GITHUB_WORKSPACE
-      - run: cat $GITHUB_EVENT_PATH
-      - uses: actions/checkout@v3
-      - run: git status
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
-      - run: git status
+          ref: ${{ github.head_ref }}
+      - run: gh pr view --json files --jq '.files[].path | select(endswith(".yml"))'
+      - run: git fetch --depth=1 --no-tags origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
+      - run: git diff --name-only origin/${{ github.base_ref }} -- '*.yml'
+      - run: git diff --name-only origin/${{ github.base_ref }} -- '**.yml'
+      - run: git diff --name-only origin/${{ github.base_ref }} -- '***.yml'
+      - run: md5sum .github/workflows/pull_request.yml
+      - run: git log -n 5
+      - run: git switch ${{ github.base_ref }}
+      - run: md5sum .github/workflows/pull_request.yml
+      - run: git log -n 5
+      - run: cat .git/config
