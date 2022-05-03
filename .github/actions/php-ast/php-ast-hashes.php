@@ -31,11 +31,15 @@ $paths = explode("\n", $paths);
 // $json = json_encode($hashes);
 // echo "::set-output name=json::{$json}";
 
+$hashes = '';
 foreach($paths as $path) {
     $hash = '';
     if (file_exists($path)) {
         $ast = ast\parse_file($path, $version);
         $hash = md5(ast_dump($ast));
     }
-    file_put_contents($hashes_file, "{$hash},{$path}\n", FILE_APPEND);
+    $hashes);
+    $hashes = "{$hash},{$path}\n";
+//     file_put_contents($hashes_file, "{$hash},{$path}\n", FILE_APPEND);
 }
+file_put_contents($hashes_file, $hashes);
