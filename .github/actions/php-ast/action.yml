@@ -82,6 +82,7 @@ runs:
 #       with:
 #         ref: ${{ github.base_ref }}
     - run: git switch ${{ github.base_ref }}
+      shell: bash
     - id: base-hashes
       run: php ${GITHUB_ACTION_PATH}/php-ast-hashes.php ${version} ${GITHUB_ACTION_PATH}/paths
       env:
