@@ -69,12 +69,12 @@ runs:
       run: php ${GITHUB_ACTION_PATH}/php-ast-hashes.php ${version} ${GITHUB_ACTION_PATH}/paths ${GITHUB_ACTION_PATH}/head
       env:
         version: ${{ inputs.php-ast-version }}
-        paths: ${{ steps.paths.outputs.json }}
+#         paths: ${{ steps.paths.outputs.json }}
       shell: bash
     - run: cat ${GITHUB_ACTION_PATH}/head
       shell: bash
-    - run: echo "${{ steps.head-hashes.outputs.json }}"
-      shell: bash
+#     - run: echo "${{ steps.head-hashes.outputs.json }}"
+#       shell: bash
 
 #     - uses: actions/checkout@v3
 #       with:
@@ -87,8 +87,8 @@ runs:
         version: ${{ inputs.php-ast-version }}
         paths: ${{ steps.paths.outputs.json }}
       shell: bash
-    - run: echo "${{ steps.base-hashes.outputs.json }}"
-      shell: bash
+#     - run: echo "${{ steps.base-hashes.outputs.json }}"
+#       shell: bash
     - run: cat ${GITHUB_ACTION_PATH}/base
       shell: bash
 
@@ -100,9 +100,9 @@ runs:
         else
           echo "::set-output name=exists::true"
         fi
-      env:
-        head_hashes: ${{ steps.head-hashes.outputs.json }}
-        base_hashes: ${{ steps.base-hashes.outputs.json }}
+#       env:
+#         head_hashes: ${{ steps.head-hashes.outputs.json }}
+#         base_hashes: ${{ steps.base-hashes.outputs.json }}
       shell: bash
 
 branding:
