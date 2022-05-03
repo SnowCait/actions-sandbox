@@ -1,5 +1,5 @@
 <?php
-// comment
+// hello
 echo 'hello';
 /**
  * world
