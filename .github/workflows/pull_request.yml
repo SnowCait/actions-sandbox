@@ -31,4 +31,4 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
       - run: gh pr view --json files --jq '.files[].path'
-      - run: git diff --name-only ${{ github.base_ref }}
+      - run: git diff --name-only origin/${{ github.base_ref }}
