@@ -17,6 +17,7 @@ jobs:
       GH_REPO: ${{ github.repository }}
 
     steps:
+      - run: gh --version
       - run: gh pr list
       - run: gh pr list --search "is:closed"
       - run: gh pr list --search "is:merged"
