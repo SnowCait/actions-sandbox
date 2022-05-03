@@ -21,6 +21,7 @@ jobs:
       - run: git add .
       - run: git commit -m "test"
       - run: git push
+      - run: git log -1 --format='%H'
 
   first:
     if: false
