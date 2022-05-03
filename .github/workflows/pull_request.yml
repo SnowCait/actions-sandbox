@@ -3,23 +3,6 @@ on:
   pull_request:
     paths: .github/workflows/pull_request.yml
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo $GITHUB_SHA
-          echo $GITHUB_REF
-          echo $GITHUB_EVENT_NAME
-          echo $GITHUB_EVENT_PATH
-          echo $GITHUB_WORKSPACE
-      - run: cat $GITHUB_EVENT_PATH
-      - uses: actions/checkout@v3
-      - run: git status
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-      - run: git status
-
   diff:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -34,5 +17,5 @@ jobs:
       - run: printenv
       - run: echo ${{ github.base_ref }}
       - run: echo ${{ github.head_ref }}
-      - run: git fetch origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
+      - run: git fetch --no-tags origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
       - run: git diff --name-only origin/${{ github.base_ref }}
