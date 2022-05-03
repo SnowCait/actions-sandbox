@@ -6,8 +6,17 @@ file_put_contents('util.php', file_get_contents("https://raw.githubusercontent.c
 require 'util.php';
 
 $version = (int)$argv[1];
+$paths_file = $argv[2];
 
-$paths = json_decode(getenv('paths'), true);
+$paths = file_get_contents($paths_file);
+if ($paths === false) {
+    exit(1);
+}
+var_dump($paths);
+$paths = trim($paths);
+$paths = explode("\n", $paths);
+var_dump($paths);
+// $paths = json_decode(getenv('paths'), true);
 
 $hashes = array_map(function (string $path) use ($version): array {
     $hash = '';
