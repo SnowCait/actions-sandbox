@@ -52,6 +52,8 @@ runs:
       env:
         pr_number: ${{ github.event.number }}
       shell: bash
+    - run: git fetch --depth=1 --no-tags origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
+    - run: git diff --name-only origin/${{ github.base_ref }} -- '*.php'
     - id: paths
       run: echo "::set-output name=json::$(gh pr view ${pr_number} --json files --jq '.files | map(select(.path | endswith(".php"))) | map(.path)')"
       env:
