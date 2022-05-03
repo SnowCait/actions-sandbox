@@ -7,7 +7,13 @@ require 'util.php';
 
 $version = (int)$argv[1];
 
-$paths = json_decode(getenv('paths'), true);
+$paths = file_get_contents($paths_file);
+if ($paths === false) {
+    exit(1);
+}
+$paths = trim($paths);
+$paths = explode("\n", $paths);
+// $paths = json_decode(getenv('paths'), true);
 
 $hashes = array_map(function (string $path) use ($version): array {
     $hash = '';
