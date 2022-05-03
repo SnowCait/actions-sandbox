@@ -32,10 +32,10 @@ $paths = explode("\n", $paths);
 // echo "::set-output name=json::{$json}";
 
 foreach($paths as $path) {
-    $md5 = '';
+    $hash = '';
     if (file_exists($path)) {
         $ast = ast\parse_file($path, $version);
-        $md5 = md5(ast_dump($ast));
+        $hash = md5(ast_dump($ast));
     }
-    file_put_contents($hashes_file, "{$md5},{$path}\n", FILE_APPEND);
+    file_put_contents($hashes_file, "{$hash},{$path}\n", FILE_APPEND);
 }
