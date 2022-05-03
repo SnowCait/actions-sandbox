@@ -14,6 +14,9 @@ if ($paths === false) {
 }
 $paths = trim($paths);
 $paths = explode("\n", $paths);
+if (empty($paths)) {
+    $paths = [];
+}
 // $paths = json_decode(getenv('paths'), true);
 
 $hashes = array_map(function (string $path) use ($version): array {
