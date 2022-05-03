@@ -6,6 +6,7 @@ file_put_contents('util.php', file_get_contents("https://raw.githubusercontent.c
 require 'util.php';
 
 $version = (int)$argv[1];
+$paths_file = $argv[2];
 
 $paths = file_get_contents($paths_file);
 if ($paths === false) {
