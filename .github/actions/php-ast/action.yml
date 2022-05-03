@@ -39,22 +39,22 @@ runs:
     - uses: actions/checkout@v3
       with:
         ref: ${{ github.head_ref }}
-    - run: |
-        set -x
-        if (( $(gh pr view ${pr_number} --json changedFiles --jq '.changedFiles') > 100 )); then
-          echo "Changed files are more than 100."
-          exit 1
-        fi
-      env:
-        pr_number: ${{ github.event.number }}
-      shell: bash
-    - run: gh pr view ${pr_number} --json files --jq '.files[].path | select(endswith(".php"))' > ${GITHUB_ACTION_PATH}/paths
-      env:
-        pr_number: ${{ github.event.number }}
-      shell: bash
+#     - run: |
+#         set -x
+#         if (( $(gh pr view ${pr_number} --json changedFiles --jq '.changedFiles') > 100 )); then
+#           echo "Changed files are more than 100."
+#           exit 1
+#         fi
+#       env:
+#         pr_number: ${{ github.event.number }}
+#       shell: bash
+#     - run: gh pr view ${pr_number} --json files --jq '.files[].path | select(endswith(".php"))' > ${GITHUB_ACTION_PATH}/paths
+#       env:
+#         pr_number: ${{ github.event.number }}
+#       shell: bash
     - run: git fetch --depth=1 --no-tags origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
       shell: bash
-    - run: git diff --name-only origin/${{ github.base_ref }} -- '*.php'
+    - run: git diff --name-only origin/${{ github.base_ref }} -- '*.php' > ${GITHUB_ACTION_PATH}/paths
       shell: bash
     - id: paths
       run: echo "::set-output name=json::$(gh pr view ${pr_number} --json files --jq '.files | map(select(.path | endswith(".php"))) | map(.path)')"
@@ -78,11 +78,12 @@ runs:
     # - run: git stash -u
     #   shell: bash
 
-    - uses: actions/checkout@v3
-      with:
-        ref: ${{ github.base_ref }}
+#     - uses: actions/checkout@v3
+#       with:
+#         ref: ${{ github.base_ref }}
+    - run: git switch ${{ github.base_ref }}
     - id: base-hashes
-      run: php ${GITHUB_ACTION_PATH}/php-ast-hashes.php ${version}
+      run: php ${GITHUB_ACTION_PATH}/php-ast-hashes.php ${version} ${GITHUB_ACTION_PATH}/paths
       env:
         version: ${{ inputs.php-ast-version }}
         paths: ${{ steps.paths.outputs.json }}
