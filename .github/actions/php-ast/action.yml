@@ -56,13 +56,13 @@ runs:
       shell: bash
     - run: git diff --name-only origin/${{ github.base_ref }} -- '*.php' > ${GITHUB_ACTION_PATH}/paths
       shell: bash
-    - id: paths
-      run: echo "::set-output name=json::$(gh pr view ${pr_number} --json files --jq '.files | map(select(.path | endswith(".php"))) | map(.path)')"
-      env:
-        pr_number: ${{ github.event.number }}
-      shell: bash
-    - run: echo "${{ steps.paths.outputs.json }}"
-      shell: bash
+#     - id: paths
+#       run: echo "::set-output name=json::$(gh pr view ${pr_number} --json files --jq '.files | map(select(.path | endswith(".php"))) | map(.path)')"
+#       env:
+#         pr_number: ${{ github.event.number }}
+#       shell: bash
+#     - run: echo "${{ steps.paths.outputs.json }}"
+#       shell: bash
     - run: cat ${GITHUB_ACTION_PATH}/paths
       shell: bash
     - id: head-hashes
