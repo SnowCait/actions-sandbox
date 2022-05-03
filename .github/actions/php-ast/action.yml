@@ -95,7 +95,7 @@ runs:
     - id: diff
       run: |
         #if [ "${head_hashes}" = "${base_hashes}" ]; then
-        if git diff ${GITHUB_ACTION_PATH}/base ${GITHUB_ACTION_PATH}/head; then
+        if diff ${GITHUB_ACTION_PATH}/base ${GITHUB_ACTION_PATH}/head; then
           echo "::set-output name=exists::false"
         else
           echo "::set-output name=exists::true"
