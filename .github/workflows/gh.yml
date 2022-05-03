@@ -9,6 +9,17 @@ on:
   workflow_dispatch:
 
 jobs:
+  pr-list:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+
+    steps:
+      - run: gh pr list
+      - run: gh pr list --search "is:closed"
+      - run: gh pr list --search "is:merged"
+
 #   create-pr:
 #     runs-on: ubuntu-20.04
 
