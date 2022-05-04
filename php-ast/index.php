@@ -1,5 +1,9 @@
 <?php
-// hello
+declare(strict_types=1);
+
+/**
+ * hello
+ */
 echo 'hello';
 /**
  * world
