@@ -19,7 +19,7 @@ jobs:
           - 8080:8080
           - 50000:50000
         volumes:
-          - jenkins/jenkins_home/jobs:/var/jenkins_home/jobs
+          - ${{ github.workspace }}/jenkins/jenkins_home/jobs:/var/jenkins_home/jobs
         options: >-
           --health-cmd "curl -f http://localhost:8080/"
           --health-interval 10s
@@ -31,3 +31,4 @@ jobs:
       - run: curl -sSL http://localhost:8080/
       - run: wget http://localhost:8080/jnlpJars/jenkins-cli.jar
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket help
+      - uses: actions/checkout@v3
