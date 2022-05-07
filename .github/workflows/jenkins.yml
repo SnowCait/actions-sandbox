@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     container: chickenzord/jenkins-cli:latest
     timeout-minutes: 30
+    env:
+      JENKINS_URL: http://localhost:8080
     defaults:
       run:
         working-directory: /jenkins-cli
@@ -23,7 +25,7 @@ jobs:
           - 8080:8080
           - 50000:50000
         options: >-
-          --health-cmd "curl -f http://localhost:8080/"
+          --health-cmd "curl -f ${{ env.JENKINS_URL }}"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
