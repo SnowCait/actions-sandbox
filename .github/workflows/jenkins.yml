@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: chickenzord/jenkins-cli:latest
     timeout-minutes: 30
 
     services:
@@ -18,19 +19,22 @@ jobs:
         ports:
           - 8080:8080
           - 50000:50000
-#         volumes:
-# #           - ${{ github.workspace }}/jenkins/jenkins_home/jobs:/var/jenkins_home/jobs
-#           - /tmp/jenkins_home/jobs:/var/jenkins_home/jobs
         options: >-
           --health-cmd "curl -f http://localhost:8080/"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-          --health-start-period 70s
+          --health-start-period 30s
 
     steps:
+      - run: pwd
+      - run: ls -la
       - run: curl -sSL http://localhost:8080/
-      - run: wget http://localhost:8080/jnlpJars/jenkins-cli.jar
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket help
+      
+      - run: ./jenkins-cli-wrapper.sh help
+      
+#       - run: wget http://localhost:8080/jnlpJars/jenkins-cli.jar
+#       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket help
+
       - uses: actions/checkout@v3
       - run: curl -X POST http://localhost:8080/job/job-1/build
