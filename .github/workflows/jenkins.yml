@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     container: chickenzord/jenkins-cli:latest
     timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: /jenkins-cli
 
     services:
       jenkins:
@@ -29,7 +32,7 @@ jobs:
     steps:
       - run: pwd
       - run: ls -la
-      - run: curl -sSL http://localhost:8080/
+#       - run: curl -sSL http://localhost:8080/
       
       - run: ./jenkins-cli-wrapper.sh help
       
