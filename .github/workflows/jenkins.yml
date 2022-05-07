@@ -32,14 +32,11 @@ jobs:
           --health-start-period 30s
 
     steps:
-      - run: pwd
-      - run: ls -la
       - run: curl -sSL http://localhost:8080/
-      
-#       - run: ./jenkins-cli-wrapper.sh help
+      - uses: actions/checkout@v3
       
       - run: wget http://localhost:8080/jnlpJars/jenkins-cli.jar
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket help
-
-      - uses: actions/checkout@v3
+      
+      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket create-job < jenkins/jenkins_home/jobs/job-1/config.xml
       - run: curl -X POST http://localhost:8080/job/job-1/build
