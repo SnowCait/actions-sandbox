@@ -25,4 +25,4 @@ jobs:
           --health-start-period 30s
 
     steps:
-      - run: curl -sSL http://0.0.0.0:8080/
+      - run: curl -sSL http://localhost:8080/
