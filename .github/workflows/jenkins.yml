@@ -33,3 +33,4 @@ jobs:
       - run: wget http://localhost:8080/jnlpJars/jenkins-cli.jar
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket help
       - uses: actions/checkout@v3
+      - run: curl -X POST http://localhost:8080/job/job-1/build
