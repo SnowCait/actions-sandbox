@@ -37,6 +37,7 @@ jobs:
       
       - run: wget http://localhost:8080/jnlpJars/jenkins-cli.jar
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket help
+      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket install-plugin = < plugins.txt
       
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket create-job job-1 < jenkins/jenkins_home/jobs/job-1/config.xml
       - run: curl -X POST http://localhost:8080/job/job-1/build
