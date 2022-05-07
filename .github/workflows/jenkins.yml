@@ -9,6 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      JENKINS_URL: http://localhost:8080/
 
     services:
       jenkins:
