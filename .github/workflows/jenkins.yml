@@ -25,7 +25,7 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-          --health-start-period 50s
+          --health-start-period 70s
 
     steps:
       - run: curl -sSL http://localhost:8080/
