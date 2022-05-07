@@ -27,3 +27,5 @@ jobs:
 
     steps:
       - run: curl -sSL http://localhost:8080/
+      - run: wget http://localhost:8080/jnlpJars/jenkins-cli.jar
+      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket help
