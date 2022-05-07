@@ -8,13 +8,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: chickenzord/jenkins-cli:latest
+#     container: chickenzord/jenkins-cli:latest
     timeout-minutes: 30
-    env:
-      JENKINS_URL: http://localhost:8080
-    defaults:
-      run:
-        working-directory: /jenkins-cli
+#     env:
+#       JENKINS_URL: http://localhost:8080
+#     defaults:
+#       run:
+#         working-directory: /jenkins-cli
 
     services:
       jenkins:
@@ -34,12 +34,12 @@ jobs:
     steps:
       - run: pwd
       - run: ls -la
-#       - run: curl -sSL http://localhost:8080/
+      - run: curl -sSL http://localhost:8080/
       
-      - run: ./jenkins-cli-wrapper.sh help
+#       - run: ./jenkins-cli-wrapper.sh help
       
-#       - run: wget http://localhost:8080/jnlpJars/jenkins-cli.jar
-#       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket help
+      - run: wget http://localhost:8080/jnlpJars/jenkins-cli.jar
+      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket help
 
       - uses: actions/checkout@v3
       - run: curl -X POST http://localhost:8080/job/job-1/build
