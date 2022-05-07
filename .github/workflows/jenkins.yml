@@ -17,6 +17,7 @@ jobs:
           - 8080:8080
           - 50000:50000
         options: >-
+          --env JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
           --health-cmd "ping http://localhost:8080/"
           --health-interval 10s
           --health-timeout 5s
