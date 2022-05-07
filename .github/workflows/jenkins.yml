@@ -31,7 +31,13 @@ jobs:
       
       - run: wget http://localhost:8080/jnlpJars/jenkins-cli.jar
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket help
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket install-plugin '=' < jenkins/plugins.txt
+#       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket install-plugin '=' < jenkins/plugins.txt
+      - uses: srz-zumix/setup-service-jenkins@v1
+        with:
+          id: "${{ job.services.jenkins.id }}"
+          install_suggested_plugins: true
       
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket create-job job-1 < jenkins/jenkins_home/jobs/job-1/config.xml
+#       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket create-job job-1 < jenkins/jenkins_home/jobs/job-1/config.xml
+      - run: jenkins-cli list-plugins
+      - run: jenkins-cli create-job job-1 < jenkins/jenkins_home/jobs/job-1/config.xml
       - run: curl -X POST http://localhost:8080/job/job-1/build
