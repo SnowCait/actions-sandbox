@@ -19,7 +19,8 @@ jobs:
           - 8080:8080
           - 50000:50000
         volumes:
-          - ${{ github.workspace }}/jenkins/jenkins_home/jobs:/var/jenkins_home/jobs
+#           - ${{ github.workspace }}/jenkins/jenkins_home/jobs:/var/jenkins_home/jobs
+          - /tmp/jenkins_home/jobs:/var/jenkins_home/jobs
         options: >-
           --health-cmd "curl -f http://localhost:8080/"
           --health-interval 10s
