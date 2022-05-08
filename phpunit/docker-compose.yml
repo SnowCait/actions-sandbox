@@ -8,7 +8,7 @@ services:
       - ".:/src"
 
   phpunit-on-php74:
-    image: php:7.4.28-cli
+    image: php:7.4.29-cli
     entrypoint: vendor/bin/phpunit
     working_dir: /src
     volumes:
