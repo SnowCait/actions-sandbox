@@ -20,6 +20,7 @@ jobs:
         php-version: '7.4'
     - run: composer install
     - run: ./vendor/bin/phpunit
+    - run: cat logs/junit.xml
     - uses: test-summary/action@v1
       with:
         paths: "phpunit/logs/junit.xml"
