@@ -1,0 +1,19 @@
+name: Summary
+
+on:
+  push:
+    paths:
+      - .github/workflows/summary.yml
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: |
+          echo 'Summary' >> GITHUB_STEP_SUMMARY
+          echo '' >> GITHUB_STEP_SUMMARY
+          echo 'Body' >> GITHUB_STEP_SUMMARY
