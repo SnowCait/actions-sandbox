@@ -22,5 +22,5 @@ jobs:
     - run: ./vendor/bin/phpunit
     - uses: test-summary/action@v1
       with:
-        paths: "logs/junit.xml"
+        paths: "phpunit/logs/junit.xml"
       if: always()
