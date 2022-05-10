@@ -10,10 +10,13 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ ubuntu-20.04, macos-18.04 ]
+    runs-on: ${{ matrix.os }}
 
     steps:
       - run: |
-          echo 'Summary' >> $GITHUB_STEP_SUMMARY
+          echo 'Title' >> $GITHUB_STEP_SUMMARY
           echo '' >> $GITHUB_STEP_SUMMARY
           echo 'Body' >> $GITHUB_STEP_SUMMARY
