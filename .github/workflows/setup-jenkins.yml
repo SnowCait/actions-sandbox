@@ -13,6 +13,7 @@ jobs:
     timeout-minutes: 10
 
     steps:
+      - uses: actions/checkout@v3
       - uses: snow-actions/setup-jenkins@setup-jenkins
         with:
           jenkins_home: jenkins/jenkins_home
