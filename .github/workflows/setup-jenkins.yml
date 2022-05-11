@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - .github/workflows/setup-jenkins.yml
+      - jenkins/**
   workflow_dispatch:
 
 jobs:
