@@ -1,0 +1,15 @@
+name: Setup Jenkins
+
+on:
+  push:
+    paths:
+      - .github/workflows/setup-jenkins.yml
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: snow-actions/setup-jenkins@setup-jenkins
