@@ -20,7 +20,6 @@ jobs:
       - run: curl --head http://localhost:8080/
       - run: ls -la jenkins/jenkins_home/
       - run: ls -la jenkins/jenkins_home/jobs/
-      - run: docker compose -f /home/runner/work/_actions/snow-actions/setup-jenkins/setup-jenkins/compose.yaml exec jenkins ls -la /var/jenkins_home/jobs/
       - run: |
           crumb=$(curl -s -c cookie http://localhost:8080/crumbIssuer/api/json)
           echo "CRUMB_HEADER=$(echo $crumb | jq -r '.crumbRequestField'): $(echo $crumb | jq -r '.crumb')" >> $GITHUB_ENV
