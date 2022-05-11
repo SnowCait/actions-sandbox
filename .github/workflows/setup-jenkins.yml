@@ -18,13 +18,13 @@ jobs:
           jenkins_home: jenkins/jenkins_home
       - run: curl --head http://localhost:8080/
       - run: ls -la jenkins/jenkins_home/
+      - run: ls -la jenkins/jenkins_home/jobs/
+      - run: docker compose -f /home/runner/work/_actions/snow-actions/setup-jenkins/setup-jenkins/compose.yaml exec jenkins ls -la /var/jenkins_home/jobs/
       - id: crumb
         run: |
           crumb=$(curl -s -c cookie http://localhost:8080/crumbIssuer/api/json)
           echo $crumb
           echo "::set-output name=json::${crumb}"
           echo "CRUMB_HEADER=$(echo $crumb | jq -r '.crumbRequestField'): $(echo $crumb | jq -r '.crumb')" >> $GITHUB_ENV
-      - run: curl -X POST -H "${CRUMB_HEADER}" -b cookie http://localhost:8080/api/json
-      - run: curl -X POST -H "${crumb_header}" -b cookie http://localhost:8080/job/job-1/build
-        env:
-          crumb_header: '${{ fromJSON(steps.crumb.outputs.json).crumbRequestField }}:${{ fromJSON(steps.crumb.outputs.json).crumb }}'
+      - run: curl -X POST -H "${CRUMB_HEADER}" -b cookie http://localhost:8080/api/json | jq '.jobs'
+      - run: curl -X POST -H "${CRUMB_HEADER}" -b cookie http://localhost:8080/job/job-1/build
