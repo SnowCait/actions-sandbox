@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened, edited ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - run: phpunit --version
+
+  up-to-date:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Build anything
+        run: cat $GITHUB_EVENT_PATH
+      - name: Check diff
+        run: |
+          git add -N .
+          git diff --exit-code
