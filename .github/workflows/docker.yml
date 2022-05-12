@@ -16,6 +16,8 @@ jobs:
     steps:
       - run: sudo systemctl start mysql.service
       - run: mysql -uroot -e "SHOW DATABASES"
+      - run: mysql --version
+      - run: mysql -uroot -e "SELECT VERSION()"
 
   service-container-on-host:
     runs-on: ubuntu-20.04
