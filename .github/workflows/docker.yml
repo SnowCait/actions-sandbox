@@ -119,13 +119,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: docker compose up -d
-      - name: Wait for starting
-        run: |
-          set -x
-          until [ "$(docker inspect --format='{{.State.Health.Status}}' $(docker compose ps -q mysql-server))" = 'healthy' ]; do
-            sleep 1s
-          done
+      - run: docker compose up -d --wait
+#       - name: Wait for starting
+#         run: |
+#           set -x
+#           until [ "$(docker inspect --format='{{.State.Health.Status}}' $(docker compose ps -q mysql-server))" = 'healthy' ]; do
+#             sleep 1s
+#           done
       - run: docker compose exec -T -e MYSQL_PWD=${MYSQL_PWD} mysql-client mysql -hmysql-server -uroot -e "SHOW DATABASES"
       - run: docker compose exec -T -e MYSQL_PWD=${MYSQL_PWD} mysql-server mysql -uroot -e "SHOW DATABASES"
 #       - run: docker compose logs
