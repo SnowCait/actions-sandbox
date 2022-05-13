@@ -34,7 +34,7 @@ jobs:
       - run: wget http://localhost:8080/jnlpJars/jenkins-cli.jar
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket help
 #       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket install-plugin '=' < jenkins/plugins.txt
-      - uses: srz-zumix/setup-service-jenkins@v1.1.0
+      - uses: srz-zumix/setup-service-jenkins@v1.2.0
         with:
           id: "${{ job.services.jenkins.id }}"
           install_suggested_plugins: true
