@@ -37,6 +37,7 @@ jobs:
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket build job-1 -f -v -p pr_number=200
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket list-plugins
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket list-plugins parameter-separator
+        continue-on-error: true
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket install-plugin parameter-separator
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket list-plugins
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket list-plugins parameter-separator
