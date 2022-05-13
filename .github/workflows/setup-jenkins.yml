@@ -20,13 +20,17 @@ jobs:
       - run: curl --head http://localhost:8080/
       - run: ls -la jenkins/jenkins_home/
       - run: ls -la jenkins/jenkins_home/jobs/
+      
+      # Remote Access API
       - run: |
           crumb=$(curl -s -c cookie http://localhost:8080/crumbIssuer/api/json)
           echo "CRUMB_HEADER=$(echo $crumb | jq -r '.crumbRequestField'): $(echo $crumb | jq -r '.crumb')" >> $GITHUB_ENV
       - run: curl -X POST -H "${CRUMB_HEADER}" -b cookie http://localhost:8080/api/json | jq '.jobs'
       - run: curl -X POST -H "${CRUMB_HEADER}" -b cookie http://localhost:8080/job/job-1/build
-      - run: docker ps
-      - run: printenv
       
       # Jenkins CLI
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket list-jobs
+      
+      # Info
+      - run: docker ps
+      - run: printenv
