@@ -35,6 +35,7 @@ jobs:
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket who-am-i
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket list-jobs
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket build job-1
+      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket console job-1 -f
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket build job-1 -f -v
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket build job-1 -f -v -p pr_number=200
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket list-plugins
