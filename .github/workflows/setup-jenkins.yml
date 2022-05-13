@@ -31,6 +31,9 @@ jobs:
       # Jenkins CLI
       - run: wget http://localhost:8080/jnlpJars/jenkins-cli.jar
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket list-jobs
+      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket build job-1
+      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket build job-1 -f
+      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket build job-1 -f -p pr_number=200
       
       # Info
       - run: docker ps
