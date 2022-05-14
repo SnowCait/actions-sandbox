@@ -52,7 +52,7 @@ jobs:
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket create-job job-3 < jenkins/job-3/config.xml
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket build job-3 -f -v -p param_1=p1
       - run: |
-          java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket groovy '=' < jenkins/jobs.groovy
+          java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket groovy = < jenkins/jobs.groovy
       - run: |
           java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket groovy 'jenkins/jobs.groovy'
         continue-on-error: true
