@@ -53,5 +53,6 @@ jobs:
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket build job-3 -f -v -p param_1=p1
       
       # Info
-      - run: docker ps
       - run: printenv
+      - run: docker ps
+      - run: docker compose ps
