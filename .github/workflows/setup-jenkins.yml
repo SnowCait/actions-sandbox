@@ -56,3 +56,4 @@ jobs:
       - run: printenv
       - run: docker ps
       - run: docker compose ps
+      - run: docker compose run --rm jenkins --version
