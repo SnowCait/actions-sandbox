@@ -51,6 +51,10 @@ jobs:
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket build job-2 -f -v -p pr_number=201
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket create-job job-3 < jenkins/job-3/config.xml
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket build job-3 -f -v -p param_1=p1
+      - run: |
+          echo 'jenkins.model.Jenkins.instance.items.each { job -> println "Name: ${job.name}" }' | java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket groovy '='
+      - run: |
+          java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket groovy 'jenkins.model.Jenkins.instance.items.each { job -> println "Name: ${job.name}" }'
       
       # Info
       - run: printenv
