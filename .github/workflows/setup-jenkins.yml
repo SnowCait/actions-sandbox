@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: snow-actions/setup-jenkins@v0.1.0
+      - uses: snow-actions/setup-jenkins@main
         with:
           jenkins_home: jenkins/jenkins_home
       - run: curl --head http://localhost:8080/
