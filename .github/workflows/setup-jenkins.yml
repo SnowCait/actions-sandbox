@@ -54,7 +54,7 @@ jobs:
       - run: |
           java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket groovy = < jenkins/jobs.groovy
       - run: |
-          java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket groovy 'jenkins/jobs.groovy'
+          java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket groovy jenkins/jobs.groovy
         continue-on-error: true
       - run: |
           java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket groovy 'jenkins.model.Jenkins.instance.items.each { job -> println "Name: ${job.name}" }'
