@@ -13,6 +13,7 @@ jobs:
     timeout-minutes: 10
 
     steps:
+      - uses: actions/checkout@v3
       - run: mkdir -p $RUNNER_TEMP/jenkins_home/
       - run: cp jenkins/jenkins.yaml $RUNNER_TEMP/jenkins_home/
       - uses: snow-actions/setup-jenkins@main
