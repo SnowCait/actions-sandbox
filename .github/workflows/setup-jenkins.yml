@@ -8,6 +8,19 @@ on:
   workflow_dispatch:
 
 jobs:
+  jcasc:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+
+    steps:
+      - run: mkdir -p $RUNNER_TEMP/jenkins_home/
+      - run: cp jenkins/jenkins.yaml $RUNNER_TEMP/jenkins_home/
+      - uses: snow-actions/setup-jenkins@main
+      - run: wget $JENKINS_URL/jnlpJars/jenkins-cli.jar
+      - run: java -jar jenkins-cli.jar -webSocket list-plugins
+      - run: java -jar jenkins-cli.jar -webSocket list-jobs
+      - run: java -jar jenkins-cli.jar -webSocket build job-failure -f -v
+
   build:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
