@@ -17,6 +17,7 @@ jobs:
                 stages {
                     stage('failure') {
                         steps {
+                            echo 'step 1'
                             //error('failure!')
                         }
                     }
