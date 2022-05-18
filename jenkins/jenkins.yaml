@@ -1,0 +1,29 @@
+jenkins:
+  globalNodeProperties:
+  - envVars:
+      env:
+      - key: VARIABLE1
+        value: foo
+      - key: VARIABLE2
+        value: bar
+jobs:
+  - script: |
+      pipelineJob('job-failure') {
+        definition {
+          cpsScm {
+            script('''
+            pipeline {
+                agent any
+                stages {
+                    stage('failure') {
+                        steps {
+                            error('failure!')
+                        }
+                    }
+                }
+            }
+            ''').stripIndent()
+            sandbox()
+          }
+        }
+      }
