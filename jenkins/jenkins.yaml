@@ -20,6 +20,7 @@ jobs:
                             sh 'ls -la'
                             checkout scm: [
                                 $class: 'GitSCM',
+                                branches: [[ name: "refs/heads/main" ]],
                                 userRemoteConfigs: [
                                     [
                                         url: "https://github.com/SnowCait/actions-sandbox",
