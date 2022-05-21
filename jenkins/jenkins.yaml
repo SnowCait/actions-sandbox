@@ -2,10 +2,11 @@ credentials:
   system:
     domainCredentials:
     - credentials:
-      - string:
+      - usernamePassword:
           id: pat
           scope: GLOBAL
-          secret: ${PAT}
+          username: "SnowCait"
+          password: "${PAT}"
 jenkins:
   globalNodeProperties:
   - envVars:
