@@ -1,3 +1,11 @@
+credentials:
+  system:
+    domainCredentials:
+    - credentials:
+      - string:
+          id: pat
+          scope: GLOBAL
+          secret: ${PAT}
 jenkins:
   globalNodeProperties:
   - envVars:
