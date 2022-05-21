@@ -8,17 +8,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
-    runs-on: ubuntu-20.04
-    timeout-minutes: 10
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          repository: SnowCait/private-repository
-          token: ${{ secrets.PAT }}
-      - run: ls -la
-
   jcasc:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
@@ -27,7 +16,10 @@ jobs:
       - uses: actions/checkout@v3
       - run: mkdir -p $RUNNER_TEMP/jenkins_home/
       - run: cp jenkins/jenkins.yaml $RUNNER_TEMP/jenkins_home/
+      - run: echo "PAT=${{ secrets.PAT }}" >> .env
       - uses: snow-actions/setup-jenkins@main
+        with:
+          env_file: .env
       - run: wget $JENKINS_URL/jnlpJars/jenkins-cli.jar
       - run: java -jar jenkins-cli.jar -webSocket list-plugins
       - run: java -jar jenkins-cli.jar -webSocket list-jobs
