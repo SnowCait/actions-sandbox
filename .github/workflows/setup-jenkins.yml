@@ -61,8 +61,8 @@ jobs:
       - run: |
           crumb=$(curl -s -c cookie $JENKINS_URL/crumbIssuer/api/json)
           echo "CRUMB_HEADER=$(echo $crumb | jq -r '.crumbRequestField'): $(echo $crumb | jq -r '.crumb')" >> $GITHUB_ENV
-      - run: curl -X POST -H $CRUMB_HEADER -b cookie $JENKINS_URL/api/json | jq '.jobs'
-      - run: curl -X POST -H $CRUMB_HEADER -b cookie $JENKINS_URL/job/job-1/build
+      - run: curl -X POST -H "$CRUMB_HEADER" -b cookie $JENKINS_URL/api/json | jq '.jobs'
+      - run: curl -X POST -H "$CRUMB_HEADER" -b cookie $JENKINS_URL/job/job-1/build
       
       # Jenkins CLI
       - run: wget $JENKINS_URL/jnlpJars/jenkins-cli.jar
