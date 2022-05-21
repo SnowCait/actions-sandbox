@@ -8,6 +8,17 @@ on:
   workflow_dispatch:
 
 jobs:
+  test:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: SnowCait/private-repository
+          token: ${{ secrets.PAT }}
+      - run: ls -la
+
   jcasc:
     runs-on: ubuntu-20.04
     timeout-minutes: 10
