@@ -21,6 +21,11 @@ jobs:
       - run: java -jar jenkins-cli.jar -webSocket list-jobs
       - run: java -jar jenkins-cli.jar -webSocket create-job job-3 < jenkins/job-3/config.xml
       - run: java -jar jenkins-cli.jar -webSocket build job-3 -f -v -p param_1=p1
+      - run: docker compose exec jenkins aws --version
+        continue-on-error: true
+      - run: docker compose exec -u root jenkins apt-get update
+      - run: docker compose exec -u root jenkins apt-get install -y awscli
+      - run: docker compose exec jenkins aws --version
 
   jcasc:
     runs-on: ubuntu-20.04
