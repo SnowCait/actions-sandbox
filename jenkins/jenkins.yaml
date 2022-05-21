@@ -8,16 +8,30 @@ jenkins:
         value: bar
 jobs:
   - script: |
-      pipelineJob('job-failure') {
+      pipelineJob('job-sandbox') {
         definition {
           cps {
             script('''
             pipeline {
                 agent any
                 stages {
+                    stage('checkout') {
+                        steps {
+                            sh 'ls -la'
+                            checkout scm: [
+                                $class: 'GitSCM',
+                                userRemoteConfigs: [
+                                    [
+                                        url: "https://github.com/SnowCait/actions-sandbox",
+                                    ]
+                                ]
+                            ]
+                            sh 'ls -la'
+                        }
+                    }
                     stage('failure') {
                         steps {
-                            echo 'step 1'
+                            echo 'step failure'
                             //error('failure!')
                         }
                     }
