@@ -31,7 +31,8 @@ jobs:
                                 branches: [[ name: "refs/heads/main" ]],
                                 userRemoteConfigs: [
                                     [
-                                        url: "https://github.com/SnowCait/private-repository",
+                                        url: 'https://github.com/SnowCait/private-repository',
+                                        credentialsId: 'pat'
                                     ]
                                 ]
                             ]
