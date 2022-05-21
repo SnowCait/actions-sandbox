@@ -17,6 +17,8 @@ jobs:
       - run: wget $JENKINS_URL/jnlpJars/jenkins-cli.jar
       - run: java -jar jenkins-cli.jar -webSocket list-plugins
       - run: java -jar jenkins-cli.jar -webSocket list-jobs
+      - run: java -jar jenkins-cli.jar -webSocket create-job job-3 < jenkins/job-3/config.xml
+      - run: java -jar jenkins-cli.jar -webSocket build job-3 -f -v -p param_1=p1
 
   jcasc:
     runs-on: ubuntu-20.04
@@ -44,47 +46,47 @@ jobs:
       - uses: snow-actions/setup-jenkins@main
         with:
           jenkins_home: jenkins/jenkins_home
-      - run: curl --head http://localhost:8080/
+      - run: curl --head $JENKINS_URL
       - run: ls -la jenkins/jenkins_home/
       - run: ls -la jenkins/jenkins_home/jobs/
       
       # Remote Access API
       - run: |
-          crumb=$(curl -s -c cookie http://localhost:8080/crumbIssuer/api/json)
+          crumb=$(curl -s -c cookie $JENKINS_URL/crumbIssuer/api/json)
           echo "CRUMB_HEADER=$(echo $crumb | jq -r '.crumbRequestField'): $(echo $crumb | jq -r '.crumb')" >> $GITHUB_ENV
-      - run: curl -X POST -H "${CRUMB_HEADER}" -b cookie http://localhost:8080/api/json | jq '.jobs'
-      - run: curl -X POST -H "${CRUMB_HEADER}" -b cookie http://localhost:8080/job/job-1/build
+      - run: curl -X POST -H "${CRUMB_HEADER}" -b cookie $JENKINS_URL/api/json | jq '.jobs'
+      - run: curl -X POST -H "${CRUMB_HEADER}" -b cookie $JENKINS_URL/job/job-1/build
       
       # Jenkins CLI
-      - run: wget http://localhost:8080/jnlpJars/jenkins-cli.jar
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket help
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket version
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket who-am-i
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket list-jobs
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket build job-1
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket get-job job-1
+      - run: wget $JENKINS_URL/jnlpJars/jenkins-cli.jar
+      - run: java -jar jenkins-cli.jar -webSocket help
+      - run: java -jar jenkins-cli.jar -webSocket version
+      - run: java -jar jenkins-cli.jar -webSocket who-am-i
+      - run: java -jar jenkins-cli.jar -webSocket list-jobs
+      - run: java -jar jenkins-cli.jar -webSocket build job-1
+      - run: java -jar jenkins-cli.jar -webSocket get-job job-1
       - run: sleep 10s
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket console job-1 -f
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket build job-1 -f -v
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket build job-1 -f -v -p pr_number=200
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket list-plugins
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket list-plugins http_request
+      - run: java -jar jenkins-cli.jar -webSocket console job-1 -f
+      - run: java -jar jenkins-cli.jar -webSocket build job-1 -f -v
+      - run: java -jar jenkins-cli.jar  -webSocket build job-1 -f -v -p pr_number=200
+      - run: java -jar jenkins-cli.jar -webSocket list-plugins
+      - run: java -jar jenkins-cli.jar -webSocket list-plugins http_request
         continue-on-error: true
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket install-plugin http_request -deploy
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket list-plugins
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket list-plugins http_request
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket copy-job job-1 job-2
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket list-jobs
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket build job-2 -f -v -p pr_number=201
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket create-job job-3 < jenkins/job-3/config.xml
-      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket build job-3 -f -v -p param_1=p1
+      - run: java -jar jenkins-cli.jar -webSocket install-plugin http_request -deploy
+      - run: java -jar jenkins-cli.jar -webSocket list-plugins
+      - run: java -jar jenkins-cli.jar -webSocket list-plugins http_request
+      - run: java -jar jenkins-cli.jar -webSocket copy-job job-1 job-2
+      - run: java -jar jenkins-cli.jar -webSocket list-jobs
+      - run: java -jar jenkins-cli.jar -webSocket build job-2 -f -v -p pr_number=201
+      - run: java -jar jenkins-cli.jar -webSocket create-job job-3 < jenkins/job-3/config.xml
+      - run: java -jar jenkins-cli.jar -webSocket build job-3 -f -v -p param_1=p1
       - run: |
-          java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket groovy = < jenkins/jobs.groovy
+          java -jar jenkins-cli.jar -webSocket groovy = < jenkins/jobs.groovy
       - run: |
-          java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket groovy jenkins/jobs.groovy
+          java -jar jenkins-cli.jar -webSocket groovy jenkins/jobs.groovy
         continue-on-error: true
       - run: |
-          java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket groovy 'jenkins.model.Jenkins.instance.items.each { job -> println "Name: ${job.name}" }'
+          java -jar jenkins-cli.jar -webSocket groovy 'jenkins.model.Jenkins.instance.items.each { job -> println "Name: ${job.name}" }'
         continue-on-error: true
       
       # Info
