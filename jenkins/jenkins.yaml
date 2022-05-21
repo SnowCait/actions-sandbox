@@ -34,7 +34,7 @@ jobs:
                                   branches: [[ name: "${env.BRANCH}" ]],
                                   userRemoteConfigs: [
                                       [
-                                          url: 'https://github.com/SnowCait/private-repository',
+                                          url: 'https://github.com/SnowCait/private-repository.git',
                                           credentialsId: 'pat'
                                       ]
                                   ]
