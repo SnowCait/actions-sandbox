@@ -43,6 +43,7 @@ jobs:
       - run: java -jar jenkins-cli.jar -webSocket list-plugins
       - run: java -jar jenkins-cli.jar -webSocket list-jobs
       - run: java -jar jenkins-cli.jar -webSocket build job-sandbox -f -v
+      - run: java -jar jenkins-cli.jar -webSocket declarative-linter < jenkins/Jenkinsfile
 
   build:
     runs-on: ubuntu-20.04
