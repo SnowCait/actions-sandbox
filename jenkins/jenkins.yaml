@@ -23,7 +23,7 @@ jobs:
                                 branches: [[ name: "refs/heads/main" ]],
                                 userRemoteConfigs: [
                                     [
-                                        url: "https://github.com/SnowCait/actions-sandbox",
+                                        url: "https://github.com/SnowCait/private-repository",
                                     ]
                                 ]
                             ]
