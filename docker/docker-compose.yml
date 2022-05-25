@@ -14,3 +14,6 @@ services:
     image: mysql:8.0.29
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_PWD}
+    depends_on:
+      mysql-server:
+        condition: service_healthy
