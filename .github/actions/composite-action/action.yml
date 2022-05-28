@@ -44,9 +44,11 @@ runs:
     - run: echo $plugins
       env:
         plugins: ${{ inputs.plugins }}
+      shell: bash
     - run: echo $plugins if
       env:
         plugins: ${{ inputs.plugins }}
+      shell: bash
       if: inputs.plugins
     - uses: actions/github-script@v5
       with:
