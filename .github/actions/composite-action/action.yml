@@ -45,6 +45,7 @@ runs:
       with:
         script: |
           console.log(core.getInput('plugins'));
+        plugins: ${{ inputs.plugins }}
 branding:
   icon: 'award'  
   color: 'green'
