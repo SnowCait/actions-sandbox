@@ -13,6 +13,9 @@ inputs:
     description: 'user.email'
     required: false
     default: '41898282+github-actions[bot]@users.noreply.github.com'
+  plugins:
+    description: Override plugins.txt
+    required: false
 outputs:
   random-number:
     description: "Random number"
@@ -38,6 +41,10 @@ runs:
       env:
         NAME: ${{ inputs.name }}
         EMAIL: ${{ inputs.email }}
+    - uses: actions/github-script@v5
+      with:
+        script: |
+          console.log(core.getInput('pluginx'));
 branding:
   icon: 'award'  
   color: 'green'
