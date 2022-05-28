@@ -46,7 +46,7 @@ jobs:
         with:
           name: SnowCait
           email: SnowCait@example.com
-          plugins: 'abc'
+          plugins: ''
       - run: git config --local -l
       - name: Can commit
         run: |
