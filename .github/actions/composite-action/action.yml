@@ -44,7 +44,7 @@ runs:
     - uses: actions/github-script@v5
       with:
         script: |
-          console.log(core.getInput('pluginx'));
+          console.log(core.getInput('plugins'));
 branding:
   icon: 'award'  
   color: 'green'
