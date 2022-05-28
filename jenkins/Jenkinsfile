@@ -5,7 +5,7 @@ pipeline {
         stage('stage 1') {
             steps {
                 echo 'stage 1'
-                //sh 'docker version'
+                sh 'docker version'
             }
         }
     }
