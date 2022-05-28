@@ -41,6 +41,13 @@ runs:
       env:
         NAME: ${{ inputs.name }}
         EMAIL: ${{ inputs.email }}
+    - run: echo $plugins
+      env:
+        plugins: ${{ inputs.plugins }}
+    - run: echo $plugins if
+      env:
+        plugins: ${{ inputs.plugins }}
+      if: inputs.plugins
     - uses: actions/github-script@v5
       with:
         script: |
