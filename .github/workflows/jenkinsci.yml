@@ -17,5 +17,6 @@ jobs:
         run: sleep 30s
       - run: wget http://localhost:8080/jnlpJars/jenkins-cli.jar
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket version
+      - run: curl -sS https://updates.jenkins.io/update-center.json
       - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket install-plugin git -deploy
       
