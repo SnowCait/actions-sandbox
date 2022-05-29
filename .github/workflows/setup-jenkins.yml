@@ -14,7 +14,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - run: echo "JENKINS_UC=https://updates.jenkins.io/current/" >> .env
       - uses: snow-actions/setup-jenkins@main
+        with:
+          env_file: .env
       - run: docker compose exec jenkins printenv
       - run: wget $JENKINS_URL/jnlpJars/jenkins-cli.jar
 #       - run: curl -sS https://updates.jenkins.io/update-center.json
