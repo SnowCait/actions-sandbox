@@ -5,10 +5,18 @@ on:
     - cron: '0 1 * * 1-5' # 10:00 JST
     - cron: '0 10 * * 1-5' # 19:00 JST
   workflow_dispatch:
+    inputs:
+      job:
+        description: 'Select job'
+        required: true
+        type: choice
+        options:
+          - start
+          - stop
 
 jobs:
   start:
-    if: github.event.schedule == '0 1 * * 1-5'
+    if: github.event.schedule == '0 1 * * 1-5' || github.event.inputs.job == 'start'
     runs-on: ubuntu-20.04
     timeout-minutes: 5
 
@@ -19,6 +27,7 @@ jobs:
 #         run: aws ec2 start-instances --instance-ids instance-1 instance-2
 
   stop:
+    if: github.event.schedule == '0 10 * * 1-5' || github.event.inputs.job == 'stop'
     runs-on: ubuntu-20.04
     timeout-minutes: 5
 
