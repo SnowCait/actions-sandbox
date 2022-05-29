@@ -15,7 +15,7 @@ jobs:
       - run: |
           docker run -d -p 8080:8080 -p 50000:50000 --restart=on-failure \
           --env JAVA_OPTS="-Djenkins.install.runSetupWizard=false" \
-          --env JENKINS_UC=https://updates.jenkins.io/current
+          --env JENKINS_UC=https://updates.jenkins.io/current \
           jenkins/jenkins:lts-jdk11
       - name: Wait for starting
         run: sleep 20s
