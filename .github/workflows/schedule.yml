@@ -2,8 +2,8 @@ name: Schedule
 
 on:
   schedule:
-    - cron: '10 4 * * 0-5' # 10:00 JST
-    - cron: '12 4 * * 0-5' # 19:00 JST
+    - cron: '30 4 * * *' # 10:00 JST
+    - cron: '35 4 * * *' # 19:00 JST
   workflow_dispatch:
     inputs:
       job:
@@ -16,7 +16,7 @@ on:
 
 jobs:
   start:
-    if: github.event.schedule == '30 3 * * 0-5' || github.event.inputs.job == 'start'
+    if: github.event.schedule == '30 4 * * *' || github.event.inputs.job == 'start'
     runs-on: ubuntu-20.04
     timeout-minutes: 5
 
@@ -27,7 +27,7 @@ jobs:
 #         run: aws ec2 start-instances --instance-ids instance-1 instance-2
 
   stop:
-    if: github.event.schedule == '32 3 * * 0-5' || github.event.inputs.job == 'stop'
+    if: github.event.schedule == '35 4 * * *' || github.event.inputs.job == 'stop'
     runs-on: ubuntu-20.04
     timeout-minutes: 5
 
