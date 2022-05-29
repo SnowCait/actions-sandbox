@@ -15,6 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: snow-actions/setup-jenkins@main
+      - run: docker compose exec jenkins printenv
       - run: wget $JENKINS_URL/jnlpJars/jenkins-cli.jar
 #       - run: curl -sS https://updates.jenkins.io/update-center.json
 #       - run: |
