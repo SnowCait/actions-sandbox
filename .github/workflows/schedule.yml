@@ -2,8 +2,8 @@ name: Schedule
 
 on:
   schedule:
-    - cron: '30 3 * * 0-5' # 10:00 JST
-    - cron: '32 3 * * 0-5' # 19:00 JST
+    - cron: '0 4 * * 0-5' # 10:00 JST
+    - cron: '2 4 * * 0-5' # 19:00 JST
   workflow_dispatch:
     inputs:
       job:
