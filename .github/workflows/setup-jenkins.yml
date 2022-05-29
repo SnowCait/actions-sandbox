@@ -18,6 +18,9 @@ jobs:
       - run: wget $JENKINS_URL/jnlpJars/jenkins-cli.jar
 #       - run: curl -sS https://updates.jenkins.io/update-center.json
       - run: docker compose exec jenkins jenkins-plugin-cli --plugins http_request
+      - run: docker compose exec jenkins jenkins-plugin-cli --list
+      - run: docker compose restart
+      - run: docker compose exec jenkins jenkins-plugin-cli --list
 #       - run: java -jar jenkins-cli.jar -webSocket install-plugin http_request -deploy
 #       - run: java -jar jenkins-cli.jar -webSocket install-plugin https://updates.jenkins.io/latest/http_request.hpi -deploy
       - run: java -jar jenkins-cli.jar -webSocket list-plugins
