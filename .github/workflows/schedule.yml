@@ -1,0 +1,27 @@
+name: Schedule
+
+on:
+  schedule:
+    - cron: '0 1 * * 1-5' # 10:00 JST
+    - cron: '0 10 * * 1-5' # 19:00 JST
+  workflow_dispatch:
+
+jobs:
+  start:
+    if: github.event.schedule == '0 1 * * 1-5'
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - name: 開始コマンド
+        run: aws ec2 start-instances --instance-ids instance-1 instance-2
+
+  stop:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - name: 停止コマンド
+        run: aws ec2 stop-instances --instance-ids instance-1 instance-2
