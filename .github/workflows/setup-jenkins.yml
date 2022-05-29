@@ -16,7 +16,8 @@ jobs:
       - uses: actions/checkout@v3
       - uses: snow-actions/setup-jenkins@main
       - run: wget $JENKINS_URL/jnlpJars/jenkins-cli.jar
-      - run: java -jar jenkins-cli.jar -webSocket install-plugin http_request -deploy
+#       - run: java -jar jenkins-cli.jar -webSocket install-plugin http_request -deploy
+      - run: java -jar jenkins-cli.jar -webSocket install-plugin https://updates.jenkins.io/latest/http_request.hpi -deploy
       - run: java -jar jenkins-cli.jar -webSocket list-plugins
       - run: java -jar jenkins-cli.jar -webSocket list-jobs
       - run: java -jar jenkins-cli.jar -webSocket create-job job-3 < jenkins/job-3/config.xml
