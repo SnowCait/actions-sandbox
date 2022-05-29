@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: echo "JENKINS_UC=https://updates.jenkins.io/current/" >> .env
+      - run: echo "JENKINS_UC=https://updates.jenkins.io/current" >> .env
       - uses: snow-actions/setup-jenkins@main
         with:
           env_file: .env
@@ -26,8 +26,8 @@ jobs:
 #           docker compose restart
 #           sleep 30s
       - run: java -jar jenkins-cli.jar -webSocket install-plugin http_request -deploy
-        env:
-          JENKINS_UC: https://updates.jenkins.io/current/
+#         env:
+#           JENKINS_UC: https://updates.jenkins.io/current
 #       - run: java -jar jenkins-cli.jar -webSocket install-plugin https://updates.jenkins.io/latest/http_request.hpi -deploy
       - run: java -jar jenkins-cli.jar -webSocket list-plugins
       - run: java -jar jenkins-cli.jar -webSocket list-jobs
