@@ -2,7 +2,7 @@ name: Schedule
 
 on:
   schedule:
-    - cron: '0 1 * * 1-5' # 10:00 JST
+    - cron: '25 3 * * 1-5' # 10:00 JST
     - cron: '0 10 * * 1-5' # 19:00 JST
   workflow_dispatch:
     inputs:
