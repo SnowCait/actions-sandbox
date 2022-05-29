@@ -1,0 +1,23 @@
+name: jenkinsci/docker
+
+on:
+  push:
+    paths:
+      - .github/workflows/jenkinsci.yml
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - run: docker run -p 8080:8080 -p 50000:50000 --restart=on-failure jenkins/jenkins:lts-jdk11
+        env:
+          JAVA_OPTS: -Djenkins.install.runSetupWizard=false
+      - name: Wait for starting
+        run: sleep 30s
+      - run: wget http://localhost:8080/jnlpJars/jenkins-cli.jar
+      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket version
+      - run: java -jar jenkins-cli.jar -s http://localhost:8080/ -webSocket install-plugin git -deploy
+      
