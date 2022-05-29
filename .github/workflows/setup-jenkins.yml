@@ -17,12 +17,13 @@ jobs:
       - uses: snow-actions/setup-jenkins@main
       - run: wget $JENKINS_URL/jnlpJars/jenkins-cli.jar
 #       - run: curl -sS https://updates.jenkins.io/update-center.json
-      - run: docker compose exec jenkins jenkins-plugin-cli --plugins http_request
-      - run: docker compose exec jenkins jenkins-plugin-cli --list
-      - run: docker compose restart
-      - run: sleep 30s
-      - run: docker compose exec jenkins jenkins-plugin-cli --list
-#       - run: java -jar jenkins-cli.jar -webSocket install-plugin http_request -deploy
+#       - run: |
+#           docker compose exec jenkins jenkins-plugin-cli --plugins http_request
+#           docker compose restart
+#           sleep 30s
+      - run: java -jar jenkins-cli.jar -webSocket install-plugin http_request -deploy
+        env:
+          JENKINS_UC: https://updates.jenkins.io/current/
 #       - run: java -jar jenkins-cli.jar -webSocket install-plugin https://updates.jenkins.io/latest/http_request.hpi -deploy
       - run: java -jar jenkins-cli.jar -webSocket list-plugins
       - run: java -jar jenkins-cli.jar -webSocket list-jobs
