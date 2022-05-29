@@ -15,8 +15,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: snow-actions/setup-jenkins@main
+        with:
+          jenkins_image_tag: latest
       - run: wget $JENKINS_URL/jnlpJars/jenkins-cli.jar
-      - run: curl -sS https://updates.jenkins.io/update-center.json
+#       - run: curl -sS https://updates.jenkins.io/update-center.json
       - run: java -jar jenkins-cli.jar -webSocket install-plugin http_request -deploy
       - run: java -jar jenkins-cli.jar -webSocket install-plugin https://updates.jenkins.io/latest/http_request.hpi -deploy
       - run: java -jar jenkins-cli.jar -webSocket list-plugins
