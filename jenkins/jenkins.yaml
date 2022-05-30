@@ -46,7 +46,9 @@ jobs:
                           steps {
                               echo 'step failure'
                               //error('failure!')
-                              //sh 'docker version'
+                              catchError {
+                                  sh 'docker version'
+                              }
                               sh 'git --version'
                           }
                       }
