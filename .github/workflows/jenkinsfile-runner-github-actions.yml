@@ -16,5 +16,8 @@ jobs:
     - uses: actions/checkout@v3
     - name: jenkinsfile-runner-prepackaged
       uses: jenkinsci/jenkinsfile-runner-github-actions/jenkinsfile-runner-prepackaged@master
+      with:
+        jenkinsfile: jenkinsfile-runner-github-actions/Jenkinsfile
+        pluginstxt: jenkinsfile-runner-github-actions/plugins.txt
       env:
         GITHUB_TOKEN: ${{ github.token }}
