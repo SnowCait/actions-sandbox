@@ -35,6 +35,7 @@ jobs:
       - run: docker compose exec -u root jenkins apt-get update
       - run: docker compose exec -u root jenkins apt-get install -y awscli
       - run: docker compose exec jenkins aws --version
+      - run: docker compose exec jenkins whoami
 
   jcasc:
     runs-on: ubuntu-20.04
