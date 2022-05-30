@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - .github/workflows/jenkinsfile-runner-github-actions.yml
-      - Jenkinsfile
+      - jenkinsfile-runner-github-actions/**
   workflow_dispatch:
 
 jobs:
