@@ -53,11 +53,11 @@ jobs:
       - run: java -jar jenkins-cli.jar -webSocket list-plugins
       - run: java -jar jenkins-cli.jar -webSocket list-jobs
       - run: docker compose exec -u root jenkins apt-get update
-      - run: docker compose exec jenkins docker version
-        continue-on-error: true
-      - run: docker compose exec -u root jenkins apt-get install -y docker
-      - run: docker compose exec jenkins docker version
-        continue-on-error: true
+#       - run: docker compose exec jenkins docker version
+#         continue-on-error: true
+#       - run: docker compose exec -u root jenkins apt-get install -y docker
+#       - run: docker compose exec jenkins docker version
+#         continue-on-error: true
       - run: java -jar jenkins-cli.jar -webSocket build job-sandbox -f -v
       - run: java -jar jenkins-cli.jar -webSocket declarative-linter < jenkins/Jenkinsfile
 
