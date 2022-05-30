@@ -56,8 +56,8 @@ jobs:
 #       - run: docker compose exec jenkins docker version
 #         continue-on-error: true
       - run: docker compose exec -u root jenkins apt-get install -y docker docker-compose
-#       - run: docker compose exec jenkins docker version
-#         continue-on-error: true
+      - run: docker compose exec jenkins docker version
+        continue-on-error: true
       - run: java -jar jenkins-cli.jar -webSocket build job-sandbox -f -v
       - run: java -jar jenkins-cli.jar -webSocket declarative-linter < jenkins/Jenkinsfile
 
