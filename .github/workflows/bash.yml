@@ -13,6 +13,7 @@ jobs:
 
     steps:
       - run: whoami
+      - run: nproc
 
   test:
     runs-on: ubuntu-latest
