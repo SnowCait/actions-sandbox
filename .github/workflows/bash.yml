@@ -14,8 +14,10 @@ jobs:
     steps:
       - run: whoami
       - run: nproc
+      - run: echo 'abc' | grep 'd'
 
   test:
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 1
     env:
@@ -33,6 +35,7 @@ jobs:
       - run: (( ${NUMBER} != 2 ))
 
   sleep:
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 5
     
