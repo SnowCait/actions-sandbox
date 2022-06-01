@@ -14,7 +14,7 @@ jobs:
     steps:
       - run: whoami
       - run: nproc
-      - run: echo 'abc' | grep 'd' > filtered
+      - run: echo 'abc' | grep 'd' | tee filtered
       - run: cat filtered
 
   test:
