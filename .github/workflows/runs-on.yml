@@ -38,9 +38,9 @@ jobs:
   test:
     if: github.event_name == 'pull_request'
     runs-on: >-
-      contains(github.event.pull_request.labels.*.name, 'low-priority')
+      github.event.pull_request.user.type == 'Bot'
         && fromJSON('[ "self-hosted", "Windows", "low-priority" ]')
-        || fromJSON('[ "self-hsoted", "Windows" ]')
+        || fromJSON('[ "self-hosted", "Windows" ]')
 
     steps:
       - run: cat $Env:GITHUB_EVENT_PATH
