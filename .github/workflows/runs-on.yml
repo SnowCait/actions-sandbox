@@ -16,8 +16,8 @@ on:
           - macos-12
           - macos-11
           - self-hosted
-          - '[ self-hosted, Windows ]'
-          - '[ ubuntu-20.04 ]'
+          - '[ "self-hosted", "Windows" ]'
+          - '[ "ubuntu-20.04" ]'
 
 jobs:
   workflow_dispatch:
