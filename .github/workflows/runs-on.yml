@@ -39,8 +39,8 @@ jobs:
     if: github.event_name == 'pull_request'
     runs-on: >-
       contains(github.event.pull_request.labels.*.name, 'low-priority')
-        && fromJSON('[ "self-hosted", "Windows" ]')
-        || fromJSON('[ "self-hsoted", "Windows", "low-priority" ]')
+        && fromJSON('[ "self-hosted", "Windows", "low-priority" ]')
+        || fromJSON('[ "self-hsoted", "Windows" ]')
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
