@@ -43,7 +43,7 @@ jobs:
         || fromJSON('[ "self-hsoted", "Windows" ]')
 
     steps:
-      - run: cat $GITHUB_EVENT_PATH
+      - run: cat $Env:GITHUB_EVENT_PATH
 
   deploy:
     if: github.event_name == 'workflow_dispatch'
