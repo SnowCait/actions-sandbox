@@ -33,7 +33,7 @@ jobs:
     runs-on: windows-2022
 
     steps:
-      - run: cat $GITHUB_EVENT_PATH
+      - run: cat $Env:GITHUB_EVENT_PATH
 
   test:
     if: github.event_name == 'pull_request'
