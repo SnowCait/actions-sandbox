@@ -22,14 +22,14 @@ on:
 
 jobs:
   ubuntu:
-    if: github.event_name == 'pull_request' && !contains(github.event.pull_request.lables.*.name, 'Windows')
+    if: github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'Windows')
     runs-on: ubuntu-20.04
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
 
   windows:
-    if: github.event_name == 'pull_request' && contains(github.event.pull_request.lables.*.name, 'Windows')
+    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'Windows')
     runs-on: windows-2022
 
     steps:
@@ -38,7 +38,7 @@ jobs:
   test:
     if: github.event_name == 'pull_request'
     runs-on: >-
-      contains(github.event.pull_request.lables.*.name, 'low-priority')
+      contains(github.event.pull_request.labels.*.name, 'low-priority')
         && fromJSON('[ "self-hosted", "Windows" ]')
         || fromJSON('[ "self-hsoted", "Windows", "low-priority" ]')
 
