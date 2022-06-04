@@ -16,6 +16,7 @@ on:
           - macos-12
           - macos-11
           - self-hosted
+          - '[ self-hosted, Windows ]'
 
 jobs:
   workflow_dispatch:
