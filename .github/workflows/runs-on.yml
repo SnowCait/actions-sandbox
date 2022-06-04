@@ -40,7 +40,7 @@ jobs:
     runs-on: >-
       ${{
         github.event.sender.type == 'Bot' || github.event.sender.login == 'SnowCait'
-          && fromJSON('[ "self-hosted", "Windows", "low-priority" ]')
+          && 'low-priority'
           || fromJSON('[ "self-hosted", "Linux" ]')
       }}
 
