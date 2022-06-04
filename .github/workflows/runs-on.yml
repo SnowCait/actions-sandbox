@@ -17,10 +17,11 @@ on:
           - macos-11
           - self-hosted
           - '[ self-hosted, Windows ]'
+          - '[ ubuntu-20.04 ]'
 
 jobs:
   workflow_dispatch:
-    runs-on: ${{ github.event.inputs.runner }}
+    runs-on: ${{ fromJSON(github.event.inputs.runner) }}
     timeout-minutes: 5
 
     steps:
