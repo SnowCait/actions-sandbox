@@ -1,6 +1,7 @@
 name: runs-on
 
 on:
+  pull_request:
   workflow_dispatch:
     inputs:
       runner:
@@ -20,7 +21,29 @@ on:
           - '[ "ubuntu-20.04" ]'
 
 jobs:
-  workflow_dispatch:
+  ubuntu:
+    if: github.event_name == 'pull_request' && !contains(github.event.pull_request.lables.*.name, 'Windows')
+    runs-on: ubuntu-20.04
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+
+  windows:
+    if: github.event_name == 'pull_request' && contains(github.event.pull_request.lables.*.name, 'Windows')
+    runs-on: ubuntu-20.04
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+
+#   test:
+#     if: github.event_name == 'pull_request'
+#     runs-on: >-
+#       github.event.pull_request.user_login == 'my-bot'
+#         && fromJSON('[ "self-hosted", "Linux" ]')
+#         || fromJSON('[ "self-hsoted", "low-priority" ]')
+
+  deploy:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ${{ fromJSON(github.event.inputs.runner) }}
     timeout-minutes: 5
 
