@@ -25,4 +25,5 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - run: printenv
+      - run: cat $GITHUB_EVENT_PATH
+      - run: echo $ImageOS
