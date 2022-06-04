@@ -10,6 +10,8 @@ jobs:
       GH_TOKEN: ${{ github.token }}
 
     steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - run: printenv
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.head_ref }}
