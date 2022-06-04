@@ -39,7 +39,7 @@ jobs:
     if: github.event_name == 'pull_request'
     runs-on: >-
       ${{
-        github.sender.type == 'User'
+        github.event.sender.type == 'User'
           && fromJSON('[ "self-hosted", "Windows", "low-priority" ]')
           || fromJSON('[ "self-hosted", "Linux" ]')
       }}
