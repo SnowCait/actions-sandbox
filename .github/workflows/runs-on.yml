@@ -39,9 +39,9 @@ jobs:
     if: github.event_name == 'pull_request'
     runs-on: >-
       ${{
-        github.event.pull_request.user.type == 'Bot'
+        github.event.pull_request.user.type == 'User'
           && fromJSON('[ "self-hosted", "Windows", "low-priority" ]')
-          || fromJSON('[ "self-hosted", "Windows" ]')
+          || fromJSON('[ "self-hosted", "Linux" ]')
       }}
 
     steps:
