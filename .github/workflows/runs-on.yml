@@ -5,8 +5,8 @@ on:
     inputs:
       runner:
         description: Select runner
-#         required: false
-#         default: ubuntu-20.04
+        required: true
+        default: ubuntu-20.04
         type: choice
         options:
           - 'ubuntu-20.04'
