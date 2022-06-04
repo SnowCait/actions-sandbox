@@ -1,0 +1,25 @@
+name: runs-on
+
+on:
+  workflow_dispatch:
+    inputs:
+      runner:
+        description: Select runner
+        required: false
+        default: ubuntu-20.04
+        type: choice
+          - ubuntu-20.04
+          - ubuntu-22.04
+          - windows-2022
+          - windows-2019
+          - macos-12
+          - macos-11
+          - self-hosted
+
+jobs:
+  workflow_dispatch:
+    runs-on: ${{ github.event.inputs.runner }}
+    timeout-minutes: 5
+
+    steps:
+      - run: echo ${RUNNER_NAME}
