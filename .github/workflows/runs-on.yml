@@ -8,6 +8,7 @@ on:
         required: false
         default: ubuntu-20.04
         type: choice
+        options:
           - ubuntu-20.04
           - ubuntu-22.04
           - windows-2022
