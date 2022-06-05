@@ -39,6 +39,8 @@ jobs:
       - name: Repository URL
         run: echo ${{ github.repositoryUrl }}
 
+      - run: echo "${RUNNER_OS}"
+
   steps:
     if: false
     runs-on: ubuntu-latest
