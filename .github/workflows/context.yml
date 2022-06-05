@@ -16,9 +16,9 @@ jobs:
           echo ${GITHUB_REPOSITORY}
           echo ${GITHUB_REPOSITORY_OWNER}
           echo ${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}
-          echo ${GITHUB_REPOSITORY_URL}
+          echo ${GITHUB_REPOSITORYURL}
 
-  steps-result:
+  steps:
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
