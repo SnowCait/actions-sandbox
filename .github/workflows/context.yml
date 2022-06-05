@@ -13,11 +13,11 @@ jobs:
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - name: Full Name (Owner/Repository)
-        run: echo ${GITHUB_REPOSITORY}
+        run: echo "${GITHUB_REPOSITORY}"
       - name: Owner name
-        run: echo ${GITHUB_REPOSITORY_OWNER}
+        run: echo "${GITHUB_REPOSITORY_OWNER}"
       - name: Repository name
-        run: echo ${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}
+        run: echo "${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}"
       - name: Repository name
         run: |
           repository=(${GITHUB_REPOSITORY/\// })
