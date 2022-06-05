@@ -21,7 +21,7 @@ jobs:
       - name: Repository name
         run: |
           repository=(${GITHUB_REPOSITORY/\// })
-          echo ${repository[2]}
+          echo ${repository[1]}
       - name: Repository URL
         run: echo ${GITHUB_REPOSITORYURL}
 
