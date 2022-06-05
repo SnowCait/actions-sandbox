@@ -12,11 +12,14 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - run: |
-          echo ${GITHUB_REPOSITORY}
-          echo ${GITHUB_REPOSITORY_OWNER}
-          echo ${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}
-          echo ${GITHUB_REPOSITORYURL}
+      - name: Full Name (Owner/Repository)
+        run: echo ${GITHUB_REPOSITORY}
+      - name: Owner name
+        run: echo ${GITHUB_REPOSITORY_OWNER}
+      - name: Repository name
+        run: echo ${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}
+      - name: Repository URL
+        run: echo ${GITHUB_REPOSITORYURL}
 
   steps:
     runs-on: ubuntu-latest
