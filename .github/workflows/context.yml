@@ -21,7 +21,17 @@ jobs:
       - name: Repository URL
         run: echo ${GITHUB_REPOSITORYURL}
 
+      - name: Full Name (Owner/Repository)
+        run: echo ${{ github.repository }}
+      - name: Owner name
+        run: echo ${{ github.repository_owner }}
+      - name: Repository name
+        run: echo "Cannot"
+      - name: Repository URL
+        run: echo ${{ github.repositoryUrl }}
+
   steps:
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
