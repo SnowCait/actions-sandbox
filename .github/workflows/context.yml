@@ -33,6 +33,9 @@ jobs:
         run: echo "::set-output name=name::${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}"
       - name: Repository name
         run: echo ${{ steps.repository.outputs.name }}
+      - run: echo "REPOSITORY_NAME=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_ENV
+      - name: Repository name
+        run: echo ${{ env.REPOSITORY_NAME }}
       - name: Repository URL
         run: echo ${{ github.repositoryUrl }}
 
