@@ -18,6 +18,8 @@ jobs:
         run: echo ${GITHUB_REPOSITORY_OWNER}
       - name: Repository name
         run: echo ${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}
+      - name: Repository name
+        run: echo ${${GITHUB_REPOSITORY//\// }[2]}
       - name: Repository URL
         run: echo ${GITHUB_REPOSITORYURL}
 
