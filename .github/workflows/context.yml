@@ -29,8 +29,10 @@ jobs:
         run: echo ${{ github.repository }}
       - name: Owner name
         run: echo ${{ github.repository_owner }}
+      - id: repository
+        run: echo "::set-output name=name::${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}"
       - name: Repository name
-        run: echo "Cannot"
+        run: echo ${{ steps.repository.outputs.name }}
       - name: Repository URL
         run: echo ${{ github.repositoryUrl }}
 
