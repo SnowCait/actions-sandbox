@@ -6,11 +6,23 @@ on:
       - .github/workflows/context.yml
 
 jobs:
-  build:
+  github:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
-      # steps
+      - run: cat $GITHUB_EVENT_PATH
+      - run: |
+          echo ${GITHUB_REPOSITORY}
+          echo ${GITHUB_REPOSITORY_OWNER}
+          echo ${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}
+          echo ${GITHUB_REPOSITORY_URL}
+
+  steps-result:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
       - run: cat $GITHUB_EVENT_PATH
         id: success
       - name: success result
