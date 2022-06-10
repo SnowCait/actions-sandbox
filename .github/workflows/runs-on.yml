@@ -2,6 +2,8 @@ name: runs-on
 
 on:
   pull_request:
+    paths:
+      - .github/workflows/runs-on.yml
   workflow_dispatch:
     inputs:
       runner:
