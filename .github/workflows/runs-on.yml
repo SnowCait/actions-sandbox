@@ -9,9 +9,10 @@ on:
       runner:
         description: Select runner
         required: true
-        default: ubuntu-20.04
+        default: ''
         type: choice
         options:
+          - ''
           - 'ubuntu-20.04'
           - "ubuntu-22.04"
           - windows-2022
