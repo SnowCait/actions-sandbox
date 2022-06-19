@@ -30,6 +30,7 @@ jobs:
       - run: ls -la
 
   gist:
+    if: false
     runs-on: ubuntu-20.04
 
     steps:
