@@ -1,18 +1,21 @@
 name: Checkout
 
-
 on:
   push:
     paths:
       - .github/workflows/checkout.yml
   workflow_dispatch:
+    inputs:
+      val:
+        description: value
+        required: false
 
 jobs:
   checkout:
     runs-on: ubuntu-20.04
 
     steps:
-      - name: ${{ github.repository }}
+      - name: ${{ github.repository }} ${{ inputs.val }}
         uses: actions/checkout@v3
       - run: echo a > a.txt
       - run: ls -la
