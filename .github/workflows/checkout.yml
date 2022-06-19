@@ -15,8 +15,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - name: ${{ github.repository }} ${{ inputs.val }}
-        uses: ${{ inputs.val }}@v3
+      - uses: actions/checkout@v3
       - run: echo a > a.txt
       - run: ls -la
       - uses: actions/checkout@v3
