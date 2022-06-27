@@ -2,6 +2,7 @@ name: Workflow Run
 
 on:
   workflow_run:
+    workflows: [ Push ]
 
 jobs:
   build:
