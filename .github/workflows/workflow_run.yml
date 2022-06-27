@@ -2,13 +2,11 @@ name: Workflow Run
 
 on:
   workflow_run:
-    workflows: [ Push ]
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
