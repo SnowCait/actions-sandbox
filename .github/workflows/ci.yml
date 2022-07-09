@@ -2,7 +2,6 @@ name: CI
 
 on:
   pull_request:
-  workflow_dispatch:
 
 jobs:
   paths:
@@ -32,8 +31,8 @@ jobs:
         working-directory: client
 
     steps:
-      - run: sleep 2m
       - uses: actions/checkout@v3
+      - run: sleep 2m
       - run: sh build.sh
 
   test-client:
