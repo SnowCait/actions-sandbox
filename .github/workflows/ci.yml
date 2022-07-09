@@ -76,7 +76,7 @@ jobs:
       - run: gh pr comment $number --body "@${author} CI passing"
         env:
           number: ${{ github.event.number }}
-          author: ${{ github.event..user.login }}
+          author: ${{ github.event.user.login }}
 
   post:
     needs: [ passing ]
