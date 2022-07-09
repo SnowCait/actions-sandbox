@@ -63,7 +63,7 @@ jobs:
 
   passing:
     needs: [ build-client, test-client, test-server ]
-    if: success() || cancelled()
+    if: failure() == false
     runs-on: ubuntu-20.04
     timeout-minutes: 5
 
