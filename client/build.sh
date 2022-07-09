@@ -1,1 +1,1 @@
-echo "Build"
+echo "Build client"
