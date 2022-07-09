@@ -66,9 +66,23 @@ jobs:
     if: failure() == false && contains(needs.*.result, 'cancelled') == false
     runs-on: ubuntu-20.04
     timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
 
     steps:
       - run: echo "$json"
         env:
           json: ${{ toJSON(needs) }}
-      - run: echo 'Notify somewhere.'
+      - run: gh pr comment $number --body "@${author} CI passing"
+        env:
+          number: ${{ github.event.number }}
+          author: ${{ github.event..user.login }}
+
+  post:
+    needs: [ passing ]
+    if: success()
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+
+    steps:
+      - run: echo 'Run post script'
