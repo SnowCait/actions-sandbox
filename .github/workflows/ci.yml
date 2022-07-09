@@ -1,0 +1,17 @@
+name: CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-client:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: client
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: sh build.sh
