@@ -68,16 +68,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - run: echo 'All tests has passed.'
       - run: echo "$json"
         env:
           json: ${{ toJSON(needs) }}
-
-  notify:
-    needs: [ passing ]
-    if: failure() == false
-    runs-on: ubuntu-20.04
-    timeout-minutes: 5
-
-    steps:
       - run: echo 'Notify somewhere.'
