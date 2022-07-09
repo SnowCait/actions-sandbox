@@ -5,7 +5,26 @@ on:
   workflow_dispatch:
 
 jobs:
+  paths:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    outputs:
+      client: ${{ steps.changes.outputs.client }}
+      server: ${{ steps.changes.outputs.server }}
+
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            client:
+              - 'client/**'
+            server:
+              - 'server/**'
+
   build-client:
+    needs: [ paths ]
+    if: needs.paths.outputs.client == 'true'
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     defaults:
@@ -17,6 +36,8 @@ jobs:
       - run: sh build.sh
 
   test-client:
+    needs: [ paths ]
+    if: needs.paths.outputs.client == 'true'
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     defaults:
@@ -28,6 +49,8 @@ jobs:
       - run: sh test.sh
 
   test-server:
+    needs: [ paths ]
+    if: needs.paths.outputs.server == 'true'
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     defaults:
