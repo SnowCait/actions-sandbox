@@ -81,7 +81,7 @@ jobs:
 
   post:
     needs: [ passing ]
-    if: success()
+    if: failure() == false
     runs-on: ubuntu-20.04
     timeout-minutes: 5
 
