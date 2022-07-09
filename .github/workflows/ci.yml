@@ -60,3 +60,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: sh test.sh
+
+  passing:
+    needs: [ build-client, test-client, test-server ]
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+
+    steps:
+      - run: echo 'All tests has passed.'
