@@ -137,4 +137,6 @@ jobs:
           exit 1
         env:
           needs: ${{ toJSON(needs) }}
-        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        if: >-
+          contains(needs.*.result, 'failure') ||
+          contains(needs.*.result, 'cancelled')
