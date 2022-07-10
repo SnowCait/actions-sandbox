@@ -26,14 +26,13 @@ jobs:
     needs: [ paths ]
     if: needs.paths.outputs.client == 'true'
     runs-on: ubuntu-20.04
-    timeout-minutes: 1
+    timeout-minutes: 5
     defaults:
       run:
         working-directory: client
 
     steps:
       - uses: actions/checkout@v3
-      - run: sleep 2m
       - run: sh build.sh
 
   test-client:
@@ -62,8 +61,12 @@ jobs:
       - uses: actions/checkout@v3
       - run: sh test.sh
 
+  # Required checks and Notification
   passing:
-    needs: [ build-client, test-client, test-server ]
+    needs:
+      - build-client
+      - test-client
+      - test-server
     if: failure() == false && contains(needs.*.result, 'cancelled') == false
     runs-on: ubuntu-20.04
     timeout-minutes: 5
