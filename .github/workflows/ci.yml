@@ -118,7 +118,9 @@ jobs:
           json: ${{ toJSON(needs) }}
       - name: PR
         id: pr
-        run: echo "::set-output name=json::$(gh api repos/${GITHUB_REPOSITORY}/pulls/${number})"
+        run: |
+          set -x
+          echo "::set-output name=json::$(gh api repos/${GITHUB_REPOSITORY}/pulls/${number})"
       - name: Success or Skipped
         run: gh pr comment $number --body "@${author} CI passing at ${sha}"
         if: >-
@@ -138,5 +140,8 @@ jobs:
         env:
           needs: ${{ toJSON(needs) }}
         if: >-
-          contains(needs.*.result, 'failure') ||
-          contains(needs.*.result, 'cancelled')
+          (
+            contains(needs.*.result, 'failure') ||
+            contains(needs.*.result, 'cancelled')
+          ) &&
+          github.event.pull_request.head.sha == fromJSON(steps.pr.outputs.json).head.sha
