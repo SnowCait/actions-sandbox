@@ -87,3 +87,33 @@ jobs:
 
     steps:
       - run: echo 'Run post script'
+
+  failure:
+    needs: [ build-client, test-client, test-server ]
+    if: failure()
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+
+    steps:
+      - run: gh pr comment $number --body "@${author} CI failed"
+        env:
+          number: ${{ github.event.number }}
+          author: ${{ github.event.user.login }}
+
+  cancelled:
+    needs: [ build-client, test-client, test-server ]
+    if: cancelled()
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+
+    steps:
+      - run: gh pr comment $number --body "@${author} CI cancelled or timed-out"
+        env:
+          number: ${{ github.event.number }}
+          author: ${{ github.event.user.login }}
