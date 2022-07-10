@@ -1,0 +1,9 @@
+name: CI (base changed)
+
+on:
+  pull_request:
+    types: [ edited ]
+
+jobs:
+  call:
+    uses: SnowCait/actions-sandbox/.github/workflows/ci.yml
