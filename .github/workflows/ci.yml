@@ -39,6 +39,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: sh lint.sh
+      - run: exit 1
+        if: github.base_ref == 'second'
 
   client-test:
     needs: [ paths ]
