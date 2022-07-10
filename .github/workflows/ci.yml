@@ -36,7 +36,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: sh build.sh
+      - run: sh lint.sh
 
   client-test:
     needs: [ paths ]
