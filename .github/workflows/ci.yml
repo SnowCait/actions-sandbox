@@ -124,7 +124,7 @@ jobs:
         if: >-
           contains(needs.*.result, 'failure') == false &&
           contains(needs.*.result, 'cancelled') == false &&
-          env.sha == fromJSON(steps.pr.outputs.json).head.sha
+          github.event.pull_request.head.sha == fromJSON(steps.pr.outputs.json).head.sha
       - name: Failure or Cancelled
         run: |
           echo '[failure]'
