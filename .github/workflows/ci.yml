@@ -25,14 +25,14 @@ jobs:
     needs: [ paths ]
     if: needs.paths.outputs.client == 'true'
     runs-on: ubuntu-20.04
-    timeout-minutes: 5
+    timeout-minutes: 1
     defaults:
       run:
         working-directory: client
 
     steps:
       - uses: actions/checkout@v3
-      # - run: sleep 2m
+      - run: sleep 2m
       - run: sh build.sh
 
   test-client:
