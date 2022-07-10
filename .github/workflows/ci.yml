@@ -101,9 +101,10 @@ jobs:
         env:
           json: ${{ toJSON(needs) }}
       - name: Success or Skipped
-        run: gh pr comment $number --body "@${author} CI passing"
+        run: gh pr comment $number --body "@${author} CI passing at ${sha}"
         env:
           number: ${{ github.event.number }}
+          sha: ${{ github.event.pull_request.head.sha }}
           author: ${{ github.actor }}
         if: contains(needs.*.result, 'failure') == false && contains(needs.*.result, 'cancelled') == false
       - name: Failure or Cancelled
