@@ -16,7 +16,6 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - run: echo $GITHUB_BASE_REF
       - uses: dorny/paths-filter@v2
         id: changes
         with:
@@ -40,6 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: exit 1
+        if: github.base_ref == 'second'
       - run: sh lint.sh
 
   client-test:
