@@ -110,7 +110,6 @@ jobs:
       GH_REPO: ${{ github.repository }}
       number: ${{ github.event.number }}
       sha: ${{ github.event.pull_request.head.sha }}  # 厳密には github.sha だが PR 上での分かりやすさを優先する
-      author: ${{ github.actor }}
 
     steps:
       - run: echo "$json"
@@ -123,7 +122,7 @@ jobs:
           echo "$json" | jq
           echo "::set-output name=json::$json"
       - name: Success or Skipped
-        run: gh pr comment $number --body "@${author} CI passing at ${sha}"
+        run: gh pr comment $number --body "@${GITHUB_ACTOR} CI passing at ${sha}"
         if: >-
           contains(needs.*.result, 'failure') == false &&
           contains(needs.*.result, 'cancelled') == false &&
@@ -136,7 +135,7 @@ jobs:
           echo '[cancelled]'
           echo "$needs" | jq -r 'to_entries | map(select(.value.result == "cancelled")) | .[].key'
           echo '----------'
-          gh pr comment $number --body "@${author} CI failure at ${sha}"
+          gh pr comment $number --body "@${GITHUB_ACTOR} CI failure at ${sha}"
           exit 1
         env:
           needs: ${{ toJSON(needs) }}
