@@ -39,6 +39,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - run: exit 1
       - run: sh lint.sh
 
   client-test:
