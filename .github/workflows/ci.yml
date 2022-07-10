@@ -98,11 +98,17 @@ jobs:
           author: ${{ github.actor }}
         if: contains(needs.*.result, 'failure') == false && contains(needs.*.result, 'cancelled') == false
       - run: |
-          gh pr comment $number --body "@${author} CI failure"
+          echo '[failure]'
+          echo "$needs" | jq -r 'to_entries | map(select(.value.result == "failure")) | .[].key'
+          echo '[cancelled]'
+          echo "$needs" | jq -r 'to_entries | map(select(.value.result == "cancelled")) | .[].key'
+          gh pr comment $number --body "@${author} CI failure at ${sha}"
           exit 1
         env:
           number: ${{ github.event.number }}
+          sha: ${{ github.event.pull_request.head.sha }}
           author: ${{ github.actor }}
+          needs: ${{ toJSON(needs) }}
         if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
 
   post:
