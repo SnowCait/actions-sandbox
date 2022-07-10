@@ -109,16 +109,22 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
       number: ${{ github.event.number }}
-      sha: ${{ github.event.pull_request.head.sha }} # 厳密には github.sha だが PR 上での分かりやすさを優先する
+      sha: ${{ github.event.pull_request.head.sha }}  # 厳密には github.sha だが PR 上での分かりやすさを優先する
       author: ${{ github.actor }}
 
     steps:
       - run: echo "$json"
         env:
           json: ${{ toJSON(needs) }}
+      - name: PR
+        id: pr
+        run: echo "::set-output name=json::$(gh api repos/${GITHUB_REPOSITORY}/pulls/${number})"
       - name: Success or Skipped
         run: gh pr comment $number --body "@${author} CI passing at ${sha}"
-        if: contains(needs.*.result, 'failure') == false && contains(needs.*.result, 'cancelled') == false
+        if: >-
+          contains(needs.*.result, 'failure') == false &&
+          contains(needs.*.result, 'cancelled') == false &&
+          env.sha == fromJSON(steps.pr.outputs.json).head.sha
       - name: Failure or Cancelled
         run: |
           echo '[failure]'
