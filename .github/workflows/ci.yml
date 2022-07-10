@@ -2,9 +2,11 @@ name: CI
 
 on:
   pull_request:
+    types: [ opened, synchronize, reopened, edited ]
 
 jobs:
   paths:
+    if: github.event.action != 'edited'
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     outputs:
