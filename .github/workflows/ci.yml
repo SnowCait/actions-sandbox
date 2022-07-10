@@ -24,7 +24,7 @@ jobs:
 
   build-client:
     needs: [ paths ]
-    if: needs.paths.outputs.client == 'true'
+    if: needs.paths.outputs.client == 'true' && false
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     defaults:
