@@ -8,8 +8,9 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     outputs:
-      client: ${{ steps.changes.outputs.client == 'true' || steps.changes.outputs.ci == 'true' }}
-      server: ${{ steps.changes.outputs.server == 'true' || steps.changes.outputs.ci == 'true' }}
+      client: ${{ steps.changes.outputs.client == 'true' || steps.changes.outputs.workflow == 'true' }}
+      server: ${{ steps.changes.outputs.server == 'true' || steps.changes.outputs.workflow == 'true' }}
+      workflow: ${{ steps.changes.outputs.workflow == 'true' }}
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
@@ -21,7 +22,7 @@ jobs:
               - 'client/**'
             server:
               - 'server/**'
-            ci:
+            workflow:
               - '.github/workflows/ci.yml'
 
   client-lint:
@@ -35,7 +36,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: sh build.sh
+      - run: sh lint.sh
 
   client-test:
     needs: [ paths ]
@@ -51,6 +52,19 @@ jobs:
       - run: sh build.sh
       - run: sh test.sh
 
+  server-lint:
+    needs: [ paths ]
+    if: needs.paths.outputs.server == 'true'
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: server
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: sh lint.sh
+
   server-test:
     needs: [ paths ]
     if: needs.paths.outputs.server == 'true'
@@ -64,52 +78,56 @@ jobs:
       - uses: actions/checkout@v3
       - run: sh test.sh
 
+  workflow-lint:
+    needs: [ paths ]
+    if: needs.paths.outputs.workflow == 'true'
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: reviewdog/action-actionlint@v1.27.0
+        with:
+          actionlint_flags: -shellcheck= -pyflakes=
+      - uses: reviewdog/action-yamllint@v1.6.1
+        with:
+          yamllint_flags: -c .github/.yamllint .github/workflows/
+
+
   # Required status checks and Notification
   passing:
     needs:
       - client-lint
       - client-test
+      - server-lint
       - server-test
-    if: failure() == false && contains(needs.*.result, 'cancelled') == false
-    runs-on: ubuntu-20.04
-    timeout-minutes: 5
-    env:
-      GH_TOKEN: ${{ github.token }}
-      GH_REPO: ${{ github.repository }}
-
-    steps:
-      - run: echo "$json"
-        env:
-          json: ${{ toJSON(needs) }}
-      - run: gh pr comment $number --body "@${author} CI passing"
-        env:
-          number: ${{ github.event.number }}
-          author: ${{ github.actor }}
-
-  # Required status checks and Notification
-  passing-always:
-    needs:
-      - client-lint
-      - client-test
-      - server-test
+      - workflow-lint
     if: always()
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
+      number: ${{ github.event.number }}
+      sha: ${{ github.event.pull_request.head.sha }}  # 厳密には github.sha だが PR 上での分かりやすさを優先する
+      author: ${{ github.actor }}
 
     steps:
       - run: echo "$json"
         env:
           json: ${{ toJSON(needs) }}
+      - name: PR
+        id: pr
+        run: |
+          json=$(gh api repos/${GITHUB_REPOSITORY}/pulls/${number})
+          echo "$json" | jq
+          echo "::set-output name=json::$json"
       - name: Success or Skipped
         run: gh pr comment $number --body "@${author} CI passing at ${sha}"
-        env:
-          number: ${{ github.event.number }}
-          sha: ${{ github.event.pull_request.head.sha }}
-          author: ${{ github.actor }}
-        if: contains(needs.*.result, 'failure') == false && contains(needs.*.result, 'cancelled') == false
+        if: >-
+          contains(needs.*.result, 'failure') == false &&
+          contains(needs.*.result, 'cancelled') == false &&
+          github.event.pull_request.head.sha == fromJSON(steps.pr.outputs.json).head.sha
       - name: Failure or Cancelled
         run: |
           echo '[failure]'
@@ -121,17 +139,10 @@ jobs:
           gh pr comment $number --body "@${author} CI failure at ${sha}"
           exit 1
         env:
-          number: ${{ github.event.number }}
-          sha: ${{ github.event.pull_request.head.sha }}
-          author: ${{ github.actor }}
           needs: ${{ toJSON(needs) }}
-        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
-
-  post:
-    needs: [ passing ]
-    if: failure() == false
-    runs-on: ubuntu-20.04
-    timeout-minutes: 5
-
-    steps:
-      - run: echo 'Run post script'
+        if: >-
+          (
+            contains(needs.*.result, 'failure') ||
+            contains(needs.*.result, 'cancelled')
+          ) &&
+          github.event.pull_request.head.sha == fromJSON(steps.pr.outputs.json).head.sha
