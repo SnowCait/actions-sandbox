@@ -63,7 +63,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: sh test.sh
+      - run: sh lint.sh
 
   server-test:
     needs: [ paths ]
