@@ -119,8 +119,9 @@ jobs:
       - name: PR
         id: pr
         run: |
-          set -x
-          echo "::set-output name=json::$(gh api repos/${GITHUB_REPOSITORY}/pulls/${number})"
+          json=$(gh api repos/${GITHUB_REPOSITORY}/pulls/${number})
+          echo "$json" | jq
+          echo "::set-output name=json::$json"
       - name: Success or Skipped
         run: gh pr comment $number --body "@${author} CI passing at ${sha}"
         if: >-
