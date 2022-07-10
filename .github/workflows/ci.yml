@@ -108,6 +108,9 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
+      number: ${{ github.event.number }}
+      sha: ${{ github.event.pull_request.head.sha }} # 厳密には github.sha だが PR 上での分かりやすさを優先する
+      author: ${{ github.actor }}
 
     steps:
       - run: echo "$json"
@@ -115,10 +118,6 @@ jobs:
           json: ${{ toJSON(needs) }}
       - name: Success or Skipped
         run: gh pr comment $number --body "@${author} CI passing at ${sha}"
-        env:
-          number: ${{ github.event.number }}
-          sha: ${{ github.event.pull_request.head.sha }}
-          author: ${{ github.actor }}
         if: contains(needs.*.result, 'failure') == false && contains(needs.*.result, 'cancelled') == false
       - name: Failure or Cancelled
         run: |
@@ -131,8 +130,5 @@ jobs:
           gh pr comment $number --body "@${author} CI failure at ${sha}"
           exit 1
         env:
-          number: ${{ github.event.number }}
-          sha: ${{ github.event.pull_request.head.sha }}
-          author: ${{ github.actor }}
           needs: ${{ toJSON(needs) }}
         if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
