@@ -85,7 +85,10 @@ jobs:
 
   # Required status checks and Notification
   passing-always:
-    needs: [ build-client, test-client, test-server ]
+    needs:
+      - build-client
+      - test-client
+      - test-server
     if: always()
     runs-on: ubuntu-20.04
     timeout-minutes: 5
