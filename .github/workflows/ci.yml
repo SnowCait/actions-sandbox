@@ -78,7 +78,7 @@ jobs:
       - run: gh pr comment $number --body "@${author} CI passing"
         env:
           number: ${{ github.event.number }}
-          author: ${{ github.event.user.login }}
+          author: ${{ github.actor }}
 
   passing-always:
     needs: [ build-client, test-client, test-server ]
@@ -96,14 +96,14 @@ jobs:
       - run: gh pr comment $number --body "@${author} CI passing"
         env:
           number: ${{ github.event.number }}
-          author: ${{ github.event.user.login }}
+          author: ${{ github.actor }}
         if: contains(needs.*.result, 'failure') == false && contains(needs.*.result, 'cancelled') == false
       - run: |
           gh pr comment $number --body "@${author} CI failure"
           exit 1
         env:
           number: ${{ github.event.number }}
-          author: ${{ github.event.user.login }}
+          author: ${{ github.actor }}
         if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
 
   post:
