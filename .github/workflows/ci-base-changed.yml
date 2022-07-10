@@ -6,4 +6,4 @@ on:
 
 jobs:
   call:
-    uses: SnowCait/actions-sandbox/.github/workflows/ci.yml@main
+    uses: SnowCait/actions-sandbox/.github/workflows/ci.yml@SnowCait-patch-13
