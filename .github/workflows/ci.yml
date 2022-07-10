@@ -8,8 +8,9 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     outputs:
-      client: ${{ steps.changes.outputs.client == 'true' || steps.changes.outputs.ci == 'true' }}
-      server: ${{ steps.changes.outputs.server == 'true' || steps.changes.outputs.ci == 'true' }}
+      client: ${{ steps.changes.outputs.client == 'true' || steps.changes.outputs.workflow == 'true' }}
+      server: ${{ steps.changes.outputs.server == 'true' || steps.changes.outputs.workflow == 'true' }}
+      workflow: ${{ steps.changes.outputs.workflow == 'true' }}
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
@@ -21,7 +22,7 @@ jobs:
               - 'client/**'
             server:
               - 'server/**'
-            ci:
+            workflow:
               - '.github/workflows/ci.yml'
 
   client-lint:
@@ -64,30 +65,24 @@ jobs:
       - uses: actions/checkout@v3
       - run: sh test.sh
 
-  # Required status checks and Notification
-  passing:
-    needs:
-      - client-lint
-      - client-test
-      - server-test
-    if: failure() == false && contains(needs.*.result, 'cancelled') == false
+  workflow-lint:
+    needs: [ paths ]
+    if: needs.paths.outputs.workflow == 'true'
     runs-on: ubuntu-20.04
     timeout-minutes: 5
-    env:
-      GH_TOKEN: ${{ github.token }}
-      GH_REPO: ${{ github.repository }}
 
     steps:
-      - run: echo "$json"
-        env:
-          json: ${{ toJSON(needs) }}
-      - run: gh pr comment $number --body "@${author} CI passing"
-        env:
-          number: ${{ github.event.number }}
-          author: ${{ github.actor }}
+      - uses: actions/checkout@v3
+      - uses: reviewdog/action-actionlint@v1.27.0
+        with:
+          actionlint_flags: -shellcheck= -pyflakes=
+      - uses: reviewdog/action-yamllint@v1.6.1
+        with:
+          yamllint_flags: -c .github/.yamllint .github/workflows/
+
 
   # Required status checks and Notification
-  passing-always:
+  passing:
     needs:
       - client-lint
       - client-test
@@ -126,12 +121,3 @@ jobs:
           author: ${{ github.actor }}
           needs: ${{ toJSON(needs) }}
         if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
-
-  post:
-    needs: [ passing ]
-    if: failure() == false
-    runs-on: ubuntu-20.04
-    timeout-minutes: 5
-
-    steps:
-      - run: echo 'Run post script'
