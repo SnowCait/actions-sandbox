@@ -38,8 +38,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: exit 1
-        if: github.base_ref == 'second'
       - run: sh lint.sh
 
   client-test:
