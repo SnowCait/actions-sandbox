@@ -6,7 +6,7 @@ on:
 
 jobs:
   paths:
-    if: github.event.action != 'edited' || github.event.changes.base
+    if: github.event.action != 'edited' || github.event.changes.base.ref.from
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     outputs:
@@ -16,6 +16,7 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
+      - run: echo $GITHUB_BASE_REF
       - uses: dorny/paths-filter@v2
         id: changes
         with:
@@ -104,7 +105,7 @@ jobs:
       - server-lint
       - server-test
       - workflow-lint
-    if: always()
+    if: always() && (github.event.action != 'edited' || github.event.changes.base.ref.from)
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     env:
