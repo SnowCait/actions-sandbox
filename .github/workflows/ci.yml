@@ -12,6 +12,7 @@ jobs:
       server: ${{ steps.changes.outputs.server }}
 
     steps:
+      - run: cat $GITHUB_EVENT_PATH
       - uses: dorny/paths-filter@v2
         id: changes
         with:
@@ -99,7 +100,7 @@ jobs:
         if: contains(needs.*.result, 'failure') == false && contains(needs.*.result, 'cancelled') == false
       - run: |
           gh pr comment $number --body "@${author} CI failure"
-          
+          exit 1
         env:
           number: ${{ github.event.number }}
           author: ${{ github.event.user.login }}
