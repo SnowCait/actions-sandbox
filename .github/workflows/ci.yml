@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     outputs:
-      client: ${{ steps.changes.outputs.client != 'true' }}
+      client: ${{ steps.changes.outputs.client }}
       server: ${{ steps.changes.outputs.server }}
 
     steps:
@@ -24,7 +24,7 @@ jobs:
 
   build-client:
     needs: [ paths ]
-    if: needs.paths.outputs.client == 'true' && false
+    if: needs.paths.outputs.client == 'true'
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     defaults:
@@ -33,6 +33,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - run: exit 1
       - run: sh build.sh
 
   test-client:
@@ -92,12 +93,14 @@ jobs:
       - run: echo "$json"
         env:
           json: ${{ toJSON(needs) }}
-      - run: gh pr comment $number --body "@${author} CI passing"
+      - name: Success or Skipped
+        run: gh pr comment $number --body "@${author} CI passing"
         env:
           number: ${{ github.event.number }}
           author: ${{ github.actor }}
         if: contains(needs.*.result, 'failure') == false && contains(needs.*.result, 'cancelled') == false
-      - run: |
+      - name: Failure or Cancelled
+        run: |
           echo '[failure]'
           echo "$needs" | jq -r 'to_entries | map(select(.value.result == "failure")) | .[].key'
           echo '[cancelled]'
