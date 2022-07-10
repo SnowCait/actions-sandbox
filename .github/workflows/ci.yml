@@ -52,6 +52,19 @@ jobs:
       - run: sh build.sh
       - run: sh test.sh
 
+  server-lint:
+    needs: [ paths ]
+    if: needs.paths.outputs.server == 'true'
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: server
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: sh test.sh
+
   server-test:
     needs: [ paths ]
     if: needs.paths.outputs.server == 'true'
@@ -86,7 +99,9 @@ jobs:
     needs:
       - client-lint
       - client-test
+      - server-lint
       - server-test
+      - workflow-lint
     if: always()
     runs-on: ubuntu-20.04
     timeout-minutes: 5
