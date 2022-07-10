@@ -2,10 +2,11 @@ name: CI
 
 on:
   pull_request:
-  workflow_call:
+    types: [ opened, synchronize, reopened, edited ]
 
 jobs:
   paths:
+    if: github.event.action != 'edited' || github.event.changes.base
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     outputs:
