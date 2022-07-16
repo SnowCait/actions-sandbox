@@ -17,7 +17,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
 
     steps:
-      - run: gh api "/search/repositories?q=stars:%3E100&s=stars&type=Repositories&per_page=5" | jq '.'
+      - run: gh api "/search/repositories?q=stars:%3E10000&s=stars&type=Repositories&per_page=5" | jq '.'
       - run: gh api "/search/repositories?q=stars:%3E1&s=stars&type=Repositories&per_page=5" | jq '.items[].fullname'
       - run: gh api "/repos/${GITHUB_REPOSITORY}/git/trees/main" | jq '.'
       - run: gh api "/repos/${GITHUB_REPOSITORY}/contents/" | jq '.'
