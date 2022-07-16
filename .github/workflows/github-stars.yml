@@ -3,6 +3,8 @@ name: GitHub Stars
 # https://github.com/search?q=stars:%3E1&s=stars&type=Repositories
 # https://qiita.com/notakaos/items/e344bbeca52e41df443a
 
+# API request: 2n + 1 (n = repositories)
+
 on:
 #   push:
 #     paths:
