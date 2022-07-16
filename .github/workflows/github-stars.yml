@@ -4,10 +4,10 @@ name: GitHub Stars
 # https://qiita.com/notakaos/items/e344bbeca52e41df443a
 
 on:
-  push:
-    paths:
-      - .github/workflows/github-stars.yml
-      - .github/workflows/github-stars.js
+#   push:
+#     paths:
+#       - .github/workflows/github-stars.yml
+#       - .github/workflows/github-stars.js
   workflow_dispatch:
 
 jobs:
