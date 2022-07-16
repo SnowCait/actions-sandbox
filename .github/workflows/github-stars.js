@@ -21,6 +21,9 @@ module.exports = async ({github}) => {
     // Travis CI
     const TravisCI = root.some(x => x.type == 'file' && x.name == '.travis.yml');
     
+    // Drone
+    const Drone = root.some(x => x.type == 'file' && x.name == '.drone.yml');
+    
     // GitHub Actions
     let GitHubActions = false;
     if (root.some(x => x.type == 'dir' && x.name == '.github')) {
@@ -37,6 +40,7 @@ module.exports = async ({github}) => {
       html_url: repository.html_url,
       CircleCI,
       TravisCI,
+      Drone,
       GitHubActions,
     }
   }));
