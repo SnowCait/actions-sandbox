@@ -19,11 +19,7 @@ module.exports = async ({github}) => {
       });
       console.log(workflows.status);
     } catch (e) {
-      if (e instanceof HttpError) {
-        console.log(e);
-      } else {
-        throw e;
-      }
+      console.log(e);
     }
     const content = await github.rest.repos.getContent({
       owner: repository.owner.login,
