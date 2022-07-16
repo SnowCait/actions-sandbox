@@ -19,7 +19,7 @@ module.exports = async ({github}) => {
       });
       console.log(workflows.status);
     } catch (e) {
-      console.log(e);
+//       console.log(e);
     }
     const content = await github.rest.repos.getContent({
       owner: repository.owner.login,
