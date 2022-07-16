@@ -28,7 +28,11 @@ jobs:
             const result = await script({github});
             console.log('CircleCI', result.filter(x => x.CircleCI).length);
             console.log('Travis CI', result.filter(x => x.TravisCI).length);
+            console.log('Drone', result.filter(x => x.Drone).length);
+            console.log('Azure Pipelines', result.filter(x => x.AzurePipelines).length);
+            console.log('Appveyor', result.filter(x => x.Appveyor).length);
             console.log('GitHub Actions', result.filter(x => x.GitHubActions).length);
+            console.log('None', result.filter(x => !x.CircleCI && !x.TravisCI && !x.Drone && !x.AzurePipelines && !x.Appveyor && !x => x.GitHubActions).length);
             console.log('----------');
             console.log('Total', result.length);
             console.log('==========');
