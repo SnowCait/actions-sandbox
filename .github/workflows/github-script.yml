@@ -20,5 +20,5 @@ jobs:
           script: |
             const fs = require('fs').promises;
             const json = {"a": 1}
-            await fs.writeFile('./ci-services.json', JSON.stringify(json, null, 2));
-      - run: git diff
+            await fs.writeFile('./sample.json', JSON.stringify(json, null, 2));
+      - run: ls -la
