@@ -26,5 +26,5 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            const script = require('./github-stars.js');
+            const script = require('.github/workflows/github-stars.js');
             await script({github, context});
