@@ -1,0 +1,20 @@
+name: GitHub Stars
+
+# https://github.com/search?q=stars:%3E1&s=stars&type=Repositories
+# https://qiita.com/notakaos/items/e344bbeca52e41df443a
+
+on:
+  push:
+    paths:
+      - .github/workflows/github-stars.yml
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+
+    steps:
+      - run: gh api /search/repositories?q=stars:%3E1&s=stars&type=Repositories&per_page=100
