@@ -1,14 +1,13 @@
 module.exports = async ({github}) => {
   // Target repositories
-  const starredRepos = await github.rest.search.repos({
+  const {data: starredRepos} = await github.rest.search.repos({
     q: 'stars:>10000',
     sort: 'stars',
     per_page: 100,
   });
 
   // Each info
-  const repositoryNames = starredRepos.data.items;
-  return await Promise.all(repositoryNames.map(async repository => {
+  return await Promise.all(starredRepos.items.map(async repository => {
     const {data: root} = await github.rest.repos.getContent({
       owner: repository.owner.login,
       repo: repository.name,
