@@ -14,7 +14,7 @@ module.exports = async ({github}) => {
     const content = await github.rest.repos.getContent({
       owner: repository.owner.login,
       repo: repository.name,
-      path: '/',
+      path: '',
     });
     console.log(content.data);
   });
