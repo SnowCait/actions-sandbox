@@ -10,7 +10,7 @@ module.exports = async ({github}) => {
 
   // Each info
   const repositoryNames = starredRepos.data.items;
-  const result = await repositoryNames.map(async repository => {
+  const result = await Promise.all(repositoryNames.map(async repository => {
     const {data: root} = await github.rest.repos.getContent({
       owner: repository.owner.login,
       repo: repository.name,
@@ -36,6 +36,6 @@ module.exports = async ({github}) => {
       CircleCI,
       GitHubActions
     }
-  });
+  }));
   console.log(result);
 }
