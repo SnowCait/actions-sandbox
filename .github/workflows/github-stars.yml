@@ -25,5 +25,6 @@ jobs:
             const script = require('.github/workflows/github-stars.js');
             const result = await script({github});
             console.log('CircleCI', result.filter(x => x.CircleCI).length);
+            console.log('Travis CI', result.filter(x => x.TravisCI).length);
             console.log('GitHub Actions', result.filter(x => x.GitHubActions).length);
             console.log('Total', result.length);
