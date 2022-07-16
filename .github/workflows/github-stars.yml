@@ -28,4 +28,5 @@ jobs:
         with:
           script: |
             const script = require('.github/workflows/github-stars.js');
-            await script({github});
+            const result = await script({github});
+            console.log(result);
