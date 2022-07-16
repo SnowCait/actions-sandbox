@@ -26,3 +26,4 @@ jobs:
             const result = await script({github});
             console.log('CircleCI', result.filter(x => x.CircleCI).length);
             console.log('GitHub Actions', result.filter(x => x.GitHubActions).length);
+            console.log('Total', result.length);
