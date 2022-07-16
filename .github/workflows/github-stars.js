@@ -22,7 +22,7 @@ module.exports = async ({github}) => {
     const CircleCI = root.some(x => x.type == 'dir' && x.name == '.circleci');
     
     // GitHub Actions
-    const GitHubActions = false;
+    let GitHubActions = false;
     if (root.some(x => x.type == 'dir' && x.name == '.github')) {
       const {data: _github} = await github.rest.repos.getContent({
         owner: repository.owner.login,
