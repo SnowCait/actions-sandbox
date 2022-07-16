@@ -27,7 +27,7 @@ module.exports = async ({github}) => {
       const {data: _github} = await github.rest.repos.getContent({
         owner: repository.owner.login,
         repo: repository.name,
-        path: '.github/',
+        path: '.github',
       });
       console.log(_github.map(x => x.name));
       console.log(_github.some(x => x.type == 'dir' && x.name == 'workflows'));
