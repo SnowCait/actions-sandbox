@@ -22,3 +22,7 @@ jobs:
             const json = {"a": 1}
             await fs.writeFile('./sample.json', JSON.stringify(json, null, 2));
       - run: ls -la
+      - run: cat sample.json
+      - run: |
+          git add .
+          git diff
