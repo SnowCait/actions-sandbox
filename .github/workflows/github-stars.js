@@ -16,7 +16,6 @@ module.exports = async ({github}) => {
       repo: repository.name,
       path: '',
     });
-    console.log(root.map(x => x.name));
     
     // CircleCI
     const CircleCI = root.some(x => x.type == 'dir' && x.name == '.circleci');
