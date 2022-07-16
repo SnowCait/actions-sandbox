@@ -23,6 +23,7 @@ jobs:
       - run: gh api "/repos/${GITHUB_REPOSITORY}/git/trees/main" | jq '.'
       - run: gh api "/repos/${GITHUB_REPOSITORY}/contents/" | jq '.'
       - run: gh api "/repos/${GITHUB_REPOSITORY}/contents/.github/workflows/" | jq '.'
+      - uses: actions/checkout@v3
       - uses: actions/github-script@v6
         with:
           script: |
