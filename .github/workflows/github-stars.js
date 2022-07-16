@@ -10,7 +10,7 @@ module.exports = async ({github}) => {
 
   // Each info
   const repositoryNames = starredRepos.data.items;
-  repositoryNames.forEach(async repository => {
+  const result = repositoryNames.map(async repository => {
     const {data: root} = await github.rest.repos.getContent({
       owner: repository.owner.login,
       repo: repository.name,
@@ -19,18 +19,24 @@ module.exports = async ({github}) => {
     console.log(root.map(x => x.name));
     
     // CircleCI
-    console.log('[CircleCI]', root.some(x => x.type == 'dir' && x.name == '.circleci'));
+    const CircleCI = root.some(x => x.type == 'dir' && x.name == '.circleci');
     
     // GitHub Actions
-    console.log('[GitHub Actions]', root.some(x => x.type == 'dir' && x.name == '.github'));
+    const GitHubActions = false;
     if (root.some(x => x.type == 'dir' && x.name == '.github')) {
       const {data: _github} = await github.rest.repos.getContent({
         owner: repository.owner.login,
         repo: repository.name,
         path: '.github',
       });
-      console.log(_github.map(x => x.name));
-      console.log(_github.some(x => x.type == 'dir' && x.name == 'workflows'));
+      GitHubActions = _github.some(x => x.type == 'dir' && x.name == 'workflows');
+    }
+    
+    return {
+      repository: repository.full_name,
+      CircleCI,
+      GitHubActions
     }
   });
+  console.log(result);
 }
