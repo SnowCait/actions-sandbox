@@ -4,5 +4,5 @@ module.exports = async ({github}) => {
     sort: 'stars',
     per_page: 5,
   });
-  console.log(starredRepos);
+  console.log(starredRepos.data);
 }
