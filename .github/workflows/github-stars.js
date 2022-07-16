@@ -5,4 +5,5 @@ module.exports = async ({github}) => {
     per_page: 5,
   });
   console.log(starredRepos.data);
+  console.log(starredRepos.data.items.map(x => x.full_name));
 }
