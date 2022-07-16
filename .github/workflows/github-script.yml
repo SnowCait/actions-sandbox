@@ -1,17 +1,19 @@
 name: github-script
 
 on:
-  issues:
-    types: [opened]
+  workflow_dispatch:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     
     steps:
-    - uses: actions/github-script@v6
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          github.issues.createComment({...context.issue, body: '👋 Thanks for reporting! via [github-script.yml](https://github.com/SnowCait/action-sandbox/blob/master/.github/workflows/github-script.yml)'})
+      - uses: actions/checkout@v3
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs').promises;
+            const json = {"a": 1}
+            await fs.writeFile('./ci-services.json', JSON.stringify(result, null, 2));
+      - run: git diff
