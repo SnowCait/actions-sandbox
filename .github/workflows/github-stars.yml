@@ -17,4 +17,4 @@ jobs:
       GH_TOKEN: ${{ github.token }}
 
     steps:
-      - run: gh api /search/repositories?q=stars:%3E1&s=stars&type=Repositories&per_page=100
+      - run: gh api "/search/repositories?q=stars:%3E1&s=stars&type=Repositories&per_page=5"
