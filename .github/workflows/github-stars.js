@@ -27,6 +27,9 @@ module.exports = async ({github}) => {
     // Azure Pipelines
     const AzurePipelines = root.some(x => x.type == 'file' && x.name == 'azure-pipelines.yml');
     
+    // Appveyor
+    const Appveyor = root.some(x => x.type == 'file' && x.name == 'appveyor.yml');
+    
     // GitHub Actions
     let GitHubActions = false;
     if (root.some(x => x.type == 'dir' && x.name == '.github')) {
@@ -45,6 +48,7 @@ module.exports = async ({github}) => {
       TravisCI,
       Drone,
       AzurePipelines,
+      Appveyor,
       GitHubActions,
     }
   }));
