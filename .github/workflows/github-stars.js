@@ -1,5 +1,3 @@
-const { RequestError } = require("@octokit/request-error");
-
 module.exports = async ({github}) => {
   // Target repositories
   const starredRepos = await github.rest.search.repos({
@@ -21,7 +19,7 @@ module.exports = async ({github}) => {
       });
       console.log(workflows.status);
     } catch (e) {
-      if (e instanceof RequestError) {
+      if (e instanceof HttpError) {
         console.log(e);
       } else {
         throw e;
