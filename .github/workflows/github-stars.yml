@@ -32,7 +32,7 @@ jobs:
             console.log('Azure Pipelines', result.filter(x => x.AzurePipelines).length);
             console.log('Appveyor', result.filter(x => x.Appveyor).length);
             console.log('GitHub Actions', result.filter(x => x.GitHubActions).length);
-            console.log('None', result.filter(x => !x.CircleCI && !x.TravisCI && !x.Drone && !x.AzurePipelines && !x.Appveyor && !x => x.GitHubActions).length);
+            console.log('None', result.filter(x => !x.CircleCI && !x.TravisCI && !x.Drone && !x.AzurePipelines && !x.Appveyor && !x.GitHubActions).length);
             console.log('----------');
             console.log('Total', result.length);
             console.log('==========');
