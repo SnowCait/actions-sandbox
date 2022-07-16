@@ -42,7 +42,7 @@ module.exports = async ({github}) => {
     
     return {
       repository: repository.full_name,
-      html_url: repository.html_url,
+      url: repository.html_url,
       CircleCI,
       TravisCI,
       Drone,
