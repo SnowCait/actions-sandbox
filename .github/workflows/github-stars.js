@@ -1,7 +1,7 @@
 module.exports = async ({github}) => {
   // Target repositories
   const starredRepos = await github.rest.search.repos({
-    q: 'stars:>100000',
+    q: 'stars:>10000',
     sort: 'stars',
     per_page: 100,
   });
