@@ -1,5 +1,6 @@
-import { RequestError } from "@octokit/request-error";
 module.exports = async ({github}) => {
+  import { RequestError } from "@octokit/request-error";
+
   // Target repositories
   const starredRepos = await github.rest.search.repos({
     q: 'stars:>100000',
