@@ -24,12 +24,13 @@ module.exports = async ({github}) => {
     // GitHub Actions
     console.log('[GitHub Actions]', root.some(x => x.type == 'dir' && x.name == '.github'));
     if (root.some(x => x.type == 'dir' && x.name == '.github')) {
-      const _github = await github.rest.repos.getContent({
+      const {data: _github} = await github.rest.repos.getContent({
         owner: repository.owner.login,
         repo: repository.name,
         path: '.github/',
       });
-      console.log(root.some(x => x.type == 'dir' && x.name == 'workflows'));
+      console.log(_github.map(x => x.name));
+      console.log(_github.some(x => x.type == 'dir' && x.name == 'workflows'));
     }
   });
 }
