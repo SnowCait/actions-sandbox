@@ -1,0 +1,33 @@
+name: GitHub Stars
+
+# https://github.com/search?q=stars:%3E1&s=stars&type=Repositories
+# https://qiita.com/notakaos/items/e344bbeca52e41df443a
+
+on:
+#   push:
+#     paths:
+#       - .github/workflows/github-stars.yml
+#       - .github/workflows/github-stars.js
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const script = require('.github/workflows/github-stars.js');
+            const result = await script({github});
+            console.log('CircleCI', result.filter(x => x.CircleCI).length);
+            console.log('Travis CI', result.filter(x => x.TravisCI).length);
+            console.log('GitHub Actions', result.filter(x => x.GitHubActions).length);
+            console.log('----------');
+            console.log('Total', result.length);
+            console.log('==========');
+            console.log(result);
