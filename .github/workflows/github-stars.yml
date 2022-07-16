@@ -7,6 +7,7 @@ on:
   push:
     paths:
       - .github/workflows/github-stars.yml
+      - .github/workflows/github-stars.js
   workflow_dispatch:
 
 jobs:
@@ -22,3 +23,8 @@ jobs:
       - run: gh api "/repos/${GITHUB_REPOSITORY}/git/trees/main" | jq '.'
       - run: gh api "/repos/${GITHUB_REPOSITORY}/contents/" | jq '.'
       - run: gh api "/repos/${GITHUB_REPOSITORY}/contents/.github/workflows/" | jq '.'
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const script = require('./github-stars.js');
+            await script({github, context});
