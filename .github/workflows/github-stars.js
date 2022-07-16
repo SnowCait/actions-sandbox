@@ -10,7 +10,7 @@ module.exports = async ({github}) => {
 
   // Each info
   const repositoryNames = starredRepos.data.items;
-  const result = repositoryNames.map(async repository => {
+  const result = await repositoryNames.map(async repository => {
     const {data: root} = await github.rest.repos.getContent({
       owner: repository.owner.login,
       repo: repository.name,
