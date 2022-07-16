@@ -16,7 +16,7 @@ module.exports = async ({github}) => {
       repo: repository.name,
       path: '.github/workflows/',
     });
-    console.log(workflows);
+    console.log(workflows.status);
     const content = await github.rest.repos.getContent({
       owner: repository.owner.login,
       repo: repository.name,
