@@ -11,6 +11,12 @@ module.exports = async ({github}) => {
   // Each info
   const repositoryNames = starredRepos.data.items;
   repositoryNames.forEach(async repository => {
+    const workflows = await github.rest.repos.getContent({
+      owner: repository.owner.login,
+      repo: repository.name,
+      path: '.github/workflows/',
+    });
+    console.log(workflows);
     const content = await github.rest.repos.getContent({
       owner: repository.owner.login,
       repo: repository.name,
