@@ -27,4 +27,7 @@ jobs:
             console.log('CircleCI', result.filter(x => x.CircleCI).length);
             console.log('Travis CI', result.filter(x => x.TravisCI).length);
             console.log('GitHub Actions', result.filter(x => x.GitHubActions).length);
+            console.log('----------');
             console.log('Total', result.length);
+            console.log('==========');
+            console.log(result);
