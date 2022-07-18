@@ -1,0 +1,31 @@
+name: 'if: success()'
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  job-success:
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit
+
+  job-skipped:
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit
+
+  job-needs:
+    needs: [ job-success, job-skipped ]
+    if: failure() == false
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit
+
+  job-needs-success:
+    needs: [ job-needs ]
+    if: success()
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit
