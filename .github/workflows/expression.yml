@@ -50,9 +50,14 @@ jobs:
 
     steps:
       - run: exit 1
+        id: failure
       - run: echo success
         if: success()
       - run: echo cancelled
         if: cancelled()
       - run: echo failure
+        if: failure()
+      - run: echo "$json"
+        env:
+          json: ${{ toJSON(steps) }}
         if: failure()
