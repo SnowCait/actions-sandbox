@@ -7,7 +7,18 @@ on:
   workflow_dispatch:
 
 jobs:
+  re-run:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 5
+    steps:
+      - run: exit 1
+        id: fail
+      - run: echo "${{ toJSON(steps) }}"
+        if: failure() && steps.fail.outcome == 'failure'
+        
+
   build:
+    if: false
     runs-on: ubuntu-20.04
     timeout-minutes: 1
     env:
