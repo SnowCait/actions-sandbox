@@ -7,13 +7,26 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  timeout:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
     steps:
       - run: sleep 2m
         timeout-minutes: 1
+      - run: echo success
+        if: success()
+      - run: echo cancelled
+        if: cancelled()
+      - run: echo failure
+        if: failure()
+
+  failure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - run: exit 1
       - run: echo success
         if: success()
       - run: echo cancelled
