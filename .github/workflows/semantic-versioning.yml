@@ -43,7 +43,7 @@ jobs:
             "major")
               ((major++)); minor=0; patch=0;;
             "minor")
-              ((++minor)); patch=0;;
+              ((minor++)); patch=0;;
             "patch")
               ((patch++));;
           esac
