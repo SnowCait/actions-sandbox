@@ -32,6 +32,6 @@ jobs:
       - id: increment-version
         uses: cookbenjamin/update-version@v1.0.1
         with:
-          current-version: ${{ steps.current-version.outputs.version }}
+          current-version: 1.0.0
           increment-version-fragment: ${{ github.event.inputs.semantic }}
       - run: echo ${{ steps.increment-version.outputs.updated-version }}
