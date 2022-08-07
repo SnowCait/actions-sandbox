@@ -3,7 +3,7 @@ name: Semantic versioning
 on:
   workflow_dispatch:
     inputs:
-      semantic:
+      increment:
         description: Semantic versioning
         required: true
         default: patch
@@ -19,19 +19,34 @@ jobs:
     timeout-minutes: 5
     env:
       GH_TOKEN: ${{ github.token }}
+      increment: ${{ github.event.inputs.increment }}
 
     steps:
       - run: echo $semantic
-        env:
-          semantic: ${{ github.event.inputs.semantic }}
       - run: gh api /repos/${GITHUB_REPOSITORY}/releases/latest
-      - id: current-version
-        run: |
+      - run: |
           tag=$(gh api /repos/${GITHUB_REPOSITORY}/releases/latest --jq '.tag_name')
-          echo "set-output:: name=version::$tag"
-      - id: increment-version
-        uses: cookbenjamin/update-version@v1.0.1
-        with:
-          current-version: 1.0.0
-          increment-version-fragment: PATCH
-      - run: echo ${{ steps.increment-version.outputs.updated-version }}
+          echo "version=$tag" >> $GITHUB_ENV
+      # cookbenjamin/update-version@v1.0.1 はちょっと使いにくかった
+      - run: |
+          set -x
+          
+          if [[ ${version} =~ ^(v?)([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; then
+            prefix=${BASH_REMATCH[1]}
+            major=${BASH_REMATCH[2]}
+            minor=${BASH_REMATCH[3]}
+            patch=${BASH_REMATCH[4]}
+          fi
+          
+          shopt -s nocasematch
+          case "$increment" in
+            "major")
+              ((++major)); minor=0; patch=0;;
+            "minor")
+              ((++minor)); patch=0;;
+            "patch")
+              ((++patch));;
+          esac
+          
+          next_version="${prefix}${major}.${minor}.${patch}"
+          echo $next_version
