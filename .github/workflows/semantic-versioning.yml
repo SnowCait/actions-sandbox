@@ -33,5 +33,5 @@ jobs:
         uses: cookbenjamin/update-version@v1.0.1
         with:
           current-version: 1.0.0
-          increment-version-fragment: ${{ github.event.inputs.semantic }}
+          increment-version-fragment: PATCH
       - run: echo ${{ steps.increment-version.outputs.updated-version }}
