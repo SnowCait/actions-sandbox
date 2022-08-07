@@ -16,8 +16,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
 
     steps:
       - run: echo $semantic
         env:
           semantic: ${{ github.event.inputs.semantic }}
+      - run: gh api /repos/${GITHUB_REPOSITORY}/releases/latest
+      - run: gh api /repos/${GITHUB_REPOSITORY}/releases/latest --jq '.tag_name'
