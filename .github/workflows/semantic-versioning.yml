@@ -41,11 +41,11 @@ jobs:
           shopt -s nocasematch
           case "$increment" in
             "major")
-              ((major++)); minor=0; patch=0;;
+              ((++major)); minor=0; patch=0;;
             "minor")
-              ((minor++)); patch=0;;
+              ((++minor)); patch=0;;
             "patch")
-              ((patch++));;
+              ((++patch));;
           esac
           
           next_version="${prefix}${major}.${minor}.${patch}"
