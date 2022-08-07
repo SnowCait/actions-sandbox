@@ -25,4 +25,13 @@ jobs:
         env:
           semantic: ${{ github.event.inputs.semantic }}
       - run: gh api /repos/${GITHUB_REPOSITORY}/releases/latest
-      - run: gh api /repos/${GITHUB_REPOSITORY}/releases/latest --jq '.tag_name'
+      - id: current-version
+        run: |
+          tag=$(gh api /repos/${GITHUB_REPOSITORY}/releases/latest --jq '.tag_name')
+          echo "set-output:: name=version::$tag"
+      - id: increment-version
+        uses: cookbenjamin/update-version@v1.0.1
+        with:
+          current-version: ${{ steps.current-version.outputs.version }}
+          increment-version-fragment: ${{ github.event.inputs.semantic }}
+      - run: echo ${{ steps.increment-version.outputs.updated-version }}
