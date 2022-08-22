@@ -31,6 +31,7 @@ jobs:
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - uses: actions/checkout@v3
+      - run: gh pr view $pr_number --json files --jq '.files'
       - run: gh pr view $pr_number --json files --jq '.files[].path'
       - run: yamllint -c .github/.yamllint $(gh pr view $pr_number --json files --jq '.files[].path')
 
