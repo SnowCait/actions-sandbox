@@ -22,7 +22,7 @@ jobs:
       - name: Check workflow files
         run: |
           bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
-          ./actionlint -color -shellcheck= -pyflakes= $(gh pr view $pr_number --json files --jq '.files[].path')
+          ./actionlint -color -shellcheck= -pyflakes= $(gh pr view $pr_number --json files --jq '.files[].path') # ファイルの削除を区別できないのでファイル削除するとエラー
 
   yamllint:
     runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v3
       - run: gh pr view $pr_number --json files --jq '.files'
       - run: gh pr view $pr_number --json files --jq '.files[].path'
-      - run: yamllint -c .github/.yamllint $(gh pr view $pr_number --json files --jq '.files[].path')
+      - run: yamllint -c .github/.yamllint $(gh pr view $pr_number --json files --jq '.files[].path') # ファイルの削除を区別できないのでファイル削除するとエラー
 
   yamllint-with-reviewdog:
     runs-on: ubuntu-latest
