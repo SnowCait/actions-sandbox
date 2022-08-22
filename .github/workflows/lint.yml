@@ -7,27 +7,40 @@ on:
       - .github/workflows/*.yml
   workflow_dispatch:
 
-# env:
-#   GH_TOKEN: ${{ github.token }}
+env:
+  GH_TOKEN: ${{ github.token }}
+  pr_number: ${{ github.event.number }}
 
 jobs:
-#   yamllint:
-#     runs-on: ubuntu-latest
-#     timeout-minutes: 5
+  actionlint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
 
-#     steps:
-#       - run: cat $GITHUB_EVENT_PATH
-#       - uses: actions/checkout@v3
-#       - run: gh pr view $number --json files --jq '.files[].path'
-#         env:
-#           number: ${{ github.event.number }}
-#       - run: yamllint -c .github/.yamllint $(gh pr view $number --json files --jq '.files[].path')
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - uses: actions/checkout@v3
+      - name: Check workflow files
+        run: |
+          bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+          ./actionlint -color -shellcheck= -pyflakes= $(gh pr view $pr_number --json files --jq '.files[].path') # ファイルの削除を区別できないのでファイル削除するとエラー
+
+  yamllint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - uses: actions/checkout@v3
+      - run: gh pr view $pr_number --json files --jq '.files'
+      - run: gh pr view $pr_number --json files --jq '.files[].path'
+      - run: yamllint -c .github/.yamllint $(gh pr view $pr_number --json files --jq '.files[].path') # ファイルの削除を区別できないのでファイル削除するとエラー
 
   yamllint-with-reviewdog:
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
     steps:
+      - run: cat $GITHUB_EVENT_PATH
       - uses: actions/checkout@v3
       - uses: reviewdog/action-yamllint@v1.6.0
         with:
@@ -38,6 +51,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
+      - run: cat $GITHUB_EVENT_PATH
       - uses: actions/checkout@v3
       - uses: reviewdog/action-actionlint@v1
         with:
