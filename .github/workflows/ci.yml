@@ -23,7 +23,7 @@ jobs:
             server:
               - 'server/**'
             workflow:
-              - '.github/workflows/ci.yml'
+              - '.github/workflows/*.yml'
 
   client-lint:
     needs: [ paths ]
