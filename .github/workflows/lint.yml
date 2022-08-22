@@ -7,6 +7,10 @@ on:
       - .github/workflows/*.yml
   workflow_dispatch:
 
+env:
+  GH_TOKEN: ${{ github.token }}
+  pr_number: ${{ github.event.number }}
+
 jobs:
   actionlint:
     runs-on: ubuntu-latest
@@ -18,21 +22,17 @@ jobs:
       - name: Check workflow files
         run: |
           bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
-          ./actionlint -color -shellcheck= -pyflakes=
+          ./actionlint -color -shellcheck= -pyflakes= $(gh pr view $pr_number --json files --jq '.files[].path')
 
   yamllint:
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    env:
-      GH_TOKEN: ${{ github.token }}
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - uses: actions/checkout@v3
-      - run: gh pr view $number --json files --jq '.files[].path'
-        env:
-          number: ${{ github.event.number }}
-      - run: yamllint -c .github/.yamllint $(gh pr view $number --json files --jq '.files[].path')
+      - run: gh pr view $pr_number --json files --jq '.files[].path'
+      - run: yamllint -c .github/.yamllint $(gh pr view $pr_number --json files --jq '.files[].path')
 
   yamllint-with-reviewdog:
     runs-on: ubuntu-latest
