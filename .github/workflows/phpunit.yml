@@ -16,7 +16,8 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - run: seq $parallelism | jq -R
+      - run: seq $parallelism | jq -s
+      - run: seq $parallelism | jq -s -R
 
   phpunit:
     if: false
