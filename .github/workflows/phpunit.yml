@@ -6,8 +6,20 @@ on:
       - .github/workflows/phpunit.yml
       - phpunit/**/*
 
+env:
+  parallelism: 5
+
 jobs:
+  parallelism:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - run: seq $parallelism
+
   phpunit:
+    if: false
     runs-on: ubuntu-latest
     defaults:
       run:
