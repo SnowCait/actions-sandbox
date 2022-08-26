@@ -37,8 +37,8 @@ jobs:
         working-directory: phpunit
 
     steps:
-      - run: echo ${{ matrix.id }}
       - uses: actions/checkout@v3
+      - run: echo ${{ matrix.id }}
 
   phpunit:
     if: false
