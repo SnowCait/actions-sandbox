@@ -31,7 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        id: ${{ needs.parallelism.outputs.matrix }}
+        id: ${{ fromJSON(needs.parallelism.outputs.matrix) }}
     defaults:
       run:
         working-directory: phpunit
