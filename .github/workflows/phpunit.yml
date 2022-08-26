@@ -13,11 +13,32 @@ jobs:
   parallelism:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    outputs:
+      matrix: ${{ steps.matrix.outputs.json }}
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - run: seq $parallelism | jq -s -c
       - run: jq --null-input --compact-output "[range(${parallelism})]"
+      - id: matrix
+        run: |
+          matrix=$(jq --null-input --compact-output "[range(${parallelism})]")
+          echo "::set-output name=json::${matrix}"
+
+  phpunit-parallelism:
+    needs: [ parallelism ]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        id: ${{ needs.parallelism.outputs.matrix }}
+    defaults:
+      run:
+        working-directory: phpunit
+
+    steps:
+      - run: echo ${{ matrix.id }}
+      - uses: actions/checkout@v3
 
   phpunit:
     if: false
