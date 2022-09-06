@@ -13,7 +13,7 @@ jobs:
       - run: echo ${{ github.event.repository.default_branch }}
       
       # API
-      - uses: octokit/request-action@v2.x
+      - uses: octokit/request-action@v2.1.6
         id: repo
         with:
           route: GET /repos/${{ github.repository }}
