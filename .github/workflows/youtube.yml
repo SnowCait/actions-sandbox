@@ -1,0 +1,22 @@
+name: YouTube API
+
+on:
+  workflow_dispatch:
+    inputs:
+      video:
+        required: true
+        description: Video ID
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - run: |
+          curl -sS https://www.googleapis.com/youtube/v3/commentThreads?key=${token}&videoId=${video}&part=snippet \
+            | jq '.items.snippet.topLevelComment.snippet.authorProfileImageUrl'
+            | sort | uniq
+        env:
+          token: ${{ secrets.YOUTUBE_API_TOKEN }}
+          video: ${{ inputs.video }}
