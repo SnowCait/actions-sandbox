@@ -15,8 +15,13 @@ jobs:
     steps:
       - run: |
           curl -sS "https://www.googleapis.com/youtube/v3/commentThreads?key=${token}&videoId=${video}&part=snippet" \
-            | jq '.items[].snippet.topLevelComment.snippet.authorProfileImageUrl' \
-            | sort | uniq
+            | jq -r '.items[].snippet.topLevelComment.snippet.authorProfileImageUrl' \
+            | sort | uniq | wget
         env:
           token: ${{ secrets.YOUTUBE_API_TOKEN }}
           video: ${{ inputs.video }}
+      - run: ls -l
+      - uses: actions/upload-artifact@v3
+        with:
+          name: icons
+          path: .
