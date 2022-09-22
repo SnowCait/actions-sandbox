@@ -16,7 +16,7 @@ jobs:
       - run: |
           curl -sS "https://www.googleapis.com/youtube/v3/commentThreads?key=${token}&videoId=${video}&part=snippet" \
             | jq -r '.items[].snippet.topLevelComment.snippet.authorProfileImageUrl' \
-            | sort | uniq | wget
+            | sort | uniq | xargs wget
         env:
           token: ${{ secrets.YOUTUBE_API_TOKEN }}
           video: ${{ inputs.video }}
