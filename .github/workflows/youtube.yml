@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - run: |
-          curl -sS https://www.googleapis.com/youtube/v3/commentThreads?key=${token}&videoId=${video}&part=snippet \
+          curl -sS "https://www.googleapis.com/youtube/v3/commentThreads?key=${token}&videoId=${video}&part=snippet" \
             | jq '.items.snippet.topLevelComment.snippet.authorProfileImageUrl' \
             | sort | uniq
         env:
