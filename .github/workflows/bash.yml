@@ -16,7 +16,7 @@ jobs:
       - run: nproc
       - run: echo 'abc' | grep 'd' | tee filtered
       - run: cat filtered
-      - run: echo "`pwd`"
+      - run: echo "\`pwd\`"
 
   test:
     if: false
