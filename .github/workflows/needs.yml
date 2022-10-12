@@ -20,4 +20,6 @@ jobs:
     if: success()
     runs-on: ubuntu-latest
     steps:
-      - run: echo
+      - run: echo "$needs"
+        env:
+          needs: toJSON(needs)
