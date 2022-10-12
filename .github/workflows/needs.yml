@@ -22,4 +22,4 @@ jobs:
     steps:
       - run: echo "$needs"
         env:
-          needs: toJSON(needs)
+          needs: ${{ toJSON(needs) }}
