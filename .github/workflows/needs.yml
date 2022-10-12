@@ -1,0 +1,22 @@
+name: needs
+
+on:
+  push:
+    paths:
+      - .github/workflows/needs.yml
+
+jobs:
+  job-1:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo
+  job-2:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo
+  passing:
+    needs: [ job-1, job-2 ]
+    if: success()
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo
