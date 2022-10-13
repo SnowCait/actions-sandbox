@@ -11,13 +11,13 @@ jobs:
     steps:
       - run: echo
   job-2:
-    #if: false
+    if: false
     runs-on: ubuntu-latest
     steps:
       - run: echo
   passing:
     needs: [ job-1, job-2 ]
-    if: ${{ !failure() }}
+    #if: ${{ !failure() }}
     runs-on: ubuntu-latest
     steps:
       - run: echo "$needs"
