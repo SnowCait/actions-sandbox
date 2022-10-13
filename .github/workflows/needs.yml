@@ -25,7 +25,7 @@ jobs:
           needs: ${{ toJSON(needs) }}
   notify:
     needs: passing
-    if: ${{ !failure() }}
+    if: ${{ success() }}
     runs-on: ubuntu-latest
     steps:
       - run: echo "$needs"
