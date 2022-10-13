@@ -23,3 +23,11 @@ jobs:
       - run: echo "$needs"
         env:
           needs: ${{ toJSON(needs) }}
+  notify:
+    needs: passing
+    if: ${{ !failure() }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "$needs"
+        env:
+          needs: ${{ toJSON(needs) }}
