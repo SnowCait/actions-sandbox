@@ -17,6 +17,8 @@ jobs:
       - run: echo 'abc' | grep 'd' | tee filtered
       - run: cat filtered
       - run: echo "\`pwd\`"
+      - run: echo "${GITHUB_REF_NAME}"
+      - run: echo "${GITHUB_REF_NAME/\/-}"
 
   test:
     if: false
