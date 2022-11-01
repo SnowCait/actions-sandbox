@@ -40,16 +40,13 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: master
-
       - uses: actions/download-artifact@v3
-        with:
-          path: docs
+        # with:
+        #   path: docs
 
       - run: ls -R
-        working-directory: docs
+        # working-directory: docs
+      - run: exit 1
       
       - name: Deploy to GitHub Pages
         run: |
