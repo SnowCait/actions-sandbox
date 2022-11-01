@@ -41,7 +41,8 @@ jobs:
 
     steps:
       - uses: actions/download-artifact@v3
-        # with:
+        with:
+          name: my-artifact-1
         #   path: docs
 
       - run: ls -R
