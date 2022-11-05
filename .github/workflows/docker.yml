@@ -8,6 +8,7 @@ on:
 
 jobs:
   pre-installed:
+    if: false
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     env:
@@ -20,6 +21,7 @@ jobs:
       - run: mysql -uroot -e "SELECT VERSION()"
 
   service-container-on-host:
+    if: false
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     env:
@@ -52,6 +54,7 @@ jobs:
 #         if: always()
 
   service-container-on-container:
+    if: false
     runs-on: ubuntu-20.04
     container: mysql:8.0.29 # 実際は Node.js や PHP などのアプリコンテナ
     timeout-minutes: 5
@@ -73,6 +76,7 @@ jobs:
       - run: mysql -hmysql-server -uroot -e "SHOW DATABASES"
 
   docker:
+    if: false
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     env:
@@ -111,6 +115,7 @@ jobs:
 #         if: always()
 
   docker-compose:
+    if: false
     runs-on: ubuntu-20.04
     timeout-minutes: 5
     env:
@@ -132,3 +137,17 @@ jobs:
       - run: docker compose exec -T -e MYSQL_PWD=${MYSQL_PWD} mysql-server mysql -uroot -e "SHOW DATABASES"
 #       - run: docker compose logs
 #         if: always()
+
+  docker-compose-mysql:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      MYSQL_PWD: root
+    defaults:
+      run:
+        working-directory: docker
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: docker compose up -d --wait
+      - run: mysql -uroot -e "SHOW DATABASES"
