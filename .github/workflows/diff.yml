@@ -29,7 +29,7 @@ jobs:
         run: |
           curl -sS \
             -H "Accept: application/vnd.github.v3.diff" \
-            -H "Authorization: Bearer ${token}" \
+            #-H "Authorization: Bearer ${token}" \
             https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${number}
         env:
           token: ${{ github.token }}
@@ -38,7 +38,7 @@ jobs:
         run: |
           curl -sS \
             -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${token}" \
+            #-H "Authorization: Bearer ${token}" \
             https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${number}/files \
             | jq -r '.[].filename'
         env:
