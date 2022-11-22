@@ -9,16 +9,17 @@ jobs:
   diff:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }} # チェックアウトしていれば不要
+      number: ${{ github.event.number }}
     steps:
       - run: gh pr diff ${number}
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }} # チェックアウトしていれば不要
-          number: ${{ github.event.number }}
+      - run: gh pr diff ${number} --name-only
       - uses: actions/checkout@v3
         with:
           depth: 0
-      - run: git diff ${GITHUB_BASE_REF}...${GITHUB_HEAD_REF}
+      - run: git diff ${GITHUB_HEAD_REF}...${GITHUB_BASE_REF}
       - run: git diff ${GITHUB_BASE_REF}..${GITHUB_HEAD_REF}
       - run: git diff ${GITHUB_BASE_REF} ${GITHUB_HEAD_REF}
 
