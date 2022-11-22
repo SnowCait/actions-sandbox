@@ -13,4 +13,5 @@ jobs:
       - run: gh pr diff ${number}
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }} # チェックアウトしていれば不要
           number: ${{ github.event.number }}
