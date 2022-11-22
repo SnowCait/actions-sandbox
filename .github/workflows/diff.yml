@@ -29,3 +29,9 @@ jobs:
       - run: echo "${json}"
         env:
           json: ${{ toJSON(steps.changed-files.outputs) }}
+
+      - uses: jitterbit/get-changed-files@v1
+        id: files
+      - run: echo "${json}"
+        env:
+          json: ${{ toJSON(steps.files-outputs) }}
