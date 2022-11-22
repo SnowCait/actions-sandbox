@@ -32,6 +32,14 @@ jobs:
         env:
           token: ${{ github.token }}
 
+      - run: |
+          curl -sS \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${token}" \
+            https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${number}/files
+        env:
+          token: ${{ github.token }}
+
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
