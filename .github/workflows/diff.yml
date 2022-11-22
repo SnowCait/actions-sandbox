@@ -20,8 +20,12 @@ jobs:
         with:
           fetch-depth: 0
       - run: ls -la
-      - run: git diff ${GITHUB_BASE_REF}
-      - run: git diff ${GITHUB_BASE_REF}...${GITHUB_HEAD_REF} --
-      - run: git diff ${GITHUB_BASE_REF}..${GITHUB_HEAD_REF}
-      - run: git diff ${GITHUB_BASE_REF} ${GITHUB_HEAD_REF}
+      - run: git diff origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF}
+      - run: git diff origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF}
+      - run: git diff origin/${GITHUB_BASE_REF} origin/${GITHUB_HEAD_REF}
 
+      - uses: tj-actions/changed-files@v34
+        id: changed-files
+      - run: echo "${json}"
+        env:
+          json: ${{ toJSON(steps.changed-files.outputs)
