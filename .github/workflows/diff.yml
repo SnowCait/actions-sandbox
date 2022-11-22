@@ -39,8 +39,9 @@ jobs:
             | jq -r '.[].filename'
 
       - run: |
-          gh api -H "Accept: application/vnd.github.v3.diff" \
-            /repos/${GITHUB_REPOSITORY}/pulls/${number}'
+          gh api \
+            -H "Accept: application/vnd.github.v3.diff" \
+            /repos/${GITHUB_REPOSITORY}/pulls/${number}
       - run: gh api /repos/${GITHUB_REPOSITORY}/pulls/${number}/files --jq '.[].filename'
 
       - uses: actions/checkout@v3
