@@ -59,9 +59,9 @@ jobs:
 
       - uses: tj-actions/changed-files@v34
         id: changed-files
-      - run: echo "${json}"
-        env:
-          json: ${{ toJSON(steps.changed-files.outputs) }}
+      # - run: echo "${json}"
+      #   env:
+      #     json: ${{ toJSON(steps.changed-files.outputs) }}
 
       - uses: jitterbit/get-changed-files@v1
         id: files
