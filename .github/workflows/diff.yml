@@ -15,3 +15,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }} # チェックアウトしていれば不要
           number: ${{ github.event.number }}
+      - uses: actions/checkout@v3
+        with:
+          depth: 0
+      - run: git diff ${GITHUB_BASE}...${GITHUB_HEAD}
+      - run: git diff ${GITHUB_BASE}..${GITHUB_HEAD}
+      - run: git diff ${GITHUB_BASE} ${GITHUB_HEAD}
+
