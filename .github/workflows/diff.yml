@@ -18,16 +18,17 @@ jobs:
       - run: gh pr diff ${number} --name-only
       
       - run: |
-          json=$(curl \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${number})
-          curl $(echo "${json}" | jq '.diff_url')
-
-      - run: |
           curl \
             -H "Accept: application/vnd.github+json" \
             -H "Accept: application/vnd.github.v3.diff" \
             https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${number}
+
+      - run: |
+          json=$(curl \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${number})
+          
+          curl $(echo "${json}" | jq '.diff_url')
 
       - uses: actions/checkout@v3
         with:
