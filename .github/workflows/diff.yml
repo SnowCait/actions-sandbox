@@ -1,0 +1,15 @@
+name: PR diff
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/diff.yml
+
+jobs:
+  diff:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: gh pr diff ${number}
+        env:
+          number: ${{ github.event.number }}
