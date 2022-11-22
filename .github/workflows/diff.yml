@@ -18,11 +18,11 @@ jobs:
       - run: gh pr diff ${number} --name-only
       
       - run: |
-          json=$(curl \
+          json=$(curl -sS \
             -H "Accept: application/vnd.github+json" \
             https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${number})
           echo "${json}" | jq -r '.diff_url'
-          curl $(echo "${json}" | jq -r '.diff_url')
+          curl -sS $(echo "${json}" | jq -r '.diff_url')
 
       - run: |
           curl \
