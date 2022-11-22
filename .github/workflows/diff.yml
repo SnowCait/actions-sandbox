@@ -26,7 +26,6 @@ jobs:
 
       - run: |
           curl -sS \
-            -H "Accept: application/vnd.github+json" \
             -H "Accept: application/vnd.github.v3.diff" \
             -H "Authorization: Bearer ${token}" \
             https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${number}
