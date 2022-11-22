@@ -16,14 +16,17 @@ jobs:
     steps:
       - run: gh pr diff ${number}
       - run: gh pr diff ${number} --name-only
+      - run: gh pr diff ${number} --name-only | wc -l
       
-      - run: |
+      - name: diff_url (public repository only)
+        run: |
           json=$(curl -sS \
             -H "Accept: application/vnd.github+json" \
             https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${number})
           curl -sS -L $(echo "${json}" | jq -r '.diff_url')
 
-      - run: |
+      - name: API diff
+        run: |
           curl -sS \
             -H "Accept: application/vnd.github.v3.diff" \
             -H "Authorization: Bearer ${token}" \
@@ -31,7 +34,8 @@ jobs:
         env:
           token: ${{ github.token }}
 
-      - run: |
+      - name: API files
+        run: |
           curl -sS \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${token}" \
@@ -49,6 +53,7 @@ jobs:
       - run: git diff --name-only origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF}
       - run: git diff --name-only origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF}
       - run: git diff --name-only origin/${GITHUB_BASE_REF} origin/${GITHUB_HEAD_REF}
+      - run: git diff --name-only origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} | wc -l
 
       - uses: tj-actions/changed-files@v34
         id: changed-files
