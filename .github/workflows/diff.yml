@@ -18,24 +18,26 @@ jobs:
       - run: gh pr diff ${number} --name-only
       - run: gh pr diff ${number} --name-only | wc -l
       
+      - run: echo $GITHUB_API_URL
+      
       - name: diff_url (public repository only)
         run: |
           json=$(curl -sS \
             -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${number})
+            ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls/${number})
           curl -sS -L $(echo "${json}" | jq -r '.diff_url')
 
       - name: API diff
         run: |
           curl -sS \
             -H "Accept: application/vnd.github.v3.diff" \
-            https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${number}
+            ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls/${number}
 
       - name: API files
         run: |
           curl -sS \
             -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${number}/files \
+            ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls/${number}/files \
             | jq -r '.[].filename'
 
       - run: |
