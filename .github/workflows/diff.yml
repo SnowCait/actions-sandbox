@@ -28,4 +28,4 @@ jobs:
         id: changed-files
       - run: echo "${json}"
         env:
-          json: ${{ toJSON(steps.changed-files.outputs)
+          json: ${{ toJSON(steps.changed-files.outputs) }}
