@@ -45,7 +45,7 @@ jobs:
             -H "Accept: application/vnd.github.v3.diff" \
             /repos/${GITHUB_REPOSITORY}/pulls/${number}
       - run: gh api /repos/${GITHUB_REPOSITORY}/pulls/${number}/files --jq '.[].filename'
-      - run: curl -sS $(gh api /repos/${GITHUB_REPOSITORY}/pulls/${number} --jq '.diff_url')
+      - run: curl -sS -L $(gh api /repos/${GITHUB_REPOSITORY}/pulls/${number} --jq '.diff_url')
 
       - uses: actions/checkout@v3
         with:
