@@ -37,6 +37,12 @@ jobs:
         run: |
           curl -sS \
             -H "Accept: application/vnd.github+json" \
+            ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls/${number}/files
+
+      - name: API file name
+        run: |
+          curl -sS \
+            -H "Accept: application/vnd.github+json" \
             ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls/${number}/files \
             | jq -r '.[].filename'
 
