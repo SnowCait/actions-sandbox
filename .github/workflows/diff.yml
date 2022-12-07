@@ -1,0 +1,77 @@
+name: PR diff
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/diff.yml
+
+jobs:
+  diff:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      number: ${{ github.event.number }}
+    steps:
+      - run: gh pr diff ${number}
+      - run: gh pr diff ${number} --name-only
+      - run: gh pr diff ${number} --name-only | wc -l
+      
+      - run: echo $GITHUB_API_URL
+      
+      - name: diff_url (public repository only)
+        run: |
+          json=$(curl -sS \
+            -H "Accept: application/vnd.github+json" \
+            ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls/${number})
+          curl -sS -L $(echo "${json}" | jq -r '.diff_url')
+
+      - name: API diff
+        run: |
+          curl -sS \
+            -H "Accept: application/vnd.github.v3.diff" \
+            ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls/${number}
+
+      - name: API files
+        run: |
+          curl -sS \
+            -H "Accept: application/vnd.github+json" \
+            ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls/${number}/files
+
+      - name: API file name
+        run: |
+          curl -sS \
+            -H "Accept: application/vnd.github+json" \
+            ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/pulls/${number}/files \
+            | jq -r '.[].filename'
+
+      - run: |
+          gh api \
+            -H "Accept: application/vnd.github.v3.diff" \
+            /repos/${GITHUB_REPOSITORY}/pulls/${number}
+      - run: gh api /repos/${GITHUB_REPOSITORY}/pulls/${number}/files --jq '.[].filename'
+      - run: curl -sS -L $(gh api /repos/${GITHUB_REPOSITORY}/pulls/${number} --jq '.diff_url')
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: git diff origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF}
+      - run: git diff origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF}
+      - run: git diff origin/${GITHUB_BASE_REF} origin/${GITHUB_HEAD_REF}
+      - run: git diff --name-only origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF}
+      - run: git diff --name-only origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF}
+      - run: git diff --name-only origin/${GITHUB_BASE_REF} origin/${GITHUB_HEAD_REF}
+      - run: git diff --name-only origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} | wc -l
+
+      - uses: tj-actions/changed-files@v34
+        id: changed-files
+      # - run: echo "${json}"
+      #   env:
+      #     json: ${{ toJSON(steps.changed-files.outputs) }}
+
+      - uses: jitterbit/get-changed-files@v1
+        id: files
+      - run: echo "${json}"
+        env:
+          json: ${{ toJSON(steps.files-outputs) }}
