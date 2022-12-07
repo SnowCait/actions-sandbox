@@ -1,0 +1,20 @@
+name: Reusable workflow
+
+on:
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - .github/workflows/reusable_workflow.yml
+
+jobs:
+  job-1:
+    uses: ./.github/reusable_workflows/workflow-1.yml
+  job-2:
+    uses: ./.github/reusable_workflows/workflow-1.yml
+  job-3:
+    uses: ./.github/reusable_workflows/workflow-1.yml
+  job-4:
+    uses: ./.github/reusable_workflows/workflow-1.yml
+  job-5:
+    uses: ./.github/reusable_workflows/workflow-1.yml
