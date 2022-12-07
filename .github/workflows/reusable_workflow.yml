@@ -11,42 +11,42 @@ jobs:
   job-1:
     uses: ./.github/workflows/workflow-1.yml
   job-2:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-2.yml
   job-3:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-3.yml
   job-4:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-4.yml
   job-5:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-5.yml
   job-6:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-6.yml
   job-7:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-7.yml
   job-8:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-8.yml
   job-9:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-9.yml
   job-10:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-10.yml
   job-11:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-11.yml
   job-12:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-12.yml
   job-13:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-13.yml
   job-14:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-14.yml
   job-15:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-15.yml
   job-16:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-16.yml
   job-17:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-17.yml
   job-18:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-18.yml
   job-19:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-19.yml
   job-20:
-    uses: ./.github/workflows/workflow-1.yml
+    uses: ./.github/workflows/workflow-20.yml
   job-21:
     uses: ./.github/workflows/workflow-1.yml
