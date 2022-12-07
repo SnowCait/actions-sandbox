@@ -120,7 +120,7 @@ jobs:
         run: |
           json=$(gh api repos/${GITHUB_REPOSITORY}/pulls/${number})
           echo "$json" | jq
-          echo "::set-output name=json::$json"
+          echo "json=${json}" >> $GITHUB_OUTPUT
       - name: Success or Skipped
         run: gh pr comment $number --body "@${GITHUB_ACTOR} CI passing at ${sha}"
         if: >-
