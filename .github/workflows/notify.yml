@@ -8,8 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - run: gh pr comment ${number} --body ""
+      - run: gh pr comment ${number} --body "${GITHUB_ACTOR} success."
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           number: ${{ github.event.number }}
+        if: ${{ always() }}
