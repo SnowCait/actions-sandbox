@@ -1,0 +1,15 @@
+name: Notify
+
+on:
+  pull_request:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: gh pr comment ${number} --body ""
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          number: ${{ github.event.number }}
