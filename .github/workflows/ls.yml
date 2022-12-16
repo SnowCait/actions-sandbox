@@ -11,6 +11,8 @@ jobs:
   ls:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    outputs:
+      json: ${{ steps.ls.outputs.json }}
     steps:
       - uses: actions/checkout@v3
       - run: ls
@@ -19,4 +21,16 @@ jobs:
       - run: ls -d .
       - run: ls | jq -Rs 'split("\n")[:-1]'
       - run: ls | jq -Rsc 'split("\n")[:-1]'
-      - run: echo "${{ toJSON(runner) }}"
+      - uses: snow-actions/ls@v1.0.0
+        with:
+          path: docs
+        id: ls
+  path:
+    needs: [ ls ]
+    strategy:
+      matrix:
+        path: ${{ fromJSON(jobs.ls.outputs.json) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: echo ${{ matrix.path }}
