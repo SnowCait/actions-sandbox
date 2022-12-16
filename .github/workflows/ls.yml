@@ -19,3 +19,4 @@ jobs:
       - run: ls -d .
       - run: ls | jq -Rs 'split("\n")[:-1]'
       - run: ls | jq -Rsc 'split("\n")[:-1]'
+      - run: echo "${{ toJSON(runner) }}"
