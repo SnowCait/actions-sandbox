@@ -29,7 +29,7 @@ jobs:
     needs: [ ls ]
     strategy:
       matrix:
-        path: ${{ fromJSON(jobs.ls.outputs.json) }}
+        path: ${{ fromJSON(needs.ls.outputs.json) }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
