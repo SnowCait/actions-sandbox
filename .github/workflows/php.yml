@@ -16,7 +16,7 @@ jobs:
     steps:
       - run: php -v
       - run: ls -l /usr/bin/php*
-      - uses: shivammathur/setup-php@6cba851606e69e00775ebccba68bc1d418b6fa44
+      - uses: shivammathur/setup-php@aa1fe473f9c687b6fb896056d771232c0bc41161
         with:
           php-version: ${{ matrix.php-version }}
       - run: php -v
