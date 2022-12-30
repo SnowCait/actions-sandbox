@@ -1,0 +1,16 @@
+name: Serverless
+
+on:
+  push:
+    paths:
+      - .github/workflows/serverless.yml
+      - serverless/**
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - run: cat $GITHUB_EVENT_PATH
+      - run: serverless --version
