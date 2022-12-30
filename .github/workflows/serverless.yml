@@ -10,6 +10,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
@@ -19,7 +22,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
-          # role-to-assume: 
+          role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
           aws-region: ap-northeast-1
       - run: serverless deploy
         working-directory: serverless
