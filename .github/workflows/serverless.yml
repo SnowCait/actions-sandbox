@@ -16,5 +16,6 @@ jobs:
       - run: npm --version
       - run: npm install -g serverless
       - run: serverless --version
+      - uses: actions/checkout@v3
       - run: serverless deploy
         working-directory: serverless
