@@ -24,5 +24,5 @@ jobs:
         with:
           role-to-assume: ${{ secrets.ROLE_TO_ASSUME }}
           aws-region: ap-northeast-1
-      - run: serverless deploy
+      - run: serverless deploy --verbose
         working-directory: serverless
