@@ -13,4 +13,5 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
+      - run: npm install -g serverless
       - run: serverless --version
