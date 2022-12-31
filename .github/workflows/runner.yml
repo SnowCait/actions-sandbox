@@ -19,3 +19,6 @@ jobs:
       - run: cat /etc/lsb-release
       - run: curl -sS https://json.schemastore.org/github-workflow.json
       - run: curl -sS https://json.schemastore.org/github-workflow.json | jq '.definitions.normalJob.properties["runs-on"].oneOf[0].enum'
+      - run: |
+          curl -sS https://json.schemastore.org/github-workflow.json
+            | jq '.definitions.normalJob.properties["runs-on"].oneOf[0].enum | map(select(endswith("-latest"))) | map (select(. != "self-hosted"))'
