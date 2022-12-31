@@ -21,4 +21,4 @@ jobs:
       - run: curl -sS https://json.schemastore.org/github-workflow.json | jq '.definitions.normalJob.properties["runs-on"].oneOf[0].enum'
       - run: |
           curl -sS https://json.schemastore.org/github-workflow.json \
-            | jq '.definitions.normalJob.properties["runs-on"].oneOf | first | .enum | map(select(endswith("-latest") | not)) | map (select(. != "self-hosted"))'
+            | jq '.definitions.normalJob.properties["runs-on"].oneOf | first(select(.type == "string")) | .enum | map(select(endswith("-latest") | not)) | map (select(. != "self-hosted"))'
