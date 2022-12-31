@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 5
     outputs:
-      runners: ${{ steps.list.outputs.
+      runners: ${{ steps.list.outputs.json }}
 
     steps:
       - run: arch
