@@ -7,7 +7,7 @@ on:
 
 jobs:
   info:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     timeout-minutes: 5
 
     steps:
@@ -17,3 +17,5 @@ jobs:
       - run: uname -i
       - run: getconf LONG_BIT
       - run: cat /etc/lsb-release
+      - run: curl -sS https://json.schemastore.org/github-workflow.json
+      - run: curl -sS https://json.schemastore.org/github-workflow.json | jq '.definitions.normalJob.properties["runs-on"].oneOf[0].enum'
