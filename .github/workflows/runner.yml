@@ -31,7 +31,7 @@ jobs:
     needs: [ info ]
     strategy:
       matrix:
-        runners: ${{ toJSON(needs.info.outputs.runners) }}
+        runners: ${{ needs.info.outputs.runners }}
     runs-on: ${{ matrix.runner }}
     steps:
       - run: echo $RUNNER_OS
