@@ -9,6 +9,8 @@ jobs:
   info:
     runs-on: ubuntu-22.04
     timeout-minutes: 5
+    outputs:
+      runners: ${{ steps.list.outputs.
 
     steps:
       - run: arch
@@ -20,5 +22,13 @@ jobs:
       - run: curl -sS https://json.schemastore.org/github-workflow.json
       - run: curl -sS https://json.schemastore.org/github-workflow.json | jq '.definitions.normalJob.properties["runs-on"].oneOf[0].enum'
       - run: |
-          curl -sS https://json.schemastore.org/github-workflow.json \
-            | jq '.definitions.normalJob.properties["runs-on"].oneOf | map(select(.type == "string")) | first | .enum | map(select(endswith("-latest") | not)) | map (select(. != "self-hosted"))'
+          json=$(curl -sS https://json.schemastore.org/github-workflow.json \
+            | jq -c '.definitions.normalJob.properties["runs-on"].oneOf | map(select(.type == "string")) | first | .enum | map(select(endswith("-latest") | not)) | map (select(. != "self-hosted"))')
+          echo "json=${json}" >> $GITHUB_OUTPUT
+        id: list
+
+  do:
+    needs: [ info ]
+    runs-on: ${{ toJSON(needs.info.outputs.runners) }}
+    steps:
+      - run: echo $RUNNER_OS
