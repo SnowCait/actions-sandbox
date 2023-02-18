@@ -12,13 +12,6 @@ jobs:
       - uses: snow-actions/nostr@nostr
         with:
           relay: wss://relay.damus.io
-          private-key: ${{ secrets.NOSTR_PRIVATE_KEY }}
-          content: |
-            test
-            https://github.com/snow-actions/nostr
-      - uses: snow-actions/nostr@nostr
-        with:
-          relay: wss://relay.damus.io
           private-key: ${{ secrets.NOSTR_PRIVATE_KEY_HEX }}
           content: |
             test hex
