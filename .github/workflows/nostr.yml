@@ -10,9 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: snow-actions/nostr@nostr
+      - uses: snow-actions/nostr@main
         with:
-          relay: wss://relay.damus.io
+          relays: |
+            wss://relay.nostr.wirednet.jp
+            wss://nostr.fediverse.jp
+            wss://nostr.holybea.com
           private-key: ${{ secrets.NOSTR_PRIVATE_KEY_HEX }}
           content: |
-            test hex
+            test
