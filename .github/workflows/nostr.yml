@@ -18,4 +18,4 @@ jobs:
             wss://nostr.fediverse.jp
           private-key: ${{ secrets.NOSTR_PRIVATE_KEY_HEX }}
           content: |
-            test
+            test 2
