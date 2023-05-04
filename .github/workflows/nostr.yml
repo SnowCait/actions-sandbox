@@ -14,8 +14,8 @@ jobs:
         with:
           relays: |
             wss://relay.nostr.wirednet.jp
+            wss://nostr-relay.nokotaro.com
             wss://nostr.fediverse.jp
-            wss://nostr.holybea.com
           private-key: ${{ secrets.NOSTR_PRIVATE_KEY_HEX }}
           content: |
             test
