@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - .github/workflows/qrcode.yml
+  workflow_dispatch:
 
 jobs:
   build:
