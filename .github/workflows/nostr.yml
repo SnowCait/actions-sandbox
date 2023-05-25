@@ -13,9 +13,7 @@ jobs:
       - uses: snow-actions/nostr@main
         with:
           relays: |
-            wss://relay.nostr.wirednet.jp
-            wss://nostr-relay.nokotaro.com
-            wss://nostr.fediverse.jp
+            wss://yabu.me
           private-key: ${{ secrets.NOSTR_PRIVATE_KEY_HEX }}
           content: |
-            test 2
+            test
