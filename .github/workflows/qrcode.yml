@@ -9,19 +9,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-      with:
-        ref: qrcode
-    - uses: SnowCait/qrcode@v1.0.0
+#     - uses: actions/checkout@v3
+#       with:
+#         ref: qrcode
+    - uses: SnowCait/qrcode@main
       with:
         text: ${{ github.run_id }}
         path: qrcode.png
-    - run: |
-        git config --global user.email "you@example.com"
-        git config --global user.name "Your Name"
-        git add qrcode.png
-        git commit -m "QR Code"
-        git push origin qrcode
+#     - uses: snow-actions/git-config-user@v1.0.0
+#     - run: |
+#         git add qrcode.png
+#         git commit -m "QR Code"
+#         git push origin qrcode
     - name: You can upload the QR Code file to artifact.
       uses: actions/upload-artifact@v3
       with:
