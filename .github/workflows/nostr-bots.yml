@@ -10,6 +10,15 @@ on:
 jobs:
   generate-bots-json:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: nostr
     steps:
       - uses: actions/checkout@v3
-      - run: cat nostr/nostr-bot-domains.json
+      - run: cat nostr-bot-domains.json
+      - run: npm start
+      - uses: snow-actions/git-config-user@v1.0.0
+      - run: |
+          git add .
+          git commit -m "Update nostr-bots.json"
+          git push
