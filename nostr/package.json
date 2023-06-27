@@ -1,0 +1,13 @@
+{
+  "name": "generate-nostr-bots-json",
+  "version": "1.0.0",
+  "description": "",
+  "main": "generate-nostr-bots-json.js",
+  "scripts": {
+    "start": "node generate-nostr-bots-json.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "type": "module"
+}
