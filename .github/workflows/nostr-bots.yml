@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - nostr/nostr-bot-domains.json
+      - .github/workflows/nostr-bots.yml
+  workflow_dispatch:
 
 jobs:
   generate-bots-json:
