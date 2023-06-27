@@ -1,0 +1,13 @@
+name: Nostr Bots
+
+on:
+  push:
+    paths:
+      - nostr/nostr-bot-domains.json
+
+jobs:
+  generate-bots-json:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: cat nostr/nostr-bot-domains.json
