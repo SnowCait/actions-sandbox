@@ -5,11 +5,16 @@ on:
     paths:
       - nostr/**.json
       - .github/workflows/nostr-metadata.yml
-
 jobs:
   publish:
     runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      number: ${{ github.event.number }}
     steps:
+      - run: gh pr diff ${number}
+      - run: gh pr diff ${number} --name-only
       - uses: actions/checkout@v3
       - run: cat nostr/test.json
 #       - uses: snow-actions/nostr@v1.6.0
