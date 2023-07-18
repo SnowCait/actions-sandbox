@@ -10,6 +10,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - run: cat nostr/test.json
 #       - uses: snow-actions/nostr@v1.6.0
 #         with:
