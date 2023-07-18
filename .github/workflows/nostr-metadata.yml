@@ -1,0 +1,20 @@
+name: Nostr metadata
+
+on:
+  push:
+    paths:
+      - nostr/**.json
+      - .github/workflows/nostr-metadata.yml
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - run: cat nostr/test.json
+#       - uses: snow-actions/nostr@v1.6.0
+#         with:
+#           relays: |
+#             wss://yabu.me
+#           private-key: ${{ secrets.NOSTR_PRIVATE_KEY_OF_TEST }}
+#           kind: 0
+#           content: ''
