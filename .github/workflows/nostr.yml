@@ -14,7 +14,7 @@ jobs:
         id: publish
         with:
           relays: |
-            wss://yabu.me
+            wss://nostr-relay.nokotaro.com
           private-key: ${{ secrets.NOSTR_PRIVATE_KEY_HEX }}
           content: |
             test
