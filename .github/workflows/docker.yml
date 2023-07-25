@@ -29,7 +29,7 @@ jobs:
 
     services:
       mysql-server:
-        image: mysql:8.0.29
+        image: mysql:8.0.34
         ports:
           - 3306:3306
         env:
@@ -56,14 +56,14 @@ jobs:
   service-container-on-container:
     if: false
     runs-on: ubuntu-20.04
-    container: mysql:8.0.29 # 実際は Node.js や PHP などのアプリコンテナ
+    container: mysql:8.0.34 # 実際は Node.js や PHP などのアプリコンテナ
     timeout-minutes: 5
     env:
       MYSQL_PWD: root
 
     services:
       mysql-server:
-        image: mysql:8.0.28
+        image: mysql:8.0.34
         env:
           MYSQL_ROOT_PASSWORD: ${{ env.MYSQL_PWD }}
         options: >-
