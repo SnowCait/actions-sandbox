@@ -11,9 +11,16 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: snow-actions/nostr@main
+        id: publish
         with:
           relays: |
             wss://yabu.me
           private-key: ${{ secrets.NOSTR_PRIVATE_KEY_HEX }}
           content: |
             test
+      - run: |
+          echo "::add-mask::${auth}"
+          curl -X POST -u "${auth}" -H "Content-Type: application/json" -d "$event"
+        env:
+          event: ${{ steps.publish.outputs.event }}
+          auth: ${{ secrets.NOSTR_WEBHOOK_BASIC_AUTH }}
