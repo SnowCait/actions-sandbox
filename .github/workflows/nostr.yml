@@ -14,10 +14,10 @@ jobs:
         id: publish
         with:
           relays: |
-            wss://nostream.ocha.one
+            wss://relay.nostr.wirednet.jp
           private-key: ${{ secrets.NOSTR_PRIVATE_KEY_HEX }}
           content: |
-            test2
+            テスト
       - run: |
           curl -X POST -u "${auth}" -H "Content-Type: application/json" -d "$event" https://nostr-webhook.compile-error.net/post
         env:
