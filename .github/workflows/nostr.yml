@@ -17,7 +17,7 @@ jobs:
             wss://nostream.ocha.one
           private-key: ${{ secrets.NOSTR_PRIVATE_KEY_HEX }}
           content: |
-            test
+            test2
       - run: |
           curl -X POST -u "${auth}" -H "Content-Type: application/json" -d "$event" https://nostr-webhook.compile-error.net/post
         env:
