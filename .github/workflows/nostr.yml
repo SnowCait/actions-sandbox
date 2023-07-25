@@ -20,7 +20,7 @@ jobs:
             test
       - run: |
           echo "::add-mask::${auth}"
-          curl -X POST -u "${auth}" -H "Content-Type: application/json" -d "$event"
+          curl -X POST -u "${auth}" -H "Content-Type: application/json" -d "$event" https://nostr-webhook.compile-error.net/post
         env:
           event: ${{ steps.publish.outputs.event }}
           auth: ${{ secrets.NOSTR_WEBHOOK_BASIC_AUTH }}
