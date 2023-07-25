@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: mysql:8.0.29
+    image: mysql:8.0.34
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_PWD}
     ports:
