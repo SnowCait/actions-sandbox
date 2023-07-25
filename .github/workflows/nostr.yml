@@ -14,12 +14,11 @@ jobs:
         id: publish
         with:
           relays: |
-            wss://nostr-relay.nokotaro.com
+            wss://nostream.ocha.one
           private-key: ${{ secrets.NOSTR_PRIVATE_KEY_HEX }}
           content: |
             test
       - run: |
-          echo "::add-mask::${auth}"
           curl -X POST -u "${auth}" -H "Content-Type: application/json" -d "$event" https://nostr-webhook.compile-error.net/post
         env:
           event: ${{ steps.publish.outputs.event }}
