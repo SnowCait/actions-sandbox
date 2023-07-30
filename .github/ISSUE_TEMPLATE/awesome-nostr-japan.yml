@@ -7,12 +7,10 @@ body:
   - type: input
     attributes:
       label: Relay name
-      value: Relay name
     validations:
       required: true
   - type: input
     attributes:
       label: Relay URL
-      value: Relay URL
     validations:
       required: true
