@@ -1,0 +1,15 @@
+name: Awesome Nostr Japan
+title: "[Add] "
+assignees:
+  - SnowCait
+body:
+  - type: input
+    attributes:
+      label: Relay name
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Relay URL
+    validations:
+      required: true
