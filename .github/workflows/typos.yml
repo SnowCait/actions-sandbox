@@ -1,4 +1,4 @@
-name: Typos
+name: Typos spelll check
 on:
   pull_request:
 
