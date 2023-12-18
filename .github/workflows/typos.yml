@@ -4,8 +4,8 @@ on:
 
 jobs:
   run:
-    # tst slq
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: crate-ci/typos@v1.16.25
+      - run: sl
