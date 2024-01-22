@@ -7,13 +7,13 @@ jobs:
   step-if:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "BOOL=$((RANDOM % 2))" >> $GITHUB_ENV
-      - run: echo $BOOL
+      - run: echo "CONTINUE=$((RANDOM % 2))" >> $GITHUB_ENV
+      - run: echo $CONTINUE
       - run: echo a
       - run: echo b
-        if: env.BOOL
+        if: env.CONTINUE
       - run: echo c
-        if: env.BOOL
+        if: env.CONTINUE
 
   shell-script:
     runs-on: ubuntu-latest
