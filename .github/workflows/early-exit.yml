@@ -24,7 +24,7 @@ jobs:
           echo $CONTINUE
       - run: |
           echo a
-          if $CONTINUE != 1; then
+          if [ $CONTINUE -eq 1 ]; then
             exit 0
           fi
           echo b
