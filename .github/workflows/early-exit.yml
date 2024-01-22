@@ -22,7 +22,7 @@ jobs:
       - run: echo $CONTINUE
       - run: |
           echo a
-          if [ $CONTINUE -eq 1 ]; then
+          if [ $CONTINUE -ne 1 ]; then
             exit 0
           fi
           echo b
