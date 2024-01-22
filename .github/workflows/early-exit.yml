@@ -1,0 +1,20 @@
+name: Early Exit
+
+on:
+  push:
+
+jobs:
+  step-if:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo $((RANDOM % 2))
+      - run: echo a
+      - run: echo b
+      - run: echo c
+
+  shell-script:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo a
+      - run: echo b
+      - run: echo c
