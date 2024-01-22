@@ -7,9 +7,8 @@ jobs:
   step-if:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          echo "CONTINUE=$((RANDOM % 2))" >> $GITHUB_ENV
-          echo $CONTINUE
+      - run: echo "CONTINUE=$((RANDOM % 2))" >> $GITHUB_ENV
+      - run: echo $CONTINUE
       - run: echo a
       - run: echo b
         if: env.CONTINUE == 1
@@ -19,9 +18,8 @@ jobs:
   shell-script:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          echo "CONTINUE=$((RANDOM % 2))" >> $GITHUB_ENV
-          echo $CONTINUE
+      - run: echo "CONTINUE=$((RANDOM % 2))" >> $GITHUB_ENV
+      - run: echo $CONTINUE
       - run: |
           echo a
           if [ $CONTINUE -eq 1 ]; then
