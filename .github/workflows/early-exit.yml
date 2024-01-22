@@ -11,9 +11,9 @@ jobs:
       - run: echo $CONTINUE
       - run: echo a
       - run: echo b
-        if: env.CONTINUE
+        if: env.CONTINUE == 1
       - run: echo c
-        if: env.CONTINUE
+        if: env.CONTINUE == 1
 
   shell-script:
     runs-on: ubuntu-latest
