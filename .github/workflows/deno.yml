@@ -21,4 +21,4 @@ jobs:
               ws.close();
             });
           });
-        shell: deno run {0}
+        shell: deno run --allow-net {0}
