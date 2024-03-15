@@ -14,6 +14,11 @@ jobs:
       - uses: denoland/setup-deno@v1
       - run: deno --version
       - run: |
-          const add = (a, b): number => a + b;
-          console.log(add(1, 2));
+          await new Promise(() => {
+            const ws = new WebSocket('wss://yabu.me/');
+            ws.addEventListener('open', () => {
+              console.log('open');
+              ws.close();
+            });
+          });
         shell: deno run {0}
