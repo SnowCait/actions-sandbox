@@ -13,9 +13,9 @@ jobs:
     steps:
       - uses: denoland/setup-deno@v1
       - run: deno --version
-#       - run: |
-#           const add = (a: number, b: number) => {
-#               return a + b;
-#           };
-#           console.info(add(1, 2));
-#         shell: deno run {0}
+      - run: |
+          const add = (a: number, b: number) => {
+              return a + b;
+          };
+          console.info(add(1, 2));
+        shell: deno run {0}
