@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - .github/workflows/deno.yml
+  workflow_dispatch:
 
 jobs:
   build:
