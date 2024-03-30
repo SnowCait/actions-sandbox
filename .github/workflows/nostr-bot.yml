@@ -23,6 +23,5 @@ jobs:
           kind: 0
           content: ${{ steps.metadata.outputs.json }}
           relays: |
-            wss://relay1.example.com/
-            wss://relay2.example.com/
+            http://127.0.0.1:8787
           private-key: ${{ secrets.NOSTR_BOT_PRIVATE_KEY }}
