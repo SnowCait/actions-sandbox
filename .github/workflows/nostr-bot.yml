@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - metadata.json
+      - nostr-bot/metadata.json
   workflow_dispatch:
 
 permissions: {}
