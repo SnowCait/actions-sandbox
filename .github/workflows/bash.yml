@@ -50,4 +50,10 @@ jobs:
     steps:
       - run: date
       - run: date '+%Y-%m-%d'
+      - run: date
+        env:
+          TZ: Asia/Tokyo
+      - run: date '+%Y-%m-%d'
+        env:
+          TZ: Asia/Tokyo
 
