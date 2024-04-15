@@ -44,3 +44,10 @@ jobs:
     steps:
       - run: sleep 30
       - run: sleep 1m 30s
+
+  date:
+    runs-on: ubuntu-latest
+    steps:
+      - run: date
+      - run: date '+%Y-%m-%d'
+
