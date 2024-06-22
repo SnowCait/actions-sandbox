@@ -14,11 +14,12 @@ jobs:
       - uses: denoland/setup-deno@v1
       - run: deno --version
       - run: |
-          await new Promise(() => {
+          await new Promise((resolve) => {
             const ws = new WebSocket('wss://yabu.me/');
             ws.addEventListener('open', () => {
               console.log('open');
               ws.close();
+              resolve();
             });
           });
         shell: deno run --allow-net {0}
