@@ -12,4 +12,3 @@ jobs:
       - uses: reviewdog/action-typos@v1
         with:
           fail_on_error: true
-          filter_mode: added
