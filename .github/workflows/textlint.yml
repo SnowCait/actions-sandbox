@@ -1,0 +1,13 @@
+name: Textlint
+
+on:
+  pull_request:
+
+jobs:
+  textlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: tsuyoshicho/action-textlint@v3.9.1
+        with:
+          fail_on_error: true
