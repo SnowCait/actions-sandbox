@@ -8,6 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: tsuyoshicho/action-textlint@v3.9.1
+      - uses: SnowCait/action-textlint@up-to-npx
         with:
           fail_on_error: true
