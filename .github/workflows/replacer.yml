@@ -1,0 +1,19 @@
+name: Replacer
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  replace-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: unfor19/replacer-action@v1
+        with:
+          src-file-path: replacer/README.md
+          dst-file-path: replacer/README.md
+          start-value: <!-- item_1_start -->
+          end-value: <!-- item_1_end -->
