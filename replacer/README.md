@@ -2,14 +2,14 @@
 
 ## Item 1
 
-<!-- item_1_start -->
+<!--START_SECTION:{item-1}-->
 ```
 ```
-<!-- item_1_end -->
+<!--END_SECTION:{item-1}-->
 
 ## Item 2
 
-<!-- item_2_start -->
+<!--START_SECTION:{item-2}-->
 ```
 ```
-<!-- item_2_end -->
+<!--END_SECTION:{item-2}-->
