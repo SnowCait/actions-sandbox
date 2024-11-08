@@ -1,0 +1,29 @@
+name: Deploy
+on:
+  push:
+    branches: main
+    paths:
+      - .github/workflows/restr.yml
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write # Needed for auth with Deno Deploy
+      contents: read # Needed to clone the repository
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+        with:
+          repository: ikuradon/restr
+          ref: deno
+
+      - name: Upload to Deno Deploy
+        uses: denoland/deployctl@v1
+        with:
+          project: "restr-sandbox"
+          entrypoint: "src/index.ts"
+          root: "."
