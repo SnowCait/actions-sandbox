@@ -40,6 +40,10 @@ jobs:
         run: echo ${{ github.repositoryUrl }}
 
       - run: echo "${RUNNER_OS}"
+      
+      - run: echo "${JSON}"
+        env:
+          JSON: ${{ toJSON(github) }}
 
   steps:
     if: false
