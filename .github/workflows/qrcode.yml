@@ -15,7 +15,7 @@ jobs:
 #         ref: qrcode
     - uses: SnowCait/qrcode@master
       with:
-        text: ${{ github.run_id }}
+        text: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         path: qrcode.png
 #     - uses: snow-actions/git-config-user@v1.0.0
 #     - run: |
