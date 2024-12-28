@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - .github/workflows/nostr.yml
+  workflow_dispatch:
 
 jobs:
   nostr:
