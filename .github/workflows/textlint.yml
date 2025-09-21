@@ -8,6 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: SnowCait/action-textlint@fix-filter-mode-behavior
+      - uses: tsuyoshicho/action-textlint@v3.11.1
         with:
           fail_on_error: true
