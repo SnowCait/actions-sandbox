@@ -13,7 +13,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
       - run: ls -la mermaid/
       - run: docker run --rm -v $(pwd)/mermaid:/data --entrypoint ls minlag/mermaid-cli /data
       - run: docker run --rm -v $(pwd)/mermaid:/data minlag/mermaid-cli -i /data/diagram.mmd
