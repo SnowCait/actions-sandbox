@@ -35,7 +35,7 @@ jobs:
         working-directory: client
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: sh lint.sh
 
   client-test:
@@ -48,7 +48,7 @@ jobs:
         working-directory: client
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: sh build.sh
       - run: sh test.sh
 
@@ -62,7 +62,7 @@ jobs:
         working-directory: server
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: sh lint.sh
 
   server-test:
@@ -75,7 +75,7 @@ jobs:
         working-directory: server
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: sh test.sh
 
   workflow-lint:
@@ -85,7 +85,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: reviewdog/action-actionlint@v1.67.0
         with:
           actionlint_flags: -shellcheck= -pyflakes=
