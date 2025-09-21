@@ -89,7 +89,7 @@ jobs:
       - uses: reviewdog/action-actionlint@v1.34.2
         with:
           actionlint_flags: -shellcheck= -pyflakes=
-      - uses: reviewdog/action-yamllint@v1.6.1
+      - uses: reviewdog/action-yamllint@v1.21.0
         with:
           yamllint_flags: -c .github/.yamllint .github/workflows/
 
