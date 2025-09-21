@@ -21,7 +21,7 @@ jobs:
           token: ${{ secrets.YOUTUBE_API_TOKEN }}
           video: ${{ inputs.video }}
       - run: ls -l
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: icons
           path: .
