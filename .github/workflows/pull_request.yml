@@ -10,7 +10,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.head_ref }}
       - run: gh pr view --json files --jq '.files[].path | select(endswith(".yml"))'

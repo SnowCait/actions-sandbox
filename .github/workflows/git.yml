@@ -13,7 +13,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.head_ref || github.ref }}
       - run: echo test >> test
@@ -30,7 +30,7 @@ jobs:
       changed: ${{ steps.changes.outputs.count > 0 }}
     
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v5
       with:
         ref: feature/git-commands
     - run: git remote -v
@@ -71,11 +71,11 @@ jobs:
     
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           ref: feature/git-commands
         if: github.event_name == 'push'
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           ref: ${{ github.head_ref }}
         if: github.event_name == 'pull_request'
