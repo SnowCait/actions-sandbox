@@ -3,9 +3,9 @@ name: Unanimously Approved
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened, review_requested, review_request_removed]
+    types: [ opened, synchronize, reopened, review_requested, review_request_removed ]
   pull_request_review:
-    types: [submitted, dismissed]
+    types: [ submitted, dismissed ]
 
 jobs:
   unanimously-approved:
@@ -14,4 +14,4 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - uses: snow-actions/unanimously-approved@v2.0.0
+      - uses: snow-actions/unanimously-approved@v3.0.0
