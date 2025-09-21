@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check workflow files
         run: |
           bash <(curl https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
@@ -30,7 +30,7 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: gh pr view $pr_number --json files --jq '.files'
       - run: gh pr view $pr_number --json files --jq '.files[].path'
       - run: yamllint -c .github/.yamllint $(gh pr view $pr_number --json files --jq '.files[].path') # ファイルの削除を区別できないのでファイル削除するとエラー
@@ -41,7 +41,7 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: reviewdog/action-yamllint@v1.6.0
         with:
           yamllint_flags: -c .github/.yamllint .github/workflows/
@@ -52,7 +52,7 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - uses: actions/checkout@v3
-      - uses: reviewdog/action-actionlint@v1.34.2
+      - uses: actions/checkout@v4
+      - uses: reviewdog/action-actionlint@v1.67.0
         with:
           actionlint_flags: -shellcheck= -pyflakes=
