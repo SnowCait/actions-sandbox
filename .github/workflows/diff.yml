@@ -64,7 +64,7 @@ jobs:
       - run: git diff --name-only origin/${GITHUB_BASE_REF} origin/${GITHUB_HEAD_REF}
       - run: git diff --name-only origin/${GITHUB_BASE_REF}...origin/${GITHUB_HEAD_REF} | wc -l
 
-      - uses: tj-actions/changed-files@v34
+      - uses: tj-actions/changed-files@v46
         id: changed-files
       # - run: echo "${json}"
       #   env:
