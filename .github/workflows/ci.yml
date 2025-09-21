@@ -86,7 +86,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: reviewdog/action-actionlint@v1.34.2
+      - uses: reviewdog/action-actionlint@v1.67.0
         with:
           actionlint_flags: -shellcheck= -pyflakes=
       - uses: reviewdog/action-yamllint@v1.6.1
