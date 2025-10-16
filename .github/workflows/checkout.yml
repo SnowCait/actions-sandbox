@@ -12,7 +12,7 @@ on:
 
 jobs:
   checkout:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v5
@@ -30,7 +30,7 @@ jobs:
 
   gist:
     if: false
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v5
