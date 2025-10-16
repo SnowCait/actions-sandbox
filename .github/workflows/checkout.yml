@@ -9,6 +9,8 @@ on:
 jobs:
   checkout:
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_RUNNER_DEBUG: true
 
     steps:
       - uses: actions/checkout@v5
