@@ -53,6 +53,6 @@ jobs:
     steps:
       - run: cat $GITHUB_EVENT_PATH
       - uses: actions/checkout@v5
-      - uses: reviewdog/action-actionlint@v1.67.0
+      - uses: reviewdog/action-actionlint@v1.68.0
         with:
           actionlint_flags: -shellcheck= -pyflakes=
