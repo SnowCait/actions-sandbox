@@ -8,7 +8,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v8
         id: is_null
         with:
           script: return context.payload.review.body === null
