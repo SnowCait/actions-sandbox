@@ -10,7 +10,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           ref: develop
       - run: git log -n 1 origin/develop --pretty=format:"%H"

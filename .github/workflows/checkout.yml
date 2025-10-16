@@ -12,28 +12,28 @@ on:
 
 jobs:
   checkout:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
       - run: echo a > a.txt
       - run: ls -la
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           clean: true
       - run: echo b > b.txt
       - run: ls -la
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           clean: false
       - run: ls -la
 
   gist:
     if: false
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
         with:
           repository: https://gist.github.com/ee80c65ecb2387c407cc0b0753835245
       - run: ls -la
