@@ -11,7 +11,7 @@ jobs:
     
     steps:
       - uses: actions/checkout@v5
-      - uses: tj-actions/changed-files@24d32ffd492484c1d75e0c0b894501ddb9d30d62
+      - uses: tj-actions/changed-files@24d32ffd492484c1d75e0c0b894501ddb9d30d62 # v47
         id: changed-files
       - run: |
           for file in ${FILES}; do
