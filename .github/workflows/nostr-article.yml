@@ -1,0 +1,21 @@
+name: Nostr Article
+
+on:
+  push:
+    paths:
+      - .github/workflows/nostr-article.yml
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v5
+      - uses: tj-actions/changed-files@24d32ffd492484c1d75e0c0b894501ddb9d30d62
+        id: changed-files
+      - run: |
+          for file in ${FILES}; do
+            echo "${file}"
+          done
+        env:
+          FILES: ${{ steps.changed-files.outputs.all_changed_files
