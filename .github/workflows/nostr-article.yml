@@ -18,4 +18,4 @@ jobs:
             echo "${file}"
           done
         env:
-          FILES: ${{ steps.changed-files.outputs.all_changed_files
+          FILES: ${{ steps.changed-files.outputs.all_changed_files }}
