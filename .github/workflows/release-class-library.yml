@@ -40,7 +40,7 @@ jobs:
     - run: echo ${{ fromJson(steps.releases.outputs.result).data[0].tag_name }}
 
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v2.1.0
+      uses: actions/setup-dotnet@v5.0.0
       with:
         dotnet-version: 3.1.301
     - name: Install dependencies
