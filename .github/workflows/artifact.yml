@@ -18,19 +18,19 @@ jobs:
 
       - run: echo hello > path/to/artifact/world.txt
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v5
         with:
           name: my-artifact-1
           path: path/to/artifact/world.txt
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v5
         with:
           name: my-artifact-2
           path: path/to/artifact/
 
       - run: echo $GITHUB_SHA > path/to/artifact/sha.txt
         
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v5
         with:
           path: path/to/artifact/
 
