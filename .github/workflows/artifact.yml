@@ -40,7 +40,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v6
         with:
           name: my-artifact-1
         #   path: docs
