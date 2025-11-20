@@ -125,7 +125,7 @@ jobs:
         working-directory: docker
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: docker compose up -d --wait
 #       - name: Wait for starting
 #         run: |
@@ -148,6 +148,6 @@ jobs:
         working-directory: docker
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: docker compose -f compose.mysql.yml up -d --wait
       - run: mysql -hlocalhost -uroot -e "SHOW DATABASES"

@@ -21,7 +21,7 @@ jobs:
 #       - run: |
 #           git config user.name
 #           git config user.email
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: snow-actions/git-config-user@v1.0.0
       - run: |
           git config user.name
