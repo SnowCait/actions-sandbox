@@ -15,15 +15,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: echo a > a.txt
       - run: ls -la
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           clean: true
       - run: echo b > b.txt
       - run: ls -la
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           clean: false
       - run: ls -la
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           repository: https://gist.github.com/ee80c65ecb2387c407cc0b0753835245
       - run: ls -la

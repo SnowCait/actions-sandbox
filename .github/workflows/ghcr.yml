@@ -85,7 +85,7 @@ jobs:
         shell: bash
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: docker build -t ghcr.io/snowcait/github-runner:latest .
       - run: docker images
       - run: echo $CR_PAT | docker login ghcr.io -u snowcait --password-stdin
@@ -100,7 +100,7 @@ jobs:
         working-directory: ghcr/php/
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: docker build -t ghcr.io/snowcait/php-fpm:latest .
       - run: docker images
       - run: echo $CR_PAT | docker login ghcr.io -u snowcait --password-stdin

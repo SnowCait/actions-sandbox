@@ -16,7 +16,7 @@ jobs:
             working-directory: class-library/ClassLibrary1/
 
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
     - name: XML to JSON
       id: csproj
