@@ -20,7 +20,7 @@ jobs:
         run: |
           json=$(cat nostr-bot/metadata.json | jq -c)
           echo "json=${json}" >> "$GITHUB_OUTPUT"
-      - uses: snow-actions/nostr@v1.8.1
+      - uses: snow-actions/nostr@v1.8.2
         with:
           kind: 0
           content: ${{ steps.metadata.outputs.json }}
