@@ -13,5 +13,14 @@ jobs:
       - run: cat $GITHUB_EVENT_PATH
       - run: echo "${BEFORE} => ${AFTER}"
         env:
-          AFTER: ${{ github.after }}
-          BEFORE: ${{ github.before }}
+          AFTER: ${{ github.event.after }}
+          BEFORE: ${{ github.event.before }}
+      - run: |
+          gh api \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/${GITHUB_REPOSITORY}/compare/${BASE}...${HEAD} \
+            | jq -r '.files[].filename'
+        env:
+          HEAD: ${{ github.event.after }}
+          BASE: ${{ github.event.before }}
