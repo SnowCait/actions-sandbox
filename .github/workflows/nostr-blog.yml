@@ -22,5 +22,6 @@ jobs:
             /repos/${GITHUB_REPOSITORY}/compare/${BASE}...${HEAD} \
             | jq -r '.files[].filename'
         env:
+          GH_TOKEN: ${{ github.token }}
           HEAD: ${{ github.event.after }}
           BASE: ${{ github.event.before }}
