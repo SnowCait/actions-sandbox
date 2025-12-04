@@ -4,10 +4,10 @@ on:
   push:
     paths:
       - nostr-blog/**.md
+      - .github/workflows/nostr-blog.yml
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - run: gh --version
-      - run: gh --help
+      - run: cat ${GITHUB_EVENT_PATH}
