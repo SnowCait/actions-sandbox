@@ -1,0 +1,13 @@
+name: Nostr Blog
+
+on:
+  push:
+    paths:
+      - nostr-blog/**.md
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - run: gh --version
+      - run: gh --help
