@@ -53,4 +53,4 @@ jobs:
   job-22:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6

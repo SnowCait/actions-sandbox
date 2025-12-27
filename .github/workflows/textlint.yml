@@ -7,7 +7,7 @@ jobs:
   textlint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: tsuyoshicho/action-textlint@v3.11.1
         with:
           fail_on_error: true
