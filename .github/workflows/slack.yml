@@ -28,7 +28,7 @@ jobs:
       SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
     steps:
-      - uses: slackapi/slack-github-action@v1.21.0
+      - uses: slackapi/slack-github-action@v1.25.0
         id: slack
         with:
           channel-id: '#sandbox'
@@ -67,7 +67,7 @@ jobs:
       SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
     steps:
-      - uses: slackapi/slack-github-action@v1.21.0
+      - uses: slackapi/slack-github-action@v1.25.0
         id: slack
         with:
           payload: |
