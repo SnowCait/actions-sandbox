@@ -45,7 +45,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - run: npm install --save twitter
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v8
         with:
           script: |
             const Twitter = require('twitter')
