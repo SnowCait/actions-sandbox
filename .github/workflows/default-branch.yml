@@ -22,7 +22,7 @@ jobs:
       - run: echo ${{ fromJson(steps.repo.outputs.data).default_branch }}
 
       # Checkout
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           repository: SnowCait/rest-api-description
       - run: git rev-parse --abbrev-ref HEAD

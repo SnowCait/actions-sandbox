@@ -21,7 +21,7 @@ jobs:
         run: |
           milestone_number=$(gh api -X GET /repos/${GITHUB_REPOSITORY}/milestones --jq ". | map(select(.title == \"${MILESTONE}\")) | first | .number")
           gh api -X PATCH repos/${GITHUB_REPOSITORY}/milestones/${milestone_number} -f state=closed
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Commit something
         run: |
           git config user.name github-actions[bot]

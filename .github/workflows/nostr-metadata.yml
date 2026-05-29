@@ -12,7 +12,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       number: ${{ github.event.number }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: gh pr diff ${number}
       - run: gh pr diff ${number} --name-only
       - run: cat nostr/test.json

@@ -10,5 +10,5 @@ jobs:
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - run: git status

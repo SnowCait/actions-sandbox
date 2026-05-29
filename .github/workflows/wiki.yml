@@ -38,7 +38,7 @@ jobs:
           TITLE: ${{ github.event.pages[0].title }}
           HTML_URL: ${{ github.event.pages[0].html_url }}
           WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_2 }}
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           repository: ${{ github.event.repository.full_name }}.wiki
           ref: ${{ github.event.pages[0].sha }}
