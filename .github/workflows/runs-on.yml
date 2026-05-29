@@ -2,14 +2,17 @@ name: runs-on
 
 on:
   pull_request:
+    paths:
+      - .github/workflows/runs-on.yml
   workflow_dispatch:
     inputs:
       runner:
         description: Select runner
         required: true
-        default: ubuntu-20.04
+        default: ''
         type: choice
         options:
+          - ''
           - 'ubuntu-20.04'
           - "ubuntu-22.04"
           - windows-2022
@@ -22,25 +25,30 @@ on:
 
 jobs:
   ubuntu:
-    if: github.event_name == 'pull_request' && !contains(github.event.pull_request.lables.*.name, 'Windows')
+    if: github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'Windows')
     runs-on: ubuntu-20.04
 
     steps:
       - run: cat $GITHUB_EVENT_PATH
 
   windows:
-    if: github.event_name == 'pull_request' && contains(github.event.pull_request.lables.*.name, 'Windows')
-    runs-on: ubuntu-20.04
+    if: github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'Windows')
+    runs-on: windows-2022
 
     steps:
-      - run: cat $GITHUB_EVENT_PATH
+      - run: cat $Env:GITHUB_EVENT_PATH
 
-#   test:
-#     if: github.event_name == 'pull_request'
-#     runs-on: >-
-#       github.event.pull_request.user_login == 'my-bot'
-#         && fromJSON('[ "self-hosted", "Linux" ]')
-#         || fromJSON('[ "self-hsoted", "low-priority" ]')
+  test:
+    if: github.event_name == 'pull_request'
+    runs-on: >-
+      ${{
+        github.event.sender.type == 'Bot'
+          && 'low-priority'
+          || fromJSON('[ "self-hosted", "Linux" ]')
+      }}
+
+    steps:
+      - run: cat $Env:GITHUB_EVENT_PATH
 
   deploy:
     if: github.event_name == 'workflow_dispatch'
